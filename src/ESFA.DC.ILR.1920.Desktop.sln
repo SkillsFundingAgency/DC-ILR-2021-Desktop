@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.Desktop.Service
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.Desktop.Service.Tests", "ESFA.DC.ILR.Desktop.Service.Tests\ESFA.DC.ILR.Desktop.Service.Tests.csproj", "{37EB84D2-2429-4849-9343-390FE9ABEF2F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.Desktop.Stubs", "ESFA.DC.ILR.Desktop.Stubs\ESFA.DC.ILR.Desktop.Stubs.csproj", "{79B64734-1AAA-4BCF-8892-4CAFFE6C664F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{37EB84D2-2429-4849-9343-390FE9ABEF2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37EB84D2-2429-4849-9343-390FE9ABEF2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37EB84D2-2429-4849-9343-390FE9ABEF2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79B64734-1AAA-4BCF-8892-4CAFFE6C664F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79B64734-1AAA-4BCF-8892-4CAFFE6C664F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79B64734-1AAA-4BCF-8892-4CAFFE6C664F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79B64734-1AAA-4BCF-8892-4CAFFE6C664F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
