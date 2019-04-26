@@ -1,7 +1,5 @@
-using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using ESFA.DC.ILR._1920.Desktop.WPF.Command;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using GalaSoft.MvvmLight;

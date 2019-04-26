@@ -18,7 +18,6 @@ using CommonServiceLocator;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Stubs;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Ioc;
 
 namespace ESFA.DC.ILR._1920.Desktop.WPF.ViewModel
 {
