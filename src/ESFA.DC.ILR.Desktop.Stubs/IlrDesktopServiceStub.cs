@@ -57,6 +57,8 @@ namespace ESFA.DC.ILR.Desktop.Stubs
             _messengerService.Send(new TaskProgressMessage("Store Data"));
 
             await _dataStoreServiceDesktopTask.ExecuteAsync(context, cancellationToken);
+
+            _messengerService.Send(new TaskProgressMessage("Processing Complete"));
         }
     }
 }
