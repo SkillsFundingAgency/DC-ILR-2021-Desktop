@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Service.Message;
 
@@ -8,33 +9,54 @@ namespace ESFA.DC.ILR.Desktop.Stubs
     public class IlrDesktopServiceStub : IIlrDesktopService
     {
         private readonly IMessengerService _messengerService;
+        private readonly IDesktopTask _desktopTask;
 
-        public IlrDesktopServiceStub(IMessengerService messengerService)
+        private readonly IDesktopTask _fileValidationServiceDesktopTask;
+        private readonly IDesktopTask _referenceDataServiceDesktopTask;
+        private readonly IDesktopTask _validationServiceDesktopTask;
+        private readonly IDesktopTask _fundingServiceDesktopTask;
+        private readonly IDesktopTask _reportsServiceDesktopTask;
+        private readonly IDesktopTask _dataStoreServiceDesktopTask;
+
+        public IlrDesktopServiceStub(IMessengerService messengerService, IDesktopTask desktopTask)
         {
             _messengerService = messengerService;
+
+            _fileValidationServiceDesktopTask = desktopTask;
+            _referenceDataServiceDesktopTask = desktopTask;
+            _validationServiceDesktopTask = desktopTask;
+            _fundingServiceDesktopTask = desktopTask;
+            _reportsServiceDesktopTask = desktopTask;
+            _dataStoreServiceDesktopTask = desktopTask;
         }
 
         public async Task ProcessAsync(string filePath, CancellationToken cancellationToken)
         {
+            var context = new DesktopContextStub();
+
             _messengerService.Send(new TaskProgressMessage("File Validation"));
 
-            await Task.Delay(1000, cancellationToken);
+            await _fileValidationServiceDesktopTask.ExecuteAsync(context, cancellationToken);
 
-            _messengerService.Send(new TaskProgressMessage("Validation"));
+            _messengerService.Send(new TaskProgressMessage("Reference Data"));
             
-            await Task.Delay(2000, cancellationToken);
+            await _referenceDataServiceDesktopTask.ExecuteAsync(context, cancellationToken);
+            
+            _messengerService.Send(new TaskProgressMessage("Validation"));
+
+            await _validationServiceDesktopTask.ExecuteAsync(context, cancellationToken);
 
             _messengerService.Send(new TaskProgressMessage("Funding Calculation"));
 
-            await Task.Delay(3000, cancellationToken);
+            await _fundingServiceDesktopTask.ExecuteAsync(context, cancellationToken);
 
             _messengerService.Send(new TaskProgressMessage("Report Generation"));
-            
-            await Task.Delay(2000, cancellationToken);
+
+            await _reportsServiceDesktopTask.ExecuteAsync(context, cancellationToken);
 
             _messengerService.Send(new TaskProgressMessage("Store Data"));
 
-            await Task.Delay(2000, cancellationToken);
+            await _dataStoreServiceDesktopTask.ExecuteAsync(context, cancellationToken);
         }
     }
 }
