@@ -1,6 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Service.Interface;
+using ESFA.DC.ILR.Desktop.Service.Message;
 using ESFA.DC.ILR.Desktop.WPF.Command;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
@@ -24,24 +25,30 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
     {
         private bool _processing = false;
         private string _fileName;
+        private string _currentTask;
 
         private readonly IIlrDesktopService _ilrDesktopService;
+        private readonly IMessengerService _messengerService;
 
-        public MainViewModel(IIlrDesktopService ilrDesktopService)
+        public MainViewModel(IIlrDesktopService ilrDesktopService, IMessengerService messengerService)
         {
             if (IsInDesignMode)
             {
                 FileName = "C:/Users/TestFiles/ILRFile.xml";
+                CurrentTask = "File Validation";
             }
             else
             {
                 FileName = "No file chosen";
+
+                _ilrDesktopService = ilrDesktopService;
+                _messengerService = messengerService;
+
+                _messengerService.Register<TaskProgressMessage>(this, HandleTaskProgressMessage);
             }
 
             ChooseFileCommand = new RelayCommand(ShowChooseFileDialog, () => !Processing);
             ProcessFileCommand = new AsyncCommand(ProcessFile, () => !Processing);
-
-            _ilrDesktopService = ilrDesktopService;
         }
 
         public string FileName
@@ -66,6 +73,16 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             }
         }
 
+        public string CurrentTask
+        {
+            get => _currentTask;
+            set
+            {
+                _currentTask = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public RelayCommand ChooseFileCommand { get; set; }
 
         public AsyncCommand ProcessFileCommand { get; set; }
@@ -87,6 +104,11 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             await _ilrDesktopService.ProcessAsync(FileName, CancellationToken.None);
 
             Processing = false;
+        }
+
+        private void HandleTaskProgressMessage(TaskProgressMessage taskProgressMessage)
+        {
+            CurrentTask = taskProgressMessage.TaskName;
         }
     }
 }

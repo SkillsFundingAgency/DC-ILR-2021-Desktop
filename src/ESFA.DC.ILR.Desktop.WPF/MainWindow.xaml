@@ -32,6 +32,7 @@
                 <Button Content="Choose File" Command="{Binding ChooseFileCommand}"/>
                 <Label Grid.Column="1" Content="{Binding FileName}" />
                 <Button Grid.Row="2" Command="{Binding ProcessFileCommand}" Content="Process File" Background="Green" Foreground="White"/>
+                <Label Grid.Row="2" Grid.Column="1" Content="{Binding CurrentTask}" />
             </Grid>
         </StackPanel>
     </Grid>
