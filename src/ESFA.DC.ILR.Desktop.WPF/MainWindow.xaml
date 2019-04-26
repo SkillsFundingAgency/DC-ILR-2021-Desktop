@@ -26,14 +26,17 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"/>
-                    <RowDefinition Height="10"/>                    
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="10"/>
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
                 <Button Content="Choose File" Command="{Binding ChooseFileCommand}"/>
                 <Label Grid.Column="1" Content="{Binding FileName}" />
                 <Button Grid.Row="2" Command="{Binding ProcessFileCommand}" Content="Process File" Background="Green" Foreground="White"/>
-                <Label Grid.Row="2" Grid.Column="1" Content="{Binding CurrentTask}" />
+                <Label Grid.Row="2" Grid.Column="1" Content="{Binding TaskName}" />
             </Grid>
+            <ProgressBar Height="20" Value="{Binding CurrentTask}" Maximum="{Binding TaskCount}" />
         </StackPanel>
     </Grid>
 </Window>

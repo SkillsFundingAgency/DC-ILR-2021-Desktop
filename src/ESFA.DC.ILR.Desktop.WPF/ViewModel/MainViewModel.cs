@@ -25,7 +25,9 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
     {
         private bool _processing = false;
         private string _fileName;
-        private string _currentTask;
+        private string _taskName;
+        private int _currentTask;
+        private int _taskCount;
 
         private readonly IIlrDesktopService _ilrDesktopService;
         private readonly IMessengerService _messengerService;
@@ -35,11 +37,13 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             if (IsInDesignMode)
             {
                 FileName = "C:/Users/TestFiles/ILRFile.xml";
-                CurrentTask = "File Validation";
+                TaskName = "File Validation";
             }
             else
             {
                 FileName = "No file chosen";
+                CurrentTask = 0;
+                TaskCount = 1;
 
                 _ilrDesktopService = ilrDesktopService;
                 _messengerService = messengerService;
@@ -73,12 +77,32 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             }
         }
 
-        public string CurrentTask
+        public string TaskName
+        {
+            get => _taskName;
+            set
+            {
+                _taskName = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public int CurrentTask
         {
             get => _currentTask;
             set
             {
                 _currentTask = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public int TaskCount
+        {
+            get => _taskCount;
+            set
+            {
+                _taskCount = value;
                 RaisePropertyChanged();
             }
         }
@@ -108,7 +132,9 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         private void HandleTaskProgressMessage(TaskProgressMessage taskProgressMessage)
         {
-            CurrentTask = taskProgressMessage.TaskName;
+            TaskName = taskProgressMessage.TaskName;
+            CurrentTask = taskProgressMessage.CurrentTask;
+            TaskCount = taskProgressMessage.TaskCount;
         }
     }
 }

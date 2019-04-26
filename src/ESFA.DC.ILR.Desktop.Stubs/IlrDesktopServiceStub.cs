@@ -34,31 +34,31 @@ namespace ESFA.DC.ILR.Desktop.Stubs
         {
             var context = new DesktopContextStub();
 
-            _messengerService.Send(new TaskProgressMessage("File Validation"));
+            _messengerService.Send(new TaskProgressMessage("File Validation", 0, 6));
 
             await _fileValidationServiceDesktopTask.ExecuteAsync(context, cancellationToken);
 
-            _messengerService.Send(new TaskProgressMessage("Reference Data"));
+            _messengerService.Send(new TaskProgressMessage("Reference Data", 1, 6));
             
             await _referenceDataServiceDesktopTask.ExecuteAsync(context, cancellationToken);
             
-            _messengerService.Send(new TaskProgressMessage("Validation"));
+            _messengerService.Send(new TaskProgressMessage("Validation", 2, 6));
 
             await _validationServiceDesktopTask.ExecuteAsync(context, cancellationToken);
 
-            _messengerService.Send(new TaskProgressMessage("Funding Calculation"));
+            _messengerService.Send(new TaskProgressMessage("Funding Calculation", 3, 6));
 
             await _fundingServiceDesktopTask.ExecuteAsync(context, cancellationToken);
 
-            _messengerService.Send(new TaskProgressMessage("Report Generation"));
+            _messengerService.Send(new TaskProgressMessage("Report Generation", 4, 6));
 
             await _reportsServiceDesktopTask.ExecuteAsync(context, cancellationToken);
 
-            _messengerService.Send(new TaskProgressMessage("Store Data"));
+            _messengerService.Send(new TaskProgressMessage("Store Data", 5, 6));
 
             await _dataStoreServiceDesktopTask.ExecuteAsync(context, cancellationToken);
 
-            _messengerService.Send(new TaskProgressMessage("Processing Complete"));
+            _messengerService.Send(new TaskProgressMessage("Processing Complete", 6, 6));
         }
     }
 }
