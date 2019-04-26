@@ -12,7 +12,11 @@
   See http://www.galasoft.ch/mvvm
 */
 
+using Autofac;
+using Autofac.Extras.CommonServiceLocator;
 using CommonServiceLocator;
+using ESFA.DC.ILR.Desktop.Service.Interface;
+using ESFA.DC.ILR.Desktop.Stubs;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 
@@ -29,20 +33,25 @@ namespace ESFA.DC.ILR._1920.Desktop.WPF.ViewModel
         /// </summary>
         public ViewModelLocator()
         {
-            ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
+            var containerBuilder = new ContainerBuilder();
 
-            ////if (ViewModelBase.IsInDesignModeStatic)
-            ////{
-            ////    // Create design time view services and models
-            ////    SimpleIoc.Default.Register<IDataService, DesignDataService>();
-            ////}
-            ////else
-            ////{
-            ////    // Create run time view services and models
-            ////    SimpleIoc.Default.Register<IDataService, DataService>();
-            ////}
+            if (ViewModelBase.IsInDesignModeStatic)
+            {
+                // register Design Time Services
+            }
+            else
+            {
+                // register Production Services
+            }
 
-            SimpleIoc.Default.Register<MainViewModel>();
+
+            containerBuilder.RegisterType<MainViewModel>();
+
+            containerBuilder.RegisterType<IlrDesktopServiceStub>().As<IIlrDesktopService>();
+
+            var container = containerBuilder.Build();
+
+            ServiceLocator.SetLocatorProvider(() => new AutofacServiceLocator(container));
         }
 
         public MainViewModel Main

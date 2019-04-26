@@ -1,6 +1,9 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ESFA.DC.ILR._1920.Desktop.WPF.Command;
+using ESFA.DC.ILR.Desktop.Service.Interface;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using Microsoft.Win32;
@@ -24,7 +27,9 @@ namespace ESFA.DC.ILR._1920.Desktop.WPF.ViewModel
         private bool _processing = false;
         private string _fileName;
 
-        public MainViewModel()
+        private readonly IIlrDesktopService _ilrDesktopService;
+
+        public MainViewModel(IIlrDesktopService ilrDesktopService)
         {
             if (IsInDesignMode)
             {
@@ -35,8 +40,10 @@ namespace ESFA.DC.ILR._1920.Desktop.WPF.ViewModel
                 FileName = "No file chosen";
             }
 
-            ChooseFileCommand = new RelayCommand(ShowChooseFileDialog, () => !_processing);
-            ProcessFileCommand = new RelayCommand(ProcessFile, () => !_processing);
+            ChooseFileCommand = new RelayCommand(ShowChooseFileDialog, () => !Processing);
+            ProcessFileCommand = new AsyncCommand(ProcessFile, () => !Processing);
+
+            _ilrDesktopService = ilrDesktopService;
         }
 
         public string FileName
@@ -49,9 +56,21 @@ namespace ESFA.DC.ILR._1920.Desktop.WPF.ViewModel
             }
         }
 
-        public ICommand ChooseFileCommand { get; set; }
+        public bool Processing
+        {
+            get => _processing;
+            set
+            {
+                _processing = value;
 
-        public ICommand ProcessFileCommand { get; set; }
+                ChooseFileCommand.RaiseCanExecuteChanged();
+                ProcessFileCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        public RelayCommand ChooseFileCommand { get; set; }
+
+        public AsyncCommand ProcessFileCommand { get; set; }
 
         private void ShowChooseFileDialog()
         {
@@ -63,8 +82,13 @@ namespace ESFA.DC.ILR._1920.Desktop.WPF.ViewModel
             }
         }
 
-        private void ProcessFile()
+        private async Task ProcessFile()
         {
+            Processing = true;
+
+            await _ilrDesktopService.ProcessAsync(FileName, CancellationToken.None);
+
+            Processing = false;
         }
     }
 }
