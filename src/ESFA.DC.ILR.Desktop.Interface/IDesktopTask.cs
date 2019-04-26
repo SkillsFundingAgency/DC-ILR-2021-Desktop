@@ -5,6 +5,6 @@ namespace ESFA.DC.ILR.Desktop.Interface
 {
     public interface IDesktopTask
     {
-        Task<IDesktopTask> ExecuteAsync(IDesktopTask desktopTask, CancellationToken cancellationToken);
+        Task<IDesktopContext> ExecuteAsync(IDesktopContext desktopContext, CancellationToken cancellationToken);
     }
 }
