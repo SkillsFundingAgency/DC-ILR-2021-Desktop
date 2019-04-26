@@ -1,12 +1,12 @@
 using System.Threading;
 using System.Threading.Tasks;
-using ESFA.DC.ILR._1920.Desktop.WPF.Command;
 using ESFA.DC.ILR.Desktop.Service.Interface;
+using ESFA.DC.ILR.Desktop.WPF.Command;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using Microsoft.Win32;
 
-namespace ESFA.DC.ILR._1920.Desktop.WPF.ViewModel
+namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 {
     /// <summary>
     /// This class contains properties that the main View can data bind to.

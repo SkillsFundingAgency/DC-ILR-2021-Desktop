@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using ESFA.DC.ILR._1920.Desktop.WPF.Command.Extensions;
-using ESFA.DC.ILR._1920.Desktop.WPF.Command.Interface;
+using ESFA.DC.ILR.Desktop.WPF.Command.Extensions;
+using ESFA.DC.ILR.Desktop.WPF.Command.Interface;
 
-namespace ESFA.DC.ILR._1920.Desktop.WPF.Command
+namespace ESFA.DC.ILR.Desktop.WPF.Command
 {
     public class AsyncCommand : IAsyncCommand
     {
