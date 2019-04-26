@@ -5,11 +5,11 @@ using System.Windows;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ESFA.DC.ILR.1920.Desktop.WPF")]
+[assembly: AssemblyTitle("ESFA.DC.ILR.Desktop.WPF")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ESFA.DC.ILR.1920.Desktop.WPF")]
+[assembly: AssemblyProduct("ESFA.DC.ILR.Desktop.WPF")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

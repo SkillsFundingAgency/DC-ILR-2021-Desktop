@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ESFA.DC.ILR._1920.Desktop.WPF.Command.Interface;
+using ESFA.DC.ILR.Desktop.WPF.Command.Interface;
 
-namespace ESFA.DC.ILR._1920.Desktop.WPF.Command.Extensions
+namespace ESFA.DC.ILR.Desktop.WPF.Command.Extensions
 {
     public static class TaskExtensions
     {

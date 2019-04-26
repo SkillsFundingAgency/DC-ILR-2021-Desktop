@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ESFA.DC.ILR._1920.Desktop.WPF.Properties {
+namespace ESFA.DC.ILR.Desktop.WPF.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace ESFA.DC.ILR._1920.Desktop.WPF.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ESFA.DC.ILR._1920.Desktop.WPF.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ESFA.DC.ILR.Desktop.WPF.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.489
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.1920.Desktop.WPF", "ESFA.DC.ILR.1920.Desktop.WPF\ESFA.DC.ILR.1920.Desktop.WPF.csproj", "{440A11B8-DFF6-4E85-922A-E0F9193C7093}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.Desktop.WPF", "ESFA.DC.ILR.1920.Desktop.WPF\ESFA.DC.ILR.Desktop.WPF.csproj", "{440A11B8-DFF6-4E85-922A-E0F9193C7093}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.Desktop.Interface", "ESFA.DC.ILR.Desktop.Interface\ESFA.DC.ILR.Desktop.Interface.csproj", "{2D75F514-A091-41BA-A8B0-87BB97BC0337}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.ILR.Desktop.Interface", "ESFA.DC.ILR.Desktop.Interface\ESFA.DC.ILR.Desktop.Interface.csproj", "{2D75F514-A091-41BA-A8B0-87BB97BC0337}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.Desktop.Service", "ESFA.DC.ILR.Desktop.Service\ESFA.DC.ILR.Desktop.Service.csproj", "{15E50FE1-098B-4DEC-9346-CF4456C6D81D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.ILR.Desktop.Service", "ESFA.DC.ILR.Desktop.Service\ESFA.DC.ILR.Desktop.Service.csproj", "{15E50FE1-098B-4DEC-9346-CF4456C6D81D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.Desktop.Service.Tests", "ESFA.DC.ILR.Desktop.Service.Tests\ESFA.DC.ILR.Desktop.Service.Tests.csproj", "{37EB84D2-2429-4849-9343-390FE9ABEF2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.Desktop.Stubs", "ESFA.DC.ILR.Desktop.Stubs\ESFA.DC.ILR.Desktop.Stubs.csproj", "{79B64734-1AAA-4BCF-8892-4CAFFE6C664F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.ILR.Desktop.Stubs", "ESFA.DC.ILR.Desktop.Stubs\ESFA.DC.ILR.Desktop.Stubs.csproj", "{79B64734-1AAA-4BCF-8892-4CAFFE6C664F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

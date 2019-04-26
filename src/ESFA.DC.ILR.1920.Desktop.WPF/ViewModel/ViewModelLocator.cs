@@ -1,7 +1,7 @@
 /*
   In App.xaml:
   <Application.Resources>
-      <vm:ViewModelLocator xmlns:vm="clr-namespace:ESFA.DC.ILR._1920.Desktop.WPF"
+      <vm:ViewModelLocator xmlns:vm="clr-namespace:ESFA.DC.ILR.Desktop.WPF"
                            x:Key="Locator" />
   </Application.Resources>
   
@@ -19,7 +19,7 @@ using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Stubs;
 using GalaSoft.MvvmLight;
 
-namespace ESFA.DC.ILR._1920.Desktop.WPF.ViewModel
+namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 {
     /// <summary>
     /// This class contains static references to all the view models in the

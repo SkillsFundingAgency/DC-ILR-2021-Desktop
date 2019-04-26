@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ESFA.DC.ILR._1920.Desktop.WPF.Properties {
+namespace ESFA.DC.ILR.Desktop.WPF.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

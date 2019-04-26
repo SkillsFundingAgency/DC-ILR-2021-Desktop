@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace ESFA.DC.ILR._1920.Desktop.WPF
+namespace ESFA.DC.ILR.Desktop.WPF
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
