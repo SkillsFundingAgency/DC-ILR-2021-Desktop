@@ -9,8 +9,6 @@ namespace ESFA.DC.ILR.Desktop.Stubs
     public class IlrDesktopServiceStub : IIlrDesktopService
     {
         private readonly IMessengerService _messengerService;
-        private readonly IDesktopTask _desktopTask;
-
         private readonly IDesktopTask _fileValidationServiceDesktopTask;
         private readonly IDesktopTask _referenceDataServiceDesktopTask;
         private readonly IDesktopTask _validationServiceDesktopTask;
