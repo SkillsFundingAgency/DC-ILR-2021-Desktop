@@ -1,6 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Service.Interface;
+using ESFA.DC.ILR.Desktop.Service.Message;
 using ESFA.DC.ILR.Desktop.WPF.Command;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
@@ -24,24 +25,34 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
     {
         private bool _processing = false;
         private string _fileName;
+        private string _taskName;
+        private int _currentTask;
+        private int _taskCount;
 
         private readonly IIlrDesktopService _ilrDesktopService;
+        private readonly IMessengerService _messengerService;
 
-        public MainViewModel(IIlrDesktopService ilrDesktopService)
+        public MainViewModel(IIlrDesktopService ilrDesktopService, IMessengerService messengerService)
         {
             if (IsInDesignMode)
             {
                 FileName = "C:/Users/TestFiles/ILRFile.xml";
+                TaskName = "File Validation";
             }
             else
             {
                 FileName = "No file chosen";
+                CurrentTask = 0;
+                TaskCount = 1;
+
+                _ilrDesktopService = ilrDesktopService;
+                _messengerService = messengerService;
+
+                _messengerService.Register<TaskProgressMessage>(this, HandleTaskProgressMessage);
             }
 
             ChooseFileCommand = new RelayCommand(ShowChooseFileDialog, () => !Processing);
             ProcessFileCommand = new AsyncCommand(ProcessFile, () => !Processing);
-
-            _ilrDesktopService = ilrDesktopService;
         }
 
         public string FileName
@@ -66,6 +77,36 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             }
         }
 
+        public string TaskName
+        {
+            get => _taskName;
+            set
+            {
+                _taskName = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public int CurrentTask
+        {
+            get => _currentTask;
+            set
+            {
+                _currentTask = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public int TaskCount
+        {
+            get => _taskCount;
+            set
+            {
+                _taskCount = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public RelayCommand ChooseFileCommand { get; set; }
 
         public AsyncCommand ProcessFileCommand { get; set; }
@@ -87,6 +128,13 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             await _ilrDesktopService.ProcessAsync(FileName, CancellationToken.None);
 
             Processing = false;
+        }
+
+        private void HandleTaskProgressMessage(TaskProgressMessage taskProgressMessage)
+        {
+            TaskName = taskProgressMessage.TaskName;
+            CurrentTask = taskProgressMessage.CurrentTask;
+            TaskCount = taskProgressMessage.TaskCount;
         }
     }
 }

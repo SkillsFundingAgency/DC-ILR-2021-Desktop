@@ -15,8 +15,11 @@
 using Autofac;
 using Autofac.Extras.CommonServiceLocator;
 using CommonServiceLocator;
+using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Stubs;
+using ESFA.DC.ILR.Desktop.Stubs.Tasks;
+using ESFA.DC.ILR.Desktop.WPF.Service;
 using GalaSoft.MvvmLight;
 
 namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
@@ -43,10 +46,12 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
                 // register Production Services
             }
 
+            containerBuilder.RegisterType<MessengerService>().As<IMessengerService>().SingleInstance();
 
             containerBuilder.RegisterType<MainViewModel>();
 
             containerBuilder.RegisterType<IlrDesktopServiceStub>().As<IIlrDesktopService>();
+            containerBuilder.RegisterType<DesktopTaskStub>().As<IDesktopTask>();
 
             var container = containerBuilder.Build();
 
