@@ -6,7 +6,6 @@ using ESFA.DC.ILR.Desktop.WPF.Command;
 using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using GalaSoft.MvvmLight.Views;
 using Microsoft.Win32;
 
 namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
