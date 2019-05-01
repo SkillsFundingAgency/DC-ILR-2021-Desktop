@@ -3,6 +3,11 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>ESFA.DC.ILR.1920.Desktop.Interface</PackageId>
+    <Product>ESFA.DC.ILR.1920.Desktop.Interface</Product>
+    <Company>ESFA</Company>
+    <Authors>DC</Authors>
+    <Version>0.1.0</Version>
   </PropertyGroup>
 
 </Project>

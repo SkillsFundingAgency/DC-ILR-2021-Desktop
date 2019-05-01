@@ -21,6 +21,7 @@ using ESFA.DC.ILR.Desktop.Stubs;
 using ESFA.DC.ILR.Desktop.Stubs.Tasks;
 using ESFA.DC.ILR.Desktop.WPF.Service;
 using GalaSoft.MvvmLight;
+using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
 
 namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 {
@@ -48,11 +49,16 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
             containerBuilder.RegisterType<MessengerService>().As<IMessengerService>().SingleInstance();
 
-            containerBuilder.RegisterType<MainViewModel>();
+            containerBuilder.RegisterType<WindowService>().As<IWindowService>().SingleInstance();
+
+            containerBuilder.RegisterType<SettingsServiceStub>().As<ISettingsService>();
+            
+            containerBuilder.RegisterType<MainViewModel>().SingleInstance();
+            containerBuilder.RegisterType<SettingsViewModel>().SingleInstance();
 
             containerBuilder.RegisterType<IlrDesktopServiceStub>().As<IIlrDesktopService>();
             containerBuilder.RegisterType<DesktopTaskStub>().As<IDesktopTask>();
-
+            
             var container = containerBuilder.Build();
 
             ServiceLocator.SetLocatorProvider(() => new AutofacServiceLocator(container));
@@ -63,6 +69,14 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
+            }
+        }
+
+        public SettingsViewModel Settings
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<SettingsViewModel>();
             }
         }
         

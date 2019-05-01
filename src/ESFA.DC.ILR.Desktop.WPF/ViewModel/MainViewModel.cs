@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Service.Message;
 using ESFA.DC.ILR.Desktop.WPF.Command;
+using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using Microsoft.Win32;
@@ -31,8 +32,9 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         private readonly IIlrDesktopService _ilrDesktopService;
         private readonly IMessengerService _messengerService;
+        private readonly IWindowService _windowService;
 
-        public MainViewModel(IIlrDesktopService ilrDesktopService, IMessengerService messengerService)
+        public MainViewModel(IIlrDesktopService ilrDesktopService, IMessengerService messengerService, IWindowService windowService)
         {
             if (IsInDesignMode)
             {
@@ -47,12 +49,14 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
                 _ilrDesktopService = ilrDesktopService;
                 _messengerService = messengerService;
+                _windowService = windowService;
 
                 _messengerService.Register<TaskProgressMessage>(this, HandleTaskProgressMessage);
             }
 
             ChooseFileCommand = new RelayCommand(ShowChooseFileDialog, () => !Processing);
             ProcessFileCommand = new AsyncCommand(ProcessFile, () => !Processing);
+            SettingsNavigationCommand = new RelayCommand(SettingsNavigate, () => !Processing);
         }
 
         public string FileName
@@ -74,6 +78,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
                 ChooseFileCommand.RaiseCanExecuteChanged();
                 ProcessFileCommand.RaiseCanExecuteChanged();
+                SettingsNavigationCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -111,6 +116,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         public AsyncCommand ProcessFileCommand { get; set; }
 
+        public RelayCommand SettingsNavigationCommand { get; set; }
+
         private void ShowChooseFileDialog()
         {
             var openFileDialog = new OpenFileDialog();
@@ -128,6 +135,11 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             await _ilrDesktopService.ProcessAsync(FileName, CancellationToken.None);
 
             Processing = false;
+        }
+
+        private void SettingsNavigate()
+        {
+            _windowService.ShowSettingsWindow();
         }
 
         private void HandleTaskProgressMessage(TaskProgressMessage taskProgressMessage)
