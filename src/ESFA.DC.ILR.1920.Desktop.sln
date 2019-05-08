@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.ILR.Desktop.Stubs",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.Desktop.WPF", "ESFA.DC.ILR.Desktop.WPF\ESFA.DC.ILR.Desktop.WPF.csproj", "{440A11B8-DFF6-4E85-922A-E0F9193C7093}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests", "ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests\ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests.csproj", "{2904D8D4-7E44-4031-81CC-AE8C7569A5B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{440A11B8-DFF6-4E85-922A-E0F9193C7093}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{440A11B8-DFF6-4E85-922A-E0F9193C7093}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{440A11B8-DFF6-4E85-922A-E0F9193C7093}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2904D8D4-7E44-4031-81CC-AE8C7569A5B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2904D8D4-7E44-4031-81CC-AE8C7569A5B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2904D8D4-7E44-4031-81CC-AE8C7569A5B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2904D8D4-7E44-4031-81CC-AE8C7569A5B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

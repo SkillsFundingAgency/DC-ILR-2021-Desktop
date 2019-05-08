@@ -33,27 +33,24 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private readonly IIlrDesktopService _ilrDesktopService;
         private readonly IMessengerService _messengerService;
         private readonly IWindowService _windowService;
+        private readonly IDialogInteractionService _dialogInteractionService;
 
-        public MainViewModel(IIlrDesktopService ilrDesktopService, IMessengerService messengerService, IWindowService windowService)
+        public MainViewModel(
+            IIlrDesktopService ilrDesktopService,
+            IMessengerService messengerService,
+            IWindowService windowService,
+            IDialogInteractionService dialogInteractionService)
         {
-            if (IsInDesignMode)
-            {
-                FileName = "C:/Users/TestFiles/ILRFile.xml";
-                TaskName = "File Validation";
-            }
-            else
-            {
-                FileName = "No file chosen";
-                CurrentTask = 0;
-                TaskCount = 1;
+            CurrentTask = 0;
+            TaskCount = 1;
 
-                _ilrDesktopService = ilrDesktopService;
-                _messengerService = messengerService;
-                _windowService = windowService;
+            _ilrDesktopService = ilrDesktopService;
+            _messengerService = messengerService;
+            _windowService = windowService;
+            _dialogInteractionService = dialogInteractionService;
 
-                _messengerService.Register<TaskProgressMessage>(this, HandleTaskProgressMessage);
-            }
-
+            _messengerService.Register<TaskProgressMessage>(this, HandleTaskProgressMessage);
+        
             ChooseFileCommand = new RelayCommand(ShowChooseFileDialog, () => !Processing);
             ProcessFileCommand = new AsyncCommand(ProcessFile, () => !Processing);
             SettingsNavigationCommand = new RelayCommand(SettingsNavigate, () => !Processing);
@@ -118,13 +115,20 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         public RelayCommand SettingsNavigationCommand { get; set; }
 
+        public void HandleTaskProgressMessage(TaskProgressMessage taskProgressMessage)
+        {
+            TaskName = taskProgressMessage.TaskName;
+            CurrentTask = taskProgressMessage.CurrentTask;
+            TaskCount = taskProgressMessage.TaskCount;
+        }
+
         private void ShowChooseFileDialog()
         {
-            var openFileDialog = new OpenFileDialog();
+            var fileName = _dialogInteractionService.GetFileNameFromOpenFileDialog();
 
-            if (openFileDialog.ShowDialog() == true)
+            if (!string.IsNullOrWhiteSpace(fileName))
             {
-                FileName = openFileDialog.FileName;
+                FileName = fileName;
             }
         }
 
@@ -140,13 +144,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private void SettingsNavigate()
         {
             _windowService.ShowSettingsWindow();
-        }
-
-        private void HandleTaskProgressMessage(TaskProgressMessage taskProgressMessage)
-        {
-            TaskName = taskProgressMessage.TaskName;
-            CurrentTask = taskProgressMessage.CurrentTask;
-            TaskCount = taskProgressMessage.TaskCount;
         }
     }
 }
