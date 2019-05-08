@@ -128,7 +128,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             await viewModel.ProcessFileCommand.ExecuteAsync();
 
             viewModel.Processing.Should().BeFalse();
-
         }
 
         private MainViewModel NewViewModel(IIlrDesktopService ilrDesktopService = null, IMessengerService messengerService = null, IWindowService windowService = null, IDialogInteractionService dialogInteractionService = null)
@@ -139,15 +138,5 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
                 windowService ?? Mock.Of<IWindowService>(),
                 dialogInteractionService ?? Mock.Of<IDialogInteractionService>());
         }
-        
-
-        //private async Task ProcessFile()
-        //{
-        //    Processing = true;
-
-        //    await _ilrDesktopService.ProcessAsync(FileName, CancellationToken.None);
-
-        //    Processing = false;
-        //}
     }
 }
