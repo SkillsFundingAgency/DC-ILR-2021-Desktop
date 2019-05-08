@@ -3,5 +3,7 @@
     public interface IDialogInteractionService
     {
         string GetFileNameFromOpenFileDialog();
+
+        string GetFolderBrowserDialog();
     }
 }

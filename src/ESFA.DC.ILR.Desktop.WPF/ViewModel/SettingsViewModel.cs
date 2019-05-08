@@ -1,9 +1,8 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.WPF.Command;
+using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 
@@ -13,14 +12,16 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
     {
         private readonly IDesktopServiceSettings _desktopServiceSettings;
         private readonly ISettingsService _settingsService;
+        private readonly IDialogInteractionService _dialogInteractionService;
+
         private string _ilrDatabaseConnectionString;
         private string _outputDirectory;
-        private const string ChooseOutputDirectoryDescription = @"Choose Output Directory";
 
-        public SettingsViewModel(ISettingsService settingsService)
+        public SettingsViewModel(ISettingsService settingsService, IDialogInteractionService dialogInteractionService)
         {
             _desktopServiceSettings = settingsService.LoadAsync(CancellationToken.None).Result;
             _settingsService = settingsService;
+            _dialogInteractionService = dialogInteractionService;
 
             _ilrDatabaseConnectionString = _desktopServiceSettings.IlrDatabaseConnectionString;
             _outputDirectory = _desktopServiceSettings.OutputDirectory;
@@ -55,27 +56,10 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         private void ChooseOutputDirectory()
         {
-            using (var folderBrowserDialog = new FolderBrowserDialog())
+            var choosenDirectory = _dialogInteractionService.GetFolderBrowserDialog();
+            if(!string.IsNullOrWhiteSpace(choosenDirectory))
             {
-                try
-                {
-                    // Configure browser dialog box
-                    folderBrowserDialog.Description = ChooseOutputDirectoryDescription;
-                    folderBrowserDialog.ShowNewFolderButton = true;
-                    folderBrowserDialog.SelectedPath = OutputDirectory;
-
-                    // Show the dialog.
-                    var result = folderBrowserDialog.ShowDialog();
-                    if (result == DialogResult.OK)
-                    {
-                        // Retrieve the selected path
-                        OutputDirectory = folderBrowserDialog.SelectedPath;
-                    }
-                }
-                catch (Exception ex)
-                {
-
-                }
+                OutputDirectory = choosenDirectory;
             }
         }
 
