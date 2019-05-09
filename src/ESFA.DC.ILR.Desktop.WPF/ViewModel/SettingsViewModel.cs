@@ -10,6 +10,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 {
     public class SettingsViewModel : ViewModelBase
     {
+        private const string ChooseOutputDirectoryDescription = @"Choose Report Output Directory";
+
         private readonly IDesktopServiceSettings _desktopServiceSettings;
         private readonly ISettingsService _settingsService;
         private readonly IDialogInteractionService _dialogInteractionService;
@@ -56,8 +58,9 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         private void ChooseOutputDirectory()
         {
-            var choosenDirectory = _dialogInteractionService.GetFolderNameFromFolderBrowserDialog("", "");
-            if(!string.IsNullOrWhiteSpace(choosenDirectory))
+            var choosenDirectory = _dialogInteractionService.GetFolderNameFromFolderBrowserDialog(OutputDirectory, ChooseOutputDirectoryDescription);
+
+            if (!string.IsNullOrWhiteSpace(choosenDirectory))
             {
                 OutputDirectory = choosenDirectory;
             }

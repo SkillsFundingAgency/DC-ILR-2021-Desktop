@@ -10,7 +10,7 @@
         }
 
         public string TaskName { get; }
-        
+
         public int CurrentTask { get; }
 
         public int TaskCount { get; }

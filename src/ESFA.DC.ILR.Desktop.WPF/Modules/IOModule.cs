@@ -22,7 +22,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
                 Directory = "Sandbox"
             };
 
-
             containerBuilder.RegisterInstance(fileSystemKeyValuePersistenceServiceConfiguration).As<IFileSystemKeyValuePersistenceServiceConfig>();
         }
     }

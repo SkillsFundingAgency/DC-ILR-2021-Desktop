@@ -50,7 +50,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             _dialogInteractionService = dialogInteractionService;
 
             _messengerService.Register<TaskProgressMessage>(this, HandleTaskProgressMessage);
-        
+
             ChooseFileCommand = new RelayCommand(ShowChooseFileDialog, () => !Processing);
             ProcessFileCommand = new AsyncCommand(ProcessFile, () => !Processing);
             SettingsNavigationCommand = new RelayCommand(SettingsNavigate, () => !Processing);

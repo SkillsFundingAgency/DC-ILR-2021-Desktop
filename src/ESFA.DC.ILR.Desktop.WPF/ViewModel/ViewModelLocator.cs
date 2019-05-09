@@ -4,7 +4,7 @@
       <vm:ViewModelLocator xmlns:vm="clr-namespace:ESFA.DC.ILR.Desktop.WPF"
                            x:Key="Locator" />
   </Application.Resources>
-  
+
   In the View:
   DataContext="{Binding Source={StaticResource Locator}, Path=ViewModelName}"
 
@@ -37,7 +37,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
                 return ServiceLocator.Current.GetInstance<SettingsViewModel>();
             }
         }
-        
+
         public static void Cleanup()
         {
         }
