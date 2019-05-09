@@ -8,7 +8,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.Service
     public class DialogInteractionService : IDialogInteractionService
     {
         private const string ChooseOutputDirectoryDescription = @"Choose Output Directory";
-      
+
         public string GetFileNameFromOpenFileDialog()
         {
             var openFileDialog = new OpenFileDialog();
@@ -20,10 +20,11 @@ namespace ESFA.DC.ILR.Desktop.WPF.Service
 
             return string.Empty;
         }
-               
+
         public string GetFolderNameFromFolderBrowserDialog(string outputDirectoryPath, string outputDirectoryDescription)
         {
-            string selectedOutputDirectory = string.Empty; 
+            string selectedOutputDirectory = string.Empty;
+
             using (var folderBrowserDlg = new FolderBrowserDialog())
             {
                 // Configure browser dialog box
@@ -39,6 +40,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.Service
                     selectedOutputDirectory = folderBrowserDlg.SelectedPath;
                 }
             }
+
             return selectedOutputDirectory;
         }
     }

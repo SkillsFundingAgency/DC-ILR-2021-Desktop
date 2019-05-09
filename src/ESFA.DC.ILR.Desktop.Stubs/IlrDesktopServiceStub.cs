@@ -39,9 +39,9 @@ namespace ESFA.DC.ILR.Desktop.Stubs
             await _fileValidationServiceDesktopTask.ExecuteAsync(context, cancellationToken);
 
             _messengerService.Send(new TaskProgressMessage("Reference Data", 1, 6));
-            
+
             await _referenceDataServiceDesktopTask.ExecuteAsync(context, cancellationToken);
-            
+
             _messengerService.Send(new TaskProgressMessage("Validation", 2, 6));
 
             await _validationServiceDesktopTask.ExecuteAsync(context, cancellationToken);

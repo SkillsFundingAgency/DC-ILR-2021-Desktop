@@ -8,8 +8,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.Command
 {
     public class AsyncCommand : IAsyncCommand
     {
-        public event EventHandler CanExecuteChanged;
-
         private bool _isExecuting;
         private readonly Func<Task> _execute;
         private readonly Func<bool> _canExecute;
@@ -24,6 +22,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.Command
             _canExecute = canExecute;
             _errorHandler = errorHandler;
         }
+
+        public event EventHandler CanExecuteChanged;
 
         public bool CanExecute()
         {
