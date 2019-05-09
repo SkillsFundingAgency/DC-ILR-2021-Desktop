@@ -18,7 +18,41 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
 
             dateTimeProviderMock.Setup(p => p.GetNowUtc()).Returns(dateTime);
 
-            NewFactory(dateTimeProviderMock.Object).Build("FileName").DateTimeUtc.Should().Be(dateTime);
+            NewFactory(dateTimeProviderMock.Object).Build(string.Empty).DateTimeUtc.Should().Be(dateTime);
+        }
+
+        [Fact]
+        public void Container()
+        {
+            NewFactory().Build(string.Empty).KeyValuePairs["Container"].Should().Be("Sandbox");
+        }
+
+        [Fact]
+        public void Filename()
+        {
+            var fileName = "FileName Value";
+
+            NewFactory().Build(fileName).KeyValuePairs["Filename"].Should().Be(fileName);
+        }
+
+        [Fact]
+        public void OriginalFileName()
+        {
+            var fileName = "FileName Value";
+
+            NewFactory().Build(fileName).KeyValuePairs["OriginalFilename"].Should().Be(fileName);
+        }
+
+        [Fact]
+        public void ValidationErrors()
+        {
+            NewFactory().Build(string.Empty).KeyValuePairs["ValidationErrors"].Should().Be(string.Empty);
+        }
+
+        [Fact]
+        public void KeyValuePairsCount()
+        {
+            NewFactory().Build(string.Empty).KeyValuePairs.Should().HaveCount(4);
         }
 
         private DesktopContextFactory NewFactory(IDateTimeProvider dateTimeProvider = null)
