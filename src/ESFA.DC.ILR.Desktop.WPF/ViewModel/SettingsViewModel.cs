@@ -14,15 +14,18 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private readonly ISettingsService _settingsService;
         private readonly IDialogInteractionService _dialogInteractionService;
 
+        private const string outputDirectory = "OutputDirectorySettings";
+
         private string _ilrDatabaseConnectionString;
         private string _outputDirectory;
 
         public SettingsViewModel(ISettingsService settingsService, IDialogInteractionService dialogInteractionService)
         {
-            _desktopServiceSettings = settingsService.LoadAsync(CancellationToken.None).Result;
             _settingsService = settingsService;
             _dialogInteractionService = dialogInteractionService;
 
+            // Load required data
+            _desktopServiceSettings = settingsService.LoadAsync(outputDirectory, CancellationToken.None).Result;
             _ilrDatabaseConnectionString = _desktopServiceSettings.IlrDatabaseConnectionString;
             _outputDirectory = _desktopServiceSettings.OutputDirectory;
 
@@ -56,7 +59,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         private void ChooseOutputDirectory()
         {
-            var choosenDirectory = _dialogInteractionService.GetFolderNameFromFolderBrowserDialog("", "");
+            var choosenDirectory = _dialogInteractionService.GetFolderNameFromFolderBrowserDialog(_desktopServiceSettings.OutputDirectory, "");
             if(!string.IsNullOrWhiteSpace(choosenDirectory))
             {
                 OutputDirectory = choosenDirectory;
@@ -68,7 +71,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             _desktopServiceSettings.IlrDatabaseConnectionString = IlrDatabaseConnectionString;
             _desktopServiceSettings.OutputDirectory = OutputDirectory;
 
-            await _settingsService.SaveAsync(_desktopServiceSettings, CancellationToken.None);
+            await _settingsService.SaveAsync(_desktopServiceSettings, outputDirectory, CancellationToken.None);
         }
     }
 }
