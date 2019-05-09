@@ -19,7 +19,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         public SettingsViewModel(ISettingsService settingsService, IDialogInteractionService dialogInteractionService)
         {
-            _desktopServiceSettings = settingsService.LoadAsync(CancellationToken.None, string.Empty).Result;
+            _desktopServiceSettings = settingsService.LoadAsync(CancellationToken.None).Result;
             _settingsService = settingsService;
             _dialogInteractionService = dialogInteractionService;
 

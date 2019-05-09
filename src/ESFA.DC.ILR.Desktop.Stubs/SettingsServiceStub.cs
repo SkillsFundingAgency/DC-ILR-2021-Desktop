@@ -15,7 +15,7 @@ namespace ESFA.DC.ILR.Desktop.Stubs
             return Task.CompletedTask;
         }
 
-        public Task<IDesktopServiceSettings> LoadAsync(CancellationToken cancellationToken, string directoryType)
+        public Task<IDesktopServiceSettings> LoadAsync(CancellationToken cancellationToken)
         {
             if (_settings == null)
             {
