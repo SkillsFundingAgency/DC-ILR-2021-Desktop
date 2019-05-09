@@ -9,6 +9,7 @@ namespace ESFA.DC.ILR.Desktop.Stubs
     public class IlrDesktopServiceStub : IIlrDesktopService
     {
         private readonly IMessengerService _messengerService;
+        private readonly IDesktopContextFactory _desktopContextFactory;
         private readonly IDesktopTask _fileValidationServiceDesktopTask;
         private readonly IDesktopTask _referenceDataServiceDesktopTask;
         private readonly IDesktopTask _validationServiceDesktopTask;
@@ -16,11 +17,12 @@ namespace ESFA.DC.ILR.Desktop.Stubs
         private readonly IDesktopTask _reportsServiceDesktopTask;
         private readonly IDesktopTask _dataStoreServiceDesktopTask;
 
-        public IlrDesktopServiceStub(IMessengerService messengerService, IDesktopTask desktopTask)
+        public IlrDesktopServiceStub(IMessengerService messengerService, IDesktopTask desktopTask, IDesktopContextFactory desktopContextFactory)
         {
             _messengerService = messengerService;
 
             _fileValidationServiceDesktopTask = desktopTask;
+            _desktopContextFactory = desktopContextFactory;
             _referenceDataServiceDesktopTask = desktopTask;
             _validationServiceDesktopTask = desktopTask;
             _fundingServiceDesktopTask = desktopTask;
@@ -30,7 +32,7 @@ namespace ESFA.DC.ILR.Desktop.Stubs
 
         public async Task ProcessAsync(string filePath, CancellationToken cancellationToken)
         {
-            var context = new DesktopContextStub();
+            var context = _desktopContextFactory.Build(filePath);
 
             _messengerService.Send(new TaskProgressMessage("File Validation", 0, 6));
 
