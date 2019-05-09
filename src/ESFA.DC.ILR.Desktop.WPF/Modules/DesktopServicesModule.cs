@@ -11,7 +11,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
         protected override void Load(ContainerBuilder containerBuilder)
         {
             containerBuilder.RegisterType<MessengerService>().As<IMessengerService>().SingleInstance();
-            containerBuilder.RegisterType<WindowService>().As<IWindowService>().SingleInstance();
+            containerBuilder.RegisterType<WindowService>().As<IWindowService>();
+            containerBuilder.RegisterType<DialogInteractionService>().As<IDialogInteractionService>();
             containerBuilder.RegisterType<SettingsServiceStub>().As<ISettingsService>();
         }
     }
