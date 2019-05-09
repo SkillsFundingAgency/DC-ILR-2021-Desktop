@@ -19,7 +19,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         public SettingsViewModel(ISettingsService settingsService, IDialogInteractionService dialogInteractionService)
         {
-            _desktopServiceSettings = settingsService.LoadAsync(CancellationToken.None).Result;
+            _desktopServiceSettings = settingsService.LoadAsync(CancellationToken.None, string.Empty).Result;
             _settingsService = settingsService;
             _dialogInteractionService = dialogInteractionService;
 
@@ -56,7 +56,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         private void ChooseOutputDirectory()
         {
-            var choosenDirectory = _dialogInteractionService.GetFolderBrowserDialog();
+            var choosenDirectory = _dialogInteractionService.GetFolderNameFromFolderBrowserDialog("", "");
             if(!string.IsNullOrWhiteSpace(choosenDirectory))
             {
                 OutputDirectory = choosenDirectory;

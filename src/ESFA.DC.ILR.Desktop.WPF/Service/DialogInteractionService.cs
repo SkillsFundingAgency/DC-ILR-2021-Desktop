@@ -21,27 +21,25 @@ namespace ESFA.DC.ILR.Desktop.WPF.Service
             return string.Empty;
         }
                
-        public string GetFolderBrowserDialog()
+        public string GetFolderNameFromFolderBrowserDialog(string outputDirectoryPath, string outputDirectoryDescription)
         {
-            string outputDirectory = string.Empty; 
-
-            var folderBrowserDlg = new FolderBrowserDialog();
-            using (folderBrowserDlg)
+            string selectedOutputDirectory = string.Empty; 
+            using (var folderBrowserDlg = new FolderBrowserDialog())
             {
                 // Configure browser dialog box
-                folderBrowserDlg.Description = ChooseOutputDirectoryDescription;
+                folderBrowserDlg.Description = outputDirectoryDescription;
                 folderBrowserDlg.ShowNewFolderButton = true;
-                folderBrowserDlg.SelectedPath = outputDirectory;
+                folderBrowserDlg.SelectedPath = outputDirectoryPath;
 
-                // Show the dialog.
+                // Show the dialog
                 var result = folderBrowserDlg.ShowDialog();
                 if (result == DialogResult.OK)
                 {
                     // Retrieve the selected path
-                    outputDirectory = folderBrowserDlg.SelectedPath;
+                    selectedOutputDirectory = folderBrowserDlg.SelectedPath;
                 }
             }
-            return outputDirectory;
+            return selectedOutputDirectory;
         }
     }
 }

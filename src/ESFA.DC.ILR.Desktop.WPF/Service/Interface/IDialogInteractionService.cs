@@ -4,6 +4,6 @@
     {
         string GetFileNameFromOpenFileDialog();
 
-        string GetFolderBrowserDialog();
+        string GetFolderNameFromFolderBrowserDialog(string outputDirectoryPath, string outputDirectoryDescription);
     }
 }
