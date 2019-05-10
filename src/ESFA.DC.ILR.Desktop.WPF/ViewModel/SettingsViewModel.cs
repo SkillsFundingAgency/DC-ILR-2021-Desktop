@@ -24,10 +24,9 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             _settingsService = settingsService;
             _dialogInteractionService = dialogInteractionService;
 
-            // Load required data
-            _desktopServiceSettings = settingsService.LoadAsync(outputDirectory, CancellationToken.None).Result;
-            _ilrDatabaseConnectionString = _desktopServiceSettings.IlrDatabaseConnectionString;
-            _outputDirectory = _desktopServiceSettings.OutputDirectory;
+            _desktopServiceSettings = _settingsService.Settings;
+            _ilrDatabaseConnectionString = _settingsService.Settings.IlrDatabaseConnectionString;
+            _outputDirectory = _settingsService.Settings.OutputDirectory;
 
             ChooseOutputDirectoryCommand = new RelayCommand(ChooseOutputDirectory);
             SaveSettingsCommand = new AsyncCommand(SaveSettings);

@@ -14,7 +14,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
             containerBuilder.RegisterType<WindowService>().As<IWindowService>();
             containerBuilder.RegisterType<DialogInteractionService>().As<IDialogInteractionService>();
             containerBuilder.RegisterType<ConfigServiceStub>().As<IConfigService>().SingleInstance();
-            containerBuilder.RegisterType<SettingsServiceStub>().As<ISettingsService>();
+            containerBuilder.RegisterType<SettingsServiceStub>().As<ISettingsService>().SingleInstance();
         }
     }
 }

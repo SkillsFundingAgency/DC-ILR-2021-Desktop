@@ -10,6 +10,8 @@ namespace ESFA.DC.ILR.Desktop.Stubs
         private IDesktopServiceSettings _settings;
         private IConfigService _configService;
 
+        public IDesktopServiceSettings Settings => _settings; 
+
         public SettingsServiceStub(IConfigService configService)
         {
             _configService = configService;
@@ -26,7 +28,7 @@ namespace ESFA.DC.ILR.Desktop.Stubs
                 // Change ConnectionString
                 if (!string.IsNullOrWhiteSpace(connectionStringKey.Key))
                 {
-                    if(!connectionStringKey.Value.Equals(_settings.IlrDatabaseConnectionString))
+                    if (!connectionStringKey.Value.Equals(_settings.IlrDatabaseConnectionString))
                         _configService.SaveConfigAppSettings(connectionStringKey.Key, settings.IlrDatabaseConnectionString);
                 }
 
@@ -34,7 +36,7 @@ namespace ESFA.DC.ILR.Desktop.Stubs
                 var directoryOutput = _configService.UserSettingsKeyValuePair.Where(x => x.Key == directoryTypeKey).FirstOrDefault();
                 if (!string.IsNullOrWhiteSpace(directoryOutput.Key))
                 {
-                    if(!directoryOutput.Value.Equals(_settings.OutputDirectory))
+                    if (!directoryOutput.Value.Equals(_settings.OutputDirectory))
                         _configService.SaveConfigAppSettings(directoryTypeKey, _settings.OutputDirectory);
                 }
             }
