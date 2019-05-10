@@ -49,7 +49,7 @@ namespace ESFA.DC.ILR.Desktop.Stubs
         }
 
         /// <summary>
-        ///     Loads user settings from config
+        ///     Loads user settings from config 
         /// </summary>
         /// <param name="directoryTypeKey"> Fetches the Value from config based on a provided Key</param>
         /// <param name="cancellationToken"></param>
