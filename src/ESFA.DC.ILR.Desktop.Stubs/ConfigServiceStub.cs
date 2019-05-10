@@ -1,7 +1,6 @@
-﻿using ESFA.DC.ILR.Desktop.Service.Interface;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Configuration;
-using System.Threading.Tasks;
+using ESFA.DC.ILR.Desktop.Service.Interface;
 
 namespace ESFA.DC.ILR.Desktop.Stubs
 {
@@ -18,7 +17,7 @@ namespace ESFA.DC.ILR.Desktop.Stubs
         {
             UserSettingsKeyValuePair = new Dictionary<string, string>();
             var appSettings = ConfigurationManager.AppSettings;
-                        
+
             foreach (string configKey in appSettings.AllKeys)
             {
                 string key = configKey;
@@ -36,11 +35,13 @@ namespace ESFA.DC.ILR.Desktop.Stubs
                 config.AppSettings.Settings.Remove(key);
                 config.AppSettings.Settings.Add(key, value);
                 config.Save(ConfigurationSaveMode.Full);
+                success = true;
             }
             catch (System.Exception)
             {
                 throw;
             }
+
             return success;
         }
     }

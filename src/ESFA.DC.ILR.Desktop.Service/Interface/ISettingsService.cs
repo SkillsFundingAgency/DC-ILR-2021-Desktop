@@ -8,7 +8,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Interface
         IDesktopServiceSettings Settings { get; }
 
         Task SaveAsync(IDesktopServiceSettings settings, string directoryTypeKey, CancellationToken cancellationToken);
-        
+
         Task<IDesktopServiceSettings> LoadAsync(string directoryTypeKey, CancellationToken cancellationToken);
     }
 }

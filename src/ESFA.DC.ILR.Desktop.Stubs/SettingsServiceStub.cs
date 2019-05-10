@@ -10,12 +10,16 @@ namespace ESFA.DC.ILR.Desktop.Stubs
         private IDesktopServiceSettings _settings;
         private IConfigService _configService;
 
-        public IDesktopServiceSettings Settings => _settings; 
-
         public SettingsServiceStub(IConfigService configService)
         {
             _configService = configService;
         }
+
+        public string CurrentConnectionString { get; set; }
+
+        public string CurrentOutputDirectory { get; set; }
+
+        public IDesktopServiceSettings Settings => _settings;
 
         public Task SaveAsync(IDesktopServiceSettings settings, string directoryTypeKey, CancellationToken cancellationToken)
         {
@@ -24,20 +28,29 @@ namespace ESFA.DC.ILR.Desktop.Stubs
             try
             {
                 var connectionStringKey = _configService.UserSettingsKeyValuePair.Where(x => x.Key.ToLower()
-                                                            .Contains("connectionstring")).FirstOrDefault();
+                                                            .Contains("connectionstring")).FirstOrDefault().Key;
+
                 // Change ConnectionString
-                if (!string.IsNullOrWhiteSpace(connectionStringKey.Key))
+                if (!string.IsNullOrWhiteSpace(connectionStringKey))
                 {
-                    if (!connectionStringKey.Value.Equals(_settings.IlrDatabaseConnectionString))
-                        _configService.SaveConfigAppSettings(connectionStringKey.Key, settings.IlrDatabaseConnectionString);
+                    if (CurrentConnectionString == null || !CurrentConnectionString.Equals(_settings.IlrDatabaseConnectionString))
+                    {
+                        var success = _configService.SaveConfigAppSettings(connectionStringKey, settings.IlrDatabaseConnectionString);
+                        if (success)
+                        {
+                            CurrentConnectionString = _settings.IlrDatabaseConnectionString;
+                        }
+                    }
                 }
 
                 // Change OutputDirectory
-                var directoryOutput = _configService.UserSettingsKeyValuePair.Where(x => x.Key == directoryTypeKey).FirstOrDefault();
-                if (!string.IsNullOrWhiteSpace(directoryOutput.Key))
+                if (CurrentOutputDirectory == null || !CurrentOutputDirectory.Equals(_settings.OutputDirectory))
                 {
-                    if (!directoryOutput.Value.Equals(_settings.OutputDirectory))
-                        _configService.SaveConfigAppSettings(directoryTypeKey, _settings.OutputDirectory);
+                    var success = _configService.SaveConfigAppSettings(directoryTypeKey, _settings.OutputDirectory);
+                    if (success)
+                    {
+                        CurrentOutputDirectory = _settings.OutputDirectory;
+                    }
                 }
             }
             catch (System.Exception)
@@ -70,6 +83,9 @@ namespace ESFA.DC.ILR.Desktop.Stubs
                     IlrDatabaseConnectionString = connectionString,
                     OutputDirectory = outputDir
                 };
+
+                CurrentConnectionString = connectionString;
+                CurrentOutputDirectory = outputDir;
             }
 
             return Task.FromResult(_settings);
