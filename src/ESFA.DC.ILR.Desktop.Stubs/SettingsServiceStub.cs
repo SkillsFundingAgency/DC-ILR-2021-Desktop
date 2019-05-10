@@ -8,6 +8,8 @@ namespace ESFA.DC.ILR.Desktop.Stubs
     {
         private IDesktopServiceSettings _settings;
 
+        public IDesktopServiceSettings Settings => _settings;
+
         public Task SaveAsync(IDesktopServiceSettings settings, CancellationToken cancellationToken)
         {
             _settings = settings;
