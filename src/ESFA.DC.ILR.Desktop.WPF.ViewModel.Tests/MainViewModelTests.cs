@@ -37,7 +37,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             dialogInteractionServiceMock.Setup(s => s.GetFileNameFromOpenFileDialog()).Returns(null as string);
 
             var viewModel = NewViewModel(dialogInteractionService: dialogInteractionServiceMock.Object);
-            
+
             viewModel.FileName = fileName;
 
             viewModel.ChooseFileCommand.Execute(null);

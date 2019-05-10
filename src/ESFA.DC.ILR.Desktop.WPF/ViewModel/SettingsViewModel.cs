@@ -59,7 +59,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private void ChooseOutputDirectory()
         {
             var choosenDirectory = _dialogInteractionService.GetFolderNameFromFolderBrowserDialog(_desktopServiceSettings.OutputDirectory, "");
-            if(!string.IsNullOrWhiteSpace(choosenDirectory))
+            if (!string.IsNullOrWhiteSpace(choosenDirectory))
             {
                 OutputDirectory = choosenDirectory;
             }
