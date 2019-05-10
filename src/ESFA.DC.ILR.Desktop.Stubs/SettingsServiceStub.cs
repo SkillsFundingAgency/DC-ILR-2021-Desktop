@@ -49,7 +49,7 @@ namespace ESFA.DC.ILR.Desktop.Stubs
         }
 
         /// <summary>
-        ///     Loads user settings from config 
+        ///     Loads user settings from config
         /// </summary>
         /// <param name="directoryTypeKey"> Fetches the Value from config based on a provided Key</param>
         /// <param name="cancellationToken"></param>
@@ -58,7 +58,8 @@ namespace ESFA.DC.ILR.Desktop.Stubs
         {
             if (_settings == null)
             {
-                var connectionString = _configService.UserSettingsKeyValuePair.Where(x => x.Key.ToLower()
+                var connectionString = _configService.UserSettingsKeyValuePair
+                                                        .Where(x => x.Key.ToLower()
                                                         .Contains("connectionstring")).FirstOrDefault().Value;
 
                 var outputDir = _configService.UserSettingsKeyValuePair
