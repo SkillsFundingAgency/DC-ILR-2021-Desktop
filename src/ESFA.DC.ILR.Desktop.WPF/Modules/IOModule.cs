@@ -17,6 +17,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
                 .As<IKeyValuePersistenceService>()
                 .As<IStreamableKeyValuePersistenceService>();
 
+            containerBuilder.RegisterType<DecompressionService>().As<IDecompressionService>();
+
             var fileSystemKeyValuePersistenceServiceConfiguration = new FileSystemKeyValuePersistenceServiceConfigStub()
             {
                 Directory = "Sandbox"

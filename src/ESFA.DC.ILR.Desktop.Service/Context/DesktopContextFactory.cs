@@ -25,7 +25,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
                     [ILRContextKeys.Container] = "Sandbox",
                     [ILRContextKeys.Filename] = filePath,
                     [ILRContextKeys.OriginalFilename] = filePath,
-                    [ILRContextKeys.ValidationErrors] = string.Empty,
+                    [ILRContextKeys.ValidationErrors] = "ValidationErrors",
                 }
             };
         }
