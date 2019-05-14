@@ -34,14 +34,12 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private readonly IMessengerService _messengerService;
         private readonly IWindowService _windowService;
         private readonly IDialogInteractionService _dialogInteractionService;
-        private readonly ISettingsService _settingsService;
 
         public MainViewModel(
             IIlrDesktopService ilrDesktopService,
             IMessengerService messengerService,
             IWindowService windowService,
-            IDialogInteractionService dialogInteractionService,
-            ISettingsService settingsService)
+            IDialogInteractionService dialogInteractionService)
         {
             CurrentTask = 0;
             TaskCount = 1;
@@ -50,7 +48,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             _messengerService = messengerService;
             _windowService = windowService;
             _dialogInteractionService = dialogInteractionService;
-            _settingsService = settingsService;
 
             _messengerService.Register<TaskProgressMessage>(this, HandleTaskProgressMessage);
 
@@ -146,7 +143,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         private void SettingsNavigate()
         {
-            _settingsService.LoadAsync("OutputDirectorySettings", CancellationToken.None).GetAwaiter().GetResult();
             _windowService.ShowSettingsWindow();
         }
     }

@@ -1,10 +1,10 @@
-﻿using ESFA.DC.ILR.Desktop.Service.Interface;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Service.Message;
 using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
 using FluentAssertions;
 using Moq;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
@@ -130,15 +130,13 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             viewModel.Processing.Should().BeFalse();
         }
 
-        private MainViewModel NewViewModel(IIlrDesktopService ilrDesktopService = null, IMessengerService messengerService = null, IWindowService windowService = null, IDialogInteractionService dialogInteractionService = null, ISettingsService settingsService = null)
+        private MainViewModel NewViewModel(IIlrDesktopService ilrDesktopService = null, IMessengerService messengerService = null, IWindowService windowService = null, IDialogInteractionService dialogInteractionService = null)
         {
             return new MainViewModel(
                 ilrDesktopService ?? Mock.Of<IIlrDesktopService>(),
                 messengerService ?? Mock.Of<IMessengerService>(),
                 windowService ?? Mock.Of<IWindowService>(),
-                dialogInteractionService ?? Mock.Of<IDialogInteractionService>(),
-                settingsService ?? Mock.Of<ISettingsService>());
+                dialogInteractionService ?? Mock.Of<IDialogInteractionService>());
         }
     }
 }
-    

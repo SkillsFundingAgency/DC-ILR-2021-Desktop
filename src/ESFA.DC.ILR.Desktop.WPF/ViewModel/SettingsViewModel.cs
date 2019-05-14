@@ -10,23 +10,13 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 {
     public class SettingsViewModel : ViewModelBase
     {
-        private const string outputDirectory = "OutputDirectorySettings";
-
         private readonly IDesktopServiceSettings _desktopServiceSettings;
-        private readonly ISettingsService _settingsService;
         private readonly IDialogInteractionService _dialogInteractionService;
 
-        private string _ilrDatabaseConnectionString;
-        private string _outputDirectory;
-
-        public SettingsViewModel(ISettingsService settingsService, IDialogInteractionService dialogInteractionService)
+        public SettingsViewModel(IDesktopServiceSettings desktopServiceSettings, IDialogInteractionService dialogInteractionService)
         {
-            _settingsService = settingsService;
             _dialogInteractionService = dialogInteractionService;
-
-            _desktopServiceSettings = _settingsService.Settings;
-            _ilrDatabaseConnectionString = _settingsService.Settings.IlrDatabaseConnectionString;
-            _outputDirectory = _settingsService.Settings.OutputDirectory;
+            _desktopServiceSettings = desktopServiceSettings;
 
             ChooseOutputDirectoryCommand = new RelayCommand(ChooseOutputDirectory);
             SaveSettingsCommand = new AsyncCommand(SaveSettings);
@@ -38,39 +28,36 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         public string IlrDatabaseConnectionString
         {
-            get => _ilrDatabaseConnectionString;
+            get => _desktopServiceSettings.IlrDatabaseConnectionString;
             set
             {
-                _ilrDatabaseConnectionString = value;
+                _desktopServiceSettings.IlrDatabaseConnectionString = value;
                 RaisePropertyChanged();
             }
         }
 
         public string OutputDirectory
         {
-            get => _outputDirectory;
+            get => _desktopServiceSettings.OutputDirectory;
             set
             {
-                _outputDirectory = value;
+                _desktopServiceSettings.OutputDirectory = value;
                 RaisePropertyChanged();
             }
         }
 
         private void ChooseOutputDirectory()
         {
-            var choosenDirectory = _dialogInteractionService.GetFolderNameFromFolderBrowserDialog(_desktopServiceSettings.OutputDirectory, " ");
-            if (!string.IsNullOrWhiteSpace(choosenDirectory))
+            var directory = _dialogInteractionService.GetFolderNameFromFolderBrowserDialog(_desktopServiceSettings.OutputDirectory, " ");
+            if (!string.IsNullOrWhiteSpace(directory))
             {
-                OutputDirectory = choosenDirectory;
+                OutputDirectory = directory;
             }
         }
 
         private async Task SaveSettings()
         {
-            _desktopServiceSettings.IlrDatabaseConnectionString = IlrDatabaseConnectionString;
-            _desktopServiceSettings.OutputDirectory = OutputDirectory;
-
-            await _settingsService.SaveAsync(_desktopServiceSettings, outputDirectory, CancellationToken.None);
+            await _desktopServiceSettings.SaveAsync(CancellationToken.None);
         }
     }
 }
