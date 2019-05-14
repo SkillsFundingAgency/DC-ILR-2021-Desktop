@@ -46,7 +46,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         [Fact]
         public void ValidationErrors()
         {
-            NewFactory().Build(string.Empty).KeyValuePairs["ValidationErrors"].Should().Be(string.Empty);
+            NewFactory().Build(string.Empty).KeyValuePairs["ValidationErrors"].Should().Be("ValidationErrors");
         }
 
         [Fact]
