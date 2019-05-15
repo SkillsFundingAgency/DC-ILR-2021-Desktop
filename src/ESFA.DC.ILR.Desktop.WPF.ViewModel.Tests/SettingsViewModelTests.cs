@@ -14,7 +14,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
         public void ChooseOutputDirectoryCommandExecute()
         {
             string folderName = "FolderName";
-            string outputDirectoryDescription = "Description_for_OutputDirectory";
+            string outputDirectoryDescription = "Choose Output Directory";
 
             var dialogInteractionServiceMock = new Mock<IDialogInteractionService>();
             dialogInteractionServiceMock.Setup(x => x.GetFolderNameFromFolderBrowserDialog(It.IsAny<string>(), It.IsAny<string>())).Returns(folderName);
@@ -23,7 +23,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
 
             settingsVM.ChooseOutputDirectoryCommand.Execute(null);
             var result = settingsVM.OutputDirectory;
-            result.Should().Be(folderName);
+            settingsVM.OutputDirectory.Should().Be(folderName);
+            settingsVM.OutputDirectoryDescription.Should().Be(outputDirectoryDescription);
         }
 
         [Fact]
