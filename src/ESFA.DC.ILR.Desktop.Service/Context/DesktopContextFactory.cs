@@ -9,10 +9,12 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
     public class DesktopContextFactory : IDesktopContextFactory
     {
         private readonly IDateTimeProvider _dateTimeProvider;
+        private readonly IDesktopServiceSettings _desktopServiceSettings;
 
-        public DesktopContextFactory(IDateTimeProvider dateTimeProvider)
+        public DesktopContextFactory(IDateTimeProvider dateTimeProvider, IDesktopServiceSettings desktopServiceSettings)
         {
             _dateTimeProvider = dateTimeProvider;
+            _desktopServiceSettings = desktopServiceSettings;
         }
 
         public IDesktopContext Build(string filePath)
@@ -26,7 +28,8 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
                     [ILRContextKeys.Filename] = filePath,
                     [ILRContextKeys.OriginalFilename] = filePath,
                     [ILRContextKeys.ValidationErrors] = "ValidationErrors",
-                }
+                    [ILRContextKeys.IlrDatabaseConnectionString] = _desktopServiceSettings.IlrDatabaseConnectionString,
+                },
             };
         }
     }
