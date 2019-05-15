@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System.Threading;
+using Autofac;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Stubs;
 using ESFA.DC.ILR.Desktop.WPF.Service;
@@ -13,7 +14,12 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
             containerBuilder.RegisterType<MessengerService>().As<IMessengerService>().SingleInstance();
             containerBuilder.RegisterType<WindowService>().As<IWindowService>();
             containerBuilder.RegisterType<DialogInteractionService>().As<IDialogInteractionService>();
-            containerBuilder.RegisterType<SettingsServiceStub>().As<ISettingsService>();
+            containerBuilder.Register(c =>
+            {
+                var settings = new DesktopServiceSettingsStub();
+                settings.LoadAsync(CancellationToken.None);
+                return settings;
+            }).As<IDesktopServiceSettings>().SingleInstance();
         }
     }
 }
