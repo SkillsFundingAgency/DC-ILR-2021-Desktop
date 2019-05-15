@@ -1,6 +1,7 @@
 ﻿using System;
 using ESFA.DC.DateTimeProvider.Interface;
 using ESFA.DC.ILR.Desktop.Service.Context;
+using ESFA.DC.ILR.Desktop.Service.Interface;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -50,14 +51,28 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         }
 
         [Fact]
-        public void KeyValuePairsCount()
+        public void IlrDatabaseConnectionString()
         {
-            NewFactory().Build(string.Empty).KeyValuePairs.Should().HaveCount(4);
+            var connectionString = "Connection String";
+
+            var desktopServiceSettingsMock = new Mock<IDesktopServiceSettings>();
+
+            desktopServiceSettingsMock.SetupGet(s => s.IlrDatabaseConnectionString).Returns(connectionString);
+
+            NewFactory(desktopServiceSettings: desktopServiceSettingsMock.Object).Build(string.Empty).KeyValuePairs["IlrDatabaseConnectionString"].Should().Be(connectionString);
         }
 
-        private DesktopContextFactory NewFactory(IDateTimeProvider dateTimeProvider = null)
+        [Fact]
+        public void KeyValuePairsCount()
         {
-            return new DesktopContextFactory(dateTimeProvider ?? Mock.Of<IDateTimeProvider>());
+            NewFactory().Build(string.Empty).KeyValuePairs.Should().HaveCount(5);
+        }
+
+        private DesktopContextFactory NewFactory(IDateTimeProvider dateTimeProvider = null, IDesktopServiceSettings desktopServiceSettings = null)
+        {
+            return new DesktopContextFactory(
+                dateTimeProvider ?? Mock.Of<IDateTimeProvider>(),
+                desktopServiceSettings ?? Mock.Of<IDesktopServiceSettings>());
         }
     }
 }

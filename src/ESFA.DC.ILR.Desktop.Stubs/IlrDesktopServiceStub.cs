@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.IO;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Autofac.Features.Indexed;
 using ESFA.DC.ILR.Desktop.Interface;
@@ -36,37 +32,48 @@ namespace ESFA.DC.ILR.Desktop.Stubs
 
             _messengerService.Send(new TaskProgressMessage("Pre Processing", step, stepCount));
 
-            await _desktopTaskIndex[steps[step]].ExecuteAsync(context, cancellationToken);
+            await ExecuteTask(steps, step, context, cancellationToken);
+
+            _messengerService.Send(new TaskProgressMessage("Build Database", ++step, stepCount));
+
+            await ExecuteTask(steps, step, context, cancellationToken);
 
             _messengerService.Send(new TaskProgressMessage("File Validation", ++step, stepCount));
 
-            await _desktopTaskIndex[steps[step]].ExecuteAsync(context, cancellationToken);
+            await ExecuteTask(steps, step, context, cancellationToken);
 
             _messengerService.Send(new TaskProgressMessage("Reference Data", ++step, stepCount));
 
-            await _desktopTaskIndex[steps[step]].ExecuteAsync(context, cancellationToken);
+            await ExecuteTask(steps, step, context, cancellationToken);
 
             _messengerService.Send(new TaskProgressMessage("Validation", ++step, stepCount));
 
-            await _desktopTaskIndex[steps[step]].ExecuteAsync(context, cancellationToken);
+            await ExecuteTask(steps, step, context, cancellationToken);
 
             _messengerService.Send(new TaskProgressMessage("Funding Calculation", ++step, stepCount));
 
-            await _desktopTaskIndex[steps[step]].ExecuteAsync(context, cancellationToken);
+            await ExecuteTask(steps, step, context, cancellationToken);
 
             _messengerService.Send(new TaskProgressMessage("Report Generation", ++step, stepCount));
 
-            await _desktopTaskIndex[steps[step]].ExecuteAsync(context, cancellationToken);
+            await ExecuteTask(steps, step, context, cancellationToken);
 
             _messengerService.Send(new TaskProgressMessage("Store Data", ++step, stepCount));
 
-            await _desktopTaskIndex[steps[step]].ExecuteAsync(context, cancellationToken);
+            await ExecuteTask(steps, step, context, cancellationToken);
 
             _messengerService.Send(new TaskProgressMessage("Post Processing", ++step, stepCount));
 
-            await _desktopTaskIndex[steps[step]].ExecuteAsync(context, cancellationToken);
+            await ExecuteTask(steps, step, context, cancellationToken);
 
             _messengerService.Send(new TaskProgressMessage("Processing Complete", ++step, stepCount));
+        }
+
+        private async Task ExecuteTask(IlrDesktopTaskKeys[] ilrDesktopTaskKeys, int step, IDesktopContext desktopContext, CancellationToken cancellationToken)
+        {
+            await Task.Factory.StartNew(() => _desktopTaskIndex[ilrDesktopTaskKeys[step]].ExecuteAsync(desktopContext, cancellationToken), cancellationToken, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+
+            _messengerService.Send(new TaskProgressMessage("Pre Processing", step, ilrDesktopTaskKeys.Length));
         }
 
         private IlrDesktopTaskKeys[] BuildTaskKeys()
@@ -76,6 +83,7 @@ namespace ESFA.DC.ILR.Desktop.Stubs
                 IlrDesktopTaskKeys.PreExecution,
                 IlrDesktopTaskKeys.DatabaseCreate,
                 IlrDesktopTaskKeys.FileValidationService,
+                IlrDesktopTaskKeys.ReferenceDataService,
                 IlrDesktopTaskKeys.ValidationService,
                 IlrDesktopTaskKeys.FundingService,
                 IlrDesktopTaskKeys.DataStore,

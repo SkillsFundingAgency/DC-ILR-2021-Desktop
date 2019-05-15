@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using ESFA.DC.DateTimeProvider.Interface;
+using ESFA.DC.ILR.DataStore.Desktop;
+using ESFA.DC.ILR.DataStore.Desktop.Modules;
 using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.Desktop.Service.Context;
 using ESFA.DC.ILR.Desktop.Service.Interface;
@@ -19,7 +21,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
             containerBuilder.RegisterType<IlrDesktopServiceStub>().As<IIlrDesktopService>();
 
             containerBuilder.RegisterType<DesktopTaskStub>()
-                .Keyed<IDesktopTask>(IlrDesktopTaskKeys.DatabaseCreate)
+                .Keyed<IDesktopTask>(IlrDesktopTaskKeys.ReferenceDataService)
                 .Keyed<IDesktopTask>(IlrDesktopTaskKeys.ValidationService)
                 .Keyed<IDesktopTask>(IlrDesktopTaskKeys.FundingService)
                 .Keyed<IDesktopTask>(IlrDesktopTaskKeys.DataStore)
@@ -27,6 +29,9 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
                 .Keyed<IDesktopTask>(IlrDesktopTaskKeys.PostExecution);
 
             containerBuilder.RegisterType<PreProcessingDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.PreExecution);
+
+            containerBuilder.RegisterType<BuildDataStoreDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.DatabaseCreate);
+            containerBuilder.RegisterModule<BuildDataStoreModule>();
 
             containerBuilder.RegisterType<FileValidationService.Desktop.DesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.FileValidationService);
             containerBuilder.RegisterModule<FileValidationServiceDesktopModule>();
