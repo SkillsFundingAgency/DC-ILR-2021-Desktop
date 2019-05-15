@@ -16,15 +16,22 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             string folderName = "FolderName";
             string outputDirectoryDescription = "Choose Output Directory";
 
+            string currentDirectoryName = "CurrentDirectory";
+
+            var desktopServiceSettingsMock = new Mock<IDesktopServiceSettings>();
+            desktopServiceSettingsMock
+                .SetupSequence(s => s.OutputDirectory)
+                .Returns(currentDirectoryName)
+                .Returns(folderName);
+
             var dialogInteractionServiceMock = new Mock<IDialogInteractionService>();
-            dialogInteractionServiceMock.Setup(x => x.GetFolderNameFromFolderBrowserDialog(It.IsAny<string>(), It.IsAny<string>())).Returns(folderName);
+            dialogInteractionServiceMock.Setup(x => x.GetFolderNameFromFolderBrowserDialog(currentDirectoryName, outputDirectoryDescription)).Returns(folderName);
 
-            var settingsVM = TestSettingsViewModel(dialogInteractionService: dialogInteractionServiceMock.Object);
+            var viewModel = NewViewModel(desktopServiceSettingsMock.Object, dialogInteractionServiceMock.Object);
 
-            settingsVM.ChooseOutputDirectoryCommand.Execute(null);
-            var result = settingsVM.OutputDirectory;
-            settingsVM.OutputDirectory.Should().Be(folderName);
-            settingsVM.OutputDirectoryDescription.Should().Be(outputDirectoryDescription);
+            viewModel.ChooseOutputDirectoryCommand.Execute(null);
+
+            viewModel.OutputDirectory.Should().Be(folderName);
         }
 
         [Fact]
@@ -33,7 +40,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             var cancellationToken = CancellationToken.None;
             var desktopServiceSettingsMock = new Mock<IDesktopServiceSettings>();
 
-            var vm = TestSettingsViewModel(desktopServiceSettings: desktopServiceSettingsMock.Object);
+            var vm = NewViewModel(desktopServiceSettings: desktopServiceSettingsMock.Object);
 
             desktopServiceSettingsMock.Setup(x => x.SaveAsync(cancellationToken))
                 .Callback(() => vm.CanExecute().Should().BeTrue())
@@ -51,7 +58,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             desktopServiceSettingsMock.SetupGet(x => x.IlrDatabaseConnectionString).Returns(string.Empty);
             desktopServiceSettingsMock.SetupGet(x => x.OutputDirectory).Returns("OutputDirectory");
 
-            var vm = TestSettingsViewModel(desktopServiceSettings: desktopServiceSettingsMock.Object);
+            var vm = NewViewModel(desktopServiceSettings: desktopServiceSettingsMock.Object);
             vm.CanExecute().Should().BeFalse();
         }
 
@@ -63,7 +70,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             desktopServiceSettingsMock.SetupGet(x => x.IlrDatabaseConnectionString).Returns("ConnectionStringValue");
             desktopServiceSettingsMock.SetupGet(x => x.OutputDirectory).Returns(string.Empty);
 
-            var vm = TestSettingsViewModel(desktopServiceSettings: desktopServiceSettingsMock.Object);
+            var vm = NewViewModel(desktopServiceSettings: desktopServiceSettingsMock.Object);
             vm.CanExecute().Should().BeFalse();
         }
 
@@ -75,7 +82,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             desktopServiceSettingsMock.SetupGet(x => x.IlrDatabaseConnectionString).Returns("ConnectionStringValue");
             desktopServiceSettingsMock.SetupGet(x => x.OutputDirectory).Returns("  ");
 
-            var vm = TestSettingsViewModel(desktopServiceSettings: desktopServiceSettingsMock.Object);
+            var vm = NewViewModel(desktopServiceSettings: desktopServiceSettingsMock.Object);
             vm.CanExecute().Should().BeFalse();
         }
 
@@ -87,11 +94,11 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             desktopServiceSettingsMock.SetupGet(x => x.IlrDatabaseConnectionString).Returns(null as string);
             desktopServiceSettingsMock.SetupGet(x => x.OutputDirectory).Returns(null as string);
 
-            var vm = TestSettingsViewModel(desktopServiceSettings: desktopServiceSettingsMock.Object);
+            var vm = NewViewModel(desktopServiceSettings: desktopServiceSettingsMock.Object);
             vm.CanExecute().Should().BeFalse();
         }
 
-        private SettingsViewModel TestSettingsViewModel(IDesktopServiceSettings desktopServiceSettings = null, IDialogInteractionService dialogInteractionService = null)
+        private SettingsViewModel NewViewModel(IDesktopServiceSettings desktopServiceSettings = null, IDialogInteractionService dialogInteractionService = null)
         {
             return new SettingsViewModel(desktopServiceSettings ?? Mock.Of<IDesktopServiceSettings>(), dialogInteractionService ?? Mock.Of<IDialogInteractionService>());
         }
