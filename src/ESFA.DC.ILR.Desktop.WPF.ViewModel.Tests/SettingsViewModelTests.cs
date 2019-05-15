@@ -38,6 +38,20 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             vm.CanExecute().Should().BeTrue();
         }
 
+        [Fact]
+        public async Task SaveSettingsBeFalse()
+        {
+            var desktopServiceSettingsMock = new Mock<IDesktopServiceSettings>();
+            desktopServiceSettingsMock.SetupAllProperties();
+            desktopServiceSettingsMock.SetupGet(x => x.IlrDatabaseConnectionString).Returns("ConnectionStringValue");
+            desktopServiceSettingsMock.SetupGet(x => x.OutputDirectory).Returns(string.Empty);
+
+            var vm = TestSettingsViewModel(desktopServiceSettings: desktopServiceSettingsMock.Object);
+
+            await vm.SaveSettingsCommand.ExecuteAsync();
+            vm.CanExecute().Should().BeFalse();
+        }
+
         private SettingsViewModel TestSettingsViewModel(IDesktopServiceSettings desktopServiceSettings = null, IDialogInteractionService dialogInteractionService = null)
         {
             return new SettingsViewModel(desktopServiceSettings ?? Mock.Of<IDesktopServiceSettings>(), dialogInteractionService ?? Mock.Of<IDialogInteractionService>());
