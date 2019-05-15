@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
 using FluentAssertions;
@@ -13,33 +14,48 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
         public void ChooseOutputDirectoryCommandExecute()
         {
             string folderName = "FolderName";
+            string outputDirectoryDescription = "Description_for_OutputDirectory";
 
             var dialogInteractionServiceMock = new Mock<IDialogInteractionService>();
             dialogInteractionServiceMock.Setup(x => x.GetFolderNameFromFolderBrowserDialog(It.IsAny<string>(), It.IsAny<string>())).Returns(folderName);
 
-            var settingsServiceMock = new Mock<IDesktopServiceSettings>();
             var settingsVM = TestSettingsViewModel(dialogInteractionService: dialogInteractionServiceMock.Object);
 
             settingsVM.ChooseOutputDirectoryCommand.Execute(null);
-            settingsVM.OutputDirectory.Should().Be(folderName);
+            var result = settingsVM.OutputDirectory;
+            result.Should().Be(folderName);
         }
 
         [Fact]
         public async Task SaveCommandExecute()
         {
+            var cancellationToken = CancellationToken.None;
             var desktopServiceSettingsMock = new Mock<IDesktopServiceSettings>();
-            desktopServiceSettingsMock.SetupAllProperties();
-            desktopServiceSettingsMock.SetupGet(x => x.IlrDatabaseConnectionString).Returns("ConnectionStringValue");
-            desktopServiceSettingsMock.SetupGet(x => x.OutputDirectory).Returns("OutputDirectoryValue");
 
             var vm = TestSettingsViewModel(desktopServiceSettings: desktopServiceSettingsMock.Object);
 
-            await vm.SaveSettingsCommand.ExecuteAsync();
-            vm.CanExecute().Should().BeTrue();
+            desktopServiceSettingsMock.Setup(x => x.SaveAsync(cancellationToken))
+                .Callback(() => vm.CanExecute().Should().BeTrue())
+                .Returns(Task.CompletedTask);
+
+            var result = vm.SaveSettingsCommand.ExecuteAsync().GetAwaiter();
+            result.IsCompleted.Should().BeTrue();
         }
 
         [Fact]
-        public async Task SaveCommandExecuteBeFalse()
+        public async Task SaveCommandExecute_EmptyConnectionString()
+        {
+            var desktopServiceSettingsMock = new Mock<IDesktopServiceSettings>();
+            desktopServiceSettingsMock.SetupAllProperties();
+            desktopServiceSettingsMock.SetupGet(x => x.IlrDatabaseConnectionString).Returns(string.Empty);
+            desktopServiceSettingsMock.SetupGet(x => x.OutputDirectory).Returns("OutputDirectory");
+
+            var vm = TestSettingsViewModel(desktopServiceSettings: desktopServiceSettingsMock.Object);
+            vm.CanExecute().Should().BeFalse();
+        }
+
+        [Fact]
+        public async Task SaveCommandExecut_EmptyString()
         {
             var desktopServiceSettingsMock = new Mock<IDesktopServiceSettings>();
             desktopServiceSettingsMock.SetupAllProperties();
@@ -47,8 +63,30 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             desktopServiceSettingsMock.SetupGet(x => x.OutputDirectory).Returns(string.Empty);
 
             var vm = TestSettingsViewModel(desktopServiceSettings: desktopServiceSettingsMock.Object);
+            vm.CanExecute().Should().BeFalse();
+        }
 
-            await vm.SaveSettingsCommand.ExecuteAsync();
+        [Fact]
+        public async Task SaveCommandExecute_WhiteSpace()
+        {
+            var desktopServiceSettingsMock = new Mock<IDesktopServiceSettings>();
+            desktopServiceSettingsMock.SetupAllProperties();
+            desktopServiceSettingsMock.SetupGet(x => x.IlrDatabaseConnectionString).Returns("ConnectionStringValue");
+            desktopServiceSettingsMock.SetupGet(x => x.OutputDirectory).Returns("  ");
+
+            var vm = TestSettingsViewModel(desktopServiceSettings: desktopServiceSettingsMock.Object);
+            vm.CanExecute().Should().BeFalse();
+        }
+
+        [Fact]
+        public async Task SaveCommandExecute_NullValues()
+        {
+            var desktopServiceSettingsMock = new Mock<IDesktopServiceSettings>();
+
+            desktopServiceSettingsMock.SetupGet(x => x.IlrDatabaseConnectionString).Returns(null as string);
+            desktopServiceSettingsMock.SetupGet(x => x.OutputDirectory).Returns(null as string);
+
+            var vm = TestSettingsViewModel(desktopServiceSettings: desktopServiceSettingsMock.Object);
             vm.CanExecute().Should().BeFalse();
         }
 
