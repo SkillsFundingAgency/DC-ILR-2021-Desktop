@@ -12,14 +12,12 @@ namespace ESFA.DC.ILR.Desktop.Service.Tasks
         {
             var preProcessingDesktopTaskContext = new PreProcessingDesktopTaskContext(desktopContext);
 
-            var directoryInfo = new DirectoryInfo(preProcessingDesktopTaskContext.Container);
-
-            if (directoryInfo.Exists)
+            if (Directory.Exists(preProcessingDesktopTaskContext.Container))
             {
-                directoryInfo.Delete(true);
+                Directory.Delete(preProcessingDesktopTaskContext.Container, true);
             }
 
-            directoryInfo.Create();
+            Directory.CreateDirectory(preProcessingDesktopTaskContext.Container);
 
             var fileName = Path.GetFileName(preProcessingDesktopTaskContext.FileName);
 
