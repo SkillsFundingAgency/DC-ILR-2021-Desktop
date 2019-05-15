@@ -25,7 +25,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
         }
 
         [Fact]
-        public async Task SaveSettings()
+        public async Task SaveCommandExecute()
         {
             var desktopServiceSettingsMock = new Mock<IDesktopServiceSettings>();
             desktopServiceSettingsMock.SetupAllProperties();
@@ -39,7 +39,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
         }
 
         [Fact]
-        public async Task SaveSettingsBeFalse()
+        public async Task SaveCommandExecuteBeFalse()
         {
             var desktopServiceSettingsMock = new Mock<IDesktopServiceSettings>();
             desktopServiceSettingsMock.SetupAllProperties();
