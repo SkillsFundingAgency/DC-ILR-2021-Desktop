@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.WPF.Command;
@@ -19,7 +20,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             _desktopServiceSettings = desktopServiceSettings;
 
             ChooseOutputDirectoryCommand = new RelayCommand(ChooseOutputDirectory);
-            SaveSettingsCommand = new AsyncCommand(SaveSettings);
+            SaveSettingsCommand = new AsyncCommand(SaveSettings, CanExecute);
         }
 
         public RelayCommand ChooseOutputDirectoryCommand { get; set; }
@@ -33,6 +34,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             {
                 _desktopServiceSettings.IlrDatabaseConnectionString = value;
                 RaisePropertyChanged();
+                SaveSettingsCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -43,7 +45,13 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             {
                 _desktopServiceSettings.OutputDirectory = value;
                 RaisePropertyChanged();
+                SaveSettingsCommand.RaiseCanExecuteChanged();
             }
+        }
+
+        public bool CanExecute()
+        {
+            return !string.IsNullOrWhiteSpace(IlrDatabaseConnectionString) && !string.IsNullOrWhiteSpace(OutputDirectory);
         }
 
         private void ChooseOutputDirectory()
