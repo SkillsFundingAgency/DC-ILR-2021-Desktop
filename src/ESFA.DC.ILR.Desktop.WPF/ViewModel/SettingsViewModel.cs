@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.WPF.Command;
@@ -10,6 +11,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 {
     public class SettingsViewModel : ViewModelBase
     {
+        private const string OutputDirectoryDescription = "Choose Output Directory";
         private readonly IDesktopServiceSettings _desktopServiceSettings;
         private readonly IDialogInteractionService _dialogInteractionService;
 
@@ -19,7 +21,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             _desktopServiceSettings = desktopServiceSettings;
 
             ChooseOutputDirectoryCommand = new RelayCommand(ChooseOutputDirectory);
-            SaveSettingsCommand = new AsyncCommand(SaveSettings);
+            SaveSettingsCommand = new AsyncCommand(SaveSettings, CanExecute);
         }
 
         public RelayCommand ChooseOutputDirectoryCommand { get; set; }
@@ -33,6 +35,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             {
                 _desktopServiceSettings.IlrDatabaseConnectionString = value;
                 RaisePropertyChanged();
+                SaveSettingsCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -43,12 +46,19 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             {
                 _desktopServiceSettings.OutputDirectory = value;
                 RaisePropertyChanged();
+                SaveSettingsCommand.RaiseCanExecuteChanged();
             }
+        }
+
+        public bool CanExecute()
+        {
+            return !string.IsNullOrWhiteSpace(IlrDatabaseConnectionString) && !string.IsNullOrWhiteSpace(OutputDirectory);
         }
 
         private void ChooseOutputDirectory()
         {
-            var directory = _dialogInteractionService.GetFolderNameFromFolderBrowserDialog(_desktopServiceSettings.OutputDirectory, " ");
+            var directory = _dialogInteractionService.GetFolderNameFromFolderBrowserDialog(_desktopServiceSettings.OutputDirectory, OutputDirectoryDescription);
+
             if (!string.IsNullOrWhiteSpace(directory))
             {
                 OutputDirectory = directory;
