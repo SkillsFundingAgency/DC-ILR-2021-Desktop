@@ -5,52 +5,68 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ESFA.DC.ILR.Desktop.WPF"
         mc:Ignorable="d"
-        Title="ILR 1920" Height="450" Width="800"
+        Title="ILR 1920" Height="450" Width="800" WindowStartupLocation="CenterScreen"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="1*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="10*" />
-            <ColumnDefinition Width="1*" />
-        </Grid.ColumnDefinitions>
-        <StackPanel Grid.Row="1" Grid.Column="1">            
-            <Label>Choose ILR file to upload</Label>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="3*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="10"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="10"/>
-                    <RowDefinition Height="30"/>
-                </Grid.RowDefinitions>
-                <Button Content="Choose File" Command="{Binding ChooseFileCommand}"/>
-                <Label Grid.Column="1" Content="{Binding FileName}" />
-                <Button Grid.Row="2" Command="{Binding ProcessFileCommand}" Content="Process File" Background="Green" Foreground="White"/>
-                <Label Grid.Row="2" Grid.Column="1" Content="{Binding TaskName}" />
-            </Grid>
-            <ProgressBar Height="20" Value="{Binding CurrentTask}" Maximum="{Binding TaskCount}" />
-        </StackPanel>
-        <Grid Grid.Row="2" Grid.Column="1">
+    <Window.Resources>
+
+    </Window.Resources>
+    <Border BorderBrush="LightBlue" BorderThickness="2">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="10*" />
+                <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="2*"/>
-                </Grid.RowDefinitions>
-                <Button Content="Settings" Command="{Binding SettingsNavigationCommand}"/>
-            </Grid>
+
+            <StackPanel Grid.ColumnSpan="3" Height="auto" VerticalAlignment="Top" Orientation="Horizontal" Background="LightBlue">
+                <Button Content="Preferences" Width="auto" Style="{StaticResource LinkButton}"/>
+                <TextBlock Text="|" Margin="2 5"/>
+                <Button Content="Tools" Width="auto" Style="{StaticResource LinkButton}"/>
+                <TextBlock Text="|" Margin="2 5"/>
+                <Button Content="Settings" Width="auto" Style="{StaticResource LinkButton}" Command="{Binding WindowNavigationCommand}" CommandParameter="0"/>
+                <TextBlock Text="|" Margin="2 5"/>
+                <Button Content="About" Width="auto" Style="{StaticResource LinkButton}" Command="{Binding WindowNavigationCommand}" CommandParameter="1"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Grid.Column="1">
+                <Label>Choose ILR file to upload</Label>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
+                    <Button Content="Choose File" Command="{Binding ChooseFileCommand}"/>
+                    <Label Grid.Column="1" Content="{Binding FileName}" />
+                    <Button Grid.Row="2" Command="{Binding ProcessFileCommand}" Content="Process File" Background="Green" Foreground="White"/>
+                    <Label Grid.Row="2" Grid.Column="1" Content="{Binding TaskName}" />
+                </Grid>
+                <ProgressBar Height="20" Value="{Binding CurrentTask}" Maximum="{Binding TaskCount}" />
+            </StackPanel>
+            <!--<Grid Grid.Row="2" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+                    <Button Content="Settings" Command="{Binding SettingsNavigationCommand}"/>
+                </Grid>
+            </Grid>-->
         </Grid>
-    </Grid>
+    </Border>
 </Window>

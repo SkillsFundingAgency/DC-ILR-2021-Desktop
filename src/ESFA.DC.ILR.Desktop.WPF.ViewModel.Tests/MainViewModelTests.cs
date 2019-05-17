@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Service.Message;
+using ESFA.DC.ILR.Desktop.WPF.Common;
 using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
 using FluentAssertions;
 using Moq;
@@ -82,13 +83,25 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
         }
 
         [Fact]
-        public void SettingsNavigationCommandExecute()
+        public void SettingsWindowNavigationCommandExecute()
         {
             var windowServiceMock = new Mock<IWindowService>();
+            var parameterValue = "0";
 
-            NewViewModel(windowService: windowServiceMock.Object).SettingsNavigationCommand.Execute(null);
+            NewViewModel(windowService: windowServiceMock.Object).WindowNavigationCommand.Execute(parameterValue);
 
-            windowServiceMock.Verify(s => s.ShowSettingsWindow(), Times.Once);
+            windowServiceMock.Verify(s => s.ShowSettingsWindow(WindowEnum.SettingsWindow), Times.Once);
+        }
+
+        [Fact]
+        public void AboutWindowNavigationCommandExecute()
+        {
+            var windowServiceMock = new Mock<IWindowService>();
+            var parameterValue = "1";
+
+            NewViewModel(windowService: windowServiceMock.Object).WindowNavigationCommand.Execute(parameterValue);
+
+            windowServiceMock.Verify(s => s.ShowSettingsWindow(WindowEnum.AboutWindow), Times.Once);
         }
 
         [Fact]

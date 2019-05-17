@@ -1,8 +1,10 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Service.Message;
 using ESFA.DC.ILR.Desktop.WPF.Command;
+using ESFA.DC.ILR.Desktop.WPF.Common;
 using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
@@ -29,6 +31,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private string _taskName;
         private int _currentTask;
         private int _taskCount;
+        private string _versionNumber = "2.456.01093";
+        private string _refDataDateCreated = "13/02/2019";
 
         private readonly IIlrDesktopService _ilrDesktopService;
         private readonly IMessengerService _messengerService;
@@ -53,7 +57,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
             ChooseFileCommand = new RelayCommand(ShowChooseFileDialog, () => !Processing);
             ProcessFileCommand = new AsyncCommand(ProcessFile, () => !Processing);
-            SettingsNavigationCommand = new RelayCommand(SettingsNavigate, () => !Processing);
+            WindowNavigationCommand = new RelayCommand<string>(NavigateToWindow, (x) => !Processing);
         }
 
         public string FileName
@@ -66,6 +70,26 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             }
         }
 
+        public string VersionNumber
+        {
+            get { return _versionNumber; }
+
+            set
+            {
+                Set(ref _versionNumber, value);
+            }
+        }
+
+        public string RefDataDateCreated
+        {
+            get { return _refDataDateCreated; }
+
+            set
+            {
+                Set(ref _refDataDateCreated, value);
+            }
+        }
+
         public bool Processing
         {
             get => _processing;
@@ -75,7 +99,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
                 ChooseFileCommand.RaiseCanExecuteChanged();
                 ProcessFileCommand.RaiseCanExecuteChanged();
-                SettingsNavigationCommand.RaiseCanExecuteChanged();
+                WindowNavigationCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -113,7 +137,9 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         public AsyncCommand ProcessFileCommand { get; set; }
 
-        public RelayCommand SettingsNavigationCommand { get; set; }
+        public RelayCommand<string> WindowNavigationCommand { get; set; }
+
+        public RelayCommand AboutCommand { get; set; }
 
         public void HandleTaskProgressMessage(TaskProgressMessage taskProgressMessage)
         {
@@ -141,9 +167,10 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             Processing = false;
         }
 
-        private void SettingsNavigate()
+        private void NavigateToWindow(string param)
         {
-            _windowService.ShowSettingsWindow();
+            var enumVal = (WindowEnum)int.Parse(param);
+            _windowService.ShowSettingsWindow(enumVal);
         }
     }
 }

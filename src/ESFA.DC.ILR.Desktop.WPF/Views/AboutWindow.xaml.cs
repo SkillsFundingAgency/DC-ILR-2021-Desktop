@@ -1,13 +1,13 @@
 ﻿using System.Windows;
 
-namespace ESFA.DC.ILR.Desktop.WPF
+namespace ESFA.DC.ILR.Desktop.WPF.Views
 {
     /// <summary>
-    /// Interaction logic for SettingsWindow.xaml
+    /// Interaction logic for AboutWindow.xaml.
     /// </summary>
-    public partial class SettingsWindow : Window
+    public partial class AboutWindow : Window
     {
-        public SettingsWindow()
+        public AboutWindow()
         {
             InitializeComponent();
         }
