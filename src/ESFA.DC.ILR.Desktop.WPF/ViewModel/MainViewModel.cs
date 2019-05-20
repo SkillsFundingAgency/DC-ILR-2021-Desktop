@@ -56,6 +56,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             ProcessFileCommand = new AsyncCommand(ProcessFile, () => !Processing);
             SettingsNavigationCommand = new RelayCommand(SettingsNavigate, () => !Processing);
             AboutNavigationCommand = new RelayCommand(AboutNavigate);
+            CloseWindowCommand = new RelayCommand<ICloseable>(CloseWindow);
         }
 
         public string FileName
@@ -139,6 +140,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         public RelayCommand AboutNavigationCommand { get; set; }
 
+        public RelayCommand<ICloseable> CloseWindowCommand { get; set; }
+
         public void HandleTaskProgressMessage(TaskProgressMessage taskProgressMessage)
         {
             TaskName = taskProgressMessage.TaskName;
@@ -173,6 +176,14 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private void AboutNavigate()
         {
             _windowService.ShowAboutWindow();
+        }
+
+        private void CloseWindow(ICloseable window)
+        {
+            if (window != null)
+            {
+                window.Close();
+            }
         }
     }
 }

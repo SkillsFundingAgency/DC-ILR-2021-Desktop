@@ -98,6 +98,16 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             vm.CanExecute().Should().BeFalse();
         }
 
+        [Fact]
+        public void CloseWindowCommandExecute()
+        {
+            var windowCloseable = new Mock<ICloseable>();
+
+            NewViewModel().CloseWindowCommand.Execute(windowCloseable.Object);
+
+            windowCloseable.Verify(c => c.Close(), Times.Once);
+        }
+
         private SettingsViewModel NewViewModel(IDesktopServiceSettings desktopServiceSettings = null, IDialogInteractionService dialogInteractionService = null)
         {
             return new SettingsViewModel(desktopServiceSettings ?? Mock.Of<IDesktopServiceSettings>(), dialogInteractionService ?? Mock.Of<IDialogInteractionService>());

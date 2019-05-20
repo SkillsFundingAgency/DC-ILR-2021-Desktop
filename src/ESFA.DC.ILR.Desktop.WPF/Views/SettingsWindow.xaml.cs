@@ -4,11 +4,11 @@ using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
 namespace ESFA.DC.ILR.Desktop.WPF.Views
 {
     /// <summary>
-    /// Interaction logic for AboutWindow.xaml.
+    /// Interaction logic for SettingsWindow.xaml.
     /// </summary>
-    public partial class AboutWindow : Window, ICloseable
+    public partial class SettingsWindow : Window, ICloseable
     {
-        public AboutWindow()
+        public SettingsWindow()
         {
             InitializeComponent();
         }

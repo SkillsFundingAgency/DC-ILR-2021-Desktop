@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Service.Message;
 using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
+using ESFA.DC.ILR.Desktop.WPF.Views;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -99,6 +100,16 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             NewViewModel(windowService: windowServiceMock.Object).AboutNavigationCommand.Execute(null);
 
             windowServiceMock.Verify(s => s.ShowAboutWindow(), Times.Once);
+        }
+
+        [Fact]
+        public void CloseWindowCommandExecute()
+        {
+            var windowCloseable = new Mock<ICloseable>();
+
+            NewViewModel().CloseWindowCommand.Execute(windowCloseable.Object);
+
+            windowCloseable.Verify(c => c.Close(), Times.Once);
         }
 
         [Fact]
