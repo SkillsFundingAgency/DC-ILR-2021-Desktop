@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Service.Message;
-using ESFA.DC.ILR.Desktop.WPF.Common;
 using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
 using FluentAssertions;
 using Moq;

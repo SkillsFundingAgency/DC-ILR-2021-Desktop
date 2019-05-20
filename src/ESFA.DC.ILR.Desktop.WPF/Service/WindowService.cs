@@ -1,5 +1,4 @@
-﻿using ESFA.DC.ILR.Desktop.WPF.Common;
-using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
+﻿using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
 using ESFA.DC.ILR.Desktop.WPF.Views;
 
 namespace ESFA.DC.ILR.Desktop.WPF.Service
