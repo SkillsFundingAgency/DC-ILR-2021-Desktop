@@ -6,19 +6,14 @@ namespace ESFA.DC.ILR.Desktop.WPF.Service
 {
     public class WindowService : IWindowService
     {
-        public void ShowSettingsWindow(WindowEnum windowToShow)
+        public void ShowSettingsWindow()
         {
-            switch (windowToShow)
-            {
-                case WindowEnum.SettingsWindow:
-                    new SettingsWindow().ShowDialog();
-                    break;
-                case WindowEnum.AboutWindow:
-                    new AboutWindow().ShowDialog();
-                    break;
-                default:
-                    break;
-            }
+            new SettingsWindow().ShowDialog();
+        }
+
+        public void ShowAboutWindow()
+        {
+            new AboutWindow().ShowDialog();
         }
     }
 }

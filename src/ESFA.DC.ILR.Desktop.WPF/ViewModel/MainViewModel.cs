@@ -57,7 +57,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
             ChooseFileCommand = new RelayCommand(ShowChooseFileDialog, () => !Processing);
             ProcessFileCommand = new AsyncCommand(ProcessFile, () => !Processing);
-            WindowNavigationCommand = new RelayCommand<string>(NavigateToWindow, (x) => !Processing);
+            SettingsNavigationCommand = new RelayCommand(SettingsNavigate, () => !Processing);
+            AboutNavigationCommand = new RelayCommand(AboutNavigate);
         }
 
         public string FileName
@@ -99,7 +100,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
                 ChooseFileCommand.RaiseCanExecuteChanged();
                 ProcessFileCommand.RaiseCanExecuteChanged();
-                WindowNavigationCommand.RaiseCanExecuteChanged();
+                SettingsNavigationCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -137,9 +138,9 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         public AsyncCommand ProcessFileCommand { get; set; }
 
-        public RelayCommand<string> WindowNavigationCommand { get; set; }
+        public RelayCommand SettingsNavigationCommand { get; set; }
 
-        public RelayCommand AboutCommand { get; set; }
+        public RelayCommand AboutNavigationCommand { get; set; }
 
         public void HandleTaskProgressMessage(TaskProgressMessage taskProgressMessage)
         {
@@ -167,10 +168,14 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             Processing = false;
         }
 
-        private void NavigateToWindow(string param)
+        private void SettingsNavigate()
         {
-            var enumVal = (WindowEnum)int.Parse(param);
-            _windowService.ShowSettingsWindow(enumVal);
+            _windowService.ShowSettingsWindow();
+        }
+
+        private void AboutNavigate()
+        {
+            _windowService.ShowAboutWindow();
         }
     }
 }
