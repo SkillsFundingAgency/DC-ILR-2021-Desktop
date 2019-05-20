@@ -92,6 +92,26 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
         }
 
         [Fact]
+        public void AboutWindowNavigationCommandExecute()
+        {
+            var windowServiceMock = new Mock<IWindowService>();
+
+            NewViewModel(windowService: windowServiceMock.Object).AboutNavigationCommand.Execute(null);
+
+            windowServiceMock.Verify(s => s.ShowAboutWindow(), Times.Once);
+        }
+
+        [Fact]
+        public void CloseWindowCommandExecute()
+        {
+            var windowCloseable = new Mock<ICloseable>();
+
+            NewViewModel().CloseWindowCommand.Execute(windowCloseable.Object);
+
+            windowCloseable.Verify(c => c.Close(), Times.Once);
+        }
+
+        [Fact]
         public void HandleTaskProgressMessage()
         {
             var taskName = "TaskName";

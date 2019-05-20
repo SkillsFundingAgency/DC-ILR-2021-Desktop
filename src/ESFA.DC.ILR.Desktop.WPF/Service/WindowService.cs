@@ -1,4 +1,5 @@
 ﻿using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
+using ESFA.DC.ILR.Desktop.WPF.Views;
 
 namespace ESFA.DC.ILR.Desktop.WPF.Service
 {
@@ -7,6 +8,11 @@ namespace ESFA.DC.ILR.Desktop.WPF.Service
         public void ShowSettingsWindow()
         {
             new SettingsWindow().ShowDialog();
+        }
+
+        public void ShowAboutWindow()
+        {
+            new AboutWindow().ShowDialog();
         }
     }
 }

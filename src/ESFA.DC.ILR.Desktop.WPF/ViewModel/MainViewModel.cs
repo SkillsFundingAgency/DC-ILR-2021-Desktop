@@ -6,7 +6,6 @@ using ESFA.DC.ILR.Desktop.WPF.Command;
 using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using Microsoft.Win32;
 
 namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 {
@@ -29,6 +28,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private string _taskName;
         private int _currentTask;
         private int _taskCount;
+        private string _versionNumber = "2.456.01093";
+        private string _refDataDateCreated = "13/02/2019";
 
         private readonly IIlrDesktopService _ilrDesktopService;
         private readonly IMessengerService _messengerService;
@@ -54,6 +55,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             ChooseFileCommand = new RelayCommand(ShowChooseFileDialog, () => !Processing);
             ProcessFileCommand = new AsyncCommand(ProcessFile, () => !Processing);
             SettingsNavigationCommand = new RelayCommand(SettingsNavigate, () => !Processing);
+            AboutNavigationCommand = new RelayCommand(AboutNavigate);
+            CloseWindowCommand = new RelayCommand<ICloseable>(CloseWindow);
         }
 
         public string FileName
@@ -63,6 +66,26 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             {
                 _fileName = value;
                 RaisePropertyChanged();
+            }
+        }
+
+        public string VersionNumber
+        {
+            get { return _versionNumber; }
+
+            set
+            {
+                Set(ref _versionNumber, value);
+            }
+        }
+
+        public string RefDataDateCreated
+        {
+            get { return _refDataDateCreated; }
+
+            set
+            {
+                Set(ref _refDataDateCreated, value);
             }
         }
 
@@ -115,6 +138,10 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         public RelayCommand SettingsNavigationCommand { get; set; }
 
+        public RelayCommand AboutNavigationCommand { get; set; }
+
+        public RelayCommand<ICloseable> CloseWindowCommand { get; set; }
+
         public void HandleTaskProgressMessage(TaskProgressMessage taskProgressMessage)
         {
             TaskName = taskProgressMessage.TaskName;
@@ -144,6 +171,19 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private void SettingsNavigate()
         {
             _windowService.ShowSettingsWindow();
+        }
+
+        private void AboutNavigate()
+        {
+            _windowService.ShowAboutWindow();
+        }
+
+        private void CloseWindow(ICloseable window)
+        {
+            if (window != null)
+            {
+                window.Close();
+            }
         }
     }
 }
