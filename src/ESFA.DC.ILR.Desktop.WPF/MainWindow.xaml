@@ -50,18 +50,5 @@
             </Grid>
             <ProgressBar Height="20" Value="{Binding CurrentTask}" Maximum="{Binding TaskCount}" />
         </StackPanel>
-        <!--<Grid Grid.Row="2" Grid.Column="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="2*"/>
-                    </Grid.RowDefinitions>
-                    <Button Content="Settings" Command="{Binding SettingsNavigationCommand}"/>
-                </Grid>
-            </Grid>-->
     </Grid>
 </Window>

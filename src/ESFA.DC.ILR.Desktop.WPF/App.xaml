@@ -10,36 +10,6 @@
     <Application.Resources>
         <ResourceDictionary>
             <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True"/>
-
-            <Style x:Key="MainToolBar" TargetType="Button">
-                <Setter Property="Width" Value="100"/>
-                <Setter Property="Height" Value="25"/>
-                <Setter Property="Margin" Value="2 5"/>
-                <Setter Property="Background" Value="WhiteSmoke"/>
-                <Setter Property="HorizontalAlignment" Value="Left"/>
-            </Style>
-
-            <Style x:Key="LinkButton" TargetType="Button">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="Button">
-                            <TextBlock TextDecorations="None">
-                                <ContentPresenter />
-                            </TextBlock>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="Cursor" Value="Hand"/>
-                <Setter Property="Foreground" Value="Blue" />
-                <Setter Property="FontSize" Value="15"/>
-                <Setter Property="Margin" Value="5"/>
-                <Style.Triggers>
-                    <Trigger Property="IsMouseOver" Value="true">
-                        <Setter Property="Foreground" Value="AliceBlue"/>
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
-
         </ResourceDictionary>
     </Application.Resources>
 </Application>
