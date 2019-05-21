@@ -6,46 +6,76 @@
         xmlns:local="clr-namespace:ESFA.DC.ILR.Desktop.WPF"
         mc:Ignorable="d"
         Title="ILR 1920" Height="450" Width="800" WindowStartupLocation="CenterScreen"
-        DataContext="{Binding Main, Source={StaticResource Locator}}">
+        DataContext="{Binding Main, Source={StaticResource Locator}}" Icon="/Resources/Images/govuk-logo-crown-icon.png" MinHeight="600">
     <Grid>
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height= "*"/>
+            <RowDefinition Height="120"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="10*" />
-            <ColumnDefinition Width="1*" />
-        </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.ColumnSpan="3" Height="auto" VerticalAlignment="Top" Orientation="Horizontal" Background="#FFF0F0F0">
-            <Menu Height="25" Padding="3" HorizontalAlignment="Stretch">
-                <MenuItem Header="Settings" Command="{Binding SettingsNavigationCommand}"/>
-                <MenuItem Header="About" Command="{Binding AboutNavigationCommand}"/>
-            </Menu>
-        </StackPanel>
+        <Menu HorizontalAlignment="Stretch">
+            <MenuItem Header="Settings" Command="{Binding SettingsNavigationCommand}"/>
+            <MenuItem Header="About" Command="{Binding AboutNavigationCommand}"/>
+        </Menu>
 
-        <StackPanel Grid.Row="1" Grid.Column="1">
-            <Label>Choose ILR file to upload</Label>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="3*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="10"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="10"/>
-                    <RowDefinition Height="30"/>
-                </Grid.RowDefinitions>
-                <Button Content="Choose File" Command="{Binding ChooseFileCommand}"/>
-                <Label Grid.Column="1" Content="{Binding FileName}" />
-                <Button Grid.Row="2" Command="{Binding ProcessFileCommand}" Content="Process File" Background="Green" Foreground="White"/>
-                <Label Grid.Row="2" Grid.Column="1" Content="{Binding TaskName}" />
-            </Grid>
-            <ProgressBar Height="20" Value="{Binding CurrentTask}" Maximum="{Binding TaskCount}" />
-        </StackPanel>
+        <Grid Grid.Row="1"  Background="Black">
+            <Image Source="../Resources/Images/govuk-logo-crown.png" Stretch="None" HorizontalAlignment="Left" Margin="60, 0" ></Image>
+            <Label Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" FontFamily="Segoe UI Semibold">Submit Learner Data - Desktop</Label>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="10*" />
+                <ColumnDefinition Width="60" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Row="1" Grid.Column="1">
+                <Label>Choose ILR file to upload</Label>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
+                    <Button Content="Choose File" Command="{Binding ChooseFileCommand}"/>
+                    <Label Grid.Column="1" Content="{Binding FileName}" />
+                    <Button Grid.Row="2" Command="{Binding ProcessFileCommand}" Content="Process File" Background="Green" Foreground="White"/>
+                    <Label Grid.Row="2" Grid.Column="1" Content="{Binding TaskName}" />
+                </Grid>
+                <ProgressBar Height="20" Value="{Binding CurrentTask}" Maximum="{Binding TaskCount}" />
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="3" Background="#dee0e2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="60" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="5" />
+            </Grid.RowDefinitions>
+
+            <Image Grid.Row="1" Grid.Column="1" Source="../Resources/Images/govuk-crest.png" HorizontalAlignment="Right" />
+            <Label Grid.Row="2" Grid.Column="1" Content="© Crown copyright" HorizontalAlignment="Right" VerticalAlignment="Center"></Label>
+        </Grid>
     </Grid>
 </Window>
