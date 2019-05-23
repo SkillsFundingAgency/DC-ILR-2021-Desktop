@@ -226,6 +226,12 @@
       <Version>4.6.1</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Images\govuk-logo-crown-icon.png" />
+    <Resource Include="Resources\Images\govuk-logo-crown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\govuk-crest.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
