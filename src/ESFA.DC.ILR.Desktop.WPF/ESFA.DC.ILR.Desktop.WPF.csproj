@@ -72,6 +72,7 @@
     <Compile Include="Modules\LoggingModule.cs" />
     <Compile Include="Modules\SerializationModule.cs" />
     <Compile Include="Modules\ViewModelsModule.cs" />
+    <Compile Include="Service\DesktopLogger.cs" />
     <Compile Include="Service\DialogInteractionService.cs" />
     <Compile Include="Service\Interface\ICloseable.cs" />
     <Compile Include="Service\Interface\IDialogInteractionService.cs" />
@@ -216,6 +217,9 @@
     </PackageReference>
     <PackageReference Include="MvvmLight">
       <Version>5.4.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Nlog.Config">
+      <Version>4.6.3</Version>
     </PackageReference>
     <PackageReference Include="StyleCop.Analyzers">
       <Version>1.1.118</Version>

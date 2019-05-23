@@ -72,8 +72,6 @@ namespace ESFA.DC.ILR.Desktop.Stubs
         private async Task ExecuteTask(IlrDesktopTaskKeys[] ilrDesktopTaskKeys, int step, IDesktopContext desktopContext, CancellationToken cancellationToken)
         {
             await Task.Factory.StartNew(() => _desktopTaskIndex[ilrDesktopTaskKeys[step]].ExecuteAsync(desktopContext, cancellationToken), cancellationToken, TaskCreationOptions.LongRunning, TaskScheduler.Default);
-
-            _messengerService.Send(new TaskProgressMessage("Pre Processing", step, ilrDesktopTaskKeys.Length));
         }
 
         private IlrDesktopTaskKeys[] BuildTaskKeys()
