@@ -1,8 +1,11 @@
-﻿using System.Windows;
+﻿using System;
+using System.ComponentModel;
+using System.Windows;
 using Autofac;
 using Autofac.Extras.CommonServiceLocator;
 using CommonServiceLocator;
 using ESFA.DC.ILR.Desktop.WPF.Modules;
+using ESFA.DC.Logging.Interfaces;
 
 namespace ESFA.DC.ILR.Desktop.WPF
 {
@@ -18,6 +21,10 @@ namespace ESFA.DC.ILR.Desktop.WPF
             var container = containerBuilder.Build();
 
             ServiceLocator.SetLocatorProvider(() => new AutofacServiceLocator(container));
+
+            var logger = container.Resolve<ILogger>();
+
+            logger.LogInfo("ILR Desktop Application Start");
 
             base.OnStartup(e);
         }
