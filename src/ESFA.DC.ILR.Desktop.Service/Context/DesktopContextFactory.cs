@@ -29,6 +29,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
                     [ILRContextKeys.OriginalFilename] = filePath,
                     [ILRContextKeys.ValidationErrors] = "ValidationErrors",
                     [ILRContextKeys.IlrDatabaseConnectionString] = _desktopServiceSettings.IlrDatabaseConnectionString,
+                    [ILRContextKeys.IlrReferenceData] = "IlrReferenceData.json",
                 },
             };
         }
