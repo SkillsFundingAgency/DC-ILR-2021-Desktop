@@ -11,6 +11,8 @@ using ESFA.DC.ILR.Desktop.Stubs.Tasks;
 using ESFA.DC.ILR.FileValidationService.Desktop.Modules;
 using ESFA.DC.ILR.ReferenceDataService.Desktop;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Modules;
+using ESFA.DC.ILR.ValidationService.Desktop;
+using ESFA.DC.ILR.ValidationService.Desktop.Modules;
 
 namespace ESFA.DC.ILR.Desktop.WPF.Modules
 {
@@ -23,7 +25,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
             containerBuilder.RegisterType<IlrDesktopServiceStub>().As<IIlrDesktopService>();
 
             containerBuilder.RegisterType<DesktopTaskStub>()
-                .Keyed<IDesktopTask>(IlrDesktopTaskKeys.ValidationService)
                 .Keyed<IDesktopTask>(IlrDesktopTaskKeys.FundingService)
                 .Keyed<IDesktopTask>(IlrDesktopTaskKeys.DataStore)
                 .Keyed<IDesktopTask>(IlrDesktopTaskKeys.ReportService)
@@ -39,6 +40,9 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
 
             containerBuilder.RegisterType<ReferenceDataServiceDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.ReferenceDataService);
             containerBuilder.RegisterModule<ReferenceDataServiceDesktopTaskModule>();
+
+            containerBuilder.RegisterType<ValidationServiceDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.ValidationService);
+            containerBuilder.RegisterModule<ValidationServiceDesktopModule>();
         }
     }
 }
