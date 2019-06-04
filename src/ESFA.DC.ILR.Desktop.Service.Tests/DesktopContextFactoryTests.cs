@@ -65,7 +65,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         [Fact]
         public void KeyValuePairsCount()
         {
-            NewFactory().Build(string.Empty).KeyValuePairs.Should().HaveCount(6);
+            NewFactory().Build(string.Empty).KeyValuePairs.Should().HaveCount(9);
         }
 
         private DesktopContextFactory NewFactory(IDateTimeProvider dateTimeProvider = null, IDesktopServiceSettings desktopServiceSettings = null)
