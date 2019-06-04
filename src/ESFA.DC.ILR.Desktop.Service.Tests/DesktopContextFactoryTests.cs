@@ -47,7 +47,25 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         [Fact]
         public void ValidationErrors()
         {
-            NewFactory().Build(string.Empty).KeyValuePairs["ValidationErrors"].Should().Be("ValidationErrors");
+            NewFactory().Build(string.Empty).KeyValuePairs["ValidationErrors"].Should().Be("ValidationErrors.json");
+        }
+
+        [Fact]
+        public void InvalidLearnRefNumbers()
+        {
+            NewFactory().Build(string.Empty).KeyValuePairs["InvalidLearnRefNumbers"].Should().Be("InvalidLearnRefNumbers.json");
+        }
+
+        [Fact]
+        public void ValidLearnRefNumbers()
+        {
+            NewFactory().Build(string.Empty).KeyValuePairs["ValidLearnRefNumbers"].Should().Be("ValidLearnRefNumbers.json");
+        }
+
+        [Fact]
+        public void ValidationErrorLookups()
+        {
+            NewFactory().Build(string.Empty).KeyValuePairs["ValidationErrorLookups"].Should().Be("ValidationErrorLookups.json");
         }
 
         [Fact]
@@ -65,7 +83,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         [Fact]
         public void KeyValuePairsCount()
         {
-            NewFactory().Build(string.Empty).KeyValuePairs.Should().HaveCount(6);
+            NewFactory().Build(string.Empty).KeyValuePairs.Should().HaveCount(9);
         }
 
         private DesktopContextFactory NewFactory(IDateTimeProvider dateTimeProvider = null, IDesktopServiceSettings desktopServiceSettings = null)

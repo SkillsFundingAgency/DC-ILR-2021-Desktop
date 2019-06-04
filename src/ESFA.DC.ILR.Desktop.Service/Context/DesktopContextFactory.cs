@@ -27,9 +27,12 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
                     [ILRContextKeys.Container] = "Sandbox",
                     [ILRContextKeys.Filename] = filePath,
                     [ILRContextKeys.OriginalFilename] = filePath,
-                    [ILRContextKeys.ValidationErrors] = "ValidationErrors",
+                    [ILRContextKeys.ValidationErrors] = "ValidationErrors.json",
                     [ILRContextKeys.IlrDatabaseConnectionString] = _desktopServiceSettings.IlrDatabaseConnectionString,
                     [ILRContextKeys.IlrReferenceData] = "IlrReferenceData.json",
+                    [ILRContextKeys.InvalidLearnRefNumbers] = "InvalidLearnRefNumbers.json",
+                    [ILRContextKeys.ValidLearnRefNumbers] = "ValidLearnRefNumbers.json",
+                    [ILRContextKeys.ValidationErrorLookups] = "ValidationErrorLookups.json",
                 },
             };
         }
