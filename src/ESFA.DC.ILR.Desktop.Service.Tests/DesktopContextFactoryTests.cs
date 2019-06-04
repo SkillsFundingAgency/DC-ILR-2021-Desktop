@@ -51,6 +51,24 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         }
 
         [Fact]
+        public void InvalidLearnRefNumbers()
+        {
+            NewFactory().Build(string.Empty).KeyValuePairs["InvalidLearnRefNumbers"].Should().Be("InvalidLearnRefNumbers.json");
+        }
+
+        [Fact]
+        public void ValidLearnRefNumbers()
+        {
+            NewFactory().Build(string.Empty).KeyValuePairs["ValidLearnRefNumbers"].Should().Be("ValidLearnRefNumbers.json");
+        }
+
+        [Fact]
+        public void ValidationErrorLookups()
+        {
+            NewFactory().Build(string.Empty).KeyValuePairs["ValidationErrorLookups"].Should().Be("ValidationErrorLookups.json");
+        }
+
+        [Fact]
         public void IlrDatabaseConnectionString()
         {
             var connectionString = "Connection String";
