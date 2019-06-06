@@ -8,6 +8,7 @@ using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Service.Tasks;
 using ESFA.DC.ILR.Desktop.Stubs;
 using ESFA.DC.ILR.Desktop.Stubs.Tasks;
+using ESFA.DC.ILR.FileValidationService.Desktop;
 using ESFA.DC.ILR.FileValidationService.Desktop.Modules;
 using ESFA.DC.ILR.ReferenceDataService.Desktop;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Modules;
@@ -26,7 +27,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
 
             containerBuilder.RegisterType<DesktopTaskStub>()
                 .Keyed<IDesktopTask>(IlrDesktopTaskKeys.FundingService)
-                .Keyed<IDesktopTask>(IlrDesktopTaskKeys.DataStore)
                 .Keyed<IDesktopTask>(IlrDesktopTaskKeys.ReportService)
                 .Keyed<IDesktopTask>(IlrDesktopTaskKeys.PostExecution);
 
@@ -35,7 +35,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
             containerBuilder.RegisterType<BuildDataStoreDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.DatabaseCreate);
             containerBuilder.RegisterModule<BuildDataStoreModule>();
 
-            containerBuilder.RegisterType<FileValidationService.Desktop.DesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.FileValidationService);
+            containerBuilder.RegisterType<FileValidationServiceDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.FileValidationService);
             containerBuilder.RegisterModule<FileValidationServiceDesktopModule>();
 
             containerBuilder.RegisterType<ReferenceDataServiceDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.ReferenceDataService);
@@ -43,6 +43,9 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
 
             containerBuilder.RegisterType<ValidationServiceDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.ValidationService);
             containerBuilder.RegisterModule<ValidationServiceDesktopModule>();
+
+            containerBuilder.RegisterType<DataStoreDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.DataStore);
+            containerBuilder.RegisterModule<DataStoreModule>();
         }
     }
 }
