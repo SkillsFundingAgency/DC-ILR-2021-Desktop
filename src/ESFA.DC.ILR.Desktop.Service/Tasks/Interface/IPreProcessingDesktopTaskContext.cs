@@ -7,5 +7,7 @@
         string OriginalFileName { get; set; }
 
         string Container { get; set; }
+
+        long FileSizeInBytes { set; }
     }
 }

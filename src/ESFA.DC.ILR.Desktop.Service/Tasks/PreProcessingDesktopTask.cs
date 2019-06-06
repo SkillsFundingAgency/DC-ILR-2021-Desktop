@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Interface;
@@ -27,6 +26,9 @@ namespace ESFA.DC.ILR.Desktop.Service.Tasks
 
             preProcessingDesktopTaskContext.FileName = fileName;
             preProcessingDesktopTaskContext.OriginalFileName = fileName;
+
+            var fileSizeInBytes = new FileInfo(newFilePath).Length;
+            preProcessingDesktopTaskContext.FileSizeInBytes = fileSizeInBytes;
 
             return Task.FromResult(desktopContext);
         }

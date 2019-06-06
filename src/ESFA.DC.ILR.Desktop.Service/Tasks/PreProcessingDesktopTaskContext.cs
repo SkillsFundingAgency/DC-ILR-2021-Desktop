@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ESFA.DC.ILR.Constants;
+﻿using ESFA.DC.ILR.Constants;
 using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.Desktop.Service.Tasks.Interface;
 
@@ -32,6 +29,11 @@ namespace ESFA.DC.ILR.Desktop.Service.Tasks
         {
             get => _desktopContext.KeyValuePairs[ILRContextKeys.Container].ToString();
             set => _desktopContext.KeyValuePairs[ILRContextKeys.Container] = value;
+        }
+
+        public long FileSizeInBytes
+        {
+            set => _desktopContext.KeyValuePairs[ILRContextKeys.FileSizeInBytes] = value;
         }
     }
 }
