@@ -81,6 +81,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IlrDesktopTaskKeysTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DesktopContextFactoryTests.cs" />
   </ItemGroup>

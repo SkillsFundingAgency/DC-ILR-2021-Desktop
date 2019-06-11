@@ -34,7 +34,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private StageKeys _currentStage = StageKeys.ChooseFile;
         private string _surveyHyperlinkUrl = "http://bbc.co.uk";
         private string _guidanceHyperlinkUrl = "http://google.co.uk";
-        private string _reportsLocation = "C:/Users";
+        private string _reportsLocation;
 
         private readonly IIlrDesktopService _ilrDesktopService;
         private readonly IMessengerService _messengerService;
@@ -60,9 +60,9 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
             _messengerService.Register<TaskProgressMessage>(this, HandleTaskProgressMessage);
 
-            ChooseFileCommand = new RelayCommand(ShowChooseFileDialog, () => !Processing);
-            ProcessFileCommand = new AsyncCommand(ProcessFile, () => !Processing);
-            SettingsNavigationCommand = new RelayCommand(SettingsNavigate, () => !Processing);
+            ChooseFileCommand = new RelayCommand(ShowChooseFileDialog);
+            ProcessFileCommand = new AsyncCommand(ProcessFile);
+            SettingsNavigationCommand = new RelayCommand(SettingsNavigate);
             AboutNavigationCommand = new RelayCommand(AboutNavigate);
             CloseWindowCommand = new RelayCommand<ICloseable>(CloseWindow);
             SurveyHyperlinkCommand = new RelayCommand(() => ProcessStart(_surveyHyperlinkUrl));
@@ -102,69 +102,37 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         public string ReportsLocation
         {
             get => _reportsLocation;
+            set => Set(ref _reportsLocation, value);
         }
 
         public string VersionNumber
         {
-            get { return _versionNumber; }
-
-            set
-            {
-                Set(ref _versionNumber, value);
-            }
+            get => _versionNumber;
+            set => Set(ref _versionNumber, value);
         }
 
         public string RefDataDateCreated
         {
-            get { return _refDataDateCreated; }
-
-            set
-            {
-                Set(ref _refDataDateCreated, value);
-            }
-        }
-
-        public bool Processing
-        {
-            get => _processing;
-            set
-            {
-                _processing = value;
-
-                ChooseFileCommand.RaiseCanExecuteChanged();
-                ProcessFileCommand.RaiseCanExecuteChanged();
-                SettingsNavigationCommand.RaiseCanExecuteChanged();
-            }
+            get => _refDataDateCreated;
+            set => Set(ref _refDataDateCreated, value);
         }
 
         public string TaskName
         {
             get => _taskName;
-            set
-            {
-                _taskName = value;
-                RaisePropertyChanged();
-            }
+            set => Set(ref _taskName, value);
         }
 
         public int CurrentTask
         {
             get => _currentTask;
-            set
-            {
-                _currentTask = value;
-                RaisePropertyChanged();
-            }
+            set => Set(ref _currentTask, value);
         }
 
         public int TaskCount
         {
             get => _taskCount;
-            set
-            {
-                _taskCount = value;
-                RaisePropertyChanged();
-            }
+            set => Set(ref _taskCount, value);
         }
 
         public RelayCommand ChooseFileCommand { get; set; }
@@ -202,15 +170,11 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         private async Task ProcessFile()
         {
-            Processing = true;
-
             CurrentStage = StageKeys.Processing;
 
-            await _ilrDesktopService.ProcessAsync(FileName, CancellationToken.None);
+            ReportsLocation = await _ilrDesktopService.ProcessAsync(FileName, CancellationToken.None);
 
             CurrentStage = StageKeys.ProcessedSuccessfully;
-
-            Processing = false;
         }
 
         private void ProcessStart(string url)
@@ -230,10 +194,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         private void CloseWindow(ICloseable window)
         {
-            if (window != null)
-            {
-                window.Close();
-            }
+            window?.Close();
         }
     }
 }

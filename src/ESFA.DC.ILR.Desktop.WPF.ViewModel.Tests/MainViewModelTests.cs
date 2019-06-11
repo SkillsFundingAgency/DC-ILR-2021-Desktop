@@ -133,6 +133,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
         public async Task ProcessFileCommandExecute()
         {
             var fileName = "FileName";
+            var outputDirectory = "Output Directory";
             var cancellationToken = CancellationToken.None;
 
             var ilrDesktopServiceMock = new Mock<IIlrDesktopService>();
@@ -140,23 +141,23 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             var viewModel = NewViewModel(ilrDesktopServiceMock.Object);
 
             ilrDesktopServiceMock.Setup(s => s.ProcessAsync(fileName, cancellationToken))
-                .Callback(() => viewModel.Processing.Should().BeTrue())
-                .Returns(Task.CompletedTask);
+                .Returns(Task.FromResult(outputDirectory));
 
             viewModel.FileName = fileName;
 
             await viewModel.ProcessFileCommand.ExecuteAsync();
 
-            viewModel.Processing.Should().BeFalse();
+            viewModel.ReportsLocation.Should().Be(outputDirectory);
         }
 
-        private MainViewModel NewViewModel(IIlrDesktopService ilrDesktopService = null, IMessengerService messengerService = null, IWindowService windowService = null, IDialogInteractionService dialogInteractionService = null)
+        private MainViewModel NewViewModel(IIlrDesktopService ilrDesktopService = null, IMessengerService messengerService = null, IWindowService windowService = null, IDialogInteractionService dialogInteractionService = null, IWindowsProcessService windowsProcessService = null)
         {
             return new MainViewModel(
                 ilrDesktopService ?? Mock.Of<IIlrDesktopService>(),
                 messengerService ?? Mock.Of<IMessengerService>(),
                 windowService ?? Mock.Of<IWindowService>(),
-                dialogInteractionService ?? Mock.Of<IDialogInteractionService>());
+                dialogInteractionService ?? Mock.Of<IDialogInteractionService>(),
+                windowsProcessService ?? Mock.Of<IWindowsProcessService>());
         }
     }
 }

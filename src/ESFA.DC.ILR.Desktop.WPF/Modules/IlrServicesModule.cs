@@ -28,8 +28,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
             containerBuilder.RegisterType<DesktopTaskStub>()
                 .Keyed<IDesktopTask>(IlrDesktopTaskKeys.FundingService)
                 .Keyed<IDesktopTask>(IlrDesktopTaskKeys.ReportService)
-                .Keyed<IDesktopTask>(IlrDesktopTaskKeys.PostExecution)
-                .Keyed<IDesktopTask>(IlrDesktopTaskKeys.ValidationService);
+                .Keyed<IDesktopTask>(IlrDesktopTaskKeys.PostExecution);
 
             containerBuilder.RegisterType<PreProcessingDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.PreExecution);
 
@@ -42,8 +41,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
             containerBuilder.RegisterType<ReferenceDataServiceDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.ReferenceDataService);
             containerBuilder.RegisterModule<ReferenceDataServiceDesktopTaskModule>();
 
-            //containerBuilder.RegisterType<ValidationServiceDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.ValidationService);
-            //containerBuilder.RegisterModule<ValidationServiceDesktopModule>();
+            containerBuilder.RegisterType<ValidationServiceDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.ValidationService);
+            containerBuilder.RegisterModule<ValidationServiceDesktopModule>();
 
             containerBuilder.RegisterType<DataStoreDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.DataStore);
             containerBuilder.RegisterModule<DataStoreModule>();

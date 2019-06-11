@@ -8,6 +8,8 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
     {
         public DateTime DateTimeUtc { get; set; }
 
+        public string OutputDirectory { get; set; }
+
         public IDictionary<string, object> KeyValuePairs { get; set; }
     }
 }

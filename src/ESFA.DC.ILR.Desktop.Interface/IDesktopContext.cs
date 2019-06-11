@@ -7,6 +7,8 @@ namespace ESFA.DC.ILR.Desktop.Interface
     {
         DateTime DateTimeUtc { get; }
 
+        string OutputDirectory { get; }
+
         IDictionary<string, object> KeyValuePairs { get; }
     }
 }

@@ -22,6 +22,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
             return new DesktopContext()
             {
                 DateTimeUtc = _dateTimeProvider.GetNowUtc(),
+                OutputDirectory = _desktopServiceSettings.OutputDirectory,
                 KeyValuePairs = new Dictionary<string, object>()
                 {
                     [ILRContextKeys.Container] = "Sandbox",
