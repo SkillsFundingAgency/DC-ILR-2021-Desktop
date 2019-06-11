@@ -5,15 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ESFA.DC.ILR.Desktop.WPF"
         mc:Ignorable="d"
-        Title="ILR 1920" Height="450" Width="800" WindowStartupLocation="CenterScreen"
-        DataContext="{Binding Main, Source={StaticResource Locator}}" Icon="/Resources/Images/govuk-logo-crown-icon.png" MinHeight="600">
+        Title="Funding Information System (FIS) Academic Year 2019-2020" Height="450" Width="800" WindowStartupLocation="CenterScreen"
+        DataContext="{Binding Main, Source={StaticResource Locator}}" ResizeMode="NoResize">
     <Grid>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="80"/>
-            <RowDefinition Height= "*"/>
             <RowDefinition Height="120"/>
+            <RowDefinition Height= "*"/>
         </Grid.RowDefinitions>
 
         <Menu HorizontalAlignment="Stretch">
@@ -21,61 +20,105 @@
             <MenuItem Header="About" Command="{Binding AboutNavigationCommand}"/>
         </Menu>
 
-        <Grid Grid.Row="1"  Background="Black">
-            <Image Source="../Resources/Images/govuk-logo-crown.png" Stretch="None" HorizontalAlignment="Left" Margin="60, 0" ></Image>
-            <Label Foreground="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" FontFamily="Segoe UI Semibold">Submit Learner Data - Desktop</Label>
-        </Grid>
-
-        <Grid Grid.Row="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
+        <Grid Row ="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="60" />
-                <ColumnDefinition Width="10*" />
-                <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="3*" />
             </Grid.ColumnDefinitions>
-
-            <StackPanel Grid.Row="1" Grid.Column="1">
-                <Label>Choose ILR file to upload</Label>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="3*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="10"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="10"/>
-                        <RowDefinition Height="30"/>
-                    </Grid.RowDefinitions>
-                    <Button Content="Choose File" Command="{Binding ChooseFileCommand}"/>
-                    <Label Grid.Column="1" Content="{Binding FileName}" />
-                    <Button Grid.Row="2" Command="{Binding ProcessFileCommand}" Content="Process File" Background="Green" Foreground="White"/>
-                    <Label Grid.Row="2" Grid.Column="1" Content="{Binding TaskName}" />
-                </Grid>
-                <ProgressBar Height="20" Value="{Binding CurrentTask}" Maximum="{Binding TaskCount}" />
+            <Image Source="../Resources/Images/ESFA_logo.png" HorizontalAlignment="Left" Margin="15,5"/>
+            <StackPanel Grid.Column="1">
+                <Label Content="Tell us what you thought:" FontWeight="Bold" />
+                <TextBlock>
+                    <Label><Hyperlink NavigateUri="http://google.co.uk" Command="{Binding SurveyHyperlinkCommand}">Take 2 minutes to answer a few questions</Hyperlink></Label>
+                </TextBlock>
             </StackPanel>
+            
         </Grid>
 
-        <Grid Grid.Row="3" Background="#dee0e2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="60" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="60" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="5" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="30" />
-                <RowDefinition Height="5" />
-            </Grid.RowDefinitions>
+        <Grid Margin="15" Grid.Row="2">
 
-            <Image Grid.Row="1" Grid.Column="1" Source="../Resources/Images/govuk-crest.png" HorizontalAlignment="Right" />
-            <Label Grid.Row="2" Grid.Column="1" Content="© Crown copyright" HorizontalAlignment="Right" VerticalAlignment="Center"></Label>
+            <Grid Visibility="{Binding ChooseFileVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel>
+                    <Label FontSize="14">Upload an XML or Zip File.</Label>
+                    <Label><Hyperlink NavigateUri="http://google.co.uk" Command="{Binding GuidanceHyperlinkCommand}" FontSize="14">Funding Information System (FIS) Guidance.</Hyperlink></Label>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1">
+                    <Label FontSize="14">Upload a file</Label>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Button Content="Choose File" Command="{Binding ChooseFileCommand}" FontSize="14" Margin="0,5"/>
+                        <Label Grid.Column="1" Content="{Binding FileName}" />
+                        <Button Grid.Row="1" Command="{Binding ProcessFileCommand}" Content="Submit" FontSize="14" Margin="0,5"/>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+
+            <Grid Visibility="{Binding ProcessingVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel>
+                    <Label FontSize="14">Upload an XML or Zip File.</Label>
+                    <Label>
+                        <Hyperlink NavigateUri="http://google.co.uk" Command="{Binding GuidanceHyperlinkCommand}" FontSize="14">Funding Information System (FIS) Guidance.</Hyperlink>
+                    </Label>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label FontSize="14">File Processing:</Label>
+                        <Label Grid.Column="1" Content="{Binding FileName}" FontSize="14"/>
+                        <Label Grid.Row="1" Grid.ColumnSpan="2" Content="{Binding TaskName}" />
+                        <ProgressBar Grid.Row="1" Grid.ColumnSpan="2" Height="20" Value="{Binding CurrentTask}" Maximum="{Binding TaskCount}" Margin="0,5" />
+                    </Grid>
+                    <Button Content="Cancel and re-upload file" FontSize="14" HorizontalAlignment="Left" Margin="0,5" Width="180"/>
+                </StackPanel>
+            </Grid>
+
+            <Grid Visibility="{Binding ProcessedSuccessfullyVisibility, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Row="2">
+                <StackPanel>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="100" />
+                        </Grid.RowDefinitions>
+                        <Border BorderThickness="2" BorderBrush="#FF28A197">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Label Content="Upload successfully processed" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" />
+                                <TextBlock Grid.Row="1" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                     Get your reports here: <Hyperlink Command="{Binding ReportsFolderCommand}"><TextBlock Text="{Binding ReportsLocation}" /></Hyperlink>
+                                </TextBlock>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </StackPanel>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

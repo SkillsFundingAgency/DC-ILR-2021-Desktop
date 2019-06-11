@@ -1,6 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Service.Interface;
+using ESFA.DC.ILR.Desktop.Service.Journey;
 using ESFA.DC.ILR.Desktop.Service.Message;
 using ESFA.DC.ILR.Desktop.WPF.Command;
 using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
@@ -30,17 +31,23 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private int _taskCount;
         private string _versionNumber = "2.456.01093";
         private string _refDataDateCreated = "13/02/2019";
+        private StageKeys _currentStage = StageKeys.ChooseFile;
+        private string _surveyHyperlinkUrl = "http://bbc.co.uk";
+        private string _guidanceHyperlinkUrl = "http://google.co.uk";
+        private string _reportsLocation = "C:/Users";
 
         private readonly IIlrDesktopService _ilrDesktopService;
         private readonly IMessengerService _messengerService;
         private readonly IWindowService _windowService;
         private readonly IDialogInteractionService _dialogInteractionService;
+        private readonly IWindowsProcessService _windowsProcessService;
 
         public MainViewModel(
             IIlrDesktopService ilrDesktopService,
             IMessengerService messengerService,
             IWindowService windowService,
-            IDialogInteractionService dialogInteractionService)
+            IDialogInteractionService dialogInteractionService,
+            IWindowsProcessService windowsProcessService)
         {
             CurrentTask = 0;
             TaskCount = 1;
@@ -49,6 +56,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             _messengerService = messengerService;
             _windowService = windowService;
             _dialogInteractionService = dialogInteractionService;
+            _windowsProcessService = windowsProcessService;
 
             _messengerService.Register<TaskProgressMessage>(this, HandleTaskProgressMessage);
 
@@ -57,7 +65,29 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             SettingsNavigationCommand = new RelayCommand(SettingsNavigate, () => !Processing);
             AboutNavigationCommand = new RelayCommand(AboutNavigate);
             CloseWindowCommand = new RelayCommand<ICloseable>(CloseWindow);
+            SurveyHyperlinkCommand = new RelayCommand(() => ProcessStart(_surveyHyperlinkUrl));
+            GuidanceHyperlinkCommand = new RelayCommand(() => ProcessStart(_guidanceHyperlinkUrl));
+            ReportsFolderCommand = new RelayCommand(() => ProcessStart(_reportsLocation));
         }
+
+        public StageKeys CurrentStage
+        {
+            get => _currentStage;
+            set
+            {
+                _currentStage = value;
+
+                RaisePropertyChanged(nameof(ChooseFileVisibility));
+                RaisePropertyChanged(nameof(ProcessingVisibility));
+                RaisePropertyChanged(nameof(ProcessedSuccessfullyVisibility));
+            }
+        }
+
+        public bool ChooseFileVisibility => CurrentStage == StageKeys.ChooseFile;
+
+        public bool ProcessingVisibility => CurrentStage == StageKeys.Processing;
+
+        public bool ProcessedSuccessfullyVisibility => CurrentStage == StageKeys.ProcessedSuccessfully;
 
         public string FileName
         {
@@ -67,6 +97,11 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
                 _fileName = value;
                 RaisePropertyChanged();
             }
+        }
+
+        public string ReportsLocation
+        {
+            get => _reportsLocation;
         }
 
         public string VersionNumber
@@ -142,6 +177,12 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         public RelayCommand<ICloseable> CloseWindowCommand { get; set; }
 
+        public RelayCommand SurveyHyperlinkCommand { get; set; }
+
+        public RelayCommand GuidanceHyperlinkCommand { get; set; }
+
+        public RelayCommand ReportsFolderCommand { get; set; }
+
         public void HandleTaskProgressMessage(TaskProgressMessage taskProgressMessage)
         {
             TaskName = taskProgressMessage.TaskName;
@@ -163,9 +204,18 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         {
             Processing = true;
 
+            CurrentStage = StageKeys.Processing;
+
             await _ilrDesktopService.ProcessAsync(FileName, CancellationToken.None);
 
+            CurrentStage = StageKeys.ProcessedSuccessfully;
+
             Processing = false;
+        }
+
+        private void ProcessStart(string url)
+        {
+            _windowsProcessService.ProcessStart(url);
         }
 
         private void SettingsNavigate()
