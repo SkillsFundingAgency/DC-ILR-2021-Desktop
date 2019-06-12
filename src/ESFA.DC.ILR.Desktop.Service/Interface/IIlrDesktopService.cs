@@ -5,6 +5,6 @@ namespace ESFA.DC.ILR.Desktop.Service.Interface
 {
     public interface IIlrDesktopService
     {
-        Task<string> ProcessAsync(string filePath, CancellationToken cancellationToken);
+        Task<ICompletionContext> ProcessAsync(string filePath, CancellationToken cancellationToken);
     }
 }

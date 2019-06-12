@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Autofac.Features.Indexed;
 using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.Desktop.Service.Interface;
+using ESFA.DC.ILR.Desktop.Service.Journey;
 using ESFA.DC.ILR.Desktop.Service.Message;
 using ESFA.DC.ILR.Desktop.Service.Tasks;
 using ESFA.DC.ILR.Desktop.Service.Tasks.Extensions;
@@ -27,9 +28,15 @@ namespace ESFA.DC.ILR.Desktop.Stubs
             _logger = logger;
         }
 
-        public async Task<string> ProcessAsync(string filePath, CancellationToken cancellationToken)
+        public async Task<ICompletionContext> ProcessAsync(string filePath, CancellationToken cancellationToken)
         {
             var context = _desktopContextFactory.Build(filePath);
+
+            var completionContext = new CompletionContextStub()
+            {
+                OutputDirectory = context.OutputDirectory,
+                ProcessingCompletionState = ProcessingCompletionStates.Success,
+            };
 
             var steps = BuildTaskKeys().ToList();
 
@@ -52,14 +59,22 @@ namespace ESFA.DC.ILR.Desktop.Stubs
                     {
                         step = steps.FindIndex(s => s.Key == desktopTaskDefinition.FailureKey);
 
+                        completionContext.ProcessingCompletionState = ProcessingCompletionStates.HandledFail;
+
                         _logger.LogError($"Task Execution Failed - Step {step}", result.Exception);
+                    }
+                    else
+                    {
+                        completionContext.ProcessingCompletionState = ProcessingCompletionStates.UnhandledFail;
+
+                        return completionContext;
                     }
                 }
             }
 
             _messengerService.Send(new TaskProgressMessage("Processing Complete", stepCount, stepCount));
 
-            return context.OutputDirectory;
+            return completionContext;
         }
 
         private Task<Task<IDesktopContext>> ExecuteTask(IIlrDesktopTaskDefinition ilrDesktopTaskDefinition, int step, int stepCount, IDesktopContext desktopContext, CancellationToken cancellationToken)
@@ -75,9 +90,9 @@ namespace ESFA.DC.ILR.Desktop.Stubs
             {
                 new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.PreExecution),
                 new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.DatabaseCreate),
-                new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.FileValidationService),
+                new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.FileValidationService, IlrDesktopTaskKeys.ReportService),
                 new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ReferenceDataService),
-                new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ValidationService, IlrDesktopTaskKeys.ReportService),
+                new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ValidationService),
                 new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.FundingService),
                 new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.DataStore),
                 new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ReportService),

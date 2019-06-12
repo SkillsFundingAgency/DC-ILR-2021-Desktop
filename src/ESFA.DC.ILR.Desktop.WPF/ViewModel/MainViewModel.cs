@@ -40,6 +40,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private StageKeys _currentStage = StageKeys.ChooseFile;
         private string _surveyHyperlinkUrl = "http://bbc.co.uk";
         private string _guidanceHyperlinkUrl = "http://google.co.uk";
+        private string _helpdeskUrl = "http://amazon.co.uk";
         private string _reportsLocation;
 
         public MainViewModel(
@@ -63,6 +64,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             AboutNavigationCommand = new RelayCommand(AboutNavigate);
             SurveyHyperlinkCommand = new RelayCommand(() => ProcessStart(_surveyHyperlinkUrl));
             GuidanceHyperlinkCommand = new RelayCommand(() => ProcessStart(_guidanceHyperlinkUrl));
+            HelpdeskHyperlinkCommand = new RelayCommand(() => ProcessStart(_helpdeskUrl));
             ReportsFolderCommand = new RelayCommand(() => ProcessStart(_reportsLocation));
         }
 
@@ -76,6 +78,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
                 RaisePropertyChanged(nameof(ChooseFileVisibility));
                 RaisePropertyChanged(nameof(ProcessingVisibility));
                 RaisePropertyChanged(nameof(ProcessedSuccessfullyVisibility));
+                RaisePropertyChanged(nameof(ProcessFailureHandledVisibility));
+                RaisePropertyChanged(nameof(ProcessFailureUnhandledVisibility));
             }
         }
 
@@ -94,6 +98,10 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         public bool ProcessingVisibility => CurrentStage == StageKeys.Processing;
 
         public bool ProcessedSuccessfullyVisibility => CurrentStage == StageKeys.ProcessedSuccessfully;
+
+        public bool ProcessFailureHandledVisibility => CurrentStage == StageKeys.ProcessHandledFailure;
+
+        public bool ProcessFailureUnhandledVisibility => CurrentStage == StageKeys.ProcessUnhandledFailure;
 
         public string FileName
         {
@@ -141,6 +149,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         public RelayCommand GuidanceHyperlinkCommand { get; set; }
 
+        public RelayCommand HelpdeskHyperlinkCommand { get; set; }
+
         public RelayCommand ReportsFolderCommand { get; set; }
 
         public void HandleTaskProgressMessage(TaskProgressMessage taskProgressMessage)
@@ -165,11 +175,28 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         {
             CurrentStage = StageKeys.Processing;
 
-            ReportsLocation = await _ilrDesktopService.ProcessAsync(FileName, CancellationToken.None);
+            var completionContext = await _ilrDesktopService.ProcessAsync(FileName, CancellationToken.None);
 
-            CurrentStage = StageKeys.ProcessedSuccessfully;
+            ReportsLocation = completionContext.OutputDirectory;
+            UpdateCurrentStageForCompletionState(completionContext.ProcessingCompletionState);
             CanSubmit = false;
             FileName = _filenamePlaceholder;
+        }
+
+        private void UpdateCurrentStageForCompletionState(ProcessingCompletionStates processingCompletionState)
+        {
+            switch (processingCompletionState)
+            {
+                case ProcessingCompletionStates.Success:
+                    CurrentStage = StageKeys.ProcessedSuccessfully;
+                    break;
+                case ProcessingCompletionStates.HandledFail:
+                    CurrentStage = StageKeys.ProcessHandledFailure;
+                    break;
+                case ProcessingCompletionStates.UnhandledFail:
+                    CurrentStage = StageKeys.ProcessUnhandledFailure;
+                    break;
+            }
         }
 
         private void ProcessStart(string url)

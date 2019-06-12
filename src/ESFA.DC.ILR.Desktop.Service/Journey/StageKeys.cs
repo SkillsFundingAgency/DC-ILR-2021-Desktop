@@ -4,6 +4,8 @@
     {
         ChooseFile,
         Processing,
-        ProcessedSuccessfully
+        ProcessedSuccessfully,
+        ProcessHandledFailure,
+        ProcessUnhandledFailure,
     }
 }

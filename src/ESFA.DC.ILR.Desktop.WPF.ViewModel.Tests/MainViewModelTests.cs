@@ -129,10 +129,14 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
 
             var ilrDesktopServiceMock = new Mock<IIlrDesktopService>();
 
+            var completionContextMock = new Mock<ICompletionContext>();
+
+            completionContextMock.SetupGet(c => c.OutputDirectory).Returns(outputDirectory);
+
             var viewModel = NewViewModel(ilrDesktopServiceMock.Object);
 
             ilrDesktopServiceMock.Setup(s => s.ProcessAsync(fileName, It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(outputDirectory));
+                .Returns(Task.FromResult(completionContextMock.Object));
 
             viewModel.FileName = fileName;
             viewModel.CanSubmit = true;
