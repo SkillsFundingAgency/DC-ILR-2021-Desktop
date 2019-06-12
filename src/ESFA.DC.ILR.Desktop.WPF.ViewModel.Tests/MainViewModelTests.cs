@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Service.Interface;
+using ESFA.DC.ILR.Desktop.Service.Journey;
 using ESFA.DC.ILR.Desktop.Service.Message;
 using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
 using FluentAssertions;
@@ -140,14 +141,18 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
 
             var viewModel = NewViewModel(ilrDesktopServiceMock.Object);
 
-            ilrDesktopServiceMock.Setup(s => s.ProcessAsync(fileName, cancellationToken))
+            ilrDesktopServiceMock.Setup(s => s.ProcessAsync(fileName, It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(outputDirectory));
 
             viewModel.FileName = fileName;
+            viewModel.CanSubmit = true;
 
             await viewModel.ProcessFileCommand.ExecuteAsync();
 
             viewModel.ReportsLocation.Should().Be(outputDirectory);
+            viewModel.CurrentStage.Should().Be(StageKeys.ProcessedSuccessfully);
+            viewModel.CanSubmit.Should().BeFalse();
+            viewModel.FileName.Should().Be("No file chosen");
         }
 
         private MainViewModel NewViewModel(IIlrDesktopService ilrDesktopService = null, IMessengerService messengerService = null, IWindowService windowService = null, IDialogInteractionService dialogInteractionService = null, IWindowsProcessService windowsProcessService = null)
