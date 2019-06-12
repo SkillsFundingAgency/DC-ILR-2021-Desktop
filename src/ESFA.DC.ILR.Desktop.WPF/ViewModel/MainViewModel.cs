@@ -24,11 +24,14 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
+        private const string _filenamePlaceholder = "No file chosen";
+
         private bool _processing = false;
-        private string _fileName;
+        private string _fileName = _filenamePlaceholder;
+        private bool _canSubmit = false;
         private string _taskName;
-        private int _currentTask;
-        private int _taskCount;
+        private int _currentTask = 0;
+        private int _taskCount = 1;
         private string _versionNumber = "2.456.01093";
         private string _refDataDateCreated = "13/02/2019";
         private StageKeys _currentStage = StageKeys.ChooseFile;
@@ -49,9 +52,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             IDialogInteractionService dialogInteractionService,
             IWindowsProcessService windowsProcessService)
         {
-            CurrentTask = 0;
-            TaskCount = 1;
-
             _ilrDesktopService = ilrDesktopService;
             _messengerService = messengerService;
             _windowService = windowService;
@@ -61,7 +61,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             _messengerService.Register<TaskProgressMessage>(this, HandleTaskProgressMessage);
 
             ChooseFileCommand = new RelayCommand(ShowChooseFileDialog);
-            ProcessFileCommand = new AsyncCommand(ProcessFile);
+            ProcessFileCommand = new AsyncCommand(ProcessFile, () => CanSubmit);
             SettingsNavigationCommand = new RelayCommand(SettingsNavigate);
             AboutNavigationCommand = new RelayCommand(AboutNavigate);
             CloseWindowCommand = new RelayCommand<ICloseable>(CloseWindow);
@@ -80,6 +80,16 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
                 RaisePropertyChanged(nameof(ChooseFileVisibility));
                 RaisePropertyChanged(nameof(ProcessingVisibility));
                 RaisePropertyChanged(nameof(ProcessedSuccessfullyVisibility));
+            }
+        }
+
+        public bool CanSubmit
+        {
+            get => _canSubmit;
+            set
+            {
+                Set(ref _canSubmit, value);
+                ProcessFileCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -162,9 +172,10 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         {
             var fileName = _dialogInteractionService.GetFileNameFromOpenFileDialog();
 
-            if (!string.IsNullOrWhiteSpace(fileName))
+            if (!string.IsNullOrWhiteSpace(fileName) && fileName != _filenamePlaceholder)
             {
                 FileName = fileName;
+                CanSubmit = true;
             }
         }
 
@@ -175,6 +186,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             ReportsLocation = await _ilrDesktopService.ProcessAsync(FileName, CancellationToken.None);
 
             CurrentStage = StageKeys.ProcessedSuccessfully;
+            CanSubmit = false;
+            FileName = _filenamePlaceholder;
         }
 
         private void ProcessStart(string url)
