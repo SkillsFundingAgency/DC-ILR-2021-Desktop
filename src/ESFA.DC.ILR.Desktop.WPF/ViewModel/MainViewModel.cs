@@ -26,24 +26,21 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
     {
         private const string _filenamePlaceholder = "No file chosen";
 
-        private bool _processing = false;
-        private string _fileName = _filenamePlaceholder;
-        private bool _canSubmit = false;
-        private string _taskName;
-        private int _currentTask = 0;
-        private int _taskCount = 1;
-        private string _versionNumber = "2.456.01093";
-        private string _refDataDateCreated = "13/02/2019";
-        private StageKeys _currentStage = StageKeys.ChooseFile;
-        private string _surveyHyperlinkUrl = "http://bbc.co.uk";
-        private string _guidanceHyperlinkUrl = "http://google.co.uk";
-        private string _reportsLocation;
-
         private readonly IIlrDesktopService _ilrDesktopService;
         private readonly IMessengerService _messengerService;
         private readonly IWindowService _windowService;
         private readonly IDialogInteractionService _dialogInteractionService;
         private readonly IWindowsProcessService _windowsProcessService;
+
+        private string _fileName = _filenamePlaceholder;
+        private bool _canSubmit;
+        private string _taskName;
+        private int _currentTask;
+        private int _taskCount = 1;
+        private StageKeys _currentStage = StageKeys.ChooseFile;
+        private string _surveyHyperlinkUrl = "http://bbc.co.uk";
+        private string _guidanceHyperlinkUrl = "http://google.co.uk";
+        private string _reportsLocation;
 
         public MainViewModel(
             IIlrDesktopService ilrDesktopService,
@@ -64,7 +61,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             ProcessFileCommand = new AsyncCommand(ProcessFile, () => CanSubmit);
             SettingsNavigationCommand = new RelayCommand(SettingsNavigate);
             AboutNavigationCommand = new RelayCommand(AboutNavigate);
-            CloseWindowCommand = new RelayCommand<ICloseable>(CloseWindow);
             SurveyHyperlinkCommand = new RelayCommand(() => ProcessStart(_surveyHyperlinkUrl));
             GuidanceHyperlinkCommand = new RelayCommand(() => ProcessStart(_guidanceHyperlinkUrl));
             ReportsFolderCommand = new RelayCommand(() => ProcessStart(_reportsLocation));
@@ -115,18 +111,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             set => Set(ref _reportsLocation, value);
         }
 
-        public string VersionNumber
-        {
-            get => _versionNumber;
-            set => Set(ref _versionNumber, value);
-        }
-
-        public string RefDataDateCreated
-        {
-            get => _refDataDateCreated;
-            set => Set(ref _refDataDateCreated, value);
-        }
-
         public string TaskName
         {
             get => _taskName;
@@ -152,8 +136,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         public RelayCommand SettingsNavigationCommand { get; set; }
 
         public RelayCommand AboutNavigationCommand { get; set; }
-
-        public RelayCommand<ICloseable> CloseWindowCommand { get; set; }
 
         public RelayCommand SurveyHyperlinkCommand { get; set; }
 
@@ -203,11 +185,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private void AboutNavigate()
         {
             _windowService.ShowAboutWindow();
-        }
-
-        private void CloseWindow(ICloseable window)
-        {
-            window?.Close();
         }
     }
 }

@@ -9,6 +9,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
         {
             containerBuilder.RegisterType<MainViewModel>().SingleInstance();
             containerBuilder.RegisterType<SettingsViewModel>().SingleInstance();
+            containerBuilder.RegisterType<AboutViewModel>().SingleInstance();
         }
     }
 }

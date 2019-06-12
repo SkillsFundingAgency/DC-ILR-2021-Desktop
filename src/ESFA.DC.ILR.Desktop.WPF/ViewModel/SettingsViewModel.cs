@@ -75,10 +75,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         private void CloseWindow(ICloseable window)
         {
-            if (window != null)
-            {
-                window.Close();
-            }
+            window?.Close();
         }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ESFA.DC.ILR.Desktop.WPF"
         mc:Ignorable="d"
-        Title="Funding Information System (FIS) Academic Year 2019-2020" Height="450" Width="800" WindowStartupLocation="CenterScreen"
+        Title="Funding Information System (FIS) Funding Year 2019-2020" Height="450" Width="800" WindowStartupLocation="CenterScreen"
         DataContext="{Binding Main, Source={StaticResource Locator}}" ResizeMode="NoResize" Icon="/ESFA.DC.ILR.Desktop.WPF;component/Resources/Images/ESFA_logo.png">
     <Grid>
 
