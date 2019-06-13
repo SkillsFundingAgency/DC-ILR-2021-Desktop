@@ -6,6 +6,6 @@ namespace ESFA.DC.ILR.Desktop.Service.Interface
     {
         string OutputDirectory { get; }
 
-        ProcessingCompletionStates ProcessingCompletionState { get; }
+        ProcessingCompletionStates? ProcessingCompletionState { get; }
     }
 }

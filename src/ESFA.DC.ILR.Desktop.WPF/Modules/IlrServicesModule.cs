@@ -7,7 +7,6 @@ using ESFA.DC.ILR.Desktop.Service.Context;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Service.Tasks;
 using ESFA.DC.ILR.Desktop.Stubs;
-using ESFA.DC.ILR.Desktop.Stubs.Tasks;
 using ESFA.DC.ILR.FileValidationService.Desktop;
 using ESFA.DC.ILR.FileValidationService.Desktop.Modules;
 using ESFA.DC.ILR.ReferenceDataService.Desktop;
@@ -23,12 +22,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
         {
             containerBuilder.RegisterType<DateTimeProvider.DateTimeProvider>().As<IDateTimeProvider>();
             containerBuilder.RegisterType<DesktopContextFactory>().As<IDesktopContextFactory>();
-            containerBuilder.RegisterType<IlrDesktopServiceStub>().As<IIlrDesktopService>();
-
-            containerBuilder.RegisterType<DesktopTaskStub>()
-                .Keyed<IDesktopTask>(IlrDesktopTaskKeys.FundingService)
-                .Keyed<IDesktopTask>(IlrDesktopTaskKeys.ReportService)
-                .Keyed<IDesktopTask>(IlrDesktopTaskKeys.PostExecution);
+            containerBuilder.RegisterType<IlrDesktopService>().As<IIlrDesktopService>();
 
             containerBuilder.RegisterType<PreProcessingDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.PreExecution);
 

@@ -2,6 +2,7 @@
 using ESFA.DC.FileService;
 using ESFA.DC.FileService.Interface;
 using ESFA.DC.ILR.Desktop.Stubs;
+using ESFA.DC.ILR.Desktop.WPF.Config;
 using ESFA.DC.IO.FileSystem;
 using ESFA.DC.IO.FileSystem.Config.Interfaces;
 using ESFA.DC.IO.Interfaces;
@@ -19,7 +20,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
 
             containerBuilder.RegisterType<DecompressionService>().As<IDecompressionService>();
 
-            var fileSystemKeyValuePersistenceServiceConfiguration = new FileSystemKeyValuePersistenceServiceConfigStub()
+            var fileSystemKeyValuePersistenceServiceConfiguration = new FileSystemKeyValuePersistenceServiceConfig()
             {
                 Directory = "Sandbox"
             };
