@@ -7,7 +7,8 @@
         xmlns:local="clr-namespace:ESFA.DC.ILR.Desktop.WPF"
         mc:Ignorable="d"
         Title="Settings" Height="250" Width="650" WindowStartupLocation="CenterScreen"
-        DataContext="{Binding Settings, Source={StaticResource Locator}}">
+        DataContext="{Binding Settings, Source={StaticResource Locator}}"
+        Icon="../Resources/Images/DSAppIcon.ico">
     <Grid Margin="10" >
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
