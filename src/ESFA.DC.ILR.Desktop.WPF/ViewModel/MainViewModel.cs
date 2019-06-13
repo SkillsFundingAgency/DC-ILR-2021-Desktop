@@ -72,7 +72,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             GuidanceHyperlinkCommand = new RelayCommand(() => ProcessStart(_urlService.Guidance()));
             HelpdeskHyperlinkCommand = new RelayCommand(() => ProcessStart(_urlService.Helpdesk()));
             ReportsFolderCommand = new RelayCommand(() => ProcessStart(_reportsLocation));
-            CancelAndReuploadCommand = new RelayCommand(CancelAndReupload);
+            CancelAndReuploadCommand = new RelayCommand(CancelAndReupload, () => !_cancellationTokenSource?.IsCancellationRequested ?? false);
         }
 
         public StageKeys CurrentStage
@@ -188,6 +188,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             {
                 _cancellationTokenSource = new CancellationTokenSource();
 
+                CancelAndReuploadCommand.RaiseCanExecuteChanged();
+
                 var completionContext = await _ilrDesktopService.ProcessAsync(FileName, _cancellationTokenSource.Token);
 
                 ReportsLocation = completionContext.OutputDirectory;
@@ -209,7 +211,10 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         private void CancelAndReupload()
         {
+            TaskName = "Cancelling";
             _cancellationTokenSource?.Cancel();
+
+            CancelAndReuploadCommand.RaiseCanExecuteChanged();
         }
 
         private void UpdateCurrentStageForCompletionState(ProcessingCompletionStates processingCompletionState)

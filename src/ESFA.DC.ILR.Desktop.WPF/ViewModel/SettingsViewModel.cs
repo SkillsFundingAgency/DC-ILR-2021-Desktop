@@ -21,13 +21,13 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             _desktopServiceSettings = desktopServiceSettings;
 
             ChooseOutputDirectoryCommand = new RelayCommand(ChooseOutputDirectory);
-            SaveSettingsCommand = new AsyncCommand(SaveSettings, CanExecute);
+            SaveSettingsCommand = new AsyncCommand<ICloseable>(SaveSettings, CanExecute);
             CloseWindowCommand = new RelayCommand<ICloseable>(CloseWindow);
         }
 
         public RelayCommand ChooseOutputDirectoryCommand { get; set; }
 
-        public AsyncCommand SaveSettingsCommand { get; set; }
+        public AsyncCommand<ICloseable> SaveSettingsCommand { get; set; }
 
         public RelayCommand<ICloseable> CloseWindowCommand { get; set; }
 
@@ -68,9 +68,11 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             }
         }
 
-        private async Task SaveSettings()
+        private async Task SaveSettings(ICloseable window)
         {
             await _desktopServiceSettings.SaveAsync(CancellationToken.None);
+
+            window?.Close();
         }
 
         private void CloseWindow(ICloseable window)

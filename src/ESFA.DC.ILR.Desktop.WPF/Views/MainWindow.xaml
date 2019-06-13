@@ -87,12 +87,14 @@
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Label FontSize="14">File Processing:</Label>
                         <Label Grid.Column="1" Content="{Binding FileName}" FontSize="14"/>
-                        <ProgressBar Grid.Row="1" Grid.ColumnSpan="2" Height="20" Value="{Binding CurrentTask}" Maximum="{Binding TaskCount}" Margin="0,5" />
-                        <Label Grid.Row="1" Grid.ColumnSpan="2" FontSize="14px" Content="{Binding TaskName}" HorizontalAlignment="Center" />
+                        <Label FontSize="14" Grid.Row="1">Status:</Label>
+                        <Label Grid.Column="1" Grid.Row="1" Content="{Binding TaskName}" FontSize="14"/>
+                        <ProgressBar Grid.Row="2" Grid.ColumnSpan="2" Height="20" Value="{Binding CurrentTask}" Maximum="{Binding TaskCount}" Margin="0,5" />
                     </Grid>
                     <Button Content="Cancel and re-upload file" Command="{Binding CancelAndReuploadCommand}" FontSize="14" HorizontalAlignment="Left" Margin="0,8" Width="180" Height="35"/>
                 </StackPanel>
