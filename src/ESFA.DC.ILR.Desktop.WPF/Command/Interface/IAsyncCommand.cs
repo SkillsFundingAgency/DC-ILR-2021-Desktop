@@ -9,4 +9,11 @@ namespace ESFA.DC.ILR.Desktop.WPF.Command.Interface
 
         bool CanExecute();
     }
+
+    public interface IAsyncCommand<T> : ICommand
+    {
+        Task ExecuteAsync(object parameter);
+
+        bool CanExecute();
+    }
 }

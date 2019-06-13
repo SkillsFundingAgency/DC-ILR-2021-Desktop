@@ -1,8 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Service.Interface;
+using ESFA.DC.ILR.Desktop.Service.Journey;
 using ESFA.DC.ILR.Desktop.Service.Message;
 using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
+using ESFA.DC.Logging.Interfaces;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -102,16 +104,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
         }
 
         [Fact]
-        public void CloseWindowCommandExecute()
-        {
-            var windowCloseable = new Mock<ICloseable>();
-
-            NewViewModel().CloseWindowCommand.Execute(windowCloseable.Object);
-
-            windowCloseable.Verify(c => c.Close(), Times.Once);
-        }
-
-        [Fact]
         public void HandleTaskProgressMessage()
         {
             var taskName = "TaskName";
@@ -133,30 +125,48 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
         public async Task ProcessFileCommandExecute()
         {
             var fileName = "FileName";
+            var outputDirectory = "Output Directory";
             var cancellationToken = CancellationToken.None;
 
             var ilrDesktopServiceMock = new Mock<IIlrDesktopService>();
 
+            var completionContextMock = new Mock<ICompletionContext>();
+
+            completionContextMock.SetupGet(c => c.OutputDirectory).Returns(outputDirectory);
+
             var viewModel = NewViewModel(ilrDesktopServiceMock.Object);
 
-            ilrDesktopServiceMock.Setup(s => s.ProcessAsync(fileName, cancellationToken))
-                .Callback(() => viewModel.Processing.Should().BeTrue())
-                .Returns(Task.CompletedTask);
+            ilrDesktopServiceMock.Setup(s => s.ProcessAsync(fileName, It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(completionContextMock.Object));
 
             viewModel.FileName = fileName;
+            viewModel.CanSubmit = true;
 
             await viewModel.ProcessFileCommand.ExecuteAsync();
 
-            viewModel.Processing.Should().BeFalse();
+            viewModel.ReportsLocation.Should().Be(outputDirectory);
+            viewModel.CurrentStage.Should().Be(StageKeys.ProcessedSuccessfully);
+            viewModel.CanSubmit.Should().BeFalse();
+            viewModel.FileName.Should().Be("No file chosen");
         }
 
-        private MainViewModel NewViewModel(IIlrDesktopService ilrDesktopService = null, IMessengerService messengerService = null, IWindowService windowService = null, IDialogInteractionService dialogInteractionService = null)
+        private MainViewModel NewViewModel(
+            IIlrDesktopService ilrDesktopService = null,
+            IMessengerService messengerService = null,
+            IWindowService windowService = null,
+            IDialogInteractionService dialogInteractionService = null,
+            IWindowsProcessService windowsProcessService = null,
+            IUrlService urlService = null,
+            ILogger logger = null)
         {
             return new MainViewModel(
                 ilrDesktopService ?? Mock.Of<IIlrDesktopService>(),
                 messengerService ?? Mock.Of<IMessengerService>(),
                 windowService ?? Mock.Of<IWindowService>(),
-                dialogInteractionService ?? Mock.Of<IDialogInteractionService>());
+                dialogInteractionService ?? Mock.Of<IDialogInteractionService>(),
+                windowsProcessService ?? Mock.Of<IWindowsProcessService>(),
+                urlService ?? Mock.Of<IUrlService>(),
+                logger ?? Mock.Of<ILogger>());
         }
     }
 }

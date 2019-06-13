@@ -23,6 +23,18 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         }
 
         [Fact]
+        public void OutputDirectory()
+        {
+            var outputDirectory = "Output Directory";
+
+            var desktopServiceSettingsMock = new Mock<IDesktopServiceSettings>();
+
+            desktopServiceSettingsMock.SetupGet(s => s.OutputDirectory).Returns(outputDirectory);
+
+            NewFactory(desktopServiceSettings: desktopServiceSettingsMock.Object).Build(string.Empty).OutputDirectory.Should().Be(outputDirectory);
+        }
+
+        [Fact]
         public void Container()
         {
             NewFactory().Build(string.Empty).KeyValuePairs["Container"].Should().Be("Sandbox");

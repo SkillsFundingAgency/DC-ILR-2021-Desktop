@@ -1,10 +1,16 @@
-﻿using System.Threading;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Autofac.Features.Indexed;
 using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.Desktop.Service.Interface;
+using ESFA.DC.ILR.Desktop.Service.Journey;
 using ESFA.DC.ILR.Desktop.Service.Message;
 using ESFA.DC.ILR.Desktop.Service.Tasks;
+using ESFA.DC.ILR.Desktop.Service.Tasks.Extensions;
+using ESFA.DC.Logging.Interfaces;
 
 namespace ESFA.DC.ILR.Desktop.Stubs
 {
@@ -13,80 +19,87 @@ namespace ESFA.DC.ILR.Desktop.Stubs
         private readonly IIndex<IlrDesktopTaskKeys, IDesktopTask> _desktopTaskIndex;
         private readonly IMessengerService _messengerService;
         private readonly IDesktopContextFactory _desktopContextFactory;
+        private readonly ILogger _logger;
 
-        public IlrDesktopServiceStub(IIndex<IlrDesktopTaskKeys, IDesktopTask> desktopTaskIndex, IMessengerService messengerService, IDesktopContextFactory desktopContextFactory)
+        public IlrDesktopServiceStub(IIndex<IlrDesktopTaskKeys, IDesktopTask> desktopTaskIndex, IMessengerService messengerService, IDesktopContextFactory desktopContextFactory, ILogger logger)
         {
             _desktopTaskIndex = desktopTaskIndex;
             _messengerService = messengerService;
             _desktopContextFactory = desktopContextFactory;
+            _logger = logger;
         }
 
-        public async Task ProcessAsync(string filePath, CancellationToken cancellationToken)
+        public async Task<ICompletionContext> ProcessAsync(string filePath, CancellationToken cancellationToken)
         {
             var context = _desktopContextFactory.Build(filePath);
 
-            var steps = BuildTaskKeys();
+            var completionContext = new CompletionContextStub()
+            {
+                OutputDirectory = context.OutputDirectory,
+                ProcessingCompletionState = ProcessingCompletionStates.Success,
+            };
 
-            var stepCount = steps.Length;
+            var steps = BuildTaskKeys().ToList();
+
+            var stepCount = steps.Count;
             var step = 0;
 
-            _messengerService.Send(new TaskProgressMessage("Pre Processing", step, stepCount));
-
-            await ExecuteTask(steps, step, context, cancellationToken);
-
-            _messengerService.Send(new TaskProgressMessage("Build Database", ++step, stepCount));
-
-            await ExecuteTask(steps, step, context, cancellationToken);
-
-            _messengerService.Send(new TaskProgressMessage("File Validation", ++step, stepCount));
-
-            await ExecuteTask(steps, step, context, cancellationToken);
-
-            _messengerService.Send(new TaskProgressMessage("Reference Data", ++step, stepCount));
-
-            await ExecuteTask(steps, step, context, cancellationToken);
-
-            _messengerService.Send(new TaskProgressMessage("Validation", ++step, stepCount));
-
-            await ExecuteTask(steps, step, context, cancellationToken);
-
-            _messengerService.Send(new TaskProgressMessage("Funding Calculation", ++step, stepCount));
-
-            await ExecuteTask(steps, step, context, cancellationToken);
-
-            _messengerService.Send(new TaskProgressMessage("Report Generation", ++step, stepCount));
-
-            await ExecuteTask(steps, step, context, cancellationToken);
-
-            _messengerService.Send(new TaskProgressMessage("Store Data", ++step, stepCount));
-
-            await ExecuteTask(steps, step, context, cancellationToken);
-
-            _messengerService.Send(new TaskProgressMessage("Post Processing", ++step, stepCount));
-
-            await ExecuteTask(steps, step, context, cancellationToken);
-
-            _messengerService.Send(new TaskProgressMessage("Processing Complete", ++step, stepCount));
-        }
-
-        private async Task ExecuteTask(IlrDesktopTaskKeys[] ilrDesktopTaskKeys, int step, IDesktopContext desktopContext, CancellationToken cancellationToken)
-        {
-            await Task.Factory.StartNew(() => _desktopTaskIndex[ilrDesktopTaskKeys[step]].ExecuteAsync(desktopContext, cancellationToken), cancellationToken, TaskCreationOptions.LongRunning, TaskScheduler.Default);
-        }
-
-        private IlrDesktopTaskKeys[] BuildTaskKeys()
-        {
-            return new IlrDesktopTaskKeys[]
+            while (step < stepCount)
             {
-                IlrDesktopTaskKeys.PreExecution,
-                IlrDesktopTaskKeys.DatabaseCreate,
-                IlrDesktopTaskKeys.FileValidationService,
-                IlrDesktopTaskKeys.ReferenceDataService,
-                IlrDesktopTaskKeys.ValidationService,
-                IlrDesktopTaskKeys.FundingService,
-                IlrDesktopTaskKeys.DataStore,
-                IlrDesktopTaskKeys.ReportService,
-                IlrDesktopTaskKeys.PostExecution,
+                var desktopTaskDefinition = steps[step];
+
+                var result = await ExecuteTask(desktopTaskDefinition, step, stepCount, context, cancellationToken);
+
+                cancellationToken.ThrowIfCancellationRequested();
+
+                if (!result.IsFaulted)
+                {
+                    step++;
+                }
+                else
+                {
+                    if (desktopTaskDefinition.FailureKey != null)
+                    {
+                        step = steps.FindIndex(s => s.Key == desktopTaskDefinition.FailureKey);
+
+                        completionContext.ProcessingCompletionState = ProcessingCompletionStates.HandledFail;
+
+                        _logger.LogError($"Task Execution Failed - Step {step}", result.Exception);
+                    }
+                    else
+                    {
+                        completionContext.ProcessingCompletionState = ProcessingCompletionStates.UnhandledFail;
+
+                        return completionContext;
+                    }
+                }
+            }
+
+            _messengerService.Send(new TaskProgressMessage("Processing Complete", stepCount, stepCount));
+
+            return completionContext;
+        }
+
+        private Task<Task<IDesktopContext>> ExecuteTask(IIlrDesktopTaskDefinition ilrDesktopTaskDefinition, int step, int stepCount, IDesktopContext desktopContext, CancellationToken cancellationToken)
+        {
+            _messengerService.Send(new TaskProgressMessage(ilrDesktopTaskDefinition.Key.GetDisplayText(), step, stepCount));
+
+            return Task.Factory.StartNew(() => _desktopTaskIndex[ilrDesktopTaskDefinition.Key].ExecuteAsync(desktopContext, cancellationToken), cancellationToken, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+        }
+
+        private IIlrDesktopTaskDefinition[] BuildTaskKeys()
+        {
+            return new IIlrDesktopTaskDefinition[]
+            {
+                new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.PreExecution),
+                new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.DatabaseCreate),
+                new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.FileValidationService, IlrDesktopTaskKeys.ReportService),
+                new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ReferenceDataService),
+                new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ValidationService),
+                new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.FundingService),
+                new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.DataStore),
+                new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ReportService),
+                new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.PostExecution),
             };
         }
     }

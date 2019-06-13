@@ -1,4 +1,6 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Service.Interface;
@@ -9,6 +11,7 @@ namespace ESFA.DC.ILR.Desktop.Stubs
     {
         private const string IlrDatabaseConnectionStringKey = "IlrDatabaseConnectionString";
         private const string OutputDirectoryKey = "OutputDirectory";
+        private const string FundingInformationSystem = "Funding Information System 2019-20";
 
         private string _ilrDatabaseConnectionString;
         private string _outputDirectory;
@@ -25,12 +28,16 @@ namespace ESFA.DC.ILR.Desktop.Stubs
             set => _outputDirectory = value;
         }
 
-        public Task LoadAsync(CancellationToken cancellationToken)
+        public async Task LoadAsync(CancellationToken cancellationToken)
         {
             _ilrDatabaseConnectionString = ConfigurationManager.AppSettings[IlrDatabaseConnectionStringKey];
             _outputDirectory = ConfigurationManager.AppSettings[OutputDirectoryKey];
 
-            return Task.CompletedTask;
+            if (string.IsNullOrWhiteSpace(_outputDirectory))
+            {
+                _outputDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), FundingInformationSystem);
+                await SaveAsync(cancellationToken);
+            }
         }
 
         public Task SaveAsync(CancellationToken cancellationToken)

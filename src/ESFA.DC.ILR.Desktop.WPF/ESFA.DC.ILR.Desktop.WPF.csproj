@@ -63,6 +63,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Command\AsyncCommand.cs" />
+    <Compile Include="Command\AsyncCommand{T}.cs" />
     <Compile Include="Command\Interface\IAsyncCommand.cs" />
     <Compile Include="Command\Interface\IErrorHandler.cs" />
     <Compile Include="Command\Extensions\TaskExtensions.cs" />
@@ -76,9 +77,14 @@
     <Compile Include="Service\DialogInteractionService.cs" />
     <Compile Include="Service\Interface\ICloseable.cs" />
     <Compile Include="Service\Interface\IDialogInteractionService.cs" />
+    <Compile Include="Service\Interface\IUrlService.cs" />
     <Compile Include="Service\Interface\IWindowService.cs" />
+    <Compile Include="Service\Interface\IWindowsProcessService.cs" />
     <Compile Include="Service\MessengerService.cs" />
+    <Compile Include="Service\UrlService.cs" />
     <Compile Include="Service\WindowService.cs" />
+    <Compile Include="Service\WindowsProcessService.cs" />
+    <Compile Include="ViewModel\AboutViewModel.cs" />
     <Compile Include="Views\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
@@ -237,11 +243,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\govuk-logo-crown-icon.png" />
-    <Resource Include="Resources\Images\govuk-logo-crown.png" />
+    <Resource Include="Resources\Images\DSAppIcon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\govuk-crest.png" />
+    <Resource Include="Resources\Images\ESFA_logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

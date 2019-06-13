@@ -1,9 +1,12 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Service.Interface;
+using ESFA.DC.ILR.Desktop.Service.Journey;
 using ESFA.DC.ILR.Desktop.Service.Message;
 using ESFA.DC.ILR.Desktop.WPF.Command;
 using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
+using ESFA.DC.Logging.Interfaces;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 
@@ -23,41 +26,89 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
-        private bool _processing = false;
-        private string _fileName;
-        private string _taskName;
-        private int _currentTask;
-        private int _taskCount;
-        private string _versionNumber = "2.456.01093";
-        private string _refDataDateCreated = "13/02/2019";
+        private const string _filenamePlaceholder = "No file chosen";
 
         private readonly IIlrDesktopService _ilrDesktopService;
         private readonly IMessengerService _messengerService;
         private readonly IWindowService _windowService;
         private readonly IDialogInteractionService _dialogInteractionService;
+        private readonly IWindowsProcessService _windowsProcessService;
+        private readonly IUrlService _urlService;
+        private readonly ILogger _logger;
+
+        private CancellationTokenSource _cancellationTokenSource;
+        private string _fileName = _filenamePlaceholder;
+        private bool _canSubmit;
+        private string _taskName;
+        private int _currentTask;
+        private int _taskCount = 1;
+        private StageKeys _currentStage = StageKeys.ChooseFile;
+        private string _reportsLocation;
 
         public MainViewModel(
             IIlrDesktopService ilrDesktopService,
             IMessengerService messengerService,
             IWindowService windowService,
-            IDialogInteractionService dialogInteractionService)
+            IDialogInteractionService dialogInteractionService,
+            IWindowsProcessService windowsProcessService,
+            IUrlService urlService,
+            ILogger logger)
         {
-            CurrentTask = 0;
-            TaskCount = 1;
-
             _ilrDesktopService = ilrDesktopService;
             _messengerService = messengerService;
             _windowService = windowService;
             _dialogInteractionService = dialogInteractionService;
+            _windowsProcessService = windowsProcessService;
+            _urlService = urlService;
+            _logger = logger;
 
             _messengerService.Register<TaskProgressMessage>(this, HandleTaskProgressMessage);
 
-            ChooseFileCommand = new RelayCommand(ShowChooseFileDialog, () => !Processing);
-            ProcessFileCommand = new AsyncCommand(ProcessFile, () => !Processing);
-            SettingsNavigationCommand = new RelayCommand(SettingsNavigate, () => !Processing);
+            ChooseFileCommand = new RelayCommand(ShowChooseFileDialog);
+            ProcessFileCommand = new AsyncCommand(ProcessFile, () => CanSubmit);
+            SettingsNavigationCommand = new RelayCommand(SettingsNavigate);
             AboutNavigationCommand = new RelayCommand(AboutNavigate);
-            CloseWindowCommand = new RelayCommand<ICloseable>(CloseWindow);
+            SurveyHyperlinkCommand = new RelayCommand(() => ProcessStart(_urlService.Survey()));
+            GuidanceHyperlinkCommand = new RelayCommand(() => ProcessStart(_urlService.Guidance()));
+            HelpdeskHyperlinkCommand = new RelayCommand(() => ProcessStart(_urlService.Helpdesk()));
+            ReportsFolderCommand = new RelayCommand(() => ProcessStart(_reportsLocation));
+            CancelAndReuploadCommand = new RelayCommand(CancelAndReupload, () => !_cancellationTokenSource?.IsCancellationRequested ?? false);
         }
+
+        public StageKeys CurrentStage
+        {
+            get => _currentStage;
+            set
+            {
+                _currentStage = value;
+
+                RaisePropertyChanged(nameof(ChooseFileVisibility));
+                RaisePropertyChanged(nameof(ProcessingVisibility));
+                RaisePropertyChanged(nameof(ProcessedSuccessfullyVisibility));
+                RaisePropertyChanged(nameof(ProcessFailureHandledVisibility));
+                RaisePropertyChanged(nameof(ProcessFailureUnhandledVisibility));
+            }
+        }
+
+        public bool CanSubmit
+        {
+            get => _canSubmit;
+            set
+            {
+                Set(ref _canSubmit, value);
+                ProcessFileCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        public bool ChooseFileVisibility => CurrentStage == StageKeys.ChooseFile;
+
+        public bool ProcessingVisibility => CurrentStage == StageKeys.Processing;
+
+        public bool ProcessedSuccessfullyVisibility => CurrentStage == StageKeys.ProcessedSuccessfully;
+
+        public bool ProcessFailureHandledVisibility => CurrentStage == StageKeys.ProcessHandledFailure;
+
+        public bool ProcessFailureUnhandledVisibility => CurrentStage == StageKeys.ProcessUnhandledFailure;
 
         public string FileName
         {
@@ -69,67 +120,28 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             }
         }
 
-        public string VersionNumber
+        public string ReportsLocation
         {
-            get { return _versionNumber; }
-
-            set
-            {
-                Set(ref _versionNumber, value);
-            }
-        }
-
-        public string RefDataDateCreated
-        {
-            get { return _refDataDateCreated; }
-
-            set
-            {
-                Set(ref _refDataDateCreated, value);
-            }
-        }
-
-        public bool Processing
-        {
-            get => _processing;
-            set
-            {
-                _processing = value;
-
-                ChooseFileCommand.RaiseCanExecuteChanged();
-                ProcessFileCommand.RaiseCanExecuteChanged();
-                SettingsNavigationCommand.RaiseCanExecuteChanged();
-            }
+            get => _reportsLocation;
+            set => Set(ref _reportsLocation, value);
         }
 
         public string TaskName
         {
             get => _taskName;
-            set
-            {
-                _taskName = value;
-                RaisePropertyChanged();
-            }
+            set => Set(ref _taskName, value);
         }
 
         public int CurrentTask
         {
             get => _currentTask;
-            set
-            {
-                _currentTask = value;
-                RaisePropertyChanged();
-            }
+            set => Set(ref _currentTask, value);
         }
 
         public int TaskCount
         {
             get => _taskCount;
-            set
-            {
-                _taskCount = value;
-                RaisePropertyChanged();
-            }
+            set => Set(ref _taskCount, value);
         }
 
         public RelayCommand ChooseFileCommand { get; set; }
@@ -140,7 +152,15 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         public RelayCommand AboutNavigationCommand { get; set; }
 
-        public RelayCommand<ICloseable> CloseWindowCommand { get; set; }
+        public RelayCommand SurveyHyperlinkCommand { get; set; }
+
+        public RelayCommand GuidanceHyperlinkCommand { get; set; }
+
+        public RelayCommand HelpdeskHyperlinkCommand { get; set; }
+
+        public RelayCommand ReportsFolderCommand { get; set; }
+
+        public RelayCommand CancelAndReuploadCommand { get; set; }
 
         public void HandleTaskProgressMessage(TaskProgressMessage taskProgressMessage)
         {
@@ -153,19 +173,69 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         {
             var fileName = _dialogInteractionService.GetFileNameFromOpenFileDialog();
 
-            if (!string.IsNullOrWhiteSpace(fileName))
+            if (!string.IsNullOrWhiteSpace(fileName) && fileName != _filenamePlaceholder)
             {
                 FileName = fileName;
+                CanSubmit = true;
             }
         }
 
         private async Task ProcessFile()
         {
-            Processing = true;
+            CurrentStage = StageKeys.Processing;
 
-            await _ilrDesktopService.ProcessAsync(FileName, CancellationToken.None);
+            try
+            {
+                _cancellationTokenSource = new CancellationTokenSource();
 
-            Processing = false;
+                CancelAndReuploadCommand.RaiseCanExecuteChanged();
+
+                var completionContext = await _ilrDesktopService.ProcessAsync(FileName, _cancellationTokenSource.Token);
+
+                ReportsLocation = completionContext.OutputDirectory;
+                UpdateCurrentStageForCompletionState(completionContext.ProcessingCompletionState);
+                CanSubmit = false;
+                FileName = _filenamePlaceholder;
+            }
+            catch (OperationCanceledException operationCanceledException)
+            {
+                _logger.LogError("Operation Cancelled", operationCanceledException);
+
+                CurrentStage = StageKeys.ChooseFile;
+            }
+            finally
+            {
+                _cancellationTokenSource.Dispose();
+            }
+        }
+
+        private void CancelAndReupload()
+        {
+            TaskName = "Cancelling";
+            _cancellationTokenSource?.Cancel();
+
+            CancelAndReuploadCommand.RaiseCanExecuteChanged();
+        }
+
+        private void UpdateCurrentStageForCompletionState(ProcessingCompletionStates processingCompletionState)
+        {
+            switch (processingCompletionState)
+            {
+                case ProcessingCompletionStates.Success:
+                    CurrentStage = StageKeys.ProcessedSuccessfully;
+                    break;
+                case ProcessingCompletionStates.HandledFail:
+                    CurrentStage = StageKeys.ProcessHandledFailure;
+                    break;
+                case ProcessingCompletionStates.UnhandledFail:
+                    CurrentStage = StageKeys.ProcessUnhandledFailure;
+                    break;
+            }
+        }
+
+        private void ProcessStart(string url)
+        {
+            _windowsProcessService.ProcessStart(url);
         }
 
         private void SettingsNavigate()
@@ -176,14 +246,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private void AboutNavigate()
         {
             _windowService.ShowAboutWindow();
-        }
-
-        private void CloseWindow(ICloseable window)
-        {
-            if (window != null)
-            {
-                window.Close();
-            }
         }
     }
 }
