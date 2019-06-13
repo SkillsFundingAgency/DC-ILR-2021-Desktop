@@ -35,23 +35,25 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
         }
 
         [Fact]
-        public async Task SaveCommandExecute()
+        public async Task SaveCommand_Execute()
         {
             var cancellationToken = CancellationToken.None;
             var desktopServiceSettingsMock = new Mock<IDesktopServiceSettings>();
+            var closeableMock = new Mock<ICloseable>();
 
-            var vm = NewViewModel(desktopServiceSettings: desktopServiceSettingsMock.Object);
+            desktopServiceSettingsMock.SetupGet(s => s.IlrDatabaseConnectionString).Returns("not empty");
+            desktopServiceSettingsMock.SetupGet(s => s.OutputDirectory).Returns("not empty either");
 
-            desktopServiceSettingsMock.Setup(x => x.SaveAsync(cancellationToken))
-                .Callback(() => vm.CanExecute().Should().BeTrue())
-                .Returns(Task.CompletedTask);
+            var vm = NewViewModel(desktopServiceSettingsMock.Object);
 
-            var result = vm.SaveSettingsCommand.ExecuteAsync().GetAwaiter();
-            result.IsCompleted.Should().BeTrue();
+            await vm.SaveSettingsCommand.ExecuteAsync(closeableMock.Object);
+
+            desktopServiceSettingsMock.Verify(ds => ds.SaveAsync(It.IsAny<CancellationToken>()));
+            closeableMock.Verify(c => c.Close());
         }
 
         [Fact]
-        public async Task SaveCommandExecute_EmptyConnectionString()
+        public async Task CanSave_EmptyConnectionString()
         {
             var desktopServiceSettingsMock = new Mock<IDesktopServiceSettings>();
             desktopServiceSettingsMock.SetupAllProperties();
@@ -59,11 +61,11 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             desktopServiceSettingsMock.SetupGet(x => x.OutputDirectory).Returns("OutputDirectory");
 
             var vm = NewViewModel(desktopServiceSettings: desktopServiceSettingsMock.Object);
-            vm.CanExecute().Should().BeFalse();
+            vm.CanSave().Should().BeFalse();
         }
 
         [Fact]
-        public async Task SaveCommandExecut_EmptyString()
+        public async Task CanSave_EmptyString()
         {
             var desktopServiceSettingsMock = new Mock<IDesktopServiceSettings>();
             desktopServiceSettingsMock.SetupAllProperties();
@@ -71,11 +73,11 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             desktopServiceSettingsMock.SetupGet(x => x.OutputDirectory).Returns(string.Empty);
 
             var vm = NewViewModel(desktopServiceSettings: desktopServiceSettingsMock.Object);
-            vm.CanExecute().Should().BeFalse();
+            vm.CanSave().Should().BeFalse();
         }
 
         [Fact]
-        public async Task SaveCommandExecute_WhiteSpace()
+        public async Task CanSave_WhiteSpace()
         {
             var desktopServiceSettingsMock = new Mock<IDesktopServiceSettings>();
             desktopServiceSettingsMock.SetupAllProperties();
@@ -83,11 +85,11 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             desktopServiceSettingsMock.SetupGet(x => x.OutputDirectory).Returns("  ");
 
             var vm = NewViewModel(desktopServiceSettings: desktopServiceSettingsMock.Object);
-            vm.CanExecute().Should().BeFalse();
+            vm.CanSave().Should().BeFalse();
         }
 
         [Fact]
-        public async Task SaveCommandExecute_NullValues()
+        public async Task CanSave_NullValues()
         {
             var desktopServiceSettingsMock = new Mock<IDesktopServiceSettings>();
 
@@ -95,7 +97,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             desktopServiceSettingsMock.SetupGet(x => x.OutputDirectory).Returns(null as string);
 
             var vm = NewViewModel(desktopServiceSettings: desktopServiceSettingsMock.Object);
-            vm.CanExecute().Should().BeFalse();
+            vm.CanSave().Should().BeFalse();
         }
 
         [Fact]
@@ -106,6 +108,34 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             NewViewModel().CloseWindowCommand.Execute(windowCloseable.Object);
 
             windowCloseable.Verify(c => c.Close(), Times.Once);
+        }
+
+        [Fact]
+        public void OutputDirectorySet()
+        {
+            var outputDirectory = "Output Directory";
+
+            var desktopServiceSettings = new Mock<IDesktopServiceSettings>();
+
+            var viewModel = NewViewModel(desktopServiceSettings.Object);
+
+            viewModel.OutputDirectory = outputDirectory;
+
+            desktopServiceSettings.VerifySet(s => s.OutputDirectory = outputDirectory);
+        }
+
+        [Fact]
+        public void IlrConnectionStringSet()
+        {
+            var ilrConnectionString = "Connection String";
+
+            var desktopServiceSettings = new Mock<IDesktopServiceSettings>();
+
+            var viewModel = NewViewModel(desktopServiceSettings.Object);
+
+            viewModel.IlrDatabaseConnectionString = ilrConnectionString;
+
+            desktopServiceSettings.VerifySet(s => s.IlrDatabaseConnectionString = ilrConnectionString);
         }
 
         private SettingsViewModel NewViewModel(IDesktopServiceSettings desktopServiceSettings = null, IDialogInteractionService dialogInteractionService = null)

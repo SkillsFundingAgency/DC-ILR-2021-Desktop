@@ -21,7 +21,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             _desktopServiceSettings = desktopServiceSettings;
 
             ChooseOutputDirectoryCommand = new RelayCommand(ChooseOutputDirectory);
-            SaveSettingsCommand = new AsyncCommand<ICloseable>(SaveSettings, CanExecute);
+            SaveSettingsCommand = new AsyncCommand<ICloseable>(SaveSettings, CanSave);
             CloseWindowCommand = new RelayCommand<ICloseable>(CloseWindow);
         }
 
@@ -53,7 +53,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             }
         }
 
-        public bool CanExecute()
+        public bool CanSave()
         {
             return !string.IsNullOrWhiteSpace(IlrDatabaseConnectionString) && !string.IsNullOrWhiteSpace(OutputDirectory);
         }
