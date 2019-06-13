@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ESFA.DC.ILR.Desktop.WPF"
         mc:Ignorable="d"
         Title="Funding Information System (FIS) Funding Year 2019-2020" Height="450" Width="800" WindowStartupLocation="CenterScreen"
-        DataContext="{Binding Main, Source={StaticResource Locator}}" ResizeMode="NoResize" Icon="../Resources/Images/DSAppIcon.ico">
+        DataContext="{Binding Main, Source={StaticResource Locator}}" ResizeMode="CanMinimize" Icon="../Resources/Images/DSAppIcon.ico">
     <Grid>
 
         <Grid.RowDefinitions>
