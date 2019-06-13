@@ -94,7 +94,7 @@
                         <ProgressBar Grid.Row="1" Grid.ColumnSpan="2" Height="20" Value="{Binding CurrentTask}" Maximum="{Binding TaskCount}" Margin="0,5" />
                         <Label Grid.Row="1" Grid.ColumnSpan="2" FontSize="14px" Content="{Binding TaskName}" HorizontalAlignment="Center" />
                     </Grid>
-                    <Button Content="Cancel and re-upload file" FontSize="14" HorizontalAlignment="Left" Margin="0,8" Width="180" Height="35"/>
+                    <Button Content="Cancel and re-upload file" Command="{Binding CancelAndReuploadCommand}" FontSize="14" HorizontalAlignment="Left" Margin="0,8" Width="180" Height="35"/>
                 </StackPanel>
             </Grid>
 

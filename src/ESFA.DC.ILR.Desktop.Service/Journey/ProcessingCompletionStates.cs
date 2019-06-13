@@ -9,5 +9,6 @@ namespace ESFA.DC.ILR.Desktop.Service.Journey
         Success,
         UnhandledFail,
         HandledFail,
+        Cancelled,
     }
 }

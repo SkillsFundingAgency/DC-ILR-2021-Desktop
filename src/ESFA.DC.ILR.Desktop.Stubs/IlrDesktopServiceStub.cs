@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -48,6 +49,8 @@ namespace ESFA.DC.ILR.Desktop.Stubs
                 var desktopTaskDefinition = steps[step];
 
                 var result = await ExecuteTask(desktopTaskDefinition, step, stepCount, context, cancellationToken);
+
+                cancellationToken.ThrowIfCancellationRequested();
 
                 if (!result.IsFaulted)
                 {

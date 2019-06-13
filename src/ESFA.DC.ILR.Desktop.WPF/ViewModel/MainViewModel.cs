@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Service.Interface;
@@ -5,6 +6,7 @@ using ESFA.DC.ILR.Desktop.Service.Journey;
 using ESFA.DC.ILR.Desktop.Service.Message;
 using ESFA.DC.ILR.Desktop.WPF.Command;
 using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
+using ESFA.DC.Logging.Interfaces;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 
@@ -31,16 +33,16 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private readonly IWindowService _windowService;
         private readonly IDialogInteractionService _dialogInteractionService;
         private readonly IWindowsProcessService _windowsProcessService;
+        private readonly IUrlService _urlService;
+        private readonly ILogger _logger;
 
+        private CancellationTokenSource _cancellationTokenSource;
         private string _fileName = _filenamePlaceholder;
         private bool _canSubmit;
         private string _taskName;
         private int _currentTask;
         private int _taskCount = 1;
         private StageKeys _currentStage = StageKeys.ChooseFile;
-        private string _surveyHyperlinkUrl = "http://bbc.co.uk";
-        private string _guidanceHyperlinkUrl = "http://google.co.uk";
-        private string _helpdeskUrl = "http://amazon.co.uk";
         private string _reportsLocation;
 
         public MainViewModel(
@@ -48,13 +50,17 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             IMessengerService messengerService,
             IWindowService windowService,
             IDialogInteractionService dialogInteractionService,
-            IWindowsProcessService windowsProcessService)
+            IWindowsProcessService windowsProcessService,
+            IUrlService urlService,
+            ILogger logger)
         {
             _ilrDesktopService = ilrDesktopService;
             _messengerService = messengerService;
             _windowService = windowService;
             _dialogInteractionService = dialogInteractionService;
             _windowsProcessService = windowsProcessService;
+            _urlService = urlService;
+            _logger = logger;
 
             _messengerService.Register<TaskProgressMessage>(this, HandleTaskProgressMessage);
 
@@ -62,10 +68,11 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             ProcessFileCommand = new AsyncCommand(ProcessFile, () => CanSubmit);
             SettingsNavigationCommand = new RelayCommand(SettingsNavigate);
             AboutNavigationCommand = new RelayCommand(AboutNavigate);
-            SurveyHyperlinkCommand = new RelayCommand(() => ProcessStart(_surveyHyperlinkUrl));
-            GuidanceHyperlinkCommand = new RelayCommand(() => ProcessStart(_guidanceHyperlinkUrl));
-            HelpdeskHyperlinkCommand = new RelayCommand(() => ProcessStart(_helpdeskUrl));
+            SurveyHyperlinkCommand = new RelayCommand(() => ProcessStart(_urlService.Survey()));
+            GuidanceHyperlinkCommand = new RelayCommand(() => ProcessStart(_urlService.Guidance()));
+            HelpdeskHyperlinkCommand = new RelayCommand(() => ProcessStart(_urlService.Helpdesk()));
             ReportsFolderCommand = new RelayCommand(() => ProcessStart(_reportsLocation));
+            CancelAndReuploadCommand = new RelayCommand(CancelAndReupload);
         }
 
         public StageKeys CurrentStage
@@ -153,6 +160,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         public RelayCommand ReportsFolderCommand { get; set; }
 
+        public RelayCommand CancelAndReuploadCommand { get; set; }
+
         public void HandleTaskProgressMessage(TaskProgressMessage taskProgressMessage)
         {
             TaskName = taskProgressMessage.TaskName;
@@ -175,12 +184,32 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         {
             CurrentStage = StageKeys.Processing;
 
-            var completionContext = await _ilrDesktopService.ProcessAsync(FileName, CancellationToken.None);
+            try
+            {
+                _cancellationTokenSource = new CancellationTokenSource();
 
-            ReportsLocation = completionContext.OutputDirectory;
-            UpdateCurrentStageForCompletionState(completionContext.ProcessingCompletionState);
-            CanSubmit = false;
-            FileName = _filenamePlaceholder;
+                var completionContext = await _ilrDesktopService.ProcessAsync(FileName, _cancellationTokenSource.Token);
+
+                ReportsLocation = completionContext.OutputDirectory;
+                UpdateCurrentStageForCompletionState(completionContext.ProcessingCompletionState);
+                CanSubmit = false;
+                FileName = _filenamePlaceholder;
+            }
+            catch (OperationCanceledException operationCanceledException)
+            {
+                _logger.LogError("Operation Cancelled", operationCanceledException);
+
+                CurrentStage = StageKeys.ChooseFile;
+            }
+            finally
+            {
+                _cancellationTokenSource.Dispose();
+            }
+        }
+
+        private void CancelAndReupload()
+        {
+            _cancellationTokenSource?.Cancel();
         }
 
         private void UpdateCurrentStageForCompletionState(ProcessingCompletionStates processingCompletionState)

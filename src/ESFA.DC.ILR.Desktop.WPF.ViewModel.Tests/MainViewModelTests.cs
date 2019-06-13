@@ -4,6 +4,7 @@ using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Service.Journey;
 using ESFA.DC.ILR.Desktop.Service.Message;
 using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
+using ESFA.DC.Logging.Interfaces;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -149,14 +150,23 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             viewModel.FileName.Should().Be("No file chosen");
         }
 
-        private MainViewModel NewViewModel(IIlrDesktopService ilrDesktopService = null, IMessengerService messengerService = null, IWindowService windowService = null, IDialogInteractionService dialogInteractionService = null, IWindowsProcessService windowsProcessService = null)
+        private MainViewModel NewViewModel(
+            IIlrDesktopService ilrDesktopService = null,
+            IMessengerService messengerService = null,
+            IWindowService windowService = null,
+            IDialogInteractionService dialogInteractionService = null,
+            IWindowsProcessService windowsProcessService = null,
+            IUrlService urlService = null,
+            ILogger logger = null)
         {
             return new MainViewModel(
                 ilrDesktopService ?? Mock.Of<IIlrDesktopService>(),
                 messengerService ?? Mock.Of<IMessengerService>(),
                 windowService ?? Mock.Of<IWindowService>(),
                 dialogInteractionService ?? Mock.Of<IDialogInteractionService>(),
-                windowsProcessService ?? Mock.Of<IWindowsProcessService>());
+                windowsProcessService ?? Mock.Of<IWindowsProcessService>(),
+                urlService ?? Mock.Of<IUrlService>(),
+                logger ?? Mock.Of<ILogger>());
         }
     }
 }
