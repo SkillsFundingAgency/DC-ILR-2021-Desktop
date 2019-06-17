@@ -133,6 +133,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             var completionContextMock = new Mock<ICompletionContext>();
 
             completionContextMock.SetupGet(c => c.OutputDirectory).Returns(outputDirectory);
+            completionContextMock.SetupGet(c => c.ProcessingCompletionState).Returns(ProcessingCompletionStates.Success);
 
             var viewModel = NewViewModel(ilrDesktopServiceMock.Object);
 
