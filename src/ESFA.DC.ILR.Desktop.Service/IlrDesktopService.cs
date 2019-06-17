@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac.Features.Indexed;
@@ -13,7 +11,7 @@ using ESFA.DC.ILR.Desktop.Service.Tasks;
 using ESFA.DC.ILR.Desktop.Service.Tasks.Extensions;
 using ESFA.DC.Logging.Interfaces;
 
-namespace ESFA.DC.ILR.Desktop.Stubs
+namespace ESFA.DC.ILR.Desktop.Service
 {
     public class IlrDesktopService : IIlrDesktopService
     {

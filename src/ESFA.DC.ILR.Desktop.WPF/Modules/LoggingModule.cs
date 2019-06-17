@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Autofac;
-using ESFA.DC.ILR.Desktop.Stubs;
 using ESFA.DC.ILR.Desktop.WPF.Service;
 using NLog;
 using NLog.Config;
