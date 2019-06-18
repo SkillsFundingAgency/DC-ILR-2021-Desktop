@@ -217,7 +217,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             CancelAndReuploadCommand.RaiseCanExecuteChanged();
         }
 
-        private void UpdateCurrentStageForCompletionState(ProcessingCompletionStates processingCompletionState)
+        private void UpdateCurrentStageForCompletionState(ProcessingCompletionStates? processingCompletionState)
         {
             switch (processingCompletionState)
             {
