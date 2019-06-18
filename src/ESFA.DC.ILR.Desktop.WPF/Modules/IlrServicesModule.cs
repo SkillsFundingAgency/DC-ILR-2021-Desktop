@@ -40,6 +40,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
 
             containerBuilder.RegisterType<DataStoreDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.DataStore);
             containerBuilder.RegisterModule<DataStoreModule>();
+
+            containerBuilder.RegisterType<PostProcessingDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.PostExecution);
         }
     }
 }

@@ -99,7 +99,7 @@ namespace ESFA.DC.ILR.Desktop.Service
               //  new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.FundingService),
                 new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.DataStore),
               //  new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ReportService),
-              //  new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.PostExecution),
+                new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.PostExecution),
             };
         }
     }
