@@ -1,4 +1,6 @@
-name: $(GitVersion_NuGetVersion)
+
+name: $(VersionNumberMajor).$(VersionNumberMinor)$(Rev:.rrrr)
+#name: $(GitVersion_NuGetVersion)
 
 resources:
 - repo: self
@@ -13,6 +15,8 @@ pool:
   - vstest
 
 variables:
+  VersionNumberMajor: '1'
+  VersionNumberMinor: '2'
   BuildConfiguration: 'Release'
   BuildPlatform: 'Any CPU'
   Parameters.solution: '**\*.sln'
@@ -21,6 +25,7 @@ variables:
 steps:
 - task: gittools.gitversion.gitversion-task.GitVersion@4
   displayName: GitVersion
+  enabled: false
   inputs:
     updateAssemblyInfo: true
     preferBundledVersion: false
@@ -32,6 +37,7 @@ steps:
 
 - task: NuGetCommand@2
   displayName: 'NuGet restore'
+
   inputs:
     restoreSolution: '$(Parameters.solution)'
     vstsFeed: '$(Parameters.nugetFeedName)'
