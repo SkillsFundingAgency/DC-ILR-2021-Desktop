@@ -81,6 +81,12 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         }
 
         [Fact]
+        public void ReportOutputFileNames()
+        {
+            NewFactory().Build(string.Empty).KeyValuePairs["ReportOutputFileNames"].Should().Be(string.Empty);
+        }
+
+        [Fact]
         public void IlrDatabaseConnectionString()
         {
             var connectionString = "Connection String";
@@ -95,7 +101,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         [Fact]
         public void KeyValuePairsCount()
         {
-            NewFactory().Build(string.Empty).KeyValuePairs.Should().HaveCount(9);
+            NewFactory().Build(string.Empty).KeyValuePairs.Should().HaveCount(10);
         }
 
         private DesktopContextFactory NewFactory(IDateTimeProvider dateTimeProvider = null, IDesktopServiceSettings desktopServiceSettings = null)
