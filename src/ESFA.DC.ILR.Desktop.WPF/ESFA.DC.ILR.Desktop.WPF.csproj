@@ -175,28 +175,28 @@
       <Version>0.1.19-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.1920.DataStore.Desktop">
-      <Version>0.0.89</Version>
+      <Version>0.0.145</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.1920.FileValidationService.Desktop">
-      <Version>0.1.65</Version>
+      <Version>0.1.72</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.1920.IO.Model.Validation">
       <Version>0.1.1-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.1920.Model">
-      <Version>0.1.0-beta0001</Version>
+      <Version>0.1.7-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.1920.Model.Interface">
-      <Version>0.1.0-beta0001</Version>
+      <Version>0.1.4-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.1920.Model.Loose">
-      <Version>0.1.1-beta0001</Version>
+      <Version>0.1.7-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.1920.ValidationService.Desktop">
-      <Version>0.0.106</Version>
+      <Version>0.0.201</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR1920.ReferenceDataService.Desktop">
-      <Version>0.0.46</Version>
+      <Version>0.0.77</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.IO.FileSystem">
       <Version>0.1.19-beta0001</Version>
