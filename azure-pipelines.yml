@@ -2,7 +2,7 @@ name: $(GitVersion_NuGetVersion)
 
 resources:
 - repo: self
-  fetchDepth: 15
+  fetchDepth: 30
 
 pool:
   name: DCT
@@ -90,9 +90,17 @@ steps:
   inputs:
     SourceFolder: '$(system.defaultworkingdirectory)'
     Contents: '**\bin\$(BuildConfiguration)\**'
-    TargetFolder: '$(build.artifactstagingdirectory)'
-  enabled: false
+    TargetFolder: '$(build.BinariesDirectory)\tmp'
+  enabled: true
   condition: succeededOrFailed()
+
+  ## Create Zip File for Deployment     
+- task: ArchiveFiles@2
+  displayName: 'Package WebJobs for Website'
+  inputs:
+    rootFolderOrFile: '$(build.BinariesDirectory)\tmp'
+    includeRootFolder: false
+    archiveFile: '$(build.ArtifactStagingDirectory)\DC-ILR-1920-Desktop.$(Build.BuildNumber).zip'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: drop'
