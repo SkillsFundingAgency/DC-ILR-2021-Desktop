@@ -68,9 +68,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             ProcessFileCommand = new AsyncCommand(ProcessFile, () => CanSubmit);
             SettingsNavigationCommand = new RelayCommand(SettingsNavigate);
             AboutNavigationCommand = new RelayCommand(AboutNavigate);
-            SurveyHyperlinkCommand = new RelayCommand(() => ProcessStart(_urlService.Survey()));
-            GuidanceHyperlinkCommand = new RelayCommand(() => ProcessStart(_urlService.Guidance()));
-            HelpdeskHyperlinkCommand = new RelayCommand(() => ProcessStart(_urlService.Helpdesk()));
             ReportsFolderCommand = new RelayCommand(() => ProcessStart(_reportsLocation));
             CancelAndReuploadCommand = new RelayCommand(CancelAndReupload, () => !_cancellationTokenSource?.IsCancellationRequested ?? false);
         }
@@ -151,12 +148,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         public RelayCommand SettingsNavigationCommand { get; set; }
 
         public RelayCommand AboutNavigationCommand { get; set; }
-
-        public RelayCommand SurveyHyperlinkCommand { get; set; }
-
-        public RelayCommand GuidanceHyperlinkCommand { get; set; }
-
-        public RelayCommand HelpdeskHyperlinkCommand { get; set; }
 
         public RelayCommand ReportsFolderCommand { get; set; }
 
