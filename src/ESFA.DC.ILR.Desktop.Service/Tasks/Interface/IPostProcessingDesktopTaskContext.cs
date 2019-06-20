@@ -10,6 +10,8 @@ namespace ESFA.DC.ILR.Desktop.Service.Tasks.Interface
 
         string OutputDirectory { get; }
 
+        string OriginalFilename { get; }
+
         IReadOnlyCollection<string> ReportFileNames { get; }
     }
 }

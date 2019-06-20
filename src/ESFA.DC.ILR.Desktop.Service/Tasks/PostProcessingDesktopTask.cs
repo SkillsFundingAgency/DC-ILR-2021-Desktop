@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Interface;
@@ -23,14 +20,16 @@ namespace ESFA.DC.ILR.Desktop.Service.Tasks
         {
             var postProcessingDesktopTaskContext = new PostProcessingDesktopTaskContext(desktopContext);
 
-            Directory.CreateDirectory(desktopContext.OutputDirectory);
+            var outputDirectory = Path.Combine(postProcessingDesktopTaskContext.OutputDirectory, Path.GetFileNameWithoutExtension(postProcessingDesktopTaskContext.OriginalFilename));
+
+            Directory.CreateDirectory(outputDirectory);
 
             if (postProcessingDesktopTaskContext.ReportFileNames != null)
             {
                 foreach (var fileName in postProcessingDesktopTaskContext.ReportFileNames.Where(r => !string.IsNullOrWhiteSpace(r)))
                 {
                     var source = Path.Combine(postProcessingDesktopTaskContext.Container, fileName);
-                    var destination = Path.Combine(postProcessingDesktopTaskContext.OutputDirectory, fileName);
+                    var destination = Path.Combine(outputDirectory, fileName);
 
                     File.Copy(source, destination, true);
 
