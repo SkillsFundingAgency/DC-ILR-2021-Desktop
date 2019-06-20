@@ -22,6 +22,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
         {
             containerBuilder.RegisterType<DateTimeProvider.DateTimeProvider>().As<IDateTimeProvider>();
             containerBuilder.RegisterType<DesktopContextFactory>().As<IDesktopContextFactory>();
+            containerBuilder.RegisterType<IlrPipelineProvider>().As<IIlrPipelineProvider>();
+            containerBuilder.RegisterType<DesktopTaskExecutionService>().As<IDesktopTaskExecutionService>();
             containerBuilder.RegisterType<IlrDesktopService>().As<IIlrDesktopService>();
 
             containerBuilder.RegisterType<PreProcessingDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.PreExecution);
@@ -40,6 +42,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
 
             containerBuilder.RegisterType<DataStoreDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.DataStore);
             containerBuilder.RegisterModule<DataStoreModule>();
+
+            containerBuilder.RegisterType<PostProcessingDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.PostExecution);
         }
     }
 }

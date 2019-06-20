@@ -15,16 +15,23 @@ namespace ESFA.DC.ILR.Desktop.Service
 {
     public class IlrDesktopService : IIlrDesktopService
     {
-        private readonly IIndex<IlrDesktopTaskKeys, IDesktopTask> _desktopTaskIndex;
         private readonly IMessengerService _messengerService;
         private readonly IDesktopContextFactory _desktopContextFactory;
+        private readonly IIlrPipelineProvider _ilrPipelineProvider;
+        private readonly IDesktopTaskExecutionService _desktopTaskExecutionService;
         private readonly ILogger _logger;
 
-        public IlrDesktopService(IIndex<IlrDesktopTaskKeys, IDesktopTask> desktopTaskIndex, IMessengerService messengerService, IDesktopContextFactory desktopContextFactory, ILogger logger)
+        public IlrDesktopService(
+            IMessengerService messengerService,
+            IDesktopContextFactory desktopContextFactory,
+            IIlrPipelineProvider ilrPipelineProvider,
+            IDesktopTaskExecutionService desktopTaskExecutionService,
+            ILogger logger)
         {
-            _desktopTaskIndex = desktopTaskIndex;
             _messengerService = messengerService;
             _desktopContextFactory = desktopContextFactory;
+            _ilrPipelineProvider = ilrPipelineProvider;
+            _desktopTaskExecutionService = desktopTaskExecutionService;
             _logger = logger;
         }
 
@@ -38,7 +45,7 @@ namespace ESFA.DC.ILR.Desktop.Service
                 ProcessingCompletionState = ProcessingCompletionStates.Success,
             };
 
-            var stepsList = BuildTaskKeys().ToList();
+            var stepsList = _ilrPipelineProvider.Provide();
 
             var step = 0;
 
@@ -46,7 +53,9 @@ namespace ESFA.DC.ILR.Desktop.Service
             {
                 var desktopTaskDefinition = stepsList[step];
 
-                var result = await ExecuteTask(desktopTaskDefinition, step, stepsList.Count, context, cancellationToken);
+                _messengerService.Send(new TaskProgressMessage(desktopTaskDefinition.Key.GetDisplayText(), step, stepsList.Count));
+
+                var result = await _desktopTaskExecutionService.ExecuteAsync(desktopTaskDefinition.Key, context, cancellationToken);
 
                 cancellationToken.ThrowIfCancellationRequested();
 
@@ -58,7 +67,7 @@ namespace ESFA.DC.ILR.Desktop.Service
                 {
                     if (desktopTaskDefinition.FailureKey != null)
                     {
-                        step = stepsList.FindIndex(s => s.Key == desktopTaskDefinition.FailureKey);
+                        step = _ilrPipelineProvider.IndexFor(desktopTaskDefinition.FailureKey.Value);
 
                         completionContext.ProcessingCompletionState = ProcessingCompletionStates.HandledFail;
 
@@ -78,29 +87,6 @@ namespace ESFA.DC.ILR.Desktop.Service
             _messengerService.Send(new TaskProgressMessage("Processing Complete", stepsList.Count, stepsList.Count));
 
             return completionContext;
-        }
-
-        private Task<Task<IDesktopContext>> ExecuteTask(IIlrDesktopTaskDefinition ilrDesktopTaskDefinition, int step, int stepCount, IDesktopContext desktopContext, CancellationToken cancellationToken)
-        {
-            _messengerService.Send(new TaskProgressMessage(ilrDesktopTaskDefinition.Key.GetDisplayText(), step, stepCount));
-
-            return Task.Factory.StartNew(() => _desktopTaskIndex[ilrDesktopTaskDefinition.Key].ExecuteAsync(desktopContext, cancellationToken), cancellationToken, TaskCreationOptions.LongRunning, TaskScheduler.Default);
-        }
-
-        private IIlrDesktopTaskDefinition[] BuildTaskKeys()
-        {
-            return new IIlrDesktopTaskDefinition[]
-            {
-                new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.PreExecution),
-                new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.DatabaseCreate),
-                new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.FileValidationService),
-                new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ReferenceDataService),
-                new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ValidationService),
-              //  new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.FundingService),
-                new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.DataStore),
-              //  new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ReportService),
-              //  new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.PostExecution),
-            };
         }
     }
 }
