@@ -33,7 +33,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private readonly IWindowService _windowService;
         private readonly IDialogInteractionService _dialogInteractionService;
         private readonly IWindowsProcessService _windowsProcessService;
-        private readonly IUrlService _urlService;
         private readonly ILogger _logger;
 
         private CancellationTokenSource _cancellationTokenSource;
@@ -51,7 +50,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             IWindowService windowService,
             IDialogInteractionService dialogInteractionService,
             IWindowsProcessService windowsProcessService,
-            IUrlService urlService,
             ILogger logger)
         {
             _ilrDesktopService = ilrDesktopService;
@@ -59,7 +57,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             _windowService = windowService;
             _dialogInteractionService = dialogInteractionService;
             _windowsProcessService = windowsProcessService;
-            _urlService = urlService;
             _logger = logger;
 
             _messengerService.Register<TaskProgressMessage>(this, HandleTaskProgressMessage);

@@ -14,7 +14,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
             containerBuilder.RegisterType<WindowService>().As<IWindowService>();
             containerBuilder.RegisterType<DialogInteractionService>().As<IDialogInteractionService>();
             containerBuilder.RegisterType<WindowsProcessService>().As<IWindowsProcessService>();
-            containerBuilder.RegisterType<UrlService>().As<IUrlService>();
             containerBuilder.Register(c =>
             {
                 var settings = new DesktopServiceSettings();
