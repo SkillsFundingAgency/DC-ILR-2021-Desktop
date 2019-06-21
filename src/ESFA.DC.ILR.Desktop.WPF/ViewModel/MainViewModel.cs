@@ -34,7 +34,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private readonly IWindowService _windowService;
         private readonly IDialogInteractionService _dialogInteractionService;
         private readonly IWindowsProcessService _windowsProcessService;
-        private readonly IReleaseInformationService _releaseInformationService;
+        private readonly IVersionInformationService _versionInformationService;
         private readonly ILogger _logger;
 
         private CancellationTokenSource _cancellationTokenSource;
@@ -52,7 +52,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             IWindowService windowService,
             IDialogInteractionService dialogInteractionService,
             IWindowsProcessService windowsProcessService,
-            IReleaseInformationService releaseInformationService,
+            IVersionInformationService versionInformationService,
             ILogger logger)
         {
             _ilrDesktopService = ilrDesktopService;
@@ -60,7 +60,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             _windowService = windowService;
             _dialogInteractionService = dialogInteractionService;
             _windowsProcessService = windowsProcessService;
-            _releaseInformationService = releaseInformationService;
+            _versionInformationService = versionInformationService;
             _logger = logger;
 
             _messengerService.Register<TaskProgressMessage>(this, HandleTaskProgressMessage);
@@ -142,9 +142,9 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             set => Set(ref _taskCount, value);
         }
 
-        public string ReleaseVersionNumber => _releaseInformationService.ReleaseVersionNumber;
+        public string ReleaseVersionNumber => _versionInformationService.VersionNumber;
 
-        public string ReleaseDate => _releaseInformationService.ReleaseDate;
+        public string ReleaseDate => _versionInformationService.Date;
 
         public RelayCommand ChooseFileCommand { get; set; }
 

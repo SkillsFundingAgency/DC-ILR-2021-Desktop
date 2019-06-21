@@ -27,7 +27,11 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
         [Fact]
         public void AboutItems()
         {
-            var viewModel = NewViewModel();
+            var referenceDataVersionInformationServiceMock = new Mock<IReferenceDataVersionInformationService>();
+            referenceDataVersionInformationServiceMock.SetupGet(x => x.Date).Returns(new DateTime(2019, 12, 25, 1, 2, 3).ToString());
+            referenceDataVersionInformationServiceMock.SetupGet(x => x.VersionNumber).Returns("123.123.123");
+
+            var viewModel = NewViewModel(referenceDataVersionInformationServiceMock.Object);
 
             viewModel.AboutItems.Should().HaveCount(2);
 
@@ -38,9 +42,9 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             viewModel.AboutItems[1].Value.Should().Be(new DateTime(2019, 12, 25, 1, 2, 3).ToString());
         }
 
-        private AboutViewModel NewViewModel()
+        private AboutViewModel NewViewModel(IReferenceDataVersionInformationService referenceDataVersionInformationService = null)
         {
-            return new AboutViewModel();
+            return new AboutViewModel(referenceDataVersionInformationService ?? new Mock<IReferenceDataVersionInformationService>().Object);
         }
     }
 }
