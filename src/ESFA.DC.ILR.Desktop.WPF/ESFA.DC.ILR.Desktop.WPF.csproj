@@ -81,6 +81,7 @@
     <Compile Include="Service\Interface\ICloseable.cs" />
     <Compile Include="Service\Interface\IDialogInteractionService.cs" />
     <Compile Include="Service\Interface\IReferenceDataVersionInformationService.cs" />
+    <Compile Include="Service\Interface\IReleaseVersionInformationService.cs" />
     <Compile Include="Service\Interface\IVersionInformationService.cs" />
     <Compile Include="Service\Interface\IWindowService.cs" />
     <Compile Include="Service\Interface\IWindowsProcessService.cs" />

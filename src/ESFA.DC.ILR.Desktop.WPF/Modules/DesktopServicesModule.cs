@@ -15,7 +15,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
             containerBuilder.RegisterType<WindowService>().As<IWindowService>();
             containerBuilder.RegisterType<DialogInteractionService>().As<IDialogInteractionService>();
             containerBuilder.RegisterType<WindowsProcessService>().As<IWindowsProcessService>();
-            containerBuilder.RegisterType<ReleaseVersionInformationService>().As<IVersionInformationService>();
+            containerBuilder.RegisterType<ReleaseVersionInformationService>().As<IReleaseVersionInformationService>();
             containerBuilder.RegisterType<ReferenceDataVersionInformationService>().As<IReferenceDataVersionInformationService>();
 
             containerBuilder.Register(c =>

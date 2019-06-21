@@ -1,9 +1,6 @@
 ﻿namespace ESFA.DC.ILR.Desktop.WPF.Service.Interface
 {
-    public interface IReferenceDataVersionInformationService
+    public interface IReferenceDataVersionInformationService : IVersionInformationService
     {
-        string Date { get; }
-
-        string VersionNumber { get; }
     }
 }
