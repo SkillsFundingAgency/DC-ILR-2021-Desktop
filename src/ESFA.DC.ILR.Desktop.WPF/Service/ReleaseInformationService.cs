@@ -7,8 +7,6 @@ namespace ESFA.DC.ILR.Desktop.Service
 {
     public class ReleaseInformationService : IReleaseInformationService
     {
-        private const string ReleaseDateKey = "ReleaseDate";
-
         public string ReleaseDate => DesktopServiceConfiguration.Configuration.ReleaseDate;
 
         public string ReleaseVersionNumber => Assembly.GetEntryAssembly().GetName().Version.ToString();
