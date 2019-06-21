@@ -11,6 +11,8 @@ using ESFA.DC.ILR.FileValidationService.Desktop;
 using ESFA.DC.ILR.FileValidationService.Desktop.Modules;
 using ESFA.DC.ILR.ReferenceDataService.Desktop;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Modules;
+using ESFA.DC.ILR.ReportService.Desktop;
+using ESFA.DC.ILR.ReportService.Desktop.Modules;
 using ESFA.DC.ILR.ValidationService.Desktop;
 using ESFA.DC.ILR.ValidationService.Desktop.Modules;
 
@@ -42,6 +44,9 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
 
             containerBuilder.RegisterType<DataStoreDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.DataStore);
             containerBuilder.RegisterModule<DataStoreModule>();
+
+            containerBuilder.RegisterType<ReportServiceDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.ReportService);
+            containerBuilder.RegisterModule<ReportServiceDesktopModule>();
 
             containerBuilder.RegisterType<PostProcessingDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.PostExecution);
         }

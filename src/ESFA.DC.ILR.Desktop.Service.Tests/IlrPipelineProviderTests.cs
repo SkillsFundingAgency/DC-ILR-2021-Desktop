@@ -16,7 +16,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         {
             var pipeline = NewProvider().Provide().ToList();
 
-            pipeline.Should().HaveCount(7);
+            pipeline.Should().HaveCount(8);
 
             pipeline[0].Key.Should().Be(IlrDesktopTaskKeys.PreExecution);
             pipeline[0].FailureKey.Should().BeNull();
@@ -36,8 +36,11 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
             pipeline[5].Key.Should().Be(IlrDesktopTaskKeys.DataStore);
             pipeline[5].FailureKey.Should().BeNull();
 
-            pipeline[6].Key.Should().Be(IlrDesktopTaskKeys.PostExecution);
+            pipeline[6].Key.Should().Be(IlrDesktopTaskKeys.ReportService);
             pipeline[6].FailureKey.Should().BeNull();
+
+            pipeline[7].Key.Should().Be(IlrDesktopTaskKeys.PostExecution);
+            pipeline[7].FailureKey.Should().BeNull();
         }
 
         [Theory]
@@ -47,7 +50,8 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         [InlineData(IlrDesktopTaskKeys.ReferenceDataService, 3)]
         [InlineData(IlrDesktopTaskKeys.ValidationService, 4)]
         [InlineData(IlrDesktopTaskKeys.DataStore, 5)]
-        [InlineData(IlrDesktopTaskKeys.PostExecution, 6)]
+        [InlineData(IlrDesktopTaskKeys.ReportService, 6)]
+        [InlineData(IlrDesktopTaskKeys.PostExecution, 7)]
         public void IndexFor(IlrDesktopTaskKeys ilrDesktopTaskKey, int index)
         {
             NewProvider().IndexFor(ilrDesktopTaskKey).Should().Be(index);

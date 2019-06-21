@@ -15,7 +15,7 @@ namespace ESFA.DC.ILR.Desktop.Service
             new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ValidationService),
             //  new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.FundingService),
             new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.DataStore),
-            //  new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ReportService),
+            new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ReportService),
             new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.PostExecution),
         };
 
