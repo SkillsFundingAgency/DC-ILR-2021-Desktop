@@ -35,6 +35,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
                     [ILRContextKeys.ValidLearnRefNumbers] = "ValidLearnRefNumbers.json",
                     [ILRContextKeys.ValidationErrorLookups] = "ValidationErrorLookups.json",
                     [ILRContextKeys.ReportOutputFileNames] = string.Empty,
+                    ["Tasks"] = "TaskGenerateValidationReport",
                 },
             };
         }
