@@ -67,6 +67,7 @@
     <Compile Include="Command\Interface\IAsyncCommand.cs" />
     <Compile Include="Command\Interface\IErrorHandler.cs" />
     <Compile Include="Command\Extensions\TaskExtensions.cs" />
+    <Compile Include="Config\DesktopServiceConfiguration.cs" />
     <Compile Include="Config\FileSystemKeyValuePersistenceServiceConfig.cs" />
     <Compile Include="Modules\DesktopServicesModule.cs" />
     <Compile Include="Modules\IlrServicesModule.cs" />

@@ -1,5 +1,6 @@
 ﻿using System.Configuration;
 using System.Reflection;
+using ESFA.DC.ILR.Desktop.WPF.Config;
 using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
 
 namespace ESFA.DC.ILR.Desktop.Service
@@ -8,7 +9,7 @@ namespace ESFA.DC.ILR.Desktop.Service
     {
         private const string ReleaseDateKey = "ReleaseDate";
 
-        public string ReleaseDate => ConfigurationManager.AppSettings[ReleaseDateKey];
+        public string ReleaseDate => DesktopServiceConfiguration.Configuration.ReleaseDate;
 
         public string ReleaseVersionNumber => Assembly.GetEntryAssembly().GetName().Version.ToString();
     }
