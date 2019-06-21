@@ -79,9 +79,11 @@
     <Compile Include="Service\DialogInteractionService.cs" />
     <Compile Include="Service\Interface\ICloseable.cs" />
     <Compile Include="Service\Interface\IDialogInteractionService.cs" />
+    <Compile Include="Service\Interface\IReleaseInformationService.cs" />
     <Compile Include="Service\Interface\IWindowService.cs" />
     <Compile Include="Service\Interface\IWindowsProcessService.cs" />
     <Compile Include="Service\MessengerService.cs" />
+    <Compile Include="Service\ReleaseInformationService.cs" />
     <Compile Include="Service\WindowService.cs" />
     <Compile Include="Service\WindowsProcessService.cs" />
     <Compile Include="ViewModel\AboutViewModel.cs" />

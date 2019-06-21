@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using Autofac;
+using ESFA.DC.ILR.Desktop.Service;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.WPF.Service;
 using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
@@ -14,6 +15,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
             containerBuilder.RegisterType<WindowService>().As<IWindowService>();
             containerBuilder.RegisterType<DialogInteractionService>().As<IDialogInteractionService>();
             containerBuilder.RegisterType<WindowsProcessService>().As<IWindowsProcessService>();
+            containerBuilder.RegisterType<ReleaseInformationService>().As<IReleaseInformationService>();
+
             containerBuilder.Register(c =>
             {
                 var settings = new DesktopServiceSettings();
