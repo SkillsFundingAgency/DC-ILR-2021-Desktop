@@ -30,6 +30,14 @@ steps:
     updateAssemblyInfo: true
     preferBundledVersion: false
 
+- task: VersionAssemblies@2
+  inputs:
+    Path: '$(Build.SourcesDirectory)'
+    VersionNumber: '$(Build.BuildNumber)'
+    InjectVersion: false
+    FilenamePattern: 'AssemblyInfo.*'
+    OutputVersion: 'OutputedVersion'
+
 - task: NuGetToolInstaller@0
   displayName: 'Use NuGet >=4.7.0'
   inputs:
@@ -92,16 +100,15 @@ steps:
   continueOnError: true
 
 - task: CopyFiles@2
-  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
   inputs:
     SourceFolder: '$(system.defaultworkingdirectory)'
-    Contents: '**\bin\$(BuildConfiguration)\**'
-    TargetFolder: '$(build.BinariesDirectory)\tmp'
-  enabled: true
-  condition: succeededOrFailed()
+    Contents: '**\*.WPF\bin\$(BuildConfiguration)\**
+      !**\*.pdb'
+    TargetFolder: '$(build.ArtifactStagingDirectory)\DC-ILR-1920-Desktop'
 
   ## Create Zip File for Deployment     
 - task: ArchiveFiles@2
+  enabled: false
   displayName: 'Package WebJobs for Website'
   inputs:
     rootFolderOrFile: '$(build.BinariesDirectory)\tmp'
