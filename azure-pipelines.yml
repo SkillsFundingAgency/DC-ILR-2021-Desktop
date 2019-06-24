@@ -17,7 +17,6 @@ pool:
 variables:
   VersionNumberMajor: '1'
   VersionNumberMinor: '2'
-  VersionNumberBuild: '0'
   BuildConfiguration: 'Release'
   BuildPlatform: 'Any CPU'
   Parameters.solution: '**\*.sln'
