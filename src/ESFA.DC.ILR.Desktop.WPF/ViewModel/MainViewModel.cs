@@ -34,7 +34,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private readonly IWindowService _windowService;
         private readonly IDialogInteractionService _dialogInteractionService;
         private readonly IWindowsProcessService _windowsProcessService;
-        private readonly IVersionInformationService _versionInformationService;
+        private readonly IReleaseVersionInformationService _versionInformationService;
         private readonly ILogger _logger;
 
         private CancellationTokenSource _cancellationTokenSource;
@@ -52,7 +52,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             IWindowService windowService,
             IDialogInteractionService dialogInteractionService,
             IWindowsProcessService windowsProcessService,
-            IVersionInformationService versionInformationService,
+            IReleaseVersionInformationService versionInformationService,
             ILogger logger)
         {
             _ilrDesktopService = ilrDesktopService;

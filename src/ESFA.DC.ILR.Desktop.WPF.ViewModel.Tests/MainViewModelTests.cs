@@ -158,7 +158,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             IWindowService windowService = null,
             IDialogInteractionService dialogInteractionService = null,
             IWindowsProcessService windowsProcessService = null,
-            IVersionInformationService versionInformationService = null,
+            IReleaseVersionInformationService versionInformationService = null,
             ILogger logger = null)
         {
             return new MainViewModel(
@@ -167,7 +167,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
                 windowService ?? Mock.Of<IWindowService>(),
                 dialogInteractionService ?? Mock.Of<IDialogInteractionService>(),
                 windowsProcessService ?? Mock.Of<IWindowsProcessService>(),
-                versionInformationService ?? Mock.Of<IVersionInformationService>(),
+                versionInformationService ?? Mock.Of<IReleaseVersionInformationService>(),
                 logger ?? Mock.Of<ILogger>());
         }
     }
