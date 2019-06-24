@@ -1,6 +1,6 @@
 
-name: $(VersionNumberMajor).$(VersionNumberMinor).$(VersionNumberBuild)$(Rev:.rrrr)
-#name: $(GitVersion_NuGetVersion)
+name: $(GitVersion_NuGetVersion)
+#name: $(VersionNumberMajor).$(VersionNumberMinor).$(VersionNumberBuild)$(Rev:.rrrr)
 
 resources:
 - repo: self
@@ -25,7 +25,7 @@ variables:
 steps:
 - task: gittools.gitversion.gitversion-task.GitVersion@4
   displayName: GitVersion
-  enabled: false
+  enabled: true
   inputs:
     updateAssemblyInfo: true
     preferBundledVersion: false
@@ -39,9 +39,7 @@ steps:
       $currentDate = $(Get-Date)
       $interval = NEW-TIMESPAN –Start $baseDate –End $currentDate
       $days = $interval.Days
-      Write-Host "Days : $($days)"
       Write-Host "##vso[task.setvariable variable=VersionNumberBuild]$days"
-      Write-Host "Build Number : $(Build.BuildNumber)"
       '
 
 - task: VersionAssemblies@2
