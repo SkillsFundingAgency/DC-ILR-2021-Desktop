@@ -1,6 +1,6 @@
 
-name: $(GitVersion_NuGetVersion)
-#name: $(VersionNumberMajor).$(VersionNumberMinor).$(VersionNumberBuild)$(Rev:.rrrr)
+#name: $(GitVersion_NuGetVersion)
+name: $(VersionNumberMajor).$(VersionNumberMinor).$(VersionNumberBuild)$(Rev:.rrrr)
 
 resources:
 - repo: self
@@ -25,7 +25,7 @@ variables:
 steps:
 - task: gittools.gitversion.gitversion-task.GitVersion@4
   displayName: GitVersion
-  enabled: true
+  enabled: false
   inputs:
     updateAssemblyInfo: true
     preferBundledVersion: false
@@ -43,6 +43,8 @@ steps:
       '
 
 - task: VersionAssemblies@2
+  displayName: 'Update Version number in AssemblyInfo.cs'
+  enabled: true
   inputs:
     Path: '$(Build.SourcesDirectory)'
     VersionNumber: '$(Build.BuildNumber)'
