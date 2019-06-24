@@ -108,8 +108,7 @@ steps:
   displayName: 'Copy Application File to Artifact Folder'
   inputs:
     SourceFolder: '$(build.sourcesdirectory)\src\ESFA.DC.ILR.Desktop.WPF\bin\$(BuildConfiguration)'
-    Contents: '**
-    |**\*.pdb'
+    Contents: '**'
     TargetFolder: '$(build.ArtifactStagingDirectory)\DesktopApplication'
     
 
