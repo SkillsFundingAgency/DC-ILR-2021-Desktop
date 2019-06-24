@@ -106,26 +106,14 @@ steps:
 - task: VSTest@2
   displayName: 'Run Unit Tests'
   inputs:
-    testSelector: 'testAssemblies'
-    testAssemblyVer2: '**\*test*.dll
-      !**\*TestAdapter.dll
-      !**\obj\**'
-    searchFolder: '$(System.DefaultWorkingDirectory)\src\'
-    runInParallel: true
-    codeCoverageEnabled: true
-    platform: '$(BuildPlatform)'
-    configuration: '$(BuildConfiguration)'
-    diagnosticsEnabled: true
-
-- task: VSTest@2
-  displayName: 'VsTest - testAssemblies'
-  enabled: false
-  inputs:
     testAssemblyVer2: |
      **\$(BuildConfiguration)\*test*.dll
      !**\obj\**
     platform: '$(BuildPlatform)'
     configuration: '$(BuildConfiguration)'
+    runInParallel: true
+    codeCoverageEnabled: true
+    diagnosticsEnabled: true
 
 - task: PublishSymbols@2
   displayName: 'Publish symbols path'
