@@ -1,5 +1,5 @@
 
-name: $(VersionNumberMajor).$(VersionNumberMinor).$(VersionNumberBuild).$(Rev:.rrrr)
+name: $(VersionNumberMajor).$(VersionNumberMinor).$(VersionNumberBuild)$(Rev:.rrrr)
 #name: $(GitVersion_NuGetVersion)
 
 resources:
