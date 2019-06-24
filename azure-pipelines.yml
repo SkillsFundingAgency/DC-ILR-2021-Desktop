@@ -1,6 +1,6 @@
 
-#name: $(GitVersion_NuGetVersion)
-name: $(VersionNumberMajor).$(VersionNumberMinor).$(VersionNumberBuild)$(Rev:.rrrr)
+name: $(GitVersion_NuGetVersion)
+#name: $(VersionNumberMajor).$(VersionNumberMinor).$(VersionNumberBuild)$(Rev:.rrrr)
 
 resources:
 - repo: self
@@ -30,29 +30,19 @@ steps:
     updateAssemblyInfo: true
     preferBundledVersion: false
 
-- task: PowerShell@2
-  displayName: 'Work out Build number (days since 01 Jan 2018)'
-  enabled: false
+- task: PowerShell@1
+  displayName: 'Dissplay Variables'
+  enabled: true
   inputs:
-    targetType: 'inline'
-    script: 'Write-Host "Generating Build Number"
-      $baseDate = [datetime]"01/01/2018"
-      $currentDate = $(Get-Date)
-      $interval = NEW-TIMESPAN –Start $baseDate –End $currentDate
-      $days = $interval.Days
-      Write-Host "$days"
-      Write-Host "##vso[task.setvariable variable=VersionNumberBuild]$days"
-      '
+    scriptType: inlineScript
+    inlineScript: |
+     $var = (gci env:*).GetEnumerator() | Sort-Object Name
+     $out = ""
+     Foreach ($v in $var) 
+     {
+     write-output "Name: $($v.Name)  | Value : $($v.Value)"
+     }
 
-- task: VersionAssemblies@2
-  displayName: 'Update Version number in AssemblyInfo.cs'
-  enabled: false
-  inputs:
-    Path: '$(Build.SourcesDirectory)'
-    VersionNumber: '$(Build.BuildNumber)'
-    InjectVersion: False
-    FilenamePattern: 'AssemblyInfo.*'
-    OutputVersion: 'OutputedVersion'
 
 - task: NuGetToolInstaller@0
   displayName: 'Use NuGet >=4.7.0'
@@ -115,11 +105,13 @@ steps:
   continueOnError: true
 
 - task: CopyFiles@2
+  displayName: 'Copy Application File to Artifact Folder'
   inputs:
     SourceFolder: '$(build.sourcesdirectory)\src\ESFA.DC.ILR.Desktop.WPF'
     Contents: 'bin\$(BuildConfiguration)\**
       !**\*.pdb'
     TargetFolder: '$(build.ArtifactStagingDirectory)\DesktopApplication'
+    
 
 - task: TotalALM.totalalm-tokenization.tokenization-build-task.Tokenization@2
   displayName: 'Tokenization: Transform Application config file'
