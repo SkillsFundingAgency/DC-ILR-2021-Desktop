@@ -64,31 +64,62 @@ steps:
     configuration: '$(BuildConfiguration)'
     clean: true
 
+
 - task: CopyFiles@2
-  displayName: 'Copy NuGet Packages : Artifact NuGet Packages Directory'
+  displayName: 'Copy Nuget Interface Packages Files - Artifact NugetInterface Directory'
   inputs:
-    SourceFolder: '$(build.sourcesdirectory)'
+    SourceFolder: '$(build.sourcesdirectory)\src'
     Contents: |
-     **\*.nupkg
-     !**\*Interface*.nupkg
-     !**\packages\**\*.nupkg
-    TargetFolder: '$(build.artifactstagingdirectory)\NuGet'
-    CleanTargetFolder: true
-    flattenFolders: true
-    
-- task: CopyFiles@2
-  displayName: 'Copy NuGet Packages : Artifact NuGet Interface Packages Directory'
-  inputs:
-    SourceFolder: '$(build.sourcesdirectory)'
-    Contents: |
-     **\*Interface*.nupkg
-     !**\packages\**\*.nupkg
-    TargetFolder: '$(build.artifactstagingdirectory)\NuGet Interface'
+     **\*$(BuildConfiguration)*\*Interface.nupkg
+     !**\packages\**
+     !**\bin\x64\**
+    TargetFolder: '$(build.artifactstagingdirectory)\Nuget\Interface'
     CleanTargetFolder: true
     flattenFolders: true
 
+- task: CopyFiles@2
+  displayName: 'Copy NugetPackages Files - Artifact NugetPackages Directory'
+  inputs:
+    SourceFolder: '$(build.sourcesdirectory)\src'
+    Contents: |
+     **\*$(BuildConfiguration)*\*.nupkg
+     !**\packages\**
+     !**\bin\x64\**
+    TargetFolder: '$(build.artifactstagingdirectory)\Nuget\Packages'
+    CleanTargetFolder: true
+    flattenFolders: true
+
+- task: CopyFiles@2
+  displayName: 'Copy Application File to Artifact Folder'
+  inputs:
+    SourceFolder: 'src/ESFA.DC.ILR.Desktop.WPF\bin\$(BuildConfiguration)'  
+    Contents: '**\!(*.pdb)'
+    TargetFolder: '$(build.ArtifactStagingDirectory)\DesktopApplication'
+
+- task: TotalALM.totalalm-tokenization.tokenization-build-task.Tokenization@2
+  displayName: 'Tokenization: Transform Application config file'
+  inputs:
+    SourcePath: '$(build.ArtifactStagingDirectory)\DesktopApplication'
+    TargetFileNames: '*.exe.config'
+    RequireVariable: false
+
+- task: VSTest@2
+  displayName: 'Run Unit Tests'
+  inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: '**\*test*.dll
+      !**\*TestAdapter.dll
+      !**\obj\**'
+    searchFolder: '$(System.DefaultWorkingDirectory)\src\'
+    runInParallel: true
+    codeCoverageEnabled: true
+    platform: '$(BuildPlatform)'
+    configuration: '$(BuildConfiguration)'
+    diagnosticsEnabled: true
+
 - task: VSTest@2
   displayName: 'VsTest - testAssemblies'
+  enabled: false
   inputs:
     testAssemblyVer2: |
      **\$(BuildConfiguration)\*test*.dll
@@ -98,38 +129,23 @@ steps:
 
 - task: PublishSymbols@2
   displayName: 'Publish symbols path'
+  enabled: false
   inputs:
     SearchPattern: '**\bin\**\*.pdb'
     PublishSymbols: false
-  enabled: false
   continueOnError: true
 
-- task: CopyFiles@2
-  displayName: 'Copy Application File to Artifact Folder'
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: NugetPackages'
+  enabled: true
   inputs:
-    SourceFolder: 'src/ESFA.DC.ILR.Desktop.WPF\bin\$(BuildConfiguration)'  
-    Contents: '**\!(*.pdb)'
-    TargetFolder: '$(build.ArtifactStagingDirectory)\DesktopApplication'
-    
-
-- task: TotalALM.totalalm-tokenization.tokenization-build-task.Tokenization@2
-  displayName: 'Tokenization: Transform Application config file'
-  inputs:
-    SourcePath: '$(build.ArtifactStagingDirectory)\DesktopApplication'
-    TargetFileNames: '*.exe.config'
-    RequireVariable: false
-
-  ## Create Zip File for Deployment     
-- task: ArchiveFiles@2
-  enabled: false
-  displayName: 'Package WebJobs for Website'
-  inputs:
-    rootFolderOrFile: '$(build.BinariesDirectory)\tmp'
-    includeRootFolder: false
-    archiveFile: '$(build.ArtifactStagingDirectory)\DC-ILR-1920-Desktop.$(Build.BuildNumber).zip'
+    ArtifactName: NugetPackages
+    PathtoPublish: '$(build.artifactstagingdirectory)\Nuget'
 
 - task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: drop'
+  displayName: 'Publish Artifact: DesktopApplication'
+  enabled: true
   inputs:
-    PathtoPublish: '$(build.artifactstagingdirectory)'
-  condition: succeededOrFailed()
+    ArtifactName: DesktopApplication
+    PathtoPublish: '$(build.artifactstagingdirectory)\DesktopApplication'
+
