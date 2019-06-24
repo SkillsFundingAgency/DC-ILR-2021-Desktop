@@ -116,8 +116,8 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    SourceFolder: '$(build.sourcesdirectory)\src\ESFA.DC.ILR.Desktop.WPF\bin\$(BuildConfiguration)'
-    Contents: '**
+    SourceFolder: '$(build.sourcesdirectory)\src\ESFA.DC.ILR.Desktop.WPF'
+    Contents: 'bin\$(BuildConfiguration)\**
       !**\*.pdb'
     TargetFolder: '$(build.ArtifactStagingDirectory)\DesktopApplication'
 
