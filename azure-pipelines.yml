@@ -1,5 +1,5 @@
 
-name: $(VersionNumberMajor).$(VersionNumberMinor)$(Rev:.rrrr)
+name: $(VersionNumberMajor).$(VersionNumberMinor).$(VersionNumberNuild).$(Rev:.rrrr)
 #name: $(GitVersion_NuGetVersion)
 
 resources:
@@ -17,6 +17,7 @@ pool:
 variables:
   VersionNumberMajor: '1'
   VersionNumberMinor: '2'
+  VersionNumberNuild: '0'
   BuildConfiguration: 'Release'
   BuildPlatform: 'Any CPU'
   Parameters.solution: '**\*.sln'
@@ -35,7 +36,7 @@ steps:
     Path: '$(Build.SourcesDirectory)'
     VersionNumber: '$(Build.BuildNumber)'
     InjectVersion: false
-    VersionRegex: '\d+\.\d+\.\d+\'
+    VersionRegex: '\d+\.\d+\.\d+\.\d+\'
     FilenamePattern: 'AssemblyInfo.*'
     OutputVersion: 'OutputedVersion'
 
@@ -106,6 +107,13 @@ steps:
     Contents: '**\*.WPF\bin\$(BuildConfiguration)\**
       !**\*.pdb'
     TargetFolder: '$(build.ArtifactStagingDirectory)\DC-ILR-1920-Desktop'
+
+- task: TotalALM.totalalm-tokenization.tokenization-build-task.Tokenization@2
+  displayName: 'Tokenization: Transform Application config file'
+  inputs:
+    SourcePath: '$(build.ArtifactStagingDirectory)\DC-ILR-1920-Desktop'
+    TargetFileNames: Cloud.xml
+    RequireVariable: false
 
   ## Create Zip File for Deployment     
 - task: ArchiveFiles@2
