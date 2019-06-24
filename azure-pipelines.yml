@@ -31,16 +31,18 @@ steps:
     preferBundledVersion: false
 
 - task: PowerShell@2
-  displayName: 'Work out Build number (days since 01 Jan 2019)'
+  displayName: 'Work out Build number (days since 01 Jan 2018)'
   inputs:
     targetType: 'inline'
     script: 'Write-Host "Generating Build Number"
-      $baseDate = [datetime]"01/01/2019"
+      $baseDate = [datetime]"01/01/2018"
       $currentDate = $(Get-Date)
       $interval = NEW-TIMESPAN –Start $baseDate –End $currentDate
       $days = $interval.Days
-      
-      Write-Host "##vso[task.setvariable variable=VersionNumberBuild]$days"'
+      Write-Host "Days : $($days)"
+      Write-Host "##vso[task.setvariable variable=VersionNumberBuild]$days"
+      Write-Host "Build Number : $(Build.BuildNumber)"
+      '
 
 - task: VersionAssemblies@2
   inputs:
