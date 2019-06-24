@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Service.Journey;
 using ESFA.DC.ILR.Desktop.Service.Message;
@@ -157,6 +158,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             IWindowService windowService = null,
             IDialogInteractionService dialogInteractionService = null,
             IWindowsProcessService windowsProcessService = null,
+            IVersionInformationService versionInformationService = null,
             ILogger logger = null)
         {
             return new MainViewModel(
@@ -165,6 +167,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
                 windowService ?? Mock.Of<IWindowService>(),
                 dialogInteractionService ?? Mock.Of<IDialogInteractionService>(),
                 windowsProcessService ?? Mock.Of<IWindowsProcessService>(),
+                versionInformationService ?? Mock.Of<IVersionInformationService>(),
                 logger ?? Mock.Of<ILogger>());
         }
     }

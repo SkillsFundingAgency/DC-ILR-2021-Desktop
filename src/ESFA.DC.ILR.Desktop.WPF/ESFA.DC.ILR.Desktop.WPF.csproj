@@ -67,6 +67,7 @@
     <Compile Include="Command\Interface\IAsyncCommand.cs" />
     <Compile Include="Command\Interface\IErrorHandler.cs" />
     <Compile Include="Command\Extensions\TaskExtensions.cs" />
+    <Compile Include="Config\DesktopServiceConfiguration.cs" />
     <Compile Include="Config\FileSystemKeyValuePersistenceServiceConfig.cs" />
     <Compile Include="Modules\DesktopServicesModule.cs" />
     <Compile Include="Modules\IlrServicesModule.cs" />
@@ -79,9 +80,14 @@
     <Compile Include="Service\DialogInteractionService.cs" />
     <Compile Include="Service\Interface\ICloseable.cs" />
     <Compile Include="Service\Interface\IDialogInteractionService.cs" />
+    <Compile Include="Service\Interface\IReferenceDataVersionInformationService.cs" />
+    <Compile Include="Service\Interface\IReleaseVersionInformationService.cs" />
+    <Compile Include="Service\Interface\IVersionInformationService.cs" />
     <Compile Include="Service\Interface\IWindowService.cs" />
     <Compile Include="Service\Interface\IWindowsProcessService.cs" />
     <Compile Include="Service\MessengerService.cs" />
+    <Compile Include="Service\ReferenceDataVersionInformationService.cs" />
+    <Compile Include="Service\ReleaseVersionInformationService.cs" />
     <Compile Include="Service\WindowService.cs" />
     <Compile Include="Service\WindowsProcessService.cs" />
     <Compile Include="ViewModel\AboutViewModel.cs" />

@@ -102,6 +102,10 @@
     <Compile Include="SettingsViewModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Interface\ESFA.DC.ILR.Desktop.Interface.csproj">
+      <Project>{2D75F514-A091-41BA-A8B0-87BB97BC0337}</Project>
+      <Name>ESFA.DC.ILR.Desktop.Interface</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Service\ESFA.DC.ILR.Desktop.Service.csproj">
       <Project>{15E50FE1-098B-4DEC-9346-CF4456C6D81D}</Project>
       <Name>ESFA.DC.ILR.Desktop.Service</Name>

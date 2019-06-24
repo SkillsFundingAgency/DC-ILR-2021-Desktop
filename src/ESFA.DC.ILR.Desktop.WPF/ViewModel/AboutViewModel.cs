@@ -9,18 +9,23 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 {
     public class AboutViewModel : ViewModelBase
     {
-        public AboutViewModel()
+        private IReferenceDataVersionInformationService _versionInformationService;
+
+        public AboutViewModel(IReferenceDataVersionInformationService versionInformationService)
         {
+            _versionInformationService = versionInformationService;
+
+            AboutItems = new ObservableCollection<KeyValuePair<string, string>>()
+            {
+                new KeyValuePair<string, string>("Version Number:", _versionInformationService.VersionNumber),
+                new KeyValuePair<string, string>("Reference Data Date:", _versionInformationService.Date),
+            };
             CloseWindowCommand = new RelayCommand<ICloseable>(CloseWindow);
         }
 
         public RelayCommand<ICloseable> CloseWindowCommand { get; }
 
-        public ObservableCollection<KeyValuePair<string, string>> AboutItems { get; } = new ObservableCollection<KeyValuePair<string, string>>()
-        {
-            new KeyValuePair<string, string>("Version Number:", "123.123.123"),
-            new KeyValuePair<string, string>("Reference Data Date:", new DateTime(2019, 12, 25, 1, 2, 3).ToString()),
-        };
+        public ObservableCollection<KeyValuePair<string, string>> AboutItems { get; }
 
         private void CloseWindow(ICloseable window)
         {
