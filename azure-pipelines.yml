@@ -35,6 +35,7 @@ steps:
     Path: '$(Build.SourcesDirectory)'
     VersionNumber: '$(Build.BuildNumber)'
     InjectVersion: false
+    VersionRegex: '\d+\.\d+\.\d+\'
     FilenamePattern: 'AssemblyInfo.*'
     OutputVersion: 'OutputedVersion'
 
