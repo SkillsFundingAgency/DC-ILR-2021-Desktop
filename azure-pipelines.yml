@@ -116,16 +116,16 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    SourceFolder: '$(system.defaultworkingdirectory)'
-    Contents: '**\*.WPF\bin\$(BuildConfiguration)\**
+    SourceFolder: '$(build.sourcesdirectory)\src\ESFA.DC.ILR.Desktop.WPF'
+    Contents: '**\bin\$(BuildConfiguration)\**
       !**\*.pdb'
-    TargetFolder: '$(build.ArtifactStagingDirectory)\DC-ILR-1920-Desktop'
+    TargetFolder: '$(build.ArtifactStagingDirectory)\DesktopApplication'
 
 - task: TotalALM.totalalm-tokenization.tokenization-build-task.Tokenization@2
   displayName: 'Tokenization: Transform Application config file'
   inputs:
-    SourcePath: '$(build.ArtifactStagingDirectory)\DC-ILR-1920-Desktop'
-    TargetFileNames: Cloud.xml
+    SourcePath: '$(build.ArtifactStagingDirectory)\DesktopApplication'
+    TargetFileNames: '*.exe.config'
     RequireVariable: false
 
   ## Create Zip File for Deployment     
