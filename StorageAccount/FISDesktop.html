@@ -9,18 +9,17 @@
 	.alert-success-alt {border-color: #19B99A; background: #137792}
 </style>
 
-<script src="/azure-storage.blob.js"></script>
+<script src="/azure-storage.blob.min.js"></script>
 
 <script type='text/javascript'>
-	var account = '__StorageAccountNameFIS__';
-	var sas = '__StorageAccountNameFIS_SASToken__';
-	var container = '__FIS_Download_Container__';
-	var filter = '__FIS_File_Filter__';
-</script>
+	var account = 'zzpc1submitlrndata';
+	var sas = '?sv=2018-03-28&ss=b&srt=c&sp=rl&se=2019-07-05T16:01:10Z&st=2019-06-25T08:01:10Z&spr=https,http&sig=O2kVLcvO1MoKZqJvr51lEexfIEiVvwQvZK7Gh%2B9LvJE%3D';
 
-<script type='text/javascript'>
+	var container = 'fis-downloads';
+	var filter = 'DC-ILR-1920-FIS';
+
 	function getBlobService(blobUri,sasToken) {
-		var blobService = AzureStorage.Blob.createBlobService(blobUri.toLowerCase() ).withFilter(new AzureStorage.Blob.ExponentialRetryPolicyFilter());
+		var blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri.toLowerCase() , sasToken).withFilter(new AzureStorage.Blob.ExponentialRetryPolicyFilter());
 		return blobService;
 	}
 	
