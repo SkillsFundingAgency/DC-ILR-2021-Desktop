@@ -147,3 +147,11 @@ steps:
     ArtifactName: DesktopApplication
     PathtoPublish: '$(build.artifactstagingdirectory)\DesktopApplication'
 
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: StoraegAccount Display Files'
+  enabled: true
+  inputs:
+    ArtifactName: StorageAccount
+    PathtoPublish: '$(build.artifactstagingdirectory)\StorageAccount'
+
+
