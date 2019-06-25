@@ -200,7 +200,7 @@
       <Version>0.1.7-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.1920.ReportService.Desktop">
-      <Version>0.0.86</Version>
+      <Version>0.0.97</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.1920.ValidationService.Desktop">
       <Version>0.0.201</Version>
