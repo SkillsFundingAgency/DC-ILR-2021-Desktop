@@ -16,7 +16,9 @@
 	var sas = '__StorageAccountNameFIS_SASToken__';
 	var container = '__FIS_Download_Container__';
 	var filter = '__FIS_File_Filter__';
+</script>
 
+<script type='text/javascript'>
 	function getBlobService(blobUri,sasToken) {
 		var blobService = AzureStorage.Blob.createBlobService(blobUri.toLowerCase() ).withFilter(new AzureStorage.Blob.ExponentialRetryPolicyFilter());
 		return blobService;
