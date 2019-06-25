@@ -36,6 +36,9 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>ESFA.DC.ILR.Desktop.WPF.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\Images\DSAppIcon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
