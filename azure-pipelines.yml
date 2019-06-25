@@ -96,6 +96,16 @@ steps:
     Contents: '**\!(*.pdb)'
     TargetFolder: '$(build.ArtifactStagingDirectory)\DesktopApplication'
 
+- task: CopyFiles@2
+  displayName: 'Copy Published Storage Account Files - Artifact StorageAccount Directory'
+  inputs:
+    SourceFolder: '$(build.sourcesdirectory)\src'
+    Contents: |
+     **\StorageAccount\**
+    TargetFolder: '$(build.artifactstagingdirectory)\StorageAccount'
+    CleanTargetFolder: true
+    flattenFolders: true
+
 - task: TotalALM.totalalm-tokenization.tokenization-build-task.Tokenization@2
   displayName: 'Tokenization: Transform Application config file'
   inputs:
