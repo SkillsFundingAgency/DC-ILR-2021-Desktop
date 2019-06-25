@@ -99,7 +99,7 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy Published Storage Account Files - Artifact StorageAccount Directory'
   inputs:
-    SourceFolder: '$(build.sourcesdirectory)\src'
+    SourceFolder: '$(build.sourcesdirectory)'
     Contents: |
      **\StorageAccount\**
     TargetFolder: '$(build.artifactstagingdirectory)\StorageAccount'
