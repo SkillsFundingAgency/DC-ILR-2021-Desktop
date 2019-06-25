@@ -1,6 +1,6 @@
 
-name: $(VersionNumberMajor).$(VersionNumberMinor)$(Rev:.rrrr)
-#name: $(GitVersion_NuGetVersion)
+name: $(GitVersion_NuGetVersion)
+#name: $(VersionNumberMajor).$(VersionNumberMinor).$(VersionNumberBuild)$(Rev:.rrrr)
 
 resources:
 - repo: self
@@ -25,10 +25,24 @@ variables:
 steps:
 - task: gittools.gitversion.gitversion-task.GitVersion@4
   displayName: GitVersion
-  enabled: false
+  enabled: true
   inputs:
     updateAssemblyInfo: true
     preferBundledVersion: false
+
+- task: PowerShell@1
+  displayName: 'Dissplay Variables'
+  enabled: true
+  inputs:
+    scriptType: inlineScript
+    inlineScript: |
+     $var = (gci env:*).GetEnumerator() | Sort-Object Name
+     $out = ""
+     Foreach ($v in $var) 
+     {
+     write-output "Name: $($v.Name)  | Value : $($v.Value)"
+     }
+
 
 - task: NuGetToolInstaller@0
   displayName: 'Use NuGet >=4.7.0'
@@ -37,7 +51,6 @@ steps:
 
 - task: NuGetCommand@2
   displayName: 'NuGet restore'
-
   inputs:
     restoreSolution: '$(Parameters.solution)'
     vstsFeed: '$(Parameters.nugetFeedName)'
@@ -51,65 +64,94 @@ steps:
     configuration: '$(BuildConfiguration)'
     clean: true
 
+
 - task: CopyFiles@2
-  displayName: 'Copy NuGet Packages : Artifact NuGet Packages Directory'
+  displayName: 'Copy Nuget Interface Packages Files - Artifact NugetInterface Directory'
   inputs:
-    SourceFolder: '$(build.sourcesdirectory)'
+    SourceFolder: '$(build.sourcesdirectory)\src'
     Contents: |
-     **\*.nupkg
-     !**\*Interface*.nupkg
-     !**\packages\**\*.nupkg
-    TargetFolder: '$(build.artifactstagingdirectory)\NuGet'
-    CleanTargetFolder: true
-    flattenFolders: true
-    
-- task: CopyFiles@2
-  displayName: 'Copy NuGet Packages : Artifact NuGet Interface Packages Directory'
-  inputs:
-    SourceFolder: '$(build.sourcesdirectory)'
-    Contents: |
-     **\*Interface*.nupkg
-     !**\packages\**\*.nupkg
-    TargetFolder: '$(build.artifactstagingdirectory)\NuGet Interface'
+     **\*$(BuildConfiguration)*\*Interface.nupkg
+     !**\packages\**
+     !**\bin\x64\**
+    TargetFolder: '$(build.artifactstagingdirectory)\Nuget\Interface'
     CleanTargetFolder: true
     flattenFolders: true
 
+- task: CopyFiles@2
+  displayName: 'Copy NugetPackages Files - Artifact NugetPackages Directory'
+  inputs:
+    SourceFolder: '$(build.sourcesdirectory)\src'
+    Contents: |
+     **\*$(BuildConfiguration)*\*.nupkg
+     !**\packages\**
+     !**\bin\x64\**
+    TargetFolder: '$(build.artifactstagingdirectory)\Nuget\Packages'
+    CleanTargetFolder: true
+    flattenFolders: true
+
+- task: CopyFiles@2
+  displayName: 'Copy Application File to Artifact Folder'
+  inputs:
+    SourceFolder: 'src/ESFA.DC.ILR.Desktop.WPF\bin\$(BuildConfiguration)'  
+    Contents: '**\!(*.pdb)'
+    TargetFolder: '$(build.ArtifactStagingDirectory)\DesktopApplication'
+
+- task: CopyFiles@2
+  displayName: 'Copy Published Storage Account Files - Artifact StorageAccount Directory'
+  inputs:
+    SourceFolder: '$(build.sourcesdirectory)'
+    Contents: |
+     **\StorageAccount\**
+    TargetFolder: '$(build.artifactstagingdirectory)\StorageAccount'
+    CleanTargetFolder: true
+    flattenFolders: true
+
+- task: TotalALM.totalalm-tokenization.tokenization-build-task.Tokenization@2
+  displayName: 'Tokenization: Transform Application config file'
+  inputs:
+    SourcePath: '$(build.ArtifactStagingDirectory)\DesktopApplication'
+    TargetFileNames: '*.exe.config'
+    RequireVariable: false
+
 - task: VSTest@2
-  displayName: 'VsTest - testAssemblies'
+  displayName: 'Run Unit Tests'
   inputs:
     testAssemblyVer2: |
      **\$(BuildConfiguration)\*test*.dll
      !**\obj\**
     platform: '$(BuildPlatform)'
     configuration: '$(BuildConfiguration)'
+    runInParallel: true
+    codeCoverageEnabled: true
+    diagnosticsEnabled: true
 
 - task: PublishSymbols@2
   displayName: 'Publish symbols path'
+  enabled: false
   inputs:
     SearchPattern: '**\bin\**\*.pdb'
     PublishSymbols: false
-  enabled: false
   continueOnError: true
 
-- task: CopyFiles@2
-  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
-  inputs:
-    SourceFolder: '$(system.defaultworkingdirectory)'
-    Contents: '**\bin\$(BuildConfiguration)\**'
-    TargetFolder: '$(build.BinariesDirectory)\tmp'
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: NugetPackages'
   enabled: true
-  condition: succeededOrFailed()
-
-  ## Create Zip File for Deployment     
-- task: ArchiveFiles@2
-  displayName: 'Package WebJobs for Website'
   inputs:
-    rootFolderOrFile: '$(build.BinariesDirectory)\tmp'
-    includeRootFolder: false
-    archiveFile: '$(build.ArtifactStagingDirectory)\DC-ILR-1920-Desktop.$(Build.BuildNumber).zip'
+    ArtifactName: NugetPackages
+    PathtoPublish: '$(build.artifactstagingdirectory)\Nuget'
 
 - task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: drop'
+  displayName: 'Publish Artifact: DesktopApplication'
+  enabled: true
   inputs:
-    PathtoPublish: '$(build.artifactstagingdirectory)'
-  condition: succeededOrFailed()
+    ArtifactName: DesktopApplication
+    PathtoPublish: '$(build.artifactstagingdirectory)\DesktopApplication'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: StoraegAccount Display Files'
+  enabled: true
+  inputs:
+    ArtifactName: StorageAccount
+    PathtoPublish: '$(build.artifactstagingdirectory)\StorageAccount'
+
+

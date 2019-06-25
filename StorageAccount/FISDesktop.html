@@ -1,0 +1,113 @@
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="/bootstrap.min.css">
+<style>
+    .table-responsive {
+    	display:table-cell;
+    	width:100%;
+		}
+	.alert-success-alt {border-color: #19B99A; background: #137792}
+</style>
+
+<script src="/azure-storage.blob.js"></script>
+
+<script type='text/javascript'>
+	var account = '__StorageAccountNameFIS__';
+	var sas = '__StorageAccountNameFIS_SASToken__';
+	var container = '__FIS_Download_Container__';
+	var filter = '__FIS_File_Filter__';
+
+	function getBlobService(blobUri,sasToken) {
+		var blobService = AzureStorage.Blob.createBlobService(blobUri.toLowerCase() ).withFilter(new AzureStorage.Blob.ExponentialRetryPolicyFilter());
+		return blobService;
+	}
+	
+	function fileSize(size) {
+	   var i = Math.floor(Math.log(size) / Math.log(1024));
+	    return (size / Math.pow(1024, i)).toFixed(2) * 1 + ' '+['B', 'kB', 'MB', 'GB', 'TB'][i];
+	}
+
+	function refreshBlobList(accountName,sasToken,containerName,fileFilter) {
+		var blobUri = '';  
+		
+		blobUri = 'https://' + accountName + '.blob.core.windows.net';
+		var blobService = getBlobService(blobUri,sasToken);
+		debugger;
+		if (!blobService)
+			return;
+
+		var url123 = blobService.GetUrl;
+
+		document.getElementById('Release').innerHTML = 'Loading...';
+
+		blobService.listBlobsSegmented(containerName.toLowerCase(), null, function (error, results) {
+			if (error) {
+				document.getElementById('Release').innerHTML = 'Error Getting Data.' + '<br>' + error;
+			} else {
+				var output = [];
+
+				output.push('<tr>',
+								'<th>Link</th>',
+								'<th>Size</th>',
+								'<th>LastModified</th>',
+							'</tr>');
+				if (results.entries.length < 1) {
+					output.push('<tr><td>Empty results...</td></tr>');
+				}
+				else
+				{
+					results.entries.sort(function(a,b){
+				  	  return new Date(b.lastModified) - new Date(a.lastModified);
+					});
+
+					for (var i = 0, blob; blob = results.entries[i]; i++) {
+						if (blob.name.toLowerCase().startsWith(fileFilter.toLowerCase()))
+						{
+							output.push('<tr>',
+											'<td><a href='+blobUri+"/"+container+"/"+blob.name+'>', blob.name, '</a></td>',
+											'<td>', fileSize(blob.contentLength), ' </td>',
+											'<td>', blob.lastModified, '</td>',
+										'</tr>');
+						}
+					}
+				}
+				document.getElementById('Release').innerHTML = '<table class="table table-condensed table-bordered">' + output.join('') + '</table>';
+			}
+		});
+	}
+
+</script>
+</head>
+<body onload="refreshBlobList(account,sas,container,filter)">
+    <div class="container">
+<div id="header" class="alert alert-success-alt" role="alert">
+    <h3 class="Display-3">FIS Download</h3>
+    </br>
+<div ><h5>Please select the appropriate release from the following list and download:</h5></div>
+</div>
+<div id="Release" class="table-responsive">Loading</div>
+<div >
+</br>
+    <h4 >Previous Releases:</h4>
+</br>
+<div id="OldRelease" class="table-responsive">
+    <table class="table table-striped table-bordered">
+         <thead>
+           <tr>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+        <tbody>
+        <tr>
+            <td>Funding Information System (FIS)</td>
+             <td><a href="https://des.fasst.org.uk/Pages/fis.aspx" target="_blank" >Open in new Window</a></td>             
+        </tr>
+      
+        </tbody>
+    </table>
+</div>
+</div>
+
+</body>
+</html>
