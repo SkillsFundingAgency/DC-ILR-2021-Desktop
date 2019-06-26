@@ -18,6 +18,9 @@
 	var container = 'fis-downloads';
 	var filter = 'DC-ILR-1920-FIS';
 
+</script>
+
+<script type='text/javascript'>
 	function getBlobService(blobUri,sasToken) {
 		var blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri.toLowerCase() , sasToken).withFilter(new AzureStorage.Blob.ExponentialRetryPolicyFilter());
 		return blobService;
