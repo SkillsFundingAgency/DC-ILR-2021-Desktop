@@ -19,6 +19,7 @@ namespace ESFA.DC.ILR.Desktop.Service
         private readonly IDesktopContextFactory _desktopContextFactory;
         private readonly IIlrPipelineProvider _ilrPipelineProvider;
         private readonly IDesktopTaskExecutionService _desktopTaskExecutionService;
+        private readonly IContextMutatorExecutor _contextMutatorExecutor;
         private readonly ILogger _logger;
 
         public IlrDesktopService(
@@ -26,12 +27,14 @@ namespace ESFA.DC.ILR.Desktop.Service
             IDesktopContextFactory desktopContextFactory,
             IIlrPipelineProvider ilrPipelineProvider,
             IDesktopTaskExecutionService desktopTaskExecutionService,
+            IContextMutatorExecutor contextMutatorExecutor,
             ILogger logger)
         {
             _messengerService = messengerService;
             _desktopContextFactory = desktopContextFactory;
             _ilrPipelineProvider = ilrPipelineProvider;
             _desktopTaskExecutionService = desktopTaskExecutionService;
+            _contextMutatorExecutor = contextMutatorExecutor;
             _logger = logger;
         }
 
@@ -67,6 +70,11 @@ namespace ESFA.DC.ILR.Desktop.Service
                 {
                     if (desktopTaskDefinition.FailureKey != null)
                     {
+                        if (desktopTaskDefinition.FailureContextMutatorKey != null)
+                        {
+                            context = _contextMutatorExecutor.Execute(desktopTaskDefinition.FailureContextMutatorKey.Value, context);
+                        }
+
                         step = _ilrPipelineProvider.IndexFor(desktopTaskDefinition.FailureKey.Value);
 
                         completionContext.ProcessingCompletionState = ProcessingCompletionStates.HandledFail;

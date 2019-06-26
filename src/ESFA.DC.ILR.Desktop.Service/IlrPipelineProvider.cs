@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ESFA.DC.ILR.Desktop.Service.Interface;
+using ESFA.DC.ILR.Desktop.Service.Mutator;
 using ESFA.DC.ILR.Desktop.Service.Tasks;
 
 namespace ESFA.DC.ILR.Desktop.Service
@@ -10,7 +11,7 @@ namespace ESFA.DC.ILR.Desktop.Service
         {
             new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.PreExecution),
             new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.DatabaseCreate),
-            new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.FileValidationService, IlrDesktopTaskKeys.ReportService),
+            new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.FileValidationService, IlrDesktopTaskKeys.ReportService, ContextMutatorKeys.SchemaError),
             new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ReferenceDataService),
             new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ValidationService),
             //  new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.FundingService),
