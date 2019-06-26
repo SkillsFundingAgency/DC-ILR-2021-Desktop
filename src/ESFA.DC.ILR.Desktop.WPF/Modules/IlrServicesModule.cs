@@ -6,6 +6,7 @@ using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.Desktop.Service;
 using ESFA.DC.ILR.Desktop.Service.Context;
 using ESFA.DC.ILR.Desktop.Service.Interface;
+using ESFA.DC.ILR.Desktop.Service.Mutator;
 using ESFA.DC.ILR.Desktop.Service.Tasks;
 using ESFA.DC.ILR.FileValidationService.Desktop;
 using ESFA.DC.ILR.FileValidationService.Desktop.Modules;
@@ -49,6 +50,9 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
             containerBuilder.RegisterModule<ReportServiceDesktopModule>();
 
             containerBuilder.RegisterType<PostProcessingDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.PostExecution);
+
+            containerBuilder.RegisterType<ContextMutatorExecutor>().As<IContextMutatorExecutor>();
+            containerBuilder.RegisterType<SchemaErrorContextMutator>().Keyed<IContextMutator>(ContextMutatorKeys.SchemaError);
         }
     }
 }

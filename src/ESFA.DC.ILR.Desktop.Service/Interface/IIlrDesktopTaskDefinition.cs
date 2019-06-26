@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ESFA.DC.ILR.Desktop.Service.Mutator;
 using ESFA.DC.ILR.Desktop.Service.Tasks;
 
 namespace ESFA.DC.ILR.Desktop.Service.Interface
@@ -9,5 +10,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Interface
         IlrDesktopTaskKeys Key { get; }
 
         IlrDesktopTaskKeys? FailureKey { get; }
+
+        ContextMutatorKeys? FailureContextMutatorKey { get; }
     }
 }
