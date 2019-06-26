@@ -58,9 +58,9 @@
 				}
 				else
 				{
-					results.entries.sort(function(a,b){
-				  	  return new Date(b.lastModified) - new Date(a.lastModified);
-					});
+					//results.entries.sort(function(a,b){
+				  	//  return new Date(b.lastModified) - new Date(a.lastModified);
+					//});
 
 					for (var i = 0, blob; blob = results.entries[i]; i++) {
 						if (blob.name.toLowerCase().startsWith(fileFilter.toLowerCase()))
