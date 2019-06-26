@@ -10,14 +10,16 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
     public class AboutViewModel : ViewModelBase
     {
         private IReferenceDataVersionInformationService _versionInformationService;
+        private IReleaseVersionInformationService _releaseVersionInformationService;
 
-        public AboutViewModel(IReferenceDataVersionInformationService versionInformationService)
+        public AboutViewModel(IReferenceDataVersionInformationService versionInformationService, IReleaseVersionInformationService releaseVersionInformationService)
         {
             _versionInformationService = versionInformationService;
+            _releaseVersionInformationService = releaseVersionInformationService;
 
             AboutItems = new ObservableCollection<KeyValuePair<string, string>>()
             {
-                new KeyValuePair<string, string>("Version Number:", _versionInformationService.VersionNumber),
+                new KeyValuePair<string, string>("Version Number:", _releaseVersionInformationService.VersionNumber),
                 new KeyValuePair<string, string>("Reference Data Date:", _versionInformationService.Date),
             };
             CloseWindowCommand = new RelayCommand<ICloseable>(CloseWindow);
