@@ -3,6 +3,7 @@ using ESFA.DC.DateTimeProvider.Interface;
 using ESFA.DC.ILR.Constants;
 using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.Desktop.Service.Interface;
+using ESFA.DC.ILR.ReportService.Service.Interface;
 
 namespace ESFA.DC.ILR.Desktop.Service.Context
 {
@@ -35,7 +36,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
                     [ILRContextKeys.ValidLearnRefNumbers] = "ValidLearnRefNumbers.json",
                     [ILRContextKeys.ValidationErrorLookups] = "ValidationErrorLookups.json",
                     [ILRContextKeys.ReportOutputFileNames] = string.Empty,
-                    [ILRContextKeys.ReportTasks] = "TaskGenerateValidationReport",
+                    [ILRContextKeys.ReportTasks] = ReportTaskNameConstants.ValidationReport,
                 },
             };
         }
