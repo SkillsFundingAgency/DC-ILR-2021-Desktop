@@ -84,7 +84,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ReportTaskNameConstants.cs" />
     <Compile Include="SchemaContextMutatorTests.cs" />
     <Compile Include="IlrDesktopTaskKeysTests.cs" />
     <Compile Include="IlrPipelineProviderTests.cs" />

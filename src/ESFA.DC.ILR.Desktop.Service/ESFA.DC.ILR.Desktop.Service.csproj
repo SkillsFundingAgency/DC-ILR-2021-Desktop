@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -16,7 +16,6 @@
     <PackageReference Include="Autofac" Version="4.9.2" />
     <PackageReference Include="ESFA.DC.DateTimeProvider.Interface" Version="0.1.6-beta0001" />
     <PackageReference Include="ESFA.DC.ILR.1920.Constants" Version="0.1.8-beta0001" />
-    <PackageReference Include="ESFA.DC.ILR.1920.ReportService.Desktop" Version="0.0.111" />
     <PackageReference Include="ESFA.DC.Logging.Interfaces" Version="0.1.4-beta0001" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
@@ -26,12 +25,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Interface\ESFA.DC.ILR.Desktop.Interface.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="ESFA.DC.ILR.ReportService.Service.Interface">
-      <HintPath>..\..\..\..\Users\Kelvin\.nuget\packages\esfa.dc.ilr.1920.reportservice.desktop\0.0.103\lib\netstandard2.0\ESFA.DC.ILR.ReportService.Service.Interface.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>
