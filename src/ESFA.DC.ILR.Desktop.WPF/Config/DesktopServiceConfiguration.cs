@@ -15,8 +15,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.Config
         {
             get
             {
-                DateTime returnDate;
-                if (DateTime.TryParse(this[ReleaseDateKey].ToString(), out returnDate))
+                if (DateTime.TryParse(this[ReleaseDateKey].ToString(), out var returnDate))
                 {
                     return returnDate.ToString();
                 }
