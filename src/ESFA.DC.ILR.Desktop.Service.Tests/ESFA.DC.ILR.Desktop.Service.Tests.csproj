@@ -46,9 +46,6 @@
     <Reference Include="ESFA.DC.ILR.Constants, Version=0.1.8.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ILR.1920.Constants.0.1.8-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Constants.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.ILR.ReportService.Service.Interface">
-      <HintPath>..\..\..\..\Users\Kelvin\.nuget\packages\esfa.dc.ilr.1920.reportservice.desktop\0.0.103\lib\netstandard2.0\ESFA.DC.ILR.ReportService.Service.Interface.dll</HintPath>
-    </Reference>
     <Reference Include="FluentAssertions, Version=5.6.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentAssertions.5.6.0\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
