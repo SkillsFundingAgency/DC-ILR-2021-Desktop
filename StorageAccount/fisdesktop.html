@@ -1,6 +1,6 @@
 <html>
 <head>
-  <link rel="stylesheet" type="text/css" href="/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
 <style>
     .table-responsive {
     	display:table-cell;
@@ -9,16 +9,20 @@
 	.alert-success-alt {border-color: #19B99A; background: #137792}
 </style>
 
-<script src="/azure-storage.blob.js"></script>
+<script src="azure-storage.blob.min.js"></script>
 
 <script type='text/javascript'>
-	var account = '__StorageAccountNameFIS__';
-	var sas = '__StorageAccountNameFIS_SASToken__';
-	var container = '__FIS_Download_Container__';
-	var filter = '__FIS_File_Filter__';
+	var account = '__FISStorageAccountName__';
+	var sas = '__FISStorageAccountName_SASToken__';
 
+	var container = '__FISDownloadContainerName__';
+	var filter = '__FileListFilter__';
+
+</script>
+
+<script type='text/javascript'>
 	function getBlobService(blobUri,sasToken) {
-		var blobService = AzureStorage.Blob.createBlobService(blobUri.toLowerCase() ).withFilter(new AzureStorage.Blob.ExponentialRetryPolicyFilter());
+		var blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri.toLowerCase() , sasToken).withFilter(new AzureStorage.Blob.ExponentialRetryPolicyFilter());
 		return blobService;
 	}
 	
@@ -32,11 +36,9 @@
 		
 		blobUri = 'https://' + accountName + '.blob.core.windows.net';
 		var blobService = getBlobService(blobUri,sasToken);
-		debugger;
+
 		if (!blobService)
 			return;
-
-		var url123 = blobService.GetUrl;
 
 		document.getElementById('Release').innerHTML = 'Loading...';
 
@@ -56,9 +58,9 @@
 				}
 				else
 				{
-					results.entries.sort(function(a,b){
-				  	  return new Date(b.lastModified) - new Date(a.lastModified);
-					});
+					//results.entries.sort(function(a,b){
+				  	//  return new Date(b.lastModified) - new Date(a.lastModified);
+					//});
 
 					for (var i = 0, blob; blob = results.entries[i]; i++) {
 						if (blob.name.toLowerCase().startsWith(fileFilter.toLowerCase()))
