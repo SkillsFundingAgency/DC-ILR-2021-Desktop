@@ -260,7 +260,7 @@
     <Resource Include="Resources\Images\DSAppIcon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\ESFA_logo.png" />
+    <Resource Include="Resources\Images\ESFA_logo.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
