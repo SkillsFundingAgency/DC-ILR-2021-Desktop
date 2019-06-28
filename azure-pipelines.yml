@@ -26,7 +26,7 @@ variables:
 steps:
 - task: gittools.gitversion.gitversion-task.GitVersion@4
   displayName: GitVersion
-  enabled: true
+  enabled: false
   inputs:
     updateAssemblyInfo: true
     preferBundledVersion: false
