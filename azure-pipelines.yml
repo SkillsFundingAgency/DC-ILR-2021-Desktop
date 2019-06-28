@@ -1,6 +1,6 @@
 
-name: $(GitVersion_NuGetVersion)
-#name: $(VersionNumberMajor).$(VersionNumberMinor).$(VersionNumberBuild)$(Rev:.rrrr)
+#name: $(GitVersion_NuGetVersion)
+name: $(VersionNumberMajor).$(VersionNumberMinor).$(VersionNumberBuild)$(Rev:.rrrr)
 
 resources:
 - repo: self
@@ -15,8 +15,9 @@ pool:
   - vstest
 
 variables:
-  VersionNumberMajor: '1'
+  VersionNumberMajor: '2'
   VersionNumberMinor: '2'
+  VersionNumberBuild: '0'
   BuildConfiguration: 'Release'
   BuildPlatform: 'Any CPU'
   Parameters.solution: '**\*.sln'
