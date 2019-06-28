@@ -25,7 +25,7 @@
                 <ColumnDefinition Width="5*" />
                 <ColumnDefinition Width="3*" />
             </Grid.ColumnDefinitions>
-            <Image Source="../Resources/Images/ESFA_logo.png" HorizontalAlignment="Left" Margin="15,5"/>
+            <Image Source="../Resources/Images/ESFA_logo.jpg" HorizontalAlignment="Left" Margin="15,5"/>
             <StackPanel Grid.Column="1" Margin="0,26,0,0">
                 <Label FontSize="14" Content="{Binding ReleaseVersionNumber}" ContentStringFormat="Version:  {0}" />
                 <Label FontSize="14" Content="{Binding ReleaseDate}"          ContentStringFormat="Released: {0}"/>
