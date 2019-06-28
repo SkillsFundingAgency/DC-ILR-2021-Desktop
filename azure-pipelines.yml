@@ -15,7 +15,7 @@ pool:
   - vstest
 
 variables:
-  VersionNumberMajor: '2'
+  VersionNumberMajor: '0'
   VersionNumberMinor: '2'
   VersionNumberBuild: '0'
   BuildConfiguration: 'Release'
