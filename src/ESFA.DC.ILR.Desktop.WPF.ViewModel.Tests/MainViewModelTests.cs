@@ -136,9 +136,14 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             completionContextMock.SetupGet(c => c.OutputDirectory).Returns(outputDirectory);
             completionContextMock.SetupGet(c => c.ProcessingCompletionState).Returns(ProcessingCompletionStates.Success);
 
+            var desktopContextMock = new Mock<IDesktopContext>();
+            var desktopContextFactoryMock = new Mock<IDesktopContextFactory>();
+
+            desktopContextFactoryMock.Setup(f => f.Build(fileName)).Returns(desktopContextMock.Object);
+
             var viewModel = NewViewModel(ilrDesktopServiceMock.Object);
 
-            ilrDesktopServiceMock.Setup(s => s.ProcessAsync(fileName, It.IsAny<CancellationToken>()))
+            ilrDesktopServiceMock.Setup(s => s.ProcessAsync(desktopContextMock.Object, It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(completionContextMock.Object));
 
             viewModel.FileName = fileName;
@@ -154,6 +159,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
 
         private MainViewModel NewViewModel(
             IIlrDesktopService ilrDesktopService = null,
+            IDesktopContextFactory desktopContextFactory = null,
             IMessengerService messengerService = null,
             IWindowService windowService = null,
             IDialogInteractionService dialogInteractionService = null,
@@ -163,6 +169,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
         {
             return new MainViewModel(
                 ilrDesktopService ?? Mock.Of<IIlrDesktopService>(),
+                desktopContextFactory ?? Mock.Of<IDesktopContextFactory>(),
                 messengerService ?? Mock.Of<IMessengerService>(),
                 windowService ?? Mock.Of<IWindowService>(),
                 dialogInteractionService ?? Mock.Of<IDialogInteractionService>(),

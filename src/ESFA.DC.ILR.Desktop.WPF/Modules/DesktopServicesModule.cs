@@ -4,6 +4,7 @@ using ESFA.DC.ILR.Desktop.Service;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.WPF.Service;
 using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
+using IDesktopContextFactory = ESFA.DC.ILR.Desktop.WPF.Service.Interface.IDesktopContextFactory;
 
 namespace ESFA.DC.ILR.Desktop.WPF.Modules
 {
