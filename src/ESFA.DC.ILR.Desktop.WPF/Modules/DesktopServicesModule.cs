@@ -18,6 +18,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
             containerBuilder.RegisterType<ReleaseVersionInformationService>().As<IReleaseVersionInformationService>();
             containerBuilder.RegisterType<ReferenceDataVersionInformationService>().As<IReferenceDataVersionInformationService>();
 
+            containerBuilder.RegisterType<DesktopContextFactory>().As<IDesktopContextFactory>();
+
             containerBuilder.Register(c =>
             {
                 var settings = new DesktopServiceSettings();

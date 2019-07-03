@@ -16,7 +16,6 @@ using ESFA.DC.ILR.ReportService.Desktop;
 using ESFA.DC.ILR.ReportService.Desktop.Modules;
 using ESFA.DC.ILR.ValidationService.Desktop;
 using ESFA.DC.ILR.ValidationService.Desktop.Modules;
-using DesktopContextFactory = ESFA.DC.ILR.Desktop.WPF.Service.DesktopContextFactory;
 
 namespace ESFA.DC.ILR.Desktop.WPF.Modules
 {
@@ -25,7 +24,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
         protected override void Load(ContainerBuilder containerBuilder)
         {
             containerBuilder.RegisterType<DateTimeProvider.DateTimeProvider>().As<IDateTimeProvider>();
-            containerBuilder.RegisterType<DesktopContextFactory>().As<IDesktopContextFactory>();
             containerBuilder.RegisterType<IlrPipelineProvider>().As<IIlrPipelineProvider>();
             containerBuilder.RegisterType<DesktopTaskExecutionService>().As<IDesktopTaskExecutionService>();
             containerBuilder.RegisterType<IlrDesktopService>().As<IIlrDesktopService>();
