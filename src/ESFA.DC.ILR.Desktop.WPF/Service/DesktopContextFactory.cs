@@ -2,9 +2,11 @@
 using ESFA.DC.DateTimeProvider.Interface;
 using ESFA.DC.ILR.Constants;
 using ESFA.DC.ILR.Desktop.Interface;
+using ESFA.DC.ILR.Desktop.Service;
+using ESFA.DC.ILR.Desktop.Service.Context;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 
-namespace ESFA.DC.ILR.Desktop.Service.Context
+namespace ESFA.DC.ILR.Desktop.WPF.Service
 {
     public class DesktopContextFactory : IDesktopContextFactory
     {

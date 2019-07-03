@@ -16,6 +16,7 @@ using ESFA.DC.ILR.ReportService.Desktop;
 using ESFA.DC.ILR.ReportService.Desktop.Modules;
 using ESFA.DC.ILR.ValidationService.Desktop;
 using ESFA.DC.ILR.ValidationService.Desktop.Modules;
+using DesktopContextFactory = ESFA.DC.ILR.Desktop.WPF.Service.DesktopContextFactory;
 
 namespace ESFA.DC.ILR.Desktop.WPF.Modules
 {

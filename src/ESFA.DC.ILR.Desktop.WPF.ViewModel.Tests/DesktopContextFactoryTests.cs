@@ -1,12 +1,12 @@
 ﻿using System;
 using ESFA.DC.DateTimeProvider.Interface;
-using ESFA.DC.ILR.Desktop.Service.Context;
 using ESFA.DC.ILR.Desktop.Service.Interface;
+using ESFA.DC.ILR.Desktop.WPF.Service;
 using FluentAssertions;
 using Moq;
 using Xunit;
 
-namespace ESFA.DC.ILR.Desktop.Service.Tests
+namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
 {
     public class DesktopContextFactoryTests
     {

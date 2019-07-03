@@ -78,6 +78,7 @@
     <Compile Include="Modules\LoggingModule.cs" />
     <Compile Include="Modules\SerializationModule.cs" />
     <Compile Include="Modules\ViewModelsModule.cs" />
+    <Compile Include="Service\DesktopContextFactory.cs" />
     <Compile Include="Service\DesktopLogger.cs" />
     <Compile Include="Service\DesktopServiceSettings.cs" />
     <Compile Include="Service\DialogInteractionService.cs" />
