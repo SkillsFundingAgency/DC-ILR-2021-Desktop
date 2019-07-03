@@ -1,0 +1,159 @@
+
+#name: $(GitVersion_NuGetVersion)
+name: $(VersionNumberMajor).$(VersionNumberMinor).$(VersionNumberBuild)$(Rev:.rrrr)
+
+resources:
+- repo: self
+  fetchDepth: 30
+
+pool:
+  name: DCT
+  demands:
+  - IsBuildServer
+  - msbuild
+  - visualstudio
+  - vstest
+
+variables:
+  VersionNumberMajor: '0'
+  VersionNumberMinor: '2'
+  VersionNumberBuild: '0'
+  BuildConfiguration: 'Release'
+  BuildPlatform: 'Any CPU'
+  Parameters.solution: '**\*.sln'
+  Parameters.nugetFeedName: 'dct-pkg'
+
+steps:
+- task: gittools.gitversion.gitversion-task.GitVersion@4
+  displayName: GitVersion
+  enabled: false
+  inputs:
+    updateAssemblyInfo: true
+    preferBundledVersion: false
+
+- task: PowerShell@1
+  displayName: 'Dissplay Variables'
+  enabled: true
+  inputs:
+    scriptType: inlineScript
+    inlineScript: |
+     $var = (gci env:*).GetEnumerator() | Sort-Object Name
+     $out = ""
+     Foreach ($v in $var) 
+     {
+     write-output "Name: $($v.Name)  | Value : $($v.Value)"
+     }
+
+
+- task: NuGetToolInstaller@0
+  displayName: 'Use NuGet >=4.7.0'
+  inputs:
+    versionSpec: '>=4.7.0'
+
+- task: NuGetCommand@2
+  displayName: 'NuGet restore'
+  inputs:
+    restoreSolution: '$(Parameters.solution)'
+    vstsFeed: '$(Parameters.nugetFeedName)'
+
+- task: VSBuild@1
+  displayName: 'Build solution **\*.sln'
+  inputs:
+    solution: '$(Parameters.solution)'
+    msbuildArgs: '/p:version=$(Build.BuildNumber) /p:FileVersion=$(Build.BuildNumber)'
+    platform: '$(BuildPlatform)'
+    configuration: '$(BuildConfiguration)'
+    clean: true
+
+
+- task: CopyFiles@2
+  displayName: 'Copy Nuget Interface Packages Files - Artifact NugetInterface Directory'
+  inputs:
+    SourceFolder: '$(build.sourcesdirectory)\src'
+    Contents: |
+     **\*$(BuildConfiguration)*\*Interface.nupkg
+     !**\packages\**
+     !**\bin\x64\**
+    TargetFolder: '$(build.artifactstagingdirectory)\Nuget\Interface'
+    CleanTargetFolder: true
+    flattenFolders: true
+
+- task: CopyFiles@2
+  displayName: 'Copy NugetPackages Files - Artifact NugetPackages Directory'
+  inputs:
+    SourceFolder: '$(build.sourcesdirectory)\src'
+    Contents: |
+     **\*$(BuildConfiguration)*\*.nupkg
+     !**\packages\**
+     !**\bin\x64\**
+    TargetFolder: '$(build.artifactstagingdirectory)\Nuget\Packages'
+    CleanTargetFolder: true
+    flattenFolders: true
+
+- task: CopyFiles@2
+  displayName: 'Copy Application File to Artifact Folder'
+  inputs:
+    SourceFolder: 'src/ESFA.DC.ILR.Desktop.WPF\bin\$(BuildConfiguration)'  
+    Contents: '**\!(*.pdb)'
+    TargetFolder: '$(build.ArtifactStagingDirectory)\DesktopApplication'
+
+- task: CopyFiles@2
+  displayName: 'Copy Published Storage Account Files - Artifact StorageAccount Directory'
+  inputs:
+    SourceFolder: '$(build.sourcesdirectory)'
+    Contents: |
+     **\StorageAccount\**
+    TargetFolder: '$(build.artifactstagingdirectory)\StorageAccount'
+    CleanTargetFolder: true
+    flattenFolders: true
+
+- task: TotalALM.totalalm-tokenization.tokenization-build-task.Tokenization@2
+  displayName: 'Tokenization: Transform Application config file'
+  enabled: false
+  inputs:
+    SourcePath: '$(build.ArtifactStagingDirectory)\DesktopApplication'
+    TargetFileNames: '*.exe.config'
+    RequireVariable: false
+
+- task: VSTest@2
+  displayName: 'Run Unit Tests'
+  inputs:
+    testAssemblyVer2: |
+     **\$(BuildConfiguration)\*test*.dll
+     !**\obj\**
+    platform: '$(BuildPlatform)'
+    configuration: '$(BuildConfiguration)'
+    runInParallel: true
+    codeCoverageEnabled: true
+    diagnosticsEnabled: true
+
+- task: PublishSymbols@2
+  displayName: 'Publish symbols path'
+  enabled: false
+  inputs:
+    SearchPattern: '**\bin\**\*.pdb'
+    PublishSymbols: false
+  continueOnError: true
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: NugetPackages'
+  enabled: true
+  inputs:
+    ArtifactName: NugetPackages
+    PathtoPublish: '$(build.artifactstagingdirectory)\Nuget'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: DesktopApplication'
+  enabled: true
+  inputs:
+    ArtifactName: DesktopApplication
+    PathtoPublish: '$(build.artifactstagingdirectory)\DesktopApplication'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: StoraegAccount Display Files'
+  enabled: true
+  inputs:
+    ArtifactName: StorageAccount
+    PathtoPublish: '$(build.artifactstagingdirectory)\StorageAccount'
+
+
