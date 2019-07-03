@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.9.2" />
+    <PackageReference Include="ESFA.DC.DateTimeProvider" Version="0.1.6-beta0001" />
+    <PackageReference Include="ESFA.DC.FileService" Version="0.1.19-beta0001" />
+    <PackageReference Include="ESFA.DC.ILR.1920.DataStore.Desktop" Version="0.0.151" />
+    <PackageReference Include="ESFA.DC.ILR.1920.FileValidationService.Desktop" Version="0.1.72" />
+    <PackageReference Include="ESFA.DC.ILR.1920.ReportService.Desktop" Version="0.0.111" />
+    <PackageReference Include="ESFA.DC.ILR.1920.ValidationService.Desktop" Version="0.0.201" />
+    <PackageReference Include="ESFA.DC.ILR1920.ReferenceDataService.Desktop" Version="0.0.87" />
+    <PackageReference Include="ESFA.DC.IO.FileSystem" Version="0.1.19-beta0001" />
+    <PackageReference Include="ESFA.DC.IO.Interfaces" Version="0.1.18-beta0001" />
+    <PackageReference Include="ESFA.DC.Logging.Interfaces" Version="0.1.4-beta0001" />
+    <PackageReference Include="ESFA.DC.Serialization.Interfaces" Version="0.1.6-beta0001" />
+    <PackageReference Include="ESFA.DC.Serialization.Json" Version="0.1.6-beta0001" />
+    <PackageReference Include="ESFA.DC.Serialization.Xml" Version="0.1.6-beta0001" />
+    <PackageReference Include="NLog.Config" Version="4.6.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Interface\ESFA.DC.ILR.Desktop.Interface.csproj" />
+    <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Service\ESFA.DC.ILR.Desktop.Service.csproj" />
+  </ItemGroup>
+
+</Project>

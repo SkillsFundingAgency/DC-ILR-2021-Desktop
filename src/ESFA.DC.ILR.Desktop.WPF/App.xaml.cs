@@ -4,6 +4,7 @@ using System.Windows;
 using Autofac;
 using Autofac.Extras.CommonServiceLocator;
 using CommonServiceLocator;
+using ESFA.DC.ILR.Desktop.Modules;
 using ESFA.DC.ILR.Desktop.WPF.Modules;
 using ESFA.DC.Logging.Interfaces;
 

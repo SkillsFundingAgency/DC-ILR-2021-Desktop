@@ -73,13 +73,8 @@
     <Compile Include="Config\DesktopServiceConfiguration.cs" />
     <Compile Include="Config\FileSystemKeyValuePersistenceServiceConfig.cs" />
     <Compile Include="Modules\DesktopServicesModule.cs" />
-    <Compile Include="Modules\IlrServicesModule.cs" />
-    <Compile Include="Modules\IOModule.cs" />
-    <Compile Include="Modules\LoggingModule.cs" />
-    <Compile Include="Modules\SerializationModule.cs" />
     <Compile Include="Modules\ViewModelsModule.cs" />
     <Compile Include="Service\DesktopContextFactory.cs" />
-    <Compile Include="Service\DesktopLogger.cs" />
     <Compile Include="Service\DesktopServiceSettings.cs" />
     <Compile Include="Service\DialogInteractionService.cs" />
     <Compile Include="Service\Interface\ICloseable.cs" />
@@ -164,6 +159,10 @@
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Interface\ESFA.DC.ILR.Desktop.Interface.csproj">
       <Project>{2D75F514-A091-41BA-A8B0-87BB97BC0337}</Project>
       <Name>ESFA.DC.ILR.Desktop.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Modules\ESFA.DC.ILR.Desktop.Modules.csproj">
+      <Project>{9759a0da-c73c-467f-b6bd-de220e3b8d97}</Project>
+      <Name>ESFA.DC.ILR.Desktop.Modules</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Service\ESFA.DC.ILR.Desktop.Service.csproj">
       <Project>{15e50fe1-098b-4dec-9346-cf4456c6d81d}</Project>

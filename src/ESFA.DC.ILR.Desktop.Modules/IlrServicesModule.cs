@@ -4,7 +4,6 @@ using ESFA.DC.ILR.DataStore.Desktop;
 using ESFA.DC.ILR.DataStore.Desktop.Modules;
 using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.Desktop.Service;
-using ESFA.DC.ILR.Desktop.Service.Context;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Service.Mutator;
 using ESFA.DC.ILR.Desktop.Service.Tasks;
@@ -17,7 +16,7 @@ using ESFA.DC.ILR.ReportService.Desktop.Modules;
 using ESFA.DC.ILR.ValidationService.Desktop;
 using ESFA.DC.ILR.ValidationService.Desktop.Modules;
 
-namespace ESFA.DC.ILR.Desktop.WPF.Modules
+namespace ESFA.DC.ILR.Desktop.Modules
 {
     public class IlrServicesModule : Module
     {
