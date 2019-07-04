@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ESFA.DC.ILR.Constants;
 using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.Desktop.Service.Context;
@@ -13,7 +14,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         [Fact]
         public void Mutate_UpdateReportTasks()
         {
-            IDesktopContext context = new DesktopContext
+            IDesktopContext context = new DesktopContext(new DateTime(2018, 1, 1), null, null, null)
             {
                 KeyValuePairs = new Dictionary<string, object>
                 {

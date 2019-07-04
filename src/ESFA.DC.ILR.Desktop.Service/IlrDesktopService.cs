@@ -16,7 +16,6 @@ namespace ESFA.DC.ILR.Desktop.Service
     public class IlrDesktopService : IIlrDesktopService
     {
         private readonly IMessengerService _messengerService;
-        private readonly IDesktopContextFactory _desktopContextFactory;
         private readonly IIlrPipelineProvider _ilrPipelineProvider;
         private readonly IDesktopTaskExecutionService _desktopTaskExecutionService;
         private readonly IContextMutatorExecutor _contextMutatorExecutor;
@@ -24,27 +23,23 @@ namespace ESFA.DC.ILR.Desktop.Service
 
         public IlrDesktopService(
             IMessengerService messengerService,
-            IDesktopContextFactory desktopContextFactory,
             IIlrPipelineProvider ilrPipelineProvider,
             IDesktopTaskExecutionService desktopTaskExecutionService,
             IContextMutatorExecutor contextMutatorExecutor,
             ILogger logger)
         {
             _messengerService = messengerService;
-            _desktopContextFactory = desktopContextFactory;
             _ilrPipelineProvider = ilrPipelineProvider;
             _desktopTaskExecutionService = desktopTaskExecutionService;
             _contextMutatorExecutor = contextMutatorExecutor;
             _logger = logger;
         }
 
-        public async Task<ICompletionContext> ProcessAsync(string filePath, CancellationToken cancellationToken)
+        public async Task<ICompletionContext> ProcessAsync(IDesktopContext desktopContext, CancellationToken cancellationToken)
         {
-            var context = _desktopContextFactory.Build(filePath);
-
             var completionContext = new CompletionContext()
             {
-                OutputDirectory = context.OutputDirectory,
+                OutputDirectory = desktopContext.OutputDirectory,
                 ProcessingCompletionState = ProcessingCompletionStates.Success,
             };
 
@@ -58,7 +53,7 @@ namespace ESFA.DC.ILR.Desktop.Service
 
                 _messengerService.Send(new TaskProgressMessage(desktopTaskDefinition.Key.GetDisplayText(), step, stepsList.Count));
 
-                var result = await _desktopTaskExecutionService.ExecuteAsync(desktopTaskDefinition.Key, context, cancellationToken);
+                var result = await _desktopTaskExecutionService.ExecuteAsync(desktopTaskDefinition.Key, desktopContext, cancellationToken);
 
                 cancellationToken.ThrowIfCancellationRequested();
 
@@ -72,7 +67,7 @@ namespace ESFA.DC.ILR.Desktop.Service
                     {
                         if (desktopTaskDefinition.FailureContextMutatorKey != null)
                         {
-                            context = _contextMutatorExecutor.Execute(desktopTaskDefinition.FailureContextMutatorKey.Value, context);
+                            desktopContext = _contextMutatorExecutor.Execute(desktopTaskDefinition.FailureContextMutatorKey.Value, desktopContext);
                         }
 
                         step = _ilrPipelineProvider.IndexFor(desktopTaskDefinition.FailureKey.Value);

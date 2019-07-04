@@ -6,7 +6,7 @@ using ESFA.DC.IO.FileSystem;
 using ESFA.DC.IO.FileSystem.Config.Interfaces;
 using ESFA.DC.IO.Interfaces;
 
-namespace ESFA.DC.ILR.Desktop.WPF.Modules
+namespace ESFA.DC.ILR.Desktop.Modules
 {
     public class IOModule : Module
     {

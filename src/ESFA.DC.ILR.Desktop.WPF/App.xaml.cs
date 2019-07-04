@@ -4,6 +4,7 @@ using System.Windows;
 using Autofac;
 using Autofac.Extras.CommonServiceLocator;
 using CommonServiceLocator;
+using ESFA.DC.ILR.Desktop.Modules;
 using ESFA.DC.ILR.Desktop.WPF.Modules;
 using ESFA.DC.Logging.Interfaces;
 
@@ -35,9 +36,9 @@ namespace ESFA.DC.ILR.Desktop.WPF
 
             containerBuilder.RegisterModule<DesktopServicesModule>();
             containerBuilder.RegisterModule<ViewModelsModule>();
-            containerBuilder.RegisterModule<IlrServicesModule>();
 
             // Common Service Registration
+            containerBuilder.RegisterModule<IlrServicesModule>();
             containerBuilder.RegisterModule<LoggingModule>();
             containerBuilder.RegisterModule<SerializationModule>();
             containerBuilder.RegisterModule<IOModule>();

@@ -8,6 +8,8 @@
 
         string Container { get; set; }
 
+        int Ukprn { set; }
+
         long FileSizeInBytes { set; }
     }
 }
