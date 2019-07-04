@@ -1,9 +1,13 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Autofac;
 using CommandLine;
 using ESFA.DC.ILR.Desktop.CLI.Interface;
 using ESFA.DC.ILR.Desktop.CLI.Modules;
+using ESFA.DC.ILR.Desktop.CLI.Service;
 using ESFA.DC.ILR.Desktop.Modules;
+using ESFA.DC.ILR.Desktop.Service.Interface;
 
 namespace ESFA.DC.ILR.Desktop.CLI
 {
@@ -16,7 +20,14 @@ namespace ESFA.DC.ILR.Desktop.CLI
                     {
                         using (var container = BuildContainerBuilder().Build())
                         {
-                            container.Resolve<ICliEntryPoint>().Execute(a, CancellationToken.None).Wait();
+                            try
+                            {
+                                container.Resolve<ICliEntryPoint>().ExecuteAsync(a, CancellationToken.None).Wait();
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
                         }
                     });
         }
@@ -30,6 +41,11 @@ namespace ESFA.DC.ILR.Desktop.CLI
             containerBuilder.RegisterModule<SerializationModule>();
             containerBuilder.RegisterModule<IOModule>();
             containerBuilder.RegisterModule<CommandLineModule>();
+
+            var desktopServiceSettings = new DesktopServiceSettings();
+            desktopServiceSettings.LoadAsync(CancellationToken.None).Wait();
+
+            containerBuilder.RegisterInstance<DesktopServiceSettings>(desktopServiceSettings).As<IDesktopServiceSettings>();
 
             return containerBuilder;
         }

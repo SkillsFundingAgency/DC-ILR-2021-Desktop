@@ -27,10 +27,37 @@ namespace ESFA.DC.ILR.Desktop.Service.Tasks
             preProcessingDesktopTaskContext.FileName = fileName;
             preProcessingDesktopTaskContext.OriginalFileName = fileName;
 
+            if (TryGetUkprnFromFileName(fileName, out var ukprn))
+            {
+                preProcessingDesktopTaskContext.Ukprn = ukprn;
+            }
+
             var fileSizeInBytes = new FileInfo(newFilePath).Length;
             preProcessingDesktopTaskContext.FileSizeInBytes = fileSizeInBytes;
 
             return Task.FromResult(desktopContext);
+        }
+
+        public bool TryGetUkprnFromFileName(string fileName, out int ukprn)
+        {
+            if (!string.IsNullOrWhiteSpace(fileName))
+            {
+                var fileNameSplit = fileName.Split('-');
+
+                if (fileNameSplit.Length > 1)
+                {
+                    var ukprnString = fileNameSplit[1];
+
+                    if (ukprnString.Length == 8)
+                    {
+                        return int.TryParse(ukprnString, out ukprn);
+                    }
+                }
+            }
+
+            ukprn = 0;
+
+            return false;
         }
     }
 }

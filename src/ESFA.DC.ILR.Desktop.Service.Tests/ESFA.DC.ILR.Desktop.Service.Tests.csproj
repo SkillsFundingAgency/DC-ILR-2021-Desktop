@@ -84,11 +84,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DesktopContextTests.cs" />
     <Compile Include="SchemaContextMutatorTests.cs" />
     <Compile Include="IlrDesktopTaskKeysTests.cs" />
     <Compile Include="IlrPipelineProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tasks\PostProcessingDesktopTaskContextTests.cs" />
+    <Compile Include="Tasks\PreProcessingDesktopTaskTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

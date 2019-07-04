@@ -22,25 +22,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.Service
 
         public IDesktopContext Build(string filePath)
         {
-            return new DesktopContext()
-            {
-                DateTimeUtc = _dateTimeProvider.GetNowUtc(),
-                OutputDirectory = _desktopServiceSettings.OutputDirectory,
-                KeyValuePairs = new Dictionary<string, object>()
-                {
-                    [ILRContextKeys.Container] = "Sandbox",
-                    [ILRContextKeys.Filename] = filePath,
-                    [ILRContextKeys.OriginalFilename] = filePath,
-                    [ILRContextKeys.ValidationErrors] = "ValidationErrors.json",
-                    [ILRContextKeys.IlrDatabaseConnectionString] = _desktopServiceSettings.IlrDatabaseConnectionString,
-                    [ILRContextKeys.IlrReferenceData] = "IlrReferenceData.json",
-                    [ILRContextKeys.InvalidLearnRefNumbers] = "InvalidLearnRefNumbers.json",
-                    [ILRContextKeys.ValidLearnRefNumbers] = "ValidLearnRefNumbers.json",
-                    [ILRContextKeys.ValidationErrorLookups] = "ValidationErrorLookups.json",
-                    [ILRContextKeys.ReportOutputFileNames] = string.Empty,
-                    [ILRContextKeys.ReportTasks] = ReportTaskNameConstants.ValidationReport,
-                },
-            };
+            return new DesktopContext(_dateTimeProvider.GetNowUtc(), _desktopServiceSettings.OutputDirectory, filePath, _desktopServiceSettings.IlrDatabaseConnectionString);
         }
     }
 }

@@ -5,6 +5,6 @@ namespace ESFA.DC.ILR.Desktop.CLI.Interface
 {
     public interface ICliEntryPoint
     {
-        Task Execute(ICommandLineArguments commandLineArguments, CancellationToken cancellationToken);
+        Task ExecuteAsync(ICommandLineArguments commandLineArguments, CancellationToken cancellationToken);
     }
 }

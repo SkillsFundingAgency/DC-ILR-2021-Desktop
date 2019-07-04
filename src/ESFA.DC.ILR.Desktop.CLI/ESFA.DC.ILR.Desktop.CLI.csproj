@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandLineArguments.cs" />
+    <Compile Include="Service\DesktopServiceSettings.cs" />
     <Compile Include="Interface\ICliEntryPoint.cs" />
     <Compile Include="Interface\ICommandLineArguments.cs" />
     <Compile Include="Interface\IDesktopContextFactory.cs" />

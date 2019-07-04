@@ -141,7 +141,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
 
             desktopContextFactoryMock.Setup(f => f.Build(fileName)).Returns(desktopContextMock.Object);
 
-            var viewModel = NewViewModel(ilrDesktopServiceMock.Object);
+            var viewModel = NewViewModel(ilrDesktopServiceMock.Object, desktopContextFactoryMock.Object);
 
             ilrDesktopServiceMock.Setup(s => s.ProcessAsync(desktopContextMock.Object, It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(completionContextMock.Object));

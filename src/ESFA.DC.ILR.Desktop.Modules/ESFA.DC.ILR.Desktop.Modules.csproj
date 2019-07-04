@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Aspose.Cells" Version="19.2.0" />
     <PackageReference Include="Autofac" Version="4.9.2" />
     <PackageReference Include="ESFA.DC.DateTimeProvider" Version="0.1.6-beta0001" />
     <PackageReference Include="ESFA.DC.FileService" Version="0.1.19-beta0001" />
@@ -15,6 +16,7 @@
     <PackageReference Include="ESFA.DC.ILR1920.ReferenceDataService.Desktop" Version="0.0.87" />
     <PackageReference Include="ESFA.DC.IO.FileSystem" Version="0.1.19-beta0001" />
     <PackageReference Include="ESFA.DC.IO.Interfaces" Version="0.1.18-beta0001" />
+    <PackageReference Include="ESFA.DC.Jobs.Model" Version="0.2.8-beta0001" />
     <PackageReference Include="ESFA.DC.Logging.Interfaces" Version="0.1.4-beta0001" />
     <PackageReference Include="ESFA.DC.Serialization.Interfaces" Version="0.1.6-beta0001" />
     <PackageReference Include="ESFA.DC.Serialization.Json" Version="0.1.6-beta0001" />
