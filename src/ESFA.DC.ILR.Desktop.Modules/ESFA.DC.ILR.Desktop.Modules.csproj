@@ -9,7 +9,7 @@
     <PackageReference Include="Autofac" Version="4.9.2" />
     <PackageReference Include="ESFA.DC.DateTimeProvider" Version="0.1.6-beta0001" />
     <PackageReference Include="ESFA.DC.FileService" Version="0.1.19-beta0001" />
-    <PackageReference Include="ESFA.DC.ILR.1920.DataStore.Desktop" Version="0.0.151" />
+    <PackageReference Include="ESFA.DC.ILR.1920.DataStore.Desktop" Version="0.0.180" />
     <PackageReference Include="ESFA.DC.ILR.1920.FileValidationService.Desktop" Version="0.1.72" />
     <PackageReference Include="ESFA.DC.ILR.1920.ReportService.Desktop" Version="0.0.111" />
     <PackageReference Include="ESFA.DC.ILR.1920.ValidationService.Desktop" Version="0.0.201" />
