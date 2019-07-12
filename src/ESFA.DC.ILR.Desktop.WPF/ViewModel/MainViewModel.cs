@@ -10,6 +10,7 @@ using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
 using ESFA.DC.Logging.Interfaces;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using IDesktopContextFactory = ESFA.DC.ILR.Desktop.WPF.Service.Interface.IDesktopContextFactory;
 
 namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 {
@@ -30,6 +31,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private const string _filenamePlaceholder = "No file chosen";
 
         private readonly IIlrDesktopService _ilrDesktopService;
+        private readonly IDesktopContextFactory _desktopContextFactory;
         private readonly IMessengerService _messengerService;
         private readonly IWindowService _windowService;
         private readonly IDialogInteractionService _dialogInteractionService;
@@ -48,6 +50,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         public MainViewModel(
             IIlrDesktopService ilrDesktopService,
+            IDesktopContextFactory desktopContextFactory,
             IMessengerService messengerService,
             IWindowService windowService,
             IDialogInteractionService dialogInteractionService,
@@ -56,6 +59,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             ILogger logger)
         {
             _ilrDesktopService = ilrDesktopService;
+            _desktopContextFactory = desktopContextFactory;
             _messengerService = messengerService;
             _windowService = windowService;
             _dialogInteractionService = dialogInteractionService;
@@ -186,7 +190,9 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
                 CancelAndReuploadCommand.RaiseCanExecuteChanged();
 
-                var completionContext = await _ilrDesktopService.ProcessAsync(FileName, _cancellationTokenSource.Token);
+                var desktopContext = _desktopContextFactory.Build(FileName);
+
+                var completionContext = await _ilrDesktopService.ProcessAsync(desktopContext, _cancellationTokenSource.Token);
 
                 ReportsLocation = completionContext.OutputDirectory;
                 UpdateCurrentStageForCompletionState(completionContext.ProcessingCompletionState);

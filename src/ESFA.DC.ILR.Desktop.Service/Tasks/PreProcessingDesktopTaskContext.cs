@@ -31,6 +31,11 @@ namespace ESFA.DC.ILR.Desktop.Service.Tasks
             set => _desktopContext.KeyValuePairs[ILRContextKeys.Container] = value;
         }
 
+        public int Ukprn
+        {
+            set => _desktopContext.KeyValuePairs[ILRContextKeys.Ukprn] = value;
+        }
+
         public long FileSizeInBytes
         {
             set => _desktopContext.KeyValuePairs[ILRContextKeys.FileSizeInBytes] = value;

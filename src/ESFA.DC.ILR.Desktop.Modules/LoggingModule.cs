@@ -7,7 +7,7 @@ using NLog.Layouts;
 using NLog.Targets;
 using ILogger = ESFA.DC.Logging.Interfaces.ILogger;
 
-namespace ESFA.DC.ILR.Desktop.WPF.Modules
+namespace ESFA.DC.ILR.Desktop.Modules
 {
     public class LoggingModule : Module
     {
