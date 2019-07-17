@@ -9,6 +9,8 @@ using ESFA.DC.ILR.Desktop.Service.Mutator;
 using ESFA.DC.ILR.Desktop.Service.Tasks;
 using ESFA.DC.ILR.FileValidationService.Desktop;
 using ESFA.DC.ILR.FileValidationService.Desktop.Modules;
+using ESFA.DC.ILR.FundingService.Desktop;
+using ESFA.DC.ILR.FundingService.Desktop.Modules;
 using ESFA.DC.ILR.ReferenceDataService.Desktop;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Modules;
 using ESFA.DC.ILR.ReportService.Desktop;
@@ -40,6 +42,9 @@ namespace ESFA.DC.ILR.Desktop.Modules
 
             containerBuilder.RegisterType<ValidationServiceDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.ValidationService);
             containerBuilder.RegisterModule<ValidationServiceDesktopModule>();
+
+            containerBuilder.RegisterType<FundingServiceDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.FundingService);
+            containerBuilder.RegisterModule<FundingServiceDesktopModule>();
 
             containerBuilder.RegisterType<DataStoreDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.DataStore);
             containerBuilder.RegisterModule<DataStoreModule>();

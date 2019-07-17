@@ -16,7 +16,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         {
             var pipeline = NewProvider().Provide().ToList();
 
-            pipeline.Should().HaveCount(8);
+            pipeline.Should().HaveCount(9);
 
             pipeline[0].Key.Should().Be(IlrDesktopTaskKeys.PreExecution);
             pipeline[0].FailureKey.Should().BeNull();
@@ -33,14 +33,17 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
             pipeline[4].Key.Should().Be(IlrDesktopTaskKeys.ValidationService);
             pipeline[4].FailureKey.Should().BeNull();
 
-            pipeline[5].Key.Should().Be(IlrDesktopTaskKeys.DataStore);
+            pipeline[5].Key.Should().Be(IlrDesktopTaskKeys.FundingService);
             pipeline[5].FailureKey.Should().BeNull();
 
-            pipeline[6].Key.Should().Be(IlrDesktopTaskKeys.ReportService);
+            pipeline[6].Key.Should().Be(IlrDesktopTaskKeys.DataStore);
             pipeline[6].FailureKey.Should().BeNull();
 
-            pipeline[7].Key.Should().Be(IlrDesktopTaskKeys.PostExecution);
+            pipeline[7].Key.Should().Be(IlrDesktopTaskKeys.ReportService);
             pipeline[7].FailureKey.Should().BeNull();
+
+            pipeline[8].Key.Should().Be(IlrDesktopTaskKeys.PostExecution);
+            pipeline[8].FailureKey.Should().BeNull();
         }
 
         [Theory]
@@ -49,9 +52,10 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         [InlineData(IlrDesktopTaskKeys.FileValidationService, 2)]
         [InlineData(IlrDesktopTaskKeys.ReferenceDataService, 3)]
         [InlineData(IlrDesktopTaskKeys.ValidationService, 4)]
-        [InlineData(IlrDesktopTaskKeys.DataStore, 5)]
-        [InlineData(IlrDesktopTaskKeys.ReportService, 6)]
-        [InlineData(IlrDesktopTaskKeys.PostExecution, 7)]
+        [InlineData(IlrDesktopTaskKeys.FundingService, 5)]
+        [InlineData(IlrDesktopTaskKeys.DataStore, 6)]
+        [InlineData(IlrDesktopTaskKeys.ReportService, 7)]
+        [InlineData(IlrDesktopTaskKeys.PostExecution, 8)]
         public void IndexFor(IlrDesktopTaskKeys ilrDesktopTaskKey, int index)
         {
             NewProvider().IndexFor(ilrDesktopTaskKey).Should().Be(index);

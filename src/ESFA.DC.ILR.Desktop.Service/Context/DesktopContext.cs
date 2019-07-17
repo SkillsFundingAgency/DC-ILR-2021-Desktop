@@ -29,6 +29,13 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
                 [ILRContextKeys.ValidationErrorLookups] = "ValidationErrorLookups.json",
                 [ILRContextKeys.ReportOutputFileNames] = string.Empty,
                 [ILRContextKeys.ReportTasks] = ReportTaskNameConstants.ValidationReport,
+
+                [ILRContextKeys.FundingTaskALB] = "ALB",
+                [ILRContextKeys.FundingTaskFM35] = "FM35",
+                [ILRContextKeys.FundingTaskFM36] = "FM36",
+                [ILRContextKeys.FundingAlbOutput] = "FundingOutputALB.json",
+                [ILRContextKeys.FundingFm35Output] = "FundingOutputFM35.json",
+                [ILRContextKeys.FundingFm36Output] = "FundingOutputFM36.json",
             };
         }
 
