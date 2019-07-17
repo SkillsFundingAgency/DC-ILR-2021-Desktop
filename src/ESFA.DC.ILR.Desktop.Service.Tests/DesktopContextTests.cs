@@ -92,7 +92,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         [Fact]
         public void KeyValuePairsCount()
         {
-            NewContext().KeyValuePairs.Should().HaveCount(12);
+            NewContext().KeyValuePairs.Should().HaveCount(18);
         }
 
         private DesktopContext NewContext(DateTime? dateTime = null, string outputDirectory = null, string filePath = null, string connectionString = null)
