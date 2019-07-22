@@ -21,6 +21,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
                 [ILRContextKeys.Filename] = filePath,
                 [ILRContextKeys.OriginalFilename] = filePath,
                 [ILRContextKeys.Ukprn] = 12345678,
+                [ILRContextKeys.CollectionYear] = "1920",
                 [ILRContextKeys.ValidationErrors] = "ValidationErrors.json",
                 [ILRContextKeys.IlrDatabaseConnectionString] = connectionString,
                 [ILRContextKeys.IlrReferenceData] = "IlrReferenceData.json",
@@ -33,9 +34,11 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
                 [ILRContextKeys.FundingTaskALB] = "ALB",
                 [ILRContextKeys.FundingTaskFM35] = "FM35",
                 [ILRContextKeys.FundingTaskFM36] = "FM36",
+                [ILRContextKeys.FundingTaskFM81] = "FM81",
                 [ILRContextKeys.FundingAlbOutput] = "FundingOutputALB.json",
                 [ILRContextKeys.FundingFm35Output] = "FundingOutputFM35.json",
                 [ILRContextKeys.FundingFm36Output] = "FundingOutputFM36.json",
+                [ILRContextKeys.FundingFm81Output] = "FundingOutputFM81.json",
             };
         }
 

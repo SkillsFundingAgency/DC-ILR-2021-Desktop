@@ -30,6 +30,12 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         }
 
         [Fact]
+        public void CollectionYear()
+        {
+            NewContext().KeyValuePairs["CollectionYear"].Should().Be("1920");
+        }
+
+        [Fact]
         public void Filename()
         {
             var fileName = "FileName Value";
@@ -90,9 +96,57 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         }
 
         [Fact]
+        public void FundingTaskALB()
+        {
+            NewContext().KeyValuePairs["ALB"].Should().Be("ALB");
+        }
+
+        [Fact]
+        public void FundingTaskFM35()
+        {
+            NewContext().KeyValuePairs["FM35"].Should().Be("FM35");
+        }
+
+        [Fact]
+        public void FundingTaskFM36()
+        {
+            NewContext().KeyValuePairs["FM36"].Should().Be("FM36");
+        }
+
+        [Fact]
+        public void FundingTaskFM81()
+        {
+            NewContext().KeyValuePairs["FM81"].Should().Be("FM81");
+        }
+
+        [Fact]
+        public void FundingAlbOutput()
+        {
+            NewContext().KeyValuePairs["FundingAlbOutput"].Should().Be("FundingOutputALB.json");
+        }
+
+        [Fact]
+        public void FundingFM35Output()
+        {
+            NewContext().KeyValuePairs["FundingFm35Output"].Should().Be("FundingOutputFM35.json");
+        }
+
+        [Fact]
+        public void FundingFM36Output()
+        {
+            NewContext().KeyValuePairs["FundingFm36Output"].Should().Be("FundingOutputFM36.json");
+        }
+
+        [Fact]
+        public void FundingFM81Output()
+        {
+            NewContext().KeyValuePairs["FundingFm81Output"].Should().Be("FundingOutputFM81.json");
+        }
+
+        [Fact]
         public void KeyValuePairsCount()
         {
-            NewContext().KeyValuePairs.Should().HaveCount(18);
+            NewContext().KeyValuePairs.Should().HaveCount(21);
         }
 
         private DesktopContext NewContext(DateTime? dateTime = null, string outputDirectory = null, string filePath = null, string connectionString = null)
