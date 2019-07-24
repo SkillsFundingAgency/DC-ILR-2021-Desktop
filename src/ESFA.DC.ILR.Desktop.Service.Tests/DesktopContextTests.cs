@@ -102,6 +102,12 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         }
 
         [Fact]
+        public void FundingTaskFM25()
+        {
+            NewContext().KeyValuePairs["FM25"].Should().Be("FM25");
+        }
+
+        [Fact]
         public void FundingTaskFM35()
         {
             NewContext().KeyValuePairs["FM35"].Should().Be("FM35");
@@ -111,6 +117,12 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         public void FundingTaskFM36()
         {
             NewContext().KeyValuePairs["FM36"].Should().Be("FM36");
+        }
+
+        [Fact]
+        public void FundingTaskFM70()
+        {
+            NewContext().KeyValuePairs["FM70"].Should().Be("FM70");
         }
 
         [Fact]
@@ -126,6 +138,12 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         }
 
         [Fact]
+        public void FundingFM25Output()
+        {
+            NewContext().KeyValuePairs["FundingFm25Output"].Should().Be("FundingOutputFM25.json");
+        }
+
+        [Fact]
         public void FundingFM35Output()
         {
             NewContext().KeyValuePairs["FundingFm35Output"].Should().Be("FundingOutputFM35.json");
@@ -138,6 +156,12 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         }
 
         [Fact]
+        public void FundingFM70Output()
+        {
+            NewContext().KeyValuePairs["FundingFm70Output"].Should().Be("FundingOutputFM70.json");
+        }
+
+        [Fact]
         public void FundingFM81Output()
         {
             NewContext().KeyValuePairs["FundingFm81Output"].Should().Be("FundingOutputFM81.json");
@@ -146,7 +170,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         [Fact]
         public void KeyValuePairsCount()
         {
-            NewContext().KeyValuePairs.Should().HaveCount(21);
+            NewContext().KeyValuePairs.Should().HaveCount(25);
         }
 
         private DesktopContext NewContext(DateTime? dateTime = null, string outputDirectory = null, string filePath = null, string connectionString = null)
