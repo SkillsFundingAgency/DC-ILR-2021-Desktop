@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac.Features.Indexed;
@@ -53,15 +54,15 @@ namespace ESFA.DC.ILR.Desktop.Service
 
                 _messengerService.Send(new TaskProgressMessage(desktopTaskDefinition.Key.GetDisplayText(), step, stepsList.Count));
 
-                var result = await _desktopTaskExecutionService.ExecuteAsync(desktopTaskDefinition.Key, desktopContext, cancellationToken);
-
-                cancellationToken.ThrowIfCancellationRequested();
-
-                if (!result.IsFaulted)
+                try
                 {
+                    desktopContext = await _desktopTaskExecutionService.ExecuteAsync(desktopTaskDefinition.Key, desktopContext, cancellationToken).ConfigureAwait(false);
+
+                    cancellationToken.ThrowIfCancellationRequested();
+
                     step++;
                 }
-                else
+                catch (Exception exception)
                 {
                     if (desktopTaskDefinition.FailureKey != null)
                     {
@@ -74,13 +75,13 @@ namespace ESFA.DC.ILR.Desktop.Service
 
                         completionContext.ProcessingCompletionState = ProcessingCompletionStates.HandledFail;
 
-                        _logger.LogError($"Task Execution Handled Failure - Step {step}", result.Exception);
+                        _logger.LogError($"Task Execution Handled Failure - Step {step}", exception);
                     }
                     else
                     {
                         completionContext.ProcessingCompletionState = ProcessingCompletionStates.UnhandledFail;
 
-                        _logger.LogError($"Task Execution Unhandled Failure - Step {step}", result.Exception);
+                        _logger.LogError($"Task Execution Unhandled Failure - Step {step}", exception);
 
                         return completionContext;
                     }

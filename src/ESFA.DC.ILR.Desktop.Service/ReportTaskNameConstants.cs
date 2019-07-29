@@ -4,5 +4,7 @@
     {
         public const string ValidationReport = "TaskGenerateValidationReport";
         public const string ValidationSchemaErrorReport = "TaskGenerateValidationSchemaErrorsReport";
+        public const string FundingSummaryReport = "TaskGenerateFundingSummaryReport";
+        public const string DevolvedAdultEducationOccupancyReport = "TaskGenerateDevolvedAdultEducationOccupancyReport";
     }
 }
