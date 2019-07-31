@@ -22,6 +22,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
                 [ILRContextKeys.OriginalFilename] = filePath,
                 [ILRContextKeys.Ukprn] = 12345678,
                 [ILRContextKeys.CollectionYear] = "1920",
+                [ILRContextKeys.ReturnPeriod] = 12,
                 [ILRContextKeys.ValidationErrors] = "ValidationErrors.json",
                 [ILRContextKeys.IlrDatabaseConnectionString] = connectionString,
                 [ILRContextKeys.IlrReferenceData] = "IlrReferenceData.json",

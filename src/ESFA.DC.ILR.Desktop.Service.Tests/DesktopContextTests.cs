@@ -36,6 +36,12 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         }
 
         [Fact]
+        public void ReturnPeriod()
+        {
+            NewContext().KeyValuePairs["ReturnPeriod"].Should().Be(12);
+        }
+
+        [Fact]
         public void Filename()
         {
             var fileName = "FileName Value";
@@ -170,7 +176,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         [Fact]
         public void KeyValuePairsCount()
         {
-            NewContext().KeyValuePairs.Should().HaveCount(25);
+            NewContext().KeyValuePairs.Should().HaveCount(26);
         }
 
         private DesktopContext NewContext(DateTime? dateTime = null, string outputDirectory = null, string filePath = null, string connectionString = null)
