@@ -74,7 +74,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             SettingsNavigationCommand = new RelayCommand(SettingsNavigate);
             AboutNavigationCommand = new RelayCommand(AboutNavigate);
             ReportsFolderCommand = new RelayCommand(() => ProcessStart(_reportsLocation));
-            CancelAndReuploadCommand = new RelayCommand(CancelAndReupload, () => !_cancellationTokenSource?.IsCancellationRequested ?? false);
+            CancelAndReImportCommand = new RelayCommand(CancelAndReImport, () => !_cancellationTokenSource?.IsCancellationRequested ?? false);
         }
 
         public StageKeys CurrentStage
@@ -160,7 +160,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         public RelayCommand ReportsFolderCommand { get; set; }
 
-        public RelayCommand CancelAndReuploadCommand { get; set; }
+        public RelayCommand CancelAndReImportCommand { get; set; }
 
         public void HandleTaskProgressMessage(TaskProgressMessage taskProgressMessage)
         {
@@ -188,7 +188,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             {
                 _cancellationTokenSource = new CancellationTokenSource();
 
-                CancelAndReuploadCommand.RaiseCanExecuteChanged();
+                CancelAndReImportCommand.RaiseCanExecuteChanged();
 
                 var desktopContext = _desktopContextFactory.Build(FileName);
 
@@ -211,12 +211,12 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             }
         }
 
-        private void CancelAndReupload()
+        private void CancelAndReImport()
         {
             TaskName = "Cancelling";
             _cancellationTokenSource?.Cancel();
 
-            CancelAndReuploadCommand.RaiseCanExecuteChanged();
+            CancelAndReImportCommand.RaiseCanExecuteChanged();
         }
 
         private void UpdateCurrentStageForCompletionState(ProcessingCompletionStates? processingCompletionState)
