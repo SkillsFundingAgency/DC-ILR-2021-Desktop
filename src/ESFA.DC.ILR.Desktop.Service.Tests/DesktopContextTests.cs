@@ -38,7 +38,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         [Fact]
         public void ReturnPeriod()
         {
-            NewContext().KeyValuePairs["ReturnPeriod"].Should().Be(0);
+            NewContext().KeyValuePairs["ReturnPeriod"].Should().Be(12);
         }
 
         [Fact]
