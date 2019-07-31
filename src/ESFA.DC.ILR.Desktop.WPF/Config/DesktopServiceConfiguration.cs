@@ -23,7 +23,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.Config
                 return returnDate.ToString("dd/MM/yyyy hh:mm:ss");
             }
 
-            return DateTime.Today.ToString("dd/MM/yyyy hh:mm:ss");
+            return string.Empty;
         }
     }
 }
