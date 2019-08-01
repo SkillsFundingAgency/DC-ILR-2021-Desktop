@@ -11,16 +11,20 @@ namespace ESFA.DC.ILR.Desktop.WPF.Service
     {
         private const string IlrDatabaseConnectionStringKey = "IlrDatabaseConnectionString";
         private const string OutputDirectoryKey = "OutputDirectory";
+        private const string ExportToSqlKey = "ExportToSQL";
         private const string FundingInformationSystem = "Funding Information System 2019-20";
 
         public string IlrDatabaseConnectionString { get; set; }
 
         public string OutputDirectory { get; set; }
 
+        public bool ExportToSql { get; set; }
+
         public async Task LoadAsync(CancellationToken cancellationToken)
         {
             IlrDatabaseConnectionString = ConfigurationManager.AppSettings[IlrDatabaseConnectionStringKey];
             OutputDirectory = ConfigurationManager.AppSettings[OutputDirectoryKey];
+            ExportToSql = Convert.ToBoolean(ConfigurationManager.AppSettings[ExportToSqlKey]);
 
             if (string.IsNullOrWhiteSpace(OutputDirectory))
             {
@@ -37,6 +41,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.Service
 
             config.AppSettings.Settings.Add(IlrDatabaseConnectionStringKey, IlrDatabaseConnectionString);
             config.AppSettings.Settings.Add(OutputDirectoryKey, OutputDirectory);
+            config.AppSettings.Settings.Add(ExportToSqlKey, ExportToSql.ToString());
 
             config.Save(ConfigurationSaveMode.Modified);
 

@@ -11,10 +11,13 @@ namespace ESFA.DC.ILR.Desktop.CLI.Service
     {
         private const string IlrDatabaseConnectionStringKey = "IlrDatabaseConnectionString";
         private const string OutputDirectoryKey = "OutputDirectory";
+        private const string ExportToSqlKey = "ExportToSQL";
 
         public string IlrDatabaseConnectionString { get; set; }
 
         public string OutputDirectory { get; set; }
+
+        public bool ExportToSql { get; set; }
 
         public Task SaveAsync(CancellationToken cancellationToken)
         {
@@ -25,6 +28,7 @@ namespace ESFA.DC.ILR.Desktop.CLI.Service
         {
             IlrDatabaseConnectionString = ConfigurationManager.AppSettings[IlrDatabaseConnectionStringKey];
             OutputDirectory = ConfigurationManager.AppSettings[OutputDirectoryKey];
+            ExportToSql = Convert.ToBoolean(ConfigurationManager.AppSettings[ExportToSqlKey]);
         }
     }
 }
