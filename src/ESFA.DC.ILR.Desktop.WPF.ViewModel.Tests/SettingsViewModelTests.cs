@@ -41,6 +41,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             var desktopServiceSettingsMock = new Mock<IDesktopServiceSettings>();
             var closeableMock = new Mock<ICloseable>();
 
+            desktopServiceSettingsMock.SetupGet(x => x.ExportToSql).Returns(true);
             desktopServiceSettingsMock.SetupGet(s => s.IlrDatabaseConnectionString).Returns("not empty");
             desktopServiceSettingsMock.SetupGet(s => s.OutputDirectory).Returns("not empty either");
 
@@ -57,6 +58,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
         {
             var desktopServiceSettingsMock = new Mock<IDesktopServiceSettings>();
             desktopServiceSettingsMock.SetupAllProperties();
+            desktopServiceSettingsMock.SetupGet(x => x.ExportToSql).Returns(true);
             desktopServiceSettingsMock.SetupGet(x => x.IlrDatabaseConnectionString).Returns(string.Empty);
             desktopServiceSettingsMock.SetupGet(x => x.OutputDirectory).Returns("OutputDirectory");
 
@@ -69,6 +71,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
         {
             var desktopServiceSettingsMock = new Mock<IDesktopServiceSettings>();
             desktopServiceSettingsMock.SetupAllProperties();
+            desktopServiceSettingsMock.SetupGet(x => x.ExportToSql).Returns(true);
             desktopServiceSettingsMock.SetupGet(x => x.IlrDatabaseConnectionString).Returns("ConnectionStringValue");
             desktopServiceSettingsMock.SetupGet(x => x.OutputDirectory).Returns(string.Empty);
 
@@ -81,6 +84,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
         {
             var desktopServiceSettingsMock = new Mock<IDesktopServiceSettings>();
             desktopServiceSettingsMock.SetupAllProperties();
+            desktopServiceSettingsMock.SetupGet(x => x.ExportToSql).Returns(true);
             desktopServiceSettingsMock.SetupGet(x => x.IlrDatabaseConnectionString).Returns("ConnectionStringValue");
             desktopServiceSettingsMock.SetupGet(x => x.OutputDirectory).Returns("  ");
 
@@ -93,6 +97,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
         {
             var desktopServiceSettingsMock = new Mock<IDesktopServiceSettings>();
 
+            desktopServiceSettingsMock.SetupGet(x => x.ExportToSql).Returns(true);
             desktopServiceSettingsMock.SetupGet(x => x.IlrDatabaseConnectionString).Returns(null as string);
             desktopServiceSettingsMock.SetupGet(x => x.OutputDirectory).Returns(null as string);
 
