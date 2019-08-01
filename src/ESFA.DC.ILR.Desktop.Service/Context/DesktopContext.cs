@@ -7,6 +7,12 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
 {
     public class DesktopContext : IDesktopContext
     {
+        private string Reports = string.Join(
+            "|",
+            ReportTaskNameConstants.ValidationReport,
+            ReportTaskNameConstants.FundingSummaryReport,
+            ReportTaskNameConstants.DevolvedAdultEducationOccupancyReport);
+
         public DesktopContext(
             DateTime dateTime,
             string outputDirectory,
@@ -30,7 +36,8 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
                 [ILRContextKeys.ValidLearnRefNumbers] = "ValidLearnRefNumbers.json",
                 [ILRContextKeys.ValidationErrorLookups] = "ValidationErrorLookups.json",
                 [ILRContextKeys.ReportOutputFileNames] = string.Empty,
-                [ILRContextKeys.ReportTasks] = ReportTaskNameConstants.ValidationReport,
+                [ILRContextKeys.ReportTasks] = Reports,
+                [ILRContextKeys.ReturnPeriod] = 12,
 
                 [ILRContextKeys.FundingTaskALB] = "ALB",
                 [ILRContextKeys.FundingTaskFM25] = "FM25",
