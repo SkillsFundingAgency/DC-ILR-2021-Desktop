@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
+using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Service.Tasks;
 using FluentAssertions;
+using Moq;
 using Xunit;
 
 namespace ESFA.DC.ILR.Desktop.Service.Tests
@@ -14,7 +12,10 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         [Fact]
         public void Provide()
         {
-            var pipeline = NewProvider().Provide().ToList();
+            var desktopServiceSettingsMock = new Mock<IDesktopServiceSettings>();
+            desktopServiceSettingsMock.Setup(dssm => dssm.ExportToSql).Returns(true);
+
+            var pipeline = NewProvider(desktopServiceSettingsMock.Object).Provide().ToList();
 
             pipeline.Should().HaveCount(9);
 
@@ -46,6 +47,38 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
             pipeline[8].FailureKey.Should().BeNull();
         }
 
+        [Fact]
+        public void ProvideNoSql()
+        {
+            var desktopServiceSettingsMock = new Mock<IDesktopServiceSettings>();
+            desktopServiceSettingsMock.Setup(dssm => dssm.ExportToSql).Returns(false);
+
+            var pipeline = NewProvider(desktopServiceSettingsMock.Object).Provide().ToList();
+
+            pipeline.Should().HaveCount(7);
+
+            pipeline[0].Key.Should().Be(IlrDesktopTaskKeys.PreExecution);
+            pipeline[0].FailureKey.Should().BeNull();
+
+            pipeline[1].Key.Should().Be(IlrDesktopTaskKeys.FileValidationService);
+            pipeline[1].FailureKey.Should().Be(IlrDesktopTaskKeys.ReportService);
+
+            pipeline[2].Key.Should().Be(IlrDesktopTaskKeys.ReferenceDataService);
+            pipeline[2].FailureKey.Should().BeNull();
+
+            pipeline[3].Key.Should().Be(IlrDesktopTaskKeys.ValidationService);
+            pipeline[3].FailureKey.Should().BeNull();
+
+            pipeline[4].Key.Should().Be(IlrDesktopTaskKeys.FundingService);
+            pipeline[4].FailureKey.Should().BeNull();
+
+            pipeline[5].Key.Should().Be(IlrDesktopTaskKeys.ReportService);
+            pipeline[5].FailureKey.Should().BeNull();
+
+            pipeline[6].Key.Should().Be(IlrDesktopTaskKeys.PostExecution);
+            pipeline[6].FailureKey.Should().BeNull();
+        }
+
         [Theory]
         [InlineData(IlrDesktopTaskKeys.PreExecution, 0)]
         [InlineData(IlrDesktopTaskKeys.DatabaseCreate, 1)]
@@ -61,9 +94,9 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
             NewProvider().IndexFor(ilrDesktopTaskKey).Should().Be(index);
         }
 
-        private IlrPipelineProvider NewProvider()
+        private IlrPipelineProvider NewProvider(IDesktopServiceSettings desktopServiceSettings = null)
         {
-            return new IlrPipelineProvider();
+            return new IlrPipelineProvider(desktopServiceSettings);
         }
     }
 }

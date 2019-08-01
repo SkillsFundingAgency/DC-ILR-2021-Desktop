@@ -53,9 +53,25 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             }
         }
 
+        public bool ExportToSql
+        {
+            get => _desktopServiceSettings.ExportToSql;
+            set
+            {
+                _desktopServiceSettings.ExportToSql = value;
+                RaisePropertyChanged();
+                SaveSettingsCommand.RaiseCanExecuteChanged();
+            }
+        }
+
         public bool CanSave()
         {
-            return !string.IsNullOrWhiteSpace(IlrDatabaseConnectionString) && !string.IsNullOrWhiteSpace(OutputDirectory);
+            if (ExportToSql)
+            {
+                return !string.IsNullOrWhiteSpace(IlrDatabaseConnectionString) && !string.IsNullOrWhiteSpace(OutputDirectory);
+            }
+
+            return !string.IsNullOrWhiteSpace(OutputDirectory);
         }
 
         private void ChooseOutputDirectory()
