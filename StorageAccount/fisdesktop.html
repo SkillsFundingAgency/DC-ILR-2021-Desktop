@@ -1,6 +1,6 @@
 <html>
 <head>
-  <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <style>
     .table-responsive {
     	display:table-cell;
@@ -8,67 +8,66 @@
 		}
 	.alert-success-alt {border-color: #19B99A; background: #137792}
 </style>
-
-<script src="azure-storage.blob.min.js"></script>
-
+<script src="scripts/azure-storage.blob.min.js" charset="utf-8"></script>
 <script type='text/javascript'>
-	var account = '__FISStorageAccountName__';
-	var sas = '__FISStorageAccountName_SASToken__';
-
-	var container = '__FISDownloadContainerName__';
-	var filter = '__FileListFilter__';
-
-</script>
-
-<script type='text/javascript'>
-	function getBlobService(blobUri,sasToken) {
-		var blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri.toLowerCase() , sasToken).withFilter(new AzureStorage.Blob.ExponentialRetryPolicyFilter());
-		return blobService;
-	}
+	const account = {
+		name: 'dcoldevsldweu',
+		sas:  '?sv=2018-03-28&ss=b&srt=c&sp=rl&se=2019-08-20T21:22:58Z&st=2019-08-06T13:22:58Z&spr=https,http&sig=KEwOp%2B6Wjj1E8JmilUp%2Bu6MkWKNYI1lKQEyMtw6rcrY%3D',
+		container: 'fis-downloads',
+		filter: 'DC-ILR-1920-FIS',
+		topXrecords: 5
+	};
 	
 	function fileSize(size) {
 	   var i = Math.floor(Math.log(size) / Math.log(1024));
 	    return (size / Math.pow(1024, i)).toFixed(2) * 1 + ' '+['B', 'kB', 'MB', 'GB', 'TB'][i];
 	}
 
-	function refreshBlobList(accountName,sasToken,containerName,fileFilter) {
-		var blobUri = '';  
-		
-		blobUri = 'https://' + accountName + '.blob.core.windows.net';
-		var blobService = getBlobService(blobUri,sasToken);
+	function sortFunction(a,b){  
+		var dateA = new Date(a.date).getTime();
+		var dateB = new Date(b.date).getTime();
+		return dateA > dateB ? 1 : -1;  
+	}; 
 
-		if (!blobService)
-			return;
-
+	function listContent()
+	{
 		document.getElementById('Release').innerHTML = 'Loading...';
 
-		blobService.listBlobsSegmented(containerName.toLowerCase(), null, function (error, results) {
-			if (error) {
+		const blobUri = 'https://' + account.name + '.blob.core.windows.net';
+		const blobService = AzureStorage.Blob.createBlobServiceWithSas(blobUri, account.sas);
+		
+		blobService.listBlobsSegmented('fis-downloads', null, (error, results) => {
+        if (error) {
 				document.getElementById('Release').innerHTML = 'Error Getting Data.' + '<br>' + error;
+				return;
 			} else {
 				var output = [];
 
 				output.push('<tr>',
-								'<th>Link</th>',
-								'<th>Size</th>',
-								'<th>LastModified</th>',
+							'<th>Link</th>',
+							'<th>Size</th>',
+							'<th>LastModified</th>',
 							'</tr>');
 				if (results.entries.length < 1) {
 					output.push('<tr><td>Empty results...</td></tr>');
 				}
 				else
 				{
-					//results.entries.sort(function(a,b){
-				  	//  return new Date(b.lastModified) - new Date(a.lastModified);
-					//});
+					results.entries.sort(function(a,b){
+					  // Turn your strings into dates, and then subtract them
+					  // to get a value that is either negative, positive, or zero.
+					  return new Date(b.lastModified) - new Date(a.lastModified);
+					});
 
-					for (var i = 0, blob; blob = results.entries[i]; i++) {
-						if (blob.name.toLowerCase().startsWith(fileFilter.toLowerCase()))
+					let sortToList = results.entries.slice(0, account.topXrecords);
+
+					for (var i = 0, blob; blob = sortToList[i]; i++) {
+						if (blob.name.toLowerCase().startsWith(account.filter.toLowerCase()))
 						{
 							output.push('<tr>',
-											'<td><a href='+blobUri+"/"+container+"/"+blob.name+'>', blob.name, '</a></td>',
-											'<td>', fileSize(blob.contentLength), ' </td>',
-											'<td>', blob.lastModified, '</td>',
+										'<td><a href='+blobUri+"/"+account.container+"/"+blob.name+'>', blob.name, '</a></td>',
+										'<td>', fileSize(blob.contentLength), ' </td>',
+										'<td>', blob.lastModified, '</td>',
 										'</tr>');
 						}
 					}
@@ -76,11 +75,11 @@
 				document.getElementById('Release').innerHTML = '<table class="table table-condensed table-bordered">' + output.join('') + '</table>';
 			}
 		});
-	}
+	}	
 
 </script>
 </head>
-<body onload="refreshBlobList(account,sas,container,filter)">
+<body onload="listContent()">
     <div class="container">
 <div id="header" class="alert alert-success-alt" role="alert">
     <h3 class="Display-3">FIS Download</h3>
