@@ -100,12 +100,12 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy Published Storage Account Files - Artifact StorageAccount Directory'
   inputs:
-    SourceFolder: '$(build.sourcesdirectory)'
+    SourceFolder: '$(build.sourcesdirectory)\StorageAccount'
     Contents: |
-     **\StorageAccount\**
+      **\*
     TargetFolder: '$(build.artifactstagingdirectory)\StorageAccount'
     CleanTargetFolder: true
-    flattenFolders: true
+    flattenFolders: false
 
 - task: TotalALM.totalalm-tokenization.tokenization-build-task.Tokenization@2
   displayName: 'Tokenization: Transform Application config file'
