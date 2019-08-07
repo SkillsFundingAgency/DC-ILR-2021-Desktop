@@ -140,37 +140,37 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         [Fact]
         public void FundingAlbOutput()
         {
-            NewContext().KeyValuePairs["FundingAlbOutput"].Should().Be("FundingOutputALB.json");
+            NewContext().KeyValuePairs["FundingAlbOutput"].Should().Be("FundingAlbOutput.json");
         }
 
         [Fact]
         public void FundingFM25Output()
         {
-            NewContext().KeyValuePairs["FundingFm25Output"].Should().Be("FundingOutputFM25.json");
+            NewContext().KeyValuePairs["FundingFm25Output"].Should().Be("FundingFm25Output.json");
         }
 
         [Fact]
         public void FundingFM35Output()
         {
-            NewContext().KeyValuePairs["FundingFm35Output"].Should().Be("FundingOutputFM35.json");
+            NewContext().KeyValuePairs["FundingFm35Output"].Should().Be("FundingFm35Output.json");
         }
 
         [Fact]
         public void FundingFM36Output()
         {
-            NewContext().KeyValuePairs["FundingFm36Output"].Should().Be("FundingOutputFM36.json");
+            NewContext().KeyValuePairs["FundingFm36Output"].Should().Be("FundingFm36Output.json");
         }
 
         [Fact]
         public void FundingFM70Output()
         {
-            NewContext().KeyValuePairs["FundingFm70Output"].Should().Be("FundingOutputFM70.json");
+            NewContext().KeyValuePairs["FundingFm70Output"].Should().Be("FundingFm70Output.json");
         }
 
         [Fact]
         public void FundingFM81Output()
         {
-            NewContext().KeyValuePairs["FundingFm81Output"].Should().Be("FundingOutputFM81.json");
+            NewContext().KeyValuePairs["FundingFm81Output"].Should().Be("FundingFm81Output.json");
         }
 
         [Fact]
