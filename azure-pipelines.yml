@@ -105,7 +105,7 @@ steps:
      **\StorageAccount\**
     TargetFolder: '$(build.artifactstagingdirectory)\StorageAccount'
     CleanTargetFolder: true
-    flattenFolders: true
+    flattenFolders: false
 
 - task: TotalALM.totalalm-tokenization.tokenization-build-task.Tokenization@2
   displayName: 'Tokenization: Transform Application config file'
