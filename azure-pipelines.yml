@@ -102,7 +102,7 @@ steps:
   inputs:
     SourceFolder: '$(build.sourcesdirectory)\StorageAccount'
     Contents: |
-     **
+      **\*
     TargetFolder: '$(build.artifactstagingdirectory)\StorageAccount'
     CleanTargetFolder: true
     flattenFolders: false
