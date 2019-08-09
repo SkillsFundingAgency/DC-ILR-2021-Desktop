@@ -11,7 +11,13 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
             "|",
             ReportTaskNameConstants.ValidationReport,
             ReportTaskNameConstants.FundingSummaryReport,
-            ReportTaskNameConstants.DevolvedAdultEducationOccupancyReport);
+            ReportTaskNameConstants.MainOccupancyReport,
+            ReportTaskNameConstants.AllbOccupancyReport,
+            ReportTaskNameConstants.DevolvedAdultEducationFundingSummaryReport,
+            ReportTaskNameConstants.DevolvedAdultEducationOccupancyReport,
+            ReportTaskNameConstants.TrailblazerAppsOccupancyReport,
+            ReportTaskNameConstants.TrailblazerEmployerIncentivesReport,
+            ReportTaskNameConstants.AppsIndicativeEarningsReport);
 
         public DesktopContext(
             DateTime dateTime,
