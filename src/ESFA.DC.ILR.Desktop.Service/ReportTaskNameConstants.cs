@@ -12,5 +12,8 @@
         public const string AllbOccupancyReport = "TaskGenerateAllbOccupancyReport";
         public const string MainOccupancyReport = "TaskGenerateMainOccupancyReport";
         public const string AppsIndicativeEarningsReport = "TaskGenerateAppsIndicativeEarningsReport";
+        public const string SummaryOfFundingByStudentReport = "TaskGenerateSummaryOfFundingByStudentReport";
+        public const string MathsAndEnglishReport = "TaskGenerateMathsAndEnglishReport";
+        public const string HNSReport = "TaskGenerateHNSReport";
     }
 }
