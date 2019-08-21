@@ -14,7 +14,7 @@
     <PackageReference Include="ESFA.DC.ILR.1920.FundingService.Desktop" Version="0.0.230" />
     <PackageReference Include="ESFA.DC.ILR.1920.ReportService.Desktop" Version="0.0.442" />
     <PackageReference Include="ESFA.DC.ILR.1920.ValidationService.Desktop" Version="0.0.728" />
-    <PackageReference Include="ESFA.DC.ILR1920.ReferenceDataService.Desktop" Version="0.0.231" />
+    <PackageReference Include="ESFA.DC.ILR1920.ReferenceDataService.Desktop" Version="0.0.249" />
     <PackageReference Include="ESFA.DC.IO.FileSystem" Version="0.1.19-beta0001" />
     <PackageReference Include="ESFA.DC.IO.Interfaces" Version="0.1.18-beta0001" />
     <PackageReference Include="ESFA.DC.Jobs.Model" Version="0.2.8-beta0001" />
