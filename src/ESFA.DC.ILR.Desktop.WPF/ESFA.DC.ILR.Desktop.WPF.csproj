@@ -214,7 +214,7 @@
       <Version>0.0.430</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.1920.ValidationService.Desktop">
-      <Version>0.0.697</Version>
+      <Version>0.0.728</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR1920.ReferenceDataService.Desktop">
       <Version>0.0.231</Version>
