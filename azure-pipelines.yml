@@ -31,6 +31,13 @@ steps:
     updateAssemblyInfo: true
     preferBundledVersion: false
 
+- task: VersionAssemblies@2
+  inputs:
+    Path: '$(Build.SourcesDirectory)'
+    VersionNumber: '$(Build.BuildNumber)'
+    InjectVersion: False
+    FilenamePattern: 'AssemblyInfo.*'
+    OutputVersion: 'OutputedVersion'
 - task: PowerShell@1
   displayName: 'Dissplay Variables'
   enabled: true
