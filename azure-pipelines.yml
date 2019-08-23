@@ -15,9 +15,9 @@ pool:
   - vstest
 
 variables:
-  VersionNumberMajor: '0'
-  VersionNumberMinor: '2'
-  VersionNumberBuild: '3'
+  VersionNumberMajor: '1'
+  VersionNumberMinor: '0'
+  VersionNumberBuild: '1'
   BuildConfiguration: 'Release'
   BuildPlatform: 'Any CPU'
   Parameters.solution: '**\*.sln'
@@ -31,6 +31,13 @@ steps:
     updateAssemblyInfo: true
     preferBundledVersion: false
 
+- task: VersionAssemblies@2
+  inputs:
+    Path: '$(Build.SourcesDirectory)'
+    VersionNumber: '$(Build.BuildNumber)'
+    InjectVersion: False
+    FilenamePattern: 'AssemblyInfo.*'
+    OutputVersion: 'OutputedVersion'
 - task: PowerShell@1
   displayName: 'Dissplay Variables'
   enabled: true
