@@ -4,8 +4,6 @@
     {
         string FilePath { get; }
 
-        string ReferenceDataFilePath { get; }
-
         string ConnectionString { get; }
         
         string OutputDirectory { get; }
