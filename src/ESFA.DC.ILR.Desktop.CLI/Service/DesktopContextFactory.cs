@@ -24,6 +24,7 @@ namespace ESFA.DC.ILR.Desktop.CLI.Service
                 _dateTimeProvider.GetNowUtc(),
                 OverrideConfig(commandLineArguments.OutputDirectory, _desktopServiceSettings.OutputDirectory),
                 commandLineArguments.FilePath,
+                commandLineArguments.ReferenceDataFilePath,
                 OverrideConfig(commandLineArguments.ConnectionString, _desktopServiceSettings.IlrDatabaseConnectionString));
         }
 

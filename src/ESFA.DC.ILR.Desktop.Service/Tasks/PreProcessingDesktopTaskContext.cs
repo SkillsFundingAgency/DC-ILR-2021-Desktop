@@ -40,5 +40,11 @@ namespace ESFA.DC.ILR.Desktop.Service.Tasks
         {
             set => _desktopContext.KeyValuePairs[ILRContextKeys.FileSizeInBytes] = value;
         }
+
+        public string ReferenceDataFileName
+        {
+            get => _desktopContext.KeyValuePairs[ILRContextKeys.ReferenceDataFilename].ToString();
+            set => _desktopContext.KeyValuePairs[ILRContextKeys.ReferenceDataFilename] = value;
+        }
     }
 }

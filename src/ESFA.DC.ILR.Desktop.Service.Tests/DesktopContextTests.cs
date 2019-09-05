@@ -179,12 +179,18 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
             NewContext().KeyValuePairs.Should().HaveCount(26);
         }
 
-        private DesktopContext NewContext(DateTime? dateTime = null, string outputDirectory = null, string filePath = null, string connectionString = null)
+        private DesktopContext NewContext(
+            DateTime? dateTime = null,
+            string outputDirectory = null,
+            string filePath = null,
+            string referenceDataFilePath = null,
+            string connectionString = null)
         {
             return new DesktopContext(
                 dateTime.HasValue ? dateTime.Value : new DateTime(2018, 1, 1),
                 outputDirectory,
                 filePath,
+                referenceDataFilePath,
                 connectionString);
         }
     }

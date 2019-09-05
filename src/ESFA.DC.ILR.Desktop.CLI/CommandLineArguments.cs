@@ -8,6 +8,9 @@ namespace ESFA.DC.ILR.Desktop.CLI
         [Option('f', "filepath", Required = true, HelpText = "Provide File Path for ILR File.")]
         public string FilePath { get; set; }
 
+        [Option('f', "referenceDataFilePath", Required = true, HelpText = "Provide File Path for FIS Reference Data.")]
+        public string ReferenceDataFilePath { get; set; }
+        
         [Option('c', "connectionstring", Required = false, HelpText = "Connection String for ILR Database, leave blank to fall back to Config File.")]
         public string ConnectionString { get; set; }
 

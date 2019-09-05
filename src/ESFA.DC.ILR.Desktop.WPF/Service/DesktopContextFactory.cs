@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using ESFA.DC.DateTimeProvider.Interface;
-using ESFA.DC.ILR.Constants;
+﻿using ESFA.DC.DateTimeProvider.Interface;
 using ESFA.DC.ILR.Desktop.Interface;
-using ESFA.DC.ILR.Desktop.Service;
 using ESFA.DC.ILR.Desktop.Service.Context;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using IDesktopContextFactory = ESFA.DC.ILR.Desktop.WPF.Service.Interface.IDesktopContextFactory;
@@ -11,6 +8,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.Service
 {
     public class DesktopContextFactory : IDesktopContextFactory
     {
+        private const string _referenceDataFile = "ReferenceData\\FISReferenceData.zip";
+
         private readonly IDateTimeProvider _dateTimeProvider;
         private readonly IDesktopServiceSettings _desktopServiceSettings;
 
@@ -22,7 +21,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.Service
 
         public IDesktopContext Build(string filePath)
         {
-            return new DesktopContext(_dateTimeProvider.GetNowUtc(), _desktopServiceSettings.OutputDirectory, filePath, _desktopServiceSettings.IlrDatabaseConnectionString);
+            return new DesktopContext(_dateTimeProvider.GetNowUtc(), _desktopServiceSettings.OutputDirectory, filePath, _referenceDataFile, _desktopServiceSettings.IlrDatabaseConnectionString);
         }
     }
 }
