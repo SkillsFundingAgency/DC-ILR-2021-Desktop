@@ -174,17 +174,29 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         }
 
         [Fact]
-        public void KeyValuePairsCount()
+        public void ReferenceDataFilename()
         {
-            NewContext().KeyValuePairs.Should().HaveCount(26);
+            NewContext().KeyValuePairs["ReferenceDataFilename"].Should().Be(null);
         }
 
-        private DesktopContext NewContext(DateTime? dateTime = null, string outputDirectory = null, string filePath = null, string connectionString = null)
+        [Fact]
+        public void KeyValuePairsCount()
+        {
+            NewContext().KeyValuePairs.Should().HaveCount(27);
+        }
+
+        private DesktopContext NewContext(
+            DateTime? dateTime = null,
+            string outputDirectory = null,
+            string filePath = null,
+            string referenceDataFilePath = null,
+            string connectionString = null)
         {
             return new DesktopContext(
                 dateTime.HasValue ? dateTime.Value : new DateTime(2018, 1, 1),
                 outputDirectory,
                 filePath,
+                referenceDataFilePath,
                 connectionString);
         }
     }

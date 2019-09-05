@@ -26,6 +26,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
             DateTime dateTime,
             string outputDirectory,
             string filePath,
+            string referenceDataFile,
             string connectionString)
         {
             DateTimeUtc = dateTime;
@@ -46,7 +47,8 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
                 [ILRContextKeys.ValidationErrorLookups] = "ValidationErrorLookups.json",
                 [ILRContextKeys.ReportOutputFileNames] = string.Empty,
                 [ILRContextKeys.ReportTasks] = Reports,
-                [ILRContextKeys.ReturnPeriod] = 12,
+
+                [ILRContextKeys.ReferenceDataFilename] = referenceDataFile,
 
                 [ILRContextKeys.FundingTaskALB] = "ALB",
                 [ILRContextKeys.FundingTaskFM25] = "FM25",

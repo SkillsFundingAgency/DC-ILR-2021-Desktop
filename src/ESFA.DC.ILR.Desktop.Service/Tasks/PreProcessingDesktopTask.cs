@@ -19,13 +19,17 @@ namespace ESFA.DC.ILR.Desktop.Service.Tasks
             Directory.CreateDirectory(preProcessingDesktopTaskContext.Container);
 
             var fileName = Path.GetFileName(preProcessingDesktopTaskContext.FileName);
+            var refDataFileName = Path.GetFileName(preProcessingDesktopTaskContext.ReferenceDataFileName);
 
             var newFilePath = Path.Combine(preProcessingDesktopTaskContext.Container, fileName);
+            var newRefDataFilePath = Path.Combine(preProcessingDesktopTaskContext.Container, refDataFileName);
 
             File.Copy(preProcessingDesktopTaskContext.FileName, newFilePath);
+            File.Copy(preProcessingDesktopTaskContext.ReferenceDataFileName, newRefDataFilePath);
 
             preProcessingDesktopTaskContext.FileName = fileName;
             preProcessingDesktopTaskContext.OriginalFileName = fileName;
+            preProcessingDesktopTaskContext.ReferenceDataFileName = refDataFileName;
 
             if (TryGetUkprnFromFileName(fileName, out var ukprn))
             {

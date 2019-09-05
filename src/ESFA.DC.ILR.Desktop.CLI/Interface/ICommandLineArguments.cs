@@ -3,7 +3,7 @@
     public interface ICommandLineArguments
     {
         string FilePath { get; }
-        
+
         string ConnectionString { get; }
         
         string OutputDirectory { get; }
