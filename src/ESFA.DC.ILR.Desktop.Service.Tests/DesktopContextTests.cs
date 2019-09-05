@@ -174,9 +174,15 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         }
 
         [Fact]
+        public void ReferenceDataFilename()
+        {
+            NewContext().KeyValuePairs["ReferenceDataFilename"].Should().Be(null);
+        }
+
+        [Fact]
         public void KeyValuePairsCount()
         {
-            NewContext().KeyValuePairs.Should().HaveCount(26);
+            NewContext().KeyValuePairs.Should().HaveCount(27);
         }
 
         private DesktopContext NewContext(
