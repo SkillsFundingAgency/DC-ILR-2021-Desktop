@@ -156,6 +156,22 @@ steps:
     ArtifactName: DesktopApplication
     PathtoPublish: '$(build.artifactstagingdirectory)\DesktopApplication'
 
+
+#********************************************************************************
+# CodeSign Script body
+# Application Signing execution begins here
+#********************************************************************************
+- task: PowerShell@2
+  displayName: 'CodeSign DfE DesktopApplications inLine and inBuild'
+  enabled: true  
+  env:
+    CodeSignPwdDfE: $(CodeSignPwdDfE)
+  inputs:
+    filePath: 'C:\Users\BuildAdmin\Desktop\CodeSign\DFE_Code_Signing.ps1'
+#********************************************************************************
+#Application Signing execution ends here
+#********************************************************************************
+ 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: StoraegAccount Display Files'
   enabled: true
