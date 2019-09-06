@@ -22,6 +22,9 @@ variables:
   BuildPlatform: 'Any CPU'
   Parameters.solution: '**\*.sln'
   Parameters.nugetFeedName: 'dct-pkg'
+  group: 'CodeSign KV'
+  name: CodeSignPwdDfE
+  value: $(CodeSignPwdDfE)
 
 steps:
 - task: gittools.gitversion.gitversion-task.GitVersion@4
