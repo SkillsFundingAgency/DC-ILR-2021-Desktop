@@ -35,8 +35,8 @@
             <Label Grid.Row="1" Content="Export to SQL:" VerticalAlignment="Center"/>
             <CheckBox Grid.Row="1" Grid.Column="1" Content="(Optional)" Margin="2" VerticalAlignment="Center" IsChecked="{Binding ExportToSql}"/>
 
-            <Label Name="ConnectionStringLabel"  Grid.Row="2" Content="Connection String:" VerticalAlignment="Center" Visibility="{Binding ExportToSql, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-            <TextBox Name="ConnectionStringTextBox" Grid.Row="2" Grid.Column="1" Text="{Binding IlrDatabaseConnectionString}" Margin="2" Visibility="{Binding ExportToSql, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            <Label Grid.Row="2" Content="Connection String:" VerticalAlignment="Center" Visibility="{Binding ExportToSql, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding IlrDatabaseConnectionString}" Margin="2" Visibility="{Binding ExportToSql, Converter={StaticResource BooleanToVisibilityConverter}}"/>
         </Grid>
 
         <Grid Grid.Row="1" Width="Auto" HorizontalAlignment="Right">

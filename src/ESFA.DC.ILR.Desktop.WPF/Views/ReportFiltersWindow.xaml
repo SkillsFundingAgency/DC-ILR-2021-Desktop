@@ -6,8 +6,52 @@
         xmlns:local="clr-namespace:ESFA.DC.ILR.Desktop.WPF.Views"
         mc:Ignorable="d"
         DataContext="{Binding ReportFilters, Source={StaticResource Locator}}"
-        Title="ReportFiltersWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="Report Filters" Height="450" Width="800">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="180"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Content="Report:"/>
+        <ComboBox Grid.Column="1" ItemsSource="{Binding Reports}" DisplayMemberPath="ReportName" SelectedItem="{Binding SelectedReport}" />
+
+        <Label Grid.Row="2" Content="Filters:"/>
+
+        <ItemsControl  Grid.Row="2" Grid.Column="1"  ItemsSource="{Binding SelectedReport.Properties}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="0,0,0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding Name}"/>
+                        <DatePicker Grid.Column="1" SelectedDate="{Binding DateTimeValue}"/>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <Grid Grid.Row="3" Grid.Column="1" Width="Auto" HorizontalAlignment="Right">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Width="100" Margin="2" Content="OK" Command="{Binding SaveSettingsCommand}" CommandParameter="{Binding ElementName=settingsWindow}" />
+            <Button Grid.Column="1" Margin="2" Width="100" Content="Cancel" Command="{Binding CloseWindowCommand, Mode=OneWay}" CommandParameter="{Binding ElementName=settingsWindow}"/>
+        </Grid>
+
     </Grid>
 </Window>

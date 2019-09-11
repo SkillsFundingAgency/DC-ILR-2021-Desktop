@@ -92,6 +92,8 @@
     <Compile Include="Service\WindowsProcessService.cs" />
     <Compile Include="ViewModel\AboutViewModel.cs" />
     <Compile Include="ViewModel\ReportFiltersViewModel.cs" />
+    <Compile Include="ViewModel\ReportFilters\ReportFiltersDefinitionViewModel.cs" />
+    <Compile Include="ViewModel\ReportFilters\ReportFiltersPropertyDefinitionViewModel.cs" />
     <Compile Include="Views\ReportFiltersWindow.xaml.cs">
       <DependentUpon>ReportFiltersWindow.xaml</DependentUpon>
     </Compile>
