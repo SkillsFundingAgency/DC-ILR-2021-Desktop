@@ -70,5 +70,11 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
         public string OutputDirectory { get; set; }
 
         public IDictionary<string, object> KeyValuePairs { get; set; }
+
+        public IEnumerable<IReportFilterQuery> ReportFilterQuery
+        {
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
+        }
     }
 }

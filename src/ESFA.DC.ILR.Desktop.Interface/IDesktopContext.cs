@@ -10,5 +10,7 @@ namespace ESFA.DC.ILR.Desktop.Interface
         string OutputDirectory { get; }
 
         IDictionary<string, object> KeyValuePairs { get; }
+
+        IEnumerable<IReportFilterQuery> ReportFilterQuery { get; }
     }
 }
