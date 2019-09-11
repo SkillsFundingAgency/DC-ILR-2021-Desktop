@@ -5,5 +5,7 @@
         void ShowSettingsWindow();
 
         void ShowAboutWindow();
+
+        void ShowReportFiltersWindow();
     }
 }
