@@ -11,13 +11,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
 
 namespace ESFA.DC.ILR.Desktop.WPF.Views
 {
     /// <summary>
     /// Interaction logic for ReportFiltersWindow.xaml
     /// </summary>
-    public partial class ReportFiltersWindow : Window
+    public partial class ReportFiltersWindow : Window, ICloseable
     {
         public ReportFiltersWindow()
         {

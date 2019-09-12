@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:ESFA.DC.ILR.Desktop.WPF.Views"
         mc:Ignorable="d"
         DataContext="{Binding ReportFilters, Source={StaticResource Locator}}"
-        Title="Report Filters" Height="450" Width="800">
+        Title="Report Filters" Height="450" Width="800" Icon="/ESFA.DC.ILR.Desktop.WPF;component/Resources/Images/DSAppIcon.ico"
+        Name="reportFiltersWindow">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -32,13 +33,14 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Grid Margin="0,0,0,5">
+                    <Grid Margin="0,0,0,5" Height="25">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="150"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding Name}"/>
-                        <DatePicker Grid.Column="1" SelectedDate="{Binding DateTimeValue}"/>
+                        <Label Content="{Binding Name}" />
+                        <DatePicker Grid.Column="1" SelectedDate="{Binding DateTimeValue}" Visibility="{Binding IsDateTime, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        <TextBox Grid.Column="1" Text="{Binding StringValue}" Visibility="{Binding IsString, Converter={StaticResource BooleanToVisibilityConverter}}" />
                     </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
@@ -49,8 +51,8 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Button Width="100" Margin="2" Content="OK" Command="{Binding SaveSettingsCommand}" CommandParameter="{Binding ElementName=settingsWindow}" />
-            <Button Grid.Column="1" Margin="2" Width="100" Content="Cancel" Command="{Binding CloseWindowCommand, Mode=OneWay}" CommandParameter="{Binding ElementName=settingsWindow}"/>
+            <Button Width="100" Margin="2" Content="OK" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=reportFiltersWindow}" />
+            <Button Grid.Column="1" Margin="2" Width="100" Content="Cancel" Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=reportFiltersWindow}"/>
         </Grid>
 
     </Grid>
