@@ -17,5 +17,6 @@
         public const string HNSReport = "TaskGenerateHNSReport";
         public const string HNSSummaryReport = "TaskGenerateHNSSummaryReport";
         public const string FundingClaim1619Report = "TaskGenerateFundingClaim1619Report";
+        public const string SummaryOfFm35FundingReport = "TaskGenerateSummaryOfFm35FundingReport";
     }
 }
