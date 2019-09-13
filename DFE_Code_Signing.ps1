@@ -6,8 +6,6 @@
 
 #Requires -Version 3.0
 Param(
-    [Parameter(Mandatory=$true)] [string]  $Certificate,
-    [Parameter(Mandatory=$true)] [string]  $CertificatePwd,
 
     #[Parameter(Mandatory=$false)] [string]  $KeyValutName ='',
     #[Parameter(Mandatory=$false)] [string]  $CertificateName ='',
@@ -27,11 +25,10 @@ Param(
 
 #$AzureKeyVaultSecret=Get-AzureKeyVaultSecret -VaultName $KeyValutName.tolower().Replace(".vault.azure.net","") -Name $CertificateName -ErrorAction SilentlyContinue
 
-if ($null-eq$Certificate)
-{   writre-host " Unable to download Certificate from Key Vault | Valut name : $($KeyValutName) - CertName : $($) "; }
+if ($null-eq$env:CERTIFICATE)
+{   writre-host " Certificate Error"; }
 else
 {
-
     write-host "Cert pwd has a value : $env:CERTIFICATEPWD"; 
     write-host "Cert var has a value : $env:CERTIFICATE"; 
 
