@@ -15,19 +15,15 @@ pool:
   - vstest
 
 variables:
-  VersionNumberMajor: '1'
-  VersionNumberMinor: '0'
-  VersionNumberBuild: '2'
-  BuildConfiguration: 'Release'
-  BuildPlatform: 'Any CPU'
   Parameters.solution: '**\*.sln'
   Parameters.nugetFeedName: 'dct-pkg'
+  -VersionNumberMajor: '1'
+  -VersionNumberMinor: '0'
+  -VersionNumberBuild: '2'
+  -BuildConfiguration: 'Release'
+  -BuildPlatform: 'Any CPU'
   group: 'CodeSign KV'
-  name: CodeSignPwdDfE
-  value: $(CodeSignPwdDfE)
-  name: Department-for-Education-CodeSigningCert-20190823
-  value: $(Cert)
-
+ 
 
 steps:
 - task: gittools.gitversion.gitversion-task.GitVersion@4
