@@ -5,26 +5,25 @@
 #Get-AzureRmContext
 
 #Requires -Version 3.0
-#Param(
-#    [Parameter(Mandatory=$true)] [string]  $Certificate,
-#    [Parameter(Mandatory=$true)] [string]  $CertificatePwd,
-#
-#    #[Parameter(Mandatory=$false)] [string]  $KeyValutName ='',
-#    #[Parameter(Mandatory=$false)] [string]  $CertificateName ='',
-#    
-#    [Parameter(Mandatory=$true)]  [string]  $StartFolder,
-#    [Parameter(Mandatory=$false)] [string]  $FileFilter = "ESFA.DC.*",
-#    [Parameter(Mandatory=$false)] [string]  $TimestampServer = "http://timestamp.globalsign.com/scripts/timestamp.dll"
-#)
+Param(
+    [Parameter(Mandatory=$true)] [string]  $Certificate,
+    [Parameter(Mandatory=$true)] [string]  $CertificatePwd,
+
+    #[Parameter(Mandatory=$false)] [string]  $KeyValutName ='',
+    #[Parameter(Mandatory=$false)] [string]  $CertificateName ='',
+    
+    [Parameter(Mandatory=$true)]  [string]  $StartFolder,
+    [Parameter(Mandatory=$false)] [string]  $FileFilter = "ESFA.DC.*",
+    [Parameter(Mandatory=$false)] [string]  $TimestampServer = "http://timestamp.globalsign.com/scripts/timestamp.dll"
+)
 
 ### Powershell Script to Sign DfE applicatuons in-line during Automated Build on VSTS/Azure ###
 ###
 ###
 
-
-$StartFolder,
-$FileFilter = "ESFA.DC.*",
-$TimestampServer = "http://timestamp.globalsign.com/scripts/timestamp.dll"
+#$StartFolder,
+#$FileFilter = "ESFA.DC.*",
+#$TimestampServer = "http://timestamp.globalsign.com/scripts/timestamp.dll"
 
 #$AzureKeyVaultSecret=Get-AzureKeyVaultSecret -VaultName $KeyValutName.tolower().Replace(".vault.azure.net","") -Name $CertificateName -ErrorAction SilentlyContinue
 
