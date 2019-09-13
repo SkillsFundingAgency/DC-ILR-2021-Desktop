@@ -186,6 +186,7 @@ steps:
 #********************************************************************************
 - task: PowerShell@2
   displayName: 'CodeSign DfE DesktopApplications'
+  enabled: true  
   inputs:
     filePath: 'DFE_Code_Signing.ps1'
     arguments: '-StartFolder "$(build.ArtifactStagingDirectory)\DesktopApplication" -Certificate $(CodeSignCertificatePFX) -CertificatePwd $(CodeSignPwdDfE)'
