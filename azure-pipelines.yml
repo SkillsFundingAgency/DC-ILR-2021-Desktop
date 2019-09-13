@@ -145,6 +145,7 @@ steps:
 
 - task: VSTest@2
   displayName: 'Run Unit Tests'
+  enabled: false
   inputs:
     testAssemblyVer2: |
      **\$(BuildConfiguration)\*test*.dll
@@ -183,7 +184,6 @@ steps:
 # CodeSign Script body
 # Application Signing execution begins here
 #********************************************************************************
-
 - task: PowerShell@2
   displayName: 'CodeSign DfE DesktopApplications'
   inputs:
@@ -204,7 +204,7 @@ steps:
  
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: StoraegAccount Display Files'
-  enabled: true
+  enabled: false
   inputs:
     ArtifactName: StorageAccount
     PathtoPublish: '$(build.artifactstagingdirectory)\StorageAccount'

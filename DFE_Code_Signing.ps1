@@ -27,9 +27,8 @@ if ($null-eq$Certificate)
 {   writre-host " Unable to download Certificate from Key Vault | Valut name : $($KeyValutName) - CertName : $($) "; }
 else
 {
-    write-host "Cert var has a value"; 
 
-    write-host "Cert pwd has a value : $CertificatePwd"; 
+    write-host "Cert pwd has a value : $env:CertificatePwd"; 
     write-host "Cert var has a value : $Certificate"; 
 
     
@@ -42,12 +41,18 @@ else
 
     $PrivateCertKVBytes = [System.Convert]::FromBase64String($Certificate)
 
+    #write-host $PrivateCertKVBytes
+    
+    write-host "a"; 
+
     $certObject = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new($PrivateCertKVBytes,$CertificatePwd);
+    write-host "B"; 
 
     if ($null-eq$certObject)
     { write-host "Cert Not Found"; }
     else
     {
+        write-host "C"; 
         Write-Host "Cert Thumbprint : $($certObject.Thumbprint.ToString())"
 
         $exePath = "$($StartFolder)\$($FileFilter).exe"
