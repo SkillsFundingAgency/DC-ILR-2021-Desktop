@@ -40,6 +40,7 @@ steps:
     InjectVersion: False
     FilenamePattern: 'AssemblyInfo.*'
     OutputVersion: 'OutputedVersion'
+
 - task: PowerShell@1
   displayName: 'Dissplay Variables'
   enabled: true
@@ -53,38 +54,21 @@ steps:
      write-output "Name: $($v.Name)  | Value : $($v.Value)"
      }
 
-
-- task: VersionAssemblies@2
-  inputs:
-    Path: '$(Build.SourcesDirectory)'
-    VersionNumber: '$(Build.BuildNumber)'
-    InjectVersion: False
-    FilenamePattern: 'AssemblyInfo.*'
-    OutputVersion: 'OutputedVersion'
 - task: PowerShell@1
-  displayName: 'Dissplay Variables'
+  displayName: 'Dissplay Variables a'
   enabled: true
   inputs:
     scriptType: inlineScript
     inlineScript: |
-     write-output "$($env:CODESIGNPWDDFE)"
+     write-output "Code Sign Pwd : $env:CODESIGNPWDDFE"
 
-     
-
-- task: VersionAssemblies@2
-  inputs:
-    Path: '$(Build.SourcesDirectory)'
-    VersionNumber: '$(Build.BuildNumber)'
-    InjectVersion: False
-    FilenamePattern: 'AssemblyInfo.*'
-    OutputVersion: 'OutputedVersion'
 - task: PowerShell@1
-  displayName: 'Dissplay Variables'
+  displayName: 'Dissplay Variables b'
   enabled: true
   inputs:
     scriptType: inlineScript
     inlineScript: |
-     write-output "$($env:CodeSignCertificatePFX)"
+     write-output "Code Sign PFX : $env:CodeSignCertificatePFX"
 
 
 - task: NuGetToolInstaller@0
