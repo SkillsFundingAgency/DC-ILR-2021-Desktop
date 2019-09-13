@@ -15,5 +15,7 @@
         public const string SummaryOfFundingByStudentReport = "TaskGenerateSummaryOfFundingByStudentReport";
         public const string MathsAndEnglishReport = "TaskGenerateMathsAndEnglishReport";
         public const string HNSReport = "TaskGenerateHNSReport";
+        public const string HNSSummaryReport = "TaskGenerateHNSSummaryReport";
+        public const string FundingClaim1619Report = "TaskGenerateFundingClaim1619Report";
     }
 }
