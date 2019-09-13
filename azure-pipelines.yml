@@ -52,8 +52,39 @@ steps:
      {
      write-output "Name: $($v.Name)  | Value : $($v.Value)"
      }
+
+
+- task: VersionAssemblies@2
+  inputs:
+    Path: '$(Build.SourcesDirectory)'
+    VersionNumber: '$(Build.BuildNumber)'
+    InjectVersion: False
+    FilenamePattern: 'AssemblyInfo.*'
+    OutputVersion: 'OutputedVersion'
+- task: PowerShell@1
+  displayName: 'Dissplay Variables'
+  enabled: true
+  inputs:
+    scriptType: inlineScript
+    inlineScript: |
      write-output "$($env:CODESIGNPWDDFE)"
-     write-output "$($env:Department-for-Education-CodeSigningCert-20190823)"
+
+     
+
+- task: VersionAssemblies@2
+  inputs:
+    Path: '$(Build.SourcesDirectory)'
+    VersionNumber: '$(Build.BuildNumber)'
+    InjectVersion: False
+    FilenamePattern: 'AssemblyInfo.*'
+    OutputVersion: 'OutputedVersion'
+- task: PowerShell@1
+  displayName: 'Dissplay Variables'
+  enabled: true
+  inputs:
+    scriptType: inlineScript
+    inlineScript: |
+     write-output "$($env:CodeSignCertificatePFX)"
 
 
 - task: NuGetToolInstaller@0
