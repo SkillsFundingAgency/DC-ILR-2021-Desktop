@@ -25,6 +25,10 @@ variables:
   group: 'CodeSign KV'
   name: CodeSignPwdDfE
   value: $(CodeSignPwdDfE)
+  group: 'CodeSign KV'
+  name: Department-for-Education-CodeSigningCert-20190823
+  value: $(Cert)
+
 
 steps:
 - task: gittools.gitversion.gitversion-task.GitVersion@4
@@ -53,6 +57,8 @@ steps:
      {
      write-output "Name: $($v.Name)  | Value : $($v.Value)"
      }
+     write-output "$($env:CODESIGNPWDDFE)"
+     write-output "$($env:Department-for-Education-CodeSigningCert-20190823)"
 
 
 - task: NuGetToolInstaller@0

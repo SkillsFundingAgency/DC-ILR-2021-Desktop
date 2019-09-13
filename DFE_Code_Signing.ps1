@@ -1,59 +1,59 @@
-﻿### Powershell Script to Sign DfE applicatuons in-line during Automated Build on VSTS/Azure ###
-###
-###
-
+﻿
+#Login-AzureRmAccount
+#Connect-Azure
+#Get-AzureRmSubscription | Out-GridView -PassThru | Set-AzureRmContext
+#Get-AzureRmContext
 
 #Requires -Version 3.0
 Param(
+    [Parameter(Mandatory=$true)] [string]  $Certificate,
+    [Parameter(Mandatory=$true)] [string]  $CertificatePwd,
 
-    [Parameter(Mandatory=$false)] [string]  $StartFolder = "$env:build_artifactstagingdirectory\DesktopApplication",
+    [Parameter(Mandatory=$false)] [string]  $KeyValutName ='',
+    [Parameter(Mandatory=$false)] [string]  $CertificateName ='',
+
+    [Parameter(Mandatory=$true)]  [string]  $StartFolder,
     [Parameter(Mandatory=$false)] [string]  $FileFilter = "ESFA.DC.*",
-
-    [Parameter(Mandatory=$false)] [string]  $CodeSignPfxCertFileLocation = "C:\Users\BuildAdmin\Desktop\Codesign\Department-for-Education-CodeSigningCert-20190823.pfx",
-    [Parameter(Mandatory=$false)] [string]  $CodeSignPwdDfE = "$($env:CODESIGNPWDDFE)",
-
     [Parameter(Mandatory=$false)] [string]  $TimestampServer = "http://timestamp.globalsign.com/scripts/timestamp.dll"
-
 )
 
-$cert = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new("$($CodeSignPfxCertFileLocation)","$($CodeSignPwdDfE)");
-Write-Debug "Cert Thumbprint : $($Cert.Thumbprint)"
+### Powershell Script to Sign DfE applicatuons in-line during Automated Build on VSTS/Azure ###
+###
+###
 
-$exePath = Join-Path $StartFolde -ChildPath "DesktopApplication\$($FileFilter).exe" -Resolve
-$dllPath = Join-Path $StartFolde -ChildPath "DesktopApplication\$($FileFilter).dll" -Resolve
+$AzureKeyVaultSecret=Get-AzureKeyVaultSecret -VaultName $KeyValutName.tolower().Replace(".vault.azure.net","") -Name $CertificateName -ErrorAction SilentlyContinue
 
-Write-Debug "#####################################################################################"
-Write-Debug "List of exe found"
-Write-Debug $exePath
-Write-Debug "-------------------------------------------------------------------------------------"
+if ($null-eq$AzureKeyVaultSecret)
+{   writre-host " Unable to download Certificate from Key Vault | Valut name : $($KeyValutName) - CertName : $($) "; }
+else
+{
 
-Write-Debug "List of Dlls found"
-Write-Debug $exePath
-Write-Debug "#####################################################################################"
+    #Convert private cert to bytes
+    $PrivateCertKVBytes = [System.Convert]::FromBase64String($AzureKeyVaultSecret.SecretValueText)
+    #Convert Bytes to Certificate (flagged as exportable & retaining private key)
+    #possible flags: https://msdn.microsoft.com/en-us/library/system.security.cryptography.x509certificates.x509keystorageflags(v=vs.110).aspx
+    #$certObject = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2 -argumentlist $PrivateCertKVBytes,$CertificatePwd
 
+    $certObject = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new("$($CodeSignPfxCertFileLocation)","$($CertificatePwd)");
 
-Set-AuthenticodeSignature -FilePath $exePath -Certificate $cert -TimestampServer "$($TimestampServer)" -force;
+    if ($null-eq$certObject)
+    { write-host "Cert Not Found"; }
+    else
+    {
+        Write-Host "Cert Thumbprint : $($certObject.Thumbprint.ToString())"
 
-Set-AuthenticodeSignature -FilePath $dllPath -Certificate $cert -TimestampServer "$($TimestampServer)" -force;
+        $exePath = "$($StartFolder)\$($FileFilter).exe"
+        $dllPath = "$($StartFolder)\$($FileFilter).dll"
 
-Write-Debug "Done"
+        Write-Debug "codeSign - EXEs"
+        Set-AuthenticodeSignature -FilePath $exePath -Certificate $certObject -TimestampServer $TimestampServer -force; # | SELECT Path | Split-Path -Leaf -Resolve
 
-<#
-#$CodeSignPwdDfE = $($env:CODESIGNPWDDFE)
+        Write-Debug "codeSign - Dlls"
+        $DllLost = Set-AuthenticodeSignature -FilePath $dllPath -Certificate $certObject -TimestampServer $TimestampServer -force;
 
-#$filePath1 =   [string]$StartFolde+'\DesktopApplication\*.exe' ;
-#$filePath2 =   [string]$env:build_artifactstagingdirectory+'\DesktopApplication\*.dll' ;
-
-
-$cert = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new("C:\Users\BuildAdmin\Desktop\Codesign\Department-for-Education-CodeSigningCert-20190823.pfx","$CodeSignPwdDfE");
-
-echo "$env:build_artifactstagingdirectory";
-
-Set-AuthenticodeSignature -FilePath $filePath1 -Certificate $cert -TimestampServer http://timestamp.globalsign.com/scripts/timestamp.dll -force;
-
-Set-AuthenticodeSignature -FilePath $filePath2 -Certificate $cert -TimestampServer http://timestamp.globalsign.com/scripts/timestamp.dll -force;
-
-#>
+        Write-Debug "Done"
+    }
+}
 
 ###  ###
 ### END ###
