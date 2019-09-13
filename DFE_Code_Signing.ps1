@@ -21,21 +21,20 @@ Param(
 ###
 ###
 
-$AzureKeyVaultSecret=Get-AzureKeyVaultSecret -VaultName $KeyValutName.tolower().Replace(".vault.azure.net","") -Name $CertificateName -ErrorAction SilentlyContinue
+#$AzureKeyVaultSecret=Get-AzureKeyVaultSecret -VaultName $KeyValutName.tolower().Replace(".vault.azure.net","") -Name $CertificateName -ErrorAction SilentlyContinue
 
-if ($null-eq$AzureKeyVaultSecret)
+if ($null-eq$Certificate)
 {   writre-host " Unable to download Certificate from Key Vault | Valut name : $($KeyValutName) - CertName : $($) "; }
 else
 {
-
     #Convert private cert to bytes
     #$PrivateCertKVBytes = [System.Convert]::FromBase64String($AzureKeyVaultSecret.SecretValueText)
-
-    $PrivateCertKVBytes = [System.Convert]::FromBase64String($(PfxSecret))
 
     #Convert Bytes to Certificate (flagged as exportable & retaining private key)
     #possible flags: https://msdn.microsoft.com/en-us/library/system.security.cryptography.x509certificates.x509keystorageflags(v=vs.110).aspx
     #$certObject = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2 -argumentlist $PrivateCertKVBytes,$CertificatePwd
+
+    $PrivateCertKVBytes = [System.Convert]::FromBase64String($Certificate)
 
     $certObject = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new("$($CodeSignPfxCertFileLocation)","$($CertificatePwd)");
 
