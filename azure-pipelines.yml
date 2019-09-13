@@ -17,11 +17,11 @@ pool:
 variables:
   Parameters.solution: '**\*.sln'
   Parameters.nugetFeedName: 'dct-pkg'
-  -VersionNumberMajor: '1'
-  -VersionNumberMinor: '0'
-  -VersionNumberBuild: '2'
-  -BuildConfiguration: 'Release'
-  -BuildPlatform: 'Any CPU'
+  VersionNumberMajor: '1'
+  VersionNumberMinor: '0'
+  VersionNumberBuild: '2'
+  BuildConfiguration: 'Release'
+  BuildPlatform: 'Any CPU'
   group: 'CodeSign KV'
  
 
