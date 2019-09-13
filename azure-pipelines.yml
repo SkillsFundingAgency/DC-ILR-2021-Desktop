@@ -182,7 +182,6 @@ steps:
 # CodeSign Script body
 # Application Signing execution begins here
 #********************************************************************************
-
 - task: PowerShell@2
   displayName: 'CodeSign DfE DesktopApplications'
   enabled: true  
