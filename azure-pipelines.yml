@@ -17,12 +17,12 @@ pool:
 variables:
   Parameters.solution: '**\*.sln'
   Parameters.nugetFeedName: 'dct-pkg'
-  VersionNumberMajor: '1'
-  VersionNumberMinor: '0'
+  - VersionNumberMajor: '1'
+  - VersionNumberMinor: '0'
   VersionNumberBuild: '2'
   BuildConfiguration: 'Release'
   BuildPlatform: 'Any CPU'
-  group: 'CodeSign KV'
+  - group: 'CodeSign KV'
  
 
 steps:
@@ -60,7 +60,8 @@ steps:
   inputs:
     scriptType: inlineScript
     inlineScript: |
-     write-output "Code Sign Pwd : $env:CODESIGNPWDDFE"
+     write-output "Code Sign Pwd : $(CodeSignPwdDfE)"
+     write-output "Code Sign Pwd : $env:CodeSignPwdDfE"
 
 - task: PowerShell@1
   displayName: 'Dissplay Variables b'
@@ -68,6 +69,7 @@ steps:
   inputs:
     scriptType: inlineScript
     inlineScript: |
+     write-output "Code Sign PFX : $(CodeSignCertificatePFX)"
      write-output "Code Sign PFX : $env:CodeSignCertificatePFX"
 
 
