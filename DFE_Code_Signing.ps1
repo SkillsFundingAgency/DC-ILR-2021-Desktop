@@ -27,6 +27,12 @@ if ($null-eq$Certificate)
 {   writre-host " Unable to download Certificate from Key Vault | Valut name : $($KeyValutName) - CertName : $($) "; }
 else
 {
+    write-host "Cert var has a value"; 
+
+    write-host "Cert pwd has a value : $CertificatePwd"; 
+    write-host "Cert var has a value : $Certificate"; 
+
+    
     #Convert private cert to bytes
     #$PrivateCertKVBytes = [System.Convert]::FromBase64String($AzureKeyVaultSecret.SecretValueText)
 
@@ -36,7 +42,7 @@ else
 
     $PrivateCertKVBytes = [System.Convert]::FromBase64String($Certificate)
 
-    $certObject = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new("$($CodeSignPfxCertFileLocation)","$($CertificatePwd)");
+    $certObject = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new($PrivateCertKVBytes,$CertificatePwd);
 
     if ($null-eq$certObject)
     { write-host "Cert Not Found"; }
