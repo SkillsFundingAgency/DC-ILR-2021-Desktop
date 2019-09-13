@@ -36,17 +36,7 @@ else
     write-host "Cert pwd has a value : $env:CERTIFICATEPWD"; 
     write-host "Cert var has a value : $env:CERTIFICATE"; 
 
-    
-    #Convert private cert to bytes
-    #$PrivateCertKVBytes = [System.Convert]::FromBase64String($AzureKeyVaultSecret.SecretValueText)
-
-    #Convert Bytes to Certificate (flagged as exportable & retaining private key)
-    #possible flags: https://msdn.microsoft.com/en-us/library/system.security.cryptography.x509certificates.x509keystorageflags(v=vs.110).aspx
-    #$certObject = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2 -argumentlist $PrivateCertKVBytes,$CertificatePwd
-
     $PrivateCertKVBytes = [System.Convert]::FromBase64String($Certificate)
-
-    #write-host $PrivateCertKVBytes
     
     write-host "a"; 
 

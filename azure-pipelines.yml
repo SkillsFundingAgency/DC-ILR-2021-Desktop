@@ -22,8 +22,6 @@ variables:
   VersionNumberBuild: '2'
   BuildConfiguration: 'Release'
   BuildPlatform: 'Any CPU'
-  group: 'CodeSign KV'
- 
 
 steps:
 - task: gittools.gitversion.gitversion-task.GitVersion@4
@@ -184,40 +182,6 @@ steps:
 # CodeSign Script body
 # Application Signing execution begins here
 #********************************************************************************
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: | $CertificatePwd = $env:CERTIFICATEPWD
-    $Certificate = $env:CERTIFICATE
-    $StartFolder = '$(build.ArtifactStagingDirectory)\DesktopApplication'
-    $FileFilter = 'ESFA.DC.*'
-    $TimestampServer = 'http://timestamp.globalsign.com/scripts/timestamp.dll'
-    if ($null-eq$Certificate)
-    {   writre-host 'CertificateEmpty'; }
-    else
-    {
-        write-host "Cert pwd has a value : $env:CERTIFICATEPWD"; 
-        write-host "Cert var has a value : $env:CERTIFICATE"; 
-        $PrivateCertKVBytes = [System.Convert]::FromBase64String($Certificate);
-        write-host "a"; 
-        $certObject = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new($PrivateCertKVBytes,"$env:CERTIFICATEPWD");
-        write-host "B"; 
-        if ($null-eq$certObject)
-        { write-host "Cert object not created"; }
-        else
-        {
-            write-host "C"; 
-            Write-Host "Cert Thumbprint : $($certObject.Thumbprint.ToString())";
-            $exePath = "$($StartFolder)\$($FileFilter).exe"
-            $dllPath = "$($StartFolder)\$($FileFilter).dll"
-            Write-Debug "codeSign - EXEs";
-            Set-AuthenticodeSignature -FilePath $exePath -Certificate $certObject -TimestampServer $TimestampServer -force;
-            Write-Debug "codeSign - Dlls";
-            $DllLost = Set-AuthenticodeSignature -FilePath $dllPath -Certificate $certObject -TimestampServer $TimestampServer -force;
-            Write-Debug "Done";
-        }
-    }
-
 
 - task: PowerShell@2
   displayName: 'CodeSign DfE DesktopApplications'
