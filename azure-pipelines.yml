@@ -25,7 +25,6 @@ variables:
   group: 'CodeSign KV'
   name: CodeSignPwdDfE
   value: $(CodeSignPwdDfE)
-  group: 'CodeSign KV'
   name: Department-for-Education-CodeSigningCert-20190823
   value: $(Cert)
 
