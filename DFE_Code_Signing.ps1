@@ -28,8 +28,8 @@ if ($null-eq$Certificate)
 else
 {
 
-    write-host "Cert pwd has a value : $env:CertificatePwd"; 
-    write-host "Cert var has a value : $Certificate"; 
+    write-host "Cert pwd has a value : $env:CERTIFICATEPWD"; 
+    write-host "Cert var has a value : $env:CERTIFICATE"; 
 
     
     #Convert private cert to bytes
