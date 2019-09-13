@@ -9,8 +9,8 @@ Param(
     [Parameter(Mandatory=$true)] [string]  $Certificate,
     [Parameter(Mandatory=$true)] [string]  $CertificatePwd,
 
-    [Parameter(Mandatory=$false)] [string]  $KeyValutName ='',
-    [Parameter(Mandatory=$false)] [string]  $CertificateName ='',
+    #[Parameter(Mandatory=$false)] [string]  $KeyValutName ='',
+    #[Parameter(Mandatory=$false)] [string]  $CertificateName ='',
 
     [Parameter(Mandatory=$true)]  [string]  $StartFolder,
     [Parameter(Mandatory=$false)] [string]  $FileFilter = "ESFA.DC.*",
@@ -29,7 +29,10 @@ else
 {
 
     #Convert private cert to bytes
-    $PrivateCertKVBytes = [System.Convert]::FromBase64String($AzureKeyVaultSecret.SecretValueText)
+    #$PrivateCertKVBytes = [System.Convert]::FromBase64String($AzureKeyVaultSecret.SecretValueText)
+
+    $PrivateCertKVBytes = [System.Convert]::FromBase64String($(PfxSecret))
+
     #Convert Bytes to Certificate (flagged as exportable & retaining private key)
     #possible flags: https://msdn.microsoft.com/en-us/library/system.security.cryptography.x509certificates.x509keystorageflags(v=vs.110).aspx
     #$certObject = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2 -argumentlist $PrivateCertKVBytes,$CertificatePwd
