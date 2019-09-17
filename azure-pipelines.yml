@@ -22,11 +22,11 @@ pool:
 variables:
 #- group: 'CodeSign KV'
 - name: VersionNumberMajor 
-  value:'1'
+  value: '1'
 - name: VersionNumberMinor 
-  value:'0'
+  value: '0'
 - name: VersionNumberBuild 
-  value:'3'
+  value: '3'
 - name: Parameters.solution 
   value: '**\*.sln'
 - name: Parameters.nugetFeedName 
