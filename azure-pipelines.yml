@@ -20,21 +20,21 @@ pool:
 #  value: 'value of my-bare-variable'
 
 variables:
-- group: 'CodeSign KV'
-- name : VersionNumberMajor 
-  value : '1'
-- name : VersionNumberMinor 
-  value : '0'
-- name : VersionNumberBuild 
-  value : '3'
-- name : Parameters.solution 
-  value : : '**\*.sln'
-- name : Parameters.nugetFeedName 
-  value : : 'dct-pkg'
-- name : BuildConfiguration
-  value : : 'Release'
-- name : BuildPlatform
-  value : : 'Any CPU'
+#- group: 'CodeSign KV'
+- name: VersionNumberMajor 
+  value:'1'
+- name: VersionNumberMinor 
+  value:'0'
+- name: VersionNumberBuild 
+  value:'3'
+- name: Parameters.solution 
+  value:: '**\*.sln'
+- name: Parameters.nugetFeedName 
+  value:: 'dct-pkg'
+- name: BuildConfiguration
+  value:: 'Release'
+- name: BuildPlatform
+  value:: 'Any CPU'
 
 #  Parameters.solution: '**\*.sln'
 #  Parameters.nugetFeedName: 'dct-pkg'
