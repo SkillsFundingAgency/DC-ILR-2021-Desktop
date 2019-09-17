@@ -25,8 +25,8 @@ variables:
   group: 'CodeSign KV'
   name: CodeSignPwdDfE
   value: $(CodeSignPwdDfE)
-  name: CodeSignCertificatePFX
-  value: $(CodeSignCertificatePFX)
+  name1: CodeSignCertificatePFX
+  value1: $(CodeSignCertificatePFX)
 
 
 steps:
