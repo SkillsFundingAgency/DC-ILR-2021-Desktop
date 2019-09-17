@@ -20,7 +20,7 @@ pool:
 #  value: 'value of my-bare-variable'
 
 variables:
-#- group: 'CodeSign KV'
+- group: 'CodeSign KV'
 - name: VersionNumberMajor 
   value: '1'
 - name: VersionNumberMinor 
