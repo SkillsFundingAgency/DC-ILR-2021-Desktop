@@ -19,7 +19,7 @@ variables:
   Parameters.nugetFeedName: 'dct-pkg'
   VersionNumberMajor: '1'
   VersionNumberMinor: '0'
-  VersionNumberBuild: '2'
+  VersionNumberBuild: '3'
   BuildConfiguration: 'Release'
   BuildPlatform: 'Any CPU'
 
