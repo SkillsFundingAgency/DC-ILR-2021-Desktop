@@ -187,17 +187,9 @@ steps:
   enabled: true  
   inputs:
     filePath: 'DFE_Code_Signing.ps1'
-    arguments: '-StartFolder "$(build.ArtifactStagingDirectory)\DesktopApplication" 
+    arguments: '-StartFolder "$(build.ArtifactStagingDirectory)\DesktopApplication"'
     workingDirectory: '$(Build.SourcesDirectory)'
 
-#
-#- task: PowerShell@2
-#  displayName: 'CodeSign DfE DesktopApplications inLine and inBuild'
-#  enabled: false  
-#  env:
-#    CodeSignPwdDfE: $(CodeSignPwdDfE)
-#  inputs:
-#    filePath: 'C:\Users\BuildAdmin\Desktop\CodeSign\DFE_Code_Signing.ps1'
 #********************************************************************************
 #Application Signing execution ends here
 #********************************************************************************
