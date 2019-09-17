@@ -14,12 +14,16 @@ pool:
   - visualstudio
   - vstest
 
+variables:
+- group: my-variable-group
+- name: my-bare-variable
+  value: 'value of my-bare-variable'
 
 variables:
 - group: 'CodeSign KV'
 - name : VersionNumberMajor 
   value : '1'
-- name : VersionNumberBuild 
+- name : VersionNumberMinor 
   value : '0'
 - name : VersionNumberBuild 
   value : '3'
