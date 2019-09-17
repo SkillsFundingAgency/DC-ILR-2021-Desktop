@@ -14,22 +14,23 @@ pool:
   - visualstudio
   - vstest
 
+
 variables:
-  - group: 'CodeSign KV'
-  - name : VersionNumberMajor 
-   value : '1'
-  - name : VersionNumberBuild 
-   value : '0'
-  - name : VersionNumberBuild 
-   value : '3'
- - name : Parameters.solution 
-   value : : '**\*.sln'
- - name : Parameters.nugetFeedName 
-   value : : 'dct-pkg'
- - name : BuildConfiguration
-   value : : 'Release'
- - name : BuildPlatform
-   value : : 'Any CPU'
+- group: 'CodeSign KV'
+- name : VersionNumberMajor 
+  value : '1'
+- name : VersionNumberBuild 
+  value : '0'
+- name : VersionNumberBuild 
+  value : '3'
+- name : Parameters.solution 
+  value : : '**\*.sln'
+- name : Parameters.nugetFeedName 
+  value : : 'dct-pkg'
+- name : BuildConfiguration
+  value : : 'Release'
+- name : BuildPlatform
+  value : : 'Any CPU'
 
 #  Parameters.solution: '**\*.sln'
 #  Parameters.nugetFeedName: 'dct-pkg'
@@ -71,7 +72,7 @@ steps:
     OutputVersion: 'OutputedVersion'
 
 - task: PowerShell@1
-  displayName: 'Dissplay Variables'
+  displayName: 'Display Variables'
   enabled: true
   inputs:
     scriptType: inlineScript
@@ -205,18 +206,19 @@ steps:
 # CodeSign Script body
 # Application Signing execution begins here
 #********************************************************************************
-#- task: PowerShell@2
-#  displayName: 'CodeSign DfE DesktopApplications'
-#  enabled: true  
-#  inputs:
-#    filePath: 'DFE_Code_Signing.ps1'
-#    arguments: '-StartFolder "$(build.ArtifactStagingDirectory)\DesktopApplication"'
-#    workingDirectory: '$(Build.SourcesDirectory)'
+- task: PowerShell@2
+  displayName: 'CodeSign DfE DesktopApplications'
+  enabled: true  
+  inputs:
+    filePath: 'DFE_Code_Signing.ps1'
+    arguments: '-StartFolder "$(build.ArtifactStagingDirectory)\DesktopApplication"'
+    workingDirectory: '$(Build.SourcesDirectory)'
 
 
     
 - task: AzurePowerShell@3
   displayName: 'Azure PowerShell script: FilePath'
+  enabled: false
   inputs:
     azureSubscription: DCOLPDVSTS
     ScriptPath: 'DFE_Code_Signing.ps1'
