@@ -26,25 +26,25 @@ Param(
 #$AzureKeyVaultSecret=Get-AzureKeyVaultSecret -VaultName $KeyValutName.tolower().Replace(".vault.azure.net","") -Name $CertificateName -ErrorAction SilentlyContinue
 
 if ($null-eq$env:CERTIFICATE)
-{   writre-host " Certificate Error"; }
+{   write-output " Certificate Error"; }
 else
 {
-    write-host "Cert pwd has a value : $env:CERTIFICATEPWD"; 
-    write-host "Cert var has a value : $env:CERTIFICATE"; 
+    write-output "Cert pwd has a value : $env:CERTIFICATEPWD"; 
+    write-output "Cert var has a value : $env:CERTIFICATE"; 
 
     $PrivateCertKVBytes = [System.Convert]::FromBase64String($Certificate)
     
-    write-host "a"; 
+    write-output "a"; 
 
     $certObject = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new("$PrivateCertKVBytes","$CertificatePwd");
-    write-host "B"; 
+    write-output "B"; 
 
     if ($null-eq$certObject)
-    { write-host "Cert Not Found"; }
+    { write-output "Cert Not Found"; }
     else
     {
-        write-host "C"; 
-        Write-Host "Cert Thumbprint : $($certObject.Thumbprint.ToString())"
+        write-output "C"; 
+        write-output "Cert Thumbprint : $($certObject.Thumbprint.ToString())"
 
         $exePath = "$($StartFolder)\$($FileFilter).exe"
         $dllPath = "$($StartFolder)\$($FileFilter).dll"
