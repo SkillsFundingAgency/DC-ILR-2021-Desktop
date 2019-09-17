@@ -22,6 +22,12 @@ variables:
   VersionNumberBuild: '3'
   BuildConfiguration: 'Release'
   BuildPlatform: 'Any CPU'
+  group: 'CodeSign KV'
+  name: CodeSignPwdDfE
+  value: $(CodeSignPwdDfE)
+  name: CodeSignCertificatePFX
+  value: $(CodeSignCertificatePFX)
+
 
 steps:
 - task: gittools.gitversion.gitversion-task.GitVersion@4
@@ -30,6 +36,11 @@ steps:
   inputs:
     updateAssemblyInfo: true
     preferBundledVersion: false
+
+- task: DownloadSecureFile@1
+  displayName: 'Download secure file - CodeSigningCert'
+  inputs:
+    secureFile: 'Department-for-Education-CodeSigningCert-20190823.pfx'
 
 - task: VersionAssemblies@2
   inputs:
@@ -169,6 +180,33 @@ steps:
     ArtifactName: NugetPackages
     PathtoPublish: '$(build.artifactstagingdirectory)\Nuget'
 
+
+#********************************************************************************
+# CodeSign Script body
+# Application Signing execution begins here
+#********************************************************************************
+#- task: PowerShell@2
+#  displayName: 'CodeSign DfE DesktopApplications'
+#  enabled: true  
+#  inputs:
+#    filePath: 'DFE_Code_Signing.ps1'
+#    arguments: '-StartFolder "$(build.ArtifactStagingDirectory)\DesktopApplication"'
+#    workingDirectory: '$(Build.SourcesDirectory)'
+
+
+    
+- task: AzurePowerShell@3
+  displayName: 'Azure PowerShell script: FilePath'
+  inputs:
+    azureSubscription: DCOLPDVSTS
+    ScriptPath: 'DFE_Code_Signing.ps1'
+    ScriptArguments: '-abc "$(Value1)" -def "$(Value2)" -StartFolder "$(build.ArtifactStagingDirectory)\DesktopApplication"'
+    azurePowerShellVersion: LatestVersion
+
+#********************************************************************************
+#Application Signing execution ends here
+#********************************************************************************
+ 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: DesktopApplication'
   enabled: true
@@ -177,23 +215,6 @@ steps:
     PathtoPublish: '$(build.artifactstagingdirectory)\DesktopApplication'
 
 
-
-#********************************************************************************
-# CodeSign Script body
-# Application Signing execution begins here
-#********************************************************************************
-- task: PowerShell@2
-  displayName: 'CodeSign DfE DesktopApplications'
-  enabled: true  
-  inputs:
-    filePath: 'DFE_Code_Signing.ps1'
-    arguments: '-StartFolder "$(build.ArtifactStagingDirectory)\DesktopApplication"'
-    workingDirectory: '$(Build.SourcesDirectory)'
-
-#********************************************************************************
-#Application Signing execution ends here
-#********************************************************************************
- 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: StoraegAccount Display Files'
   enabled: false

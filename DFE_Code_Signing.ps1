@@ -7,10 +7,13 @@
 #Requires -Version 3.0
 Param(
 
-    #[Parameter(Mandatory=$false)] [string]  $KeyValutName ='',
-    #[Parameter(Mandatory=$false)] [string]  $CertificateName ='',
     
+    [Parameter(Mandatory=$true)]  [string]  $Certificate,
+    [Parameter(Mandatory=$true)]  [string]  $CertificatePath,
+    [Parameter(Mandatory=$true)]  [string]  $CertificatePwd,
     [Parameter(Mandatory=$true)]  [string]  $StartFolder,
+    [Parameter(Mandatory=$false)] [string]  $KeyValutName ='',
+    [Parameter(Mandatory=$false)] [string]  $CertificateName ='',
     [Parameter(Mandatory=$false)] [string]  $FileFilter = "ESFA.DC.*",
     [Parameter(Mandatory=$false)] [string]  $TimestampServer = "http://timestamp.globalsign.com/scripts/timestamp.dll"
 )
@@ -25,14 +28,20 @@ Param(
 
 #$AzureKeyVaultSecret=Get-AzureKeyVaultSecret -VaultName $KeyValutName.tolower().Replace(".vault.azure.net","") -Name $CertificateName -ErrorAction SilentlyContinue
 
-if ($null-eq$env:CERTIFICATE)
-{   write-output " Certificate Error"; }
-else
-{
-    write-output "Cert pwd has a value : $env:CERTIFICATEPWD"; 
-    write-output "Cert var has a value : $env:CERTIFICATE"; 
 
-    $PrivateCertKVBytes = [System.Convert]::FromBase64String($Certificate)
+echo "$env:build_artifactstagingdirectory";
+
+echo "Cert pwd has a value : $env:CERTIFICATEPWD"; 
+echo "Cert var has a value : $env:CERTIFICATE"; 
+
+#if ($null-eq$env:CERTIFICATE)
+#{   write-output " Certificate Error"; }
+#else
+{
+    write-output "Cert pwd has a value : $env:CertificatePwd"; 
+    write-output "Cert var has a value : $env:CERTIFICATE"; 
+        
+    $PrivateCertKVBytes = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new("$CertificatePath","$CertificatePwd");
     
     write-output "a"; 
 
