@@ -25,33 +25,38 @@ Param(
 
 #$AzureKeyVaultSecret=Get-AzureKeyVaultSecret -VaultName $KeyValutName.tolower().Replace(".vault.azure.net","") -Name $CertificateName -ErrorAction SilentlyContinue
 
-write-output "Certificate pwd has a value : $env:CODESIGNPWDDFE"; 
-write-output "Certificate has a value : $env:CODESIGNCERTIFICATEPFX"; 
 
-write-output "Certificate pwdEnv has a value : $env:CODESIGNPASSWORD"; 
-write-output "Certificate CERT has a value : $env:CODESIGNCERT"; 
+
+Write-Host  "Certificate pwdEnv has a value : $env:CODESIGNPASSWORD"; 
+Write-Host "Certificate CERT has a value : $env:CODESIGNCERT"; 
+
+
+$cert = $env:CODESIGNCERT;
+Write-Host "Code Sign Cert DataType : " + $cert.GetType().FullName  
+
+$certPwd = $env:CODESIGNPASSWORD;
+Write-Host "Code Sign Cert Pwd DataType : " + $certPwd.GetType().FullName  
 
 if ($null-eq$env:CODESIGNCERT)
-{   write-output " Certificate Error"; }
+{   Write-Host " Certificate Error"; }
 else
 {
-    #write-host "Cert pwd has a value : $env:CERTIFICATEPWD"; 
-    #write-host "Cert var has a value : $env:CERTIFICATE"; 
-    write-host "Cert tyep : $(($env:CODESIGNCER).GetType())";
 
     $PrivateCertKVBytes = [System.Convert]::FromBase64String($env:CODESIGNCERT)
     
-    write-host "a : $PrivateCertKVBytes"; 
+    Write-Host "a : $PrivateCertKVBytes"; 
+    Write-Host $PrivateCertKVBytes.GetType().FullName  
+
 
     #$certObject = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new("$PrivateCertKVBytes","$env:CODESIGNPASSWORD");
     $certObject = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new("$PrivateCertKVBytes",$null,"Exportable, PersistKeySet")
-    write-host "B"; 
+    Write-Host "B"; 
 
     if ($null-eq$certObject)
-    { write-host "Cert Not Found"; }
+    { Write-Host "Cert Not Found"; }
     else
     {
-        write-host "C"; 
+        Write-Host "C"; 
         Write-Host "Cert Thumbprint : $($certObject.Thumbprint.ToString())"
 
         $exePath = "$($StartFolder)\$($FileFilter).exe"
