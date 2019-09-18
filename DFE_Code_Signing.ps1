@@ -29,7 +29,7 @@ write-output "Certificate pwd has a value : $env:CODESIGNPWDDFE";
 write-output "Certificate has a value : $env:CODESIGNCERTIFICATEPFX"; 
 
 write-output "Certificate pwdEnv has a value : $env:CODESIGNPASSWORD"; 
-write-output "Certificate pwdEnv has a value : $env:CODESIGNCERT"; 
+write-output "Certificate CERT has a value : $env:CODESIGNCERT"; 
 
 if ($null-eq$env:CODESIGNCERT)
 {   write-output " Certificate Error"; }
@@ -42,7 +42,7 @@ else
     
     write-host "a"; 
 
-    $certObject = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new("$PrivateCertKVBytes","$CertificatePwd");
+    $certObject = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new("$PrivateCertKVBytes","$env:CODESIGNPASSWORD");
     write-host "B"; 
 
     if ($null-eq$certObject)
