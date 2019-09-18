@@ -7,13 +7,10 @@
 #Requires -Version 3.0
 Param(
 
+    #[Parameter(Mandatory=$false)] [string]  $KeyValutName ='',
+    #[Parameter(Mandatory=$false)] [string]  $CertificateName ='',
     
-    [Parameter(Mandatory=$true)]  [string]  $Certificate,
-    [Parameter(Mandatory=$true)]  [string]  $CertificatePath,
-    [Parameter(Mandatory=$true)]  [string]  $CertificatePwd,
     [Parameter(Mandatory=$true)]  [string]  $StartFolder,
-    [Parameter(Mandatory=$false)] [string]  $KeyValutName ='',
-    [Parameter(Mandatory=$false)] [string]  $CertificateName ='',
     [Parameter(Mandatory=$false)] [string]  $FileFilter = "ESFA.DC.*",
     [Parameter(Mandatory=$false)] [string]  $TimestampServer = "http://timestamp.globalsign.com/scripts/timestamp.dll"
 )
@@ -28,32 +25,30 @@ Param(
 
 #$AzureKeyVaultSecret=Get-AzureKeyVaultSecret -VaultName $KeyValutName.tolower().Replace(".vault.azure.net","") -Name $CertificateName -ErrorAction SilentlyContinue
 
+write-host "Cert pwd has a value : $env:CERTIFICATEPWD"; 
+write-host "Cert var has a value : $env:CERTIFICATE"; 
 
-echo "$env:build_artifactstagingdirectory";
 
-echo "Cert pwd has a value : $env:CERTIFICATEPWD"; 
-echo "Cert var has a value : $env:CERTIFICATE"; 
-
-#if ($null-eq$env:CERTIFICATE)
-#{   write-output " Certificate Error"; }
-#else
+if ($null-eq$env:CERTIFICATE)
+{   writre-host " Certificate Error"; }
+else
 {
-    write-output "Cert pwd has a value : $env:CertificatePwd"; 
-    write-output "Cert var has a value : $env:CERTIFICATE"; 
-        
-    $PrivateCertKVBytes = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new("$CertificatePath","$CertificatePwd");
+    write-host "Cert pwd has a value : $env:CERTIFICATEPWD"; 
+    write-host "Cert var has a value : $env:CERTIFICATE"; 
+
+    $PrivateCertKVBytes = [System.Convert]::FromBase64String($env:CERTIFICATE)
     
-    write-output "a"; 
+    write-host "a"; 
 
     $certObject = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new("$PrivateCertKVBytes","$CertificatePwd");
-    write-output "B"; 
+    write-host "B"; 
 
     if ($null-eq$certObject)
-    { write-output "Cert Not Found"; }
+    { write-host "Cert Not Found"; }
     else
     {
-        write-output "C"; 
-        write-output "Cert Thumbprint : $($certObject.Thumbprint.ToString())"
+        write-host "C"; 
+        Write-Host "Cert Thumbprint : $($certObject.Thumbprint.ToString())"
 
         $exePath = "$($StartFolder)\$($FileFilter).exe"
         $dllPath = "$($StartFolder)\$($FileFilter).dll"
