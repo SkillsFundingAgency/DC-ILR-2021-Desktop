@@ -32,24 +32,24 @@ Write-Host "Certificate CERT has a value : $env:CODESIGNCERT";
 
 
 $cert = $env:CODESIGNCERT;
-Write-Host "Code Sign Cert DataType : " + $cert.GetType().FullName  
+Write-Host "Code Sign Cert DataType : $($cert.GetType().FullName)"
 
 $certPwd = $env:CODESIGNPASSWORD;
-Write-Host "Code Sign Cert Pwd DataType : " + $certPwd.GetType().FullName  
+Write-Host "Code Sign Cert Pwd DataType : $($certPwd.GetType().FullName)"
 
 if ($null-eq$env:CODESIGNCERT)
 {   Write-Host " Certificate Error"; }
 else
 {
 
-    $PrivateCertKVBytes = [System.Convert]::FromBase64String($env:CODESIGNCERT)
+    $PrivateCertKVBytes = [System.Convert]::FromBase64String($cert)
     
     Write-Host "a : $PrivateCertKVBytes"; 
-    Write-Host $PrivateCertKVBytes.GetType().FullName  
+    Write-Host "PrivateCertKVBytes DataType : $($PrivateCertKVBytes.GetType().FullName)"
 
-
+    $certObject = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new($PrivateCertKVBytes,"");
     #$certObject = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new("$PrivateCertKVBytes","$env:CODESIGNPASSWORD");
-    $certObject = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new("$PrivateCertKVBytes",$null,"Exportable, PersistKeySet")
+    #$certObject = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new("$PrivateCertKVBytes",$null,"Exportable, PersistKeySet")
     Write-Host "B"; 
 
     if ($null-eq$certObject)
