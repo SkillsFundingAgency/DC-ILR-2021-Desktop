@@ -25,8 +25,8 @@ Param(
 
 #$AzureKeyVaultSecret=Get-AzureKeyVaultSecret -VaultName $KeyValutName.tolower().Replace(".vault.azure.net","") -Name $CertificateName -ErrorAction SilentlyContinue
 
-write-host "Cert pwd has a value : $env:CERTIFICATEPWD"; 
-write-host "Cert var has a value : $env:CERTIFICATE"; 
+write-host "Cert pwd has a value : $env:CodeSignPwdDfE"; 
+write-host "Cert var has a value : $env:CodeSignCertificatePFX"; 
 
 
 if ($null-eq$env:CERTIFICATE)
