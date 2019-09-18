@@ -37,12 +37,14 @@ else
 {
     #write-host "Cert pwd has a value : $env:CERTIFICATEPWD"; 
     #write-host "Cert var has a value : $env:CERTIFICATE"; 
+    write-host "Cert tyep : $(($env:CODESIGNCER).GetType())";
 
     $PrivateCertKVBytes = [System.Convert]::FromBase64String($env:CODESIGNCERT)
     
-    write-host "a"; 
+    write-host "a : $PrivateCertKVBytes"; 
 
-    $certObject = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new("$PrivateCertKVBytes","$env:CODESIGNPASSWORD");
+    #$certObject = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new("$PrivateCertKVBytes","$env:CODESIGNPASSWORD");
+    $certObject = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new("$PrivateCertKVBytes",$null,"Exportable, PersistKeySet")
     write-host "B"; 
 
     if ($null-eq$certObject)
