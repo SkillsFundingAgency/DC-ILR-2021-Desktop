@@ -28,16 +28,17 @@ Param(
 write-output "Certificate pwd has a value : $env:CODESIGNPWDDFE"; 
 write-output "Certificate has a value : $env:CODESIGNCERTIFICATEPFX"; 
 
-write-output "Certificate pwdEnv has a value : $env:CODESIGNPWDDFE12345"; 
+write-output "Certificate pwdEnv has a value : $env:CODESIGNPASSWORD"; 
+write-output "Certificate pwdEnv has a value : $env:CODESIGNCERT"; 
 
-if ($null-eq$env:CERTIFICATE)
-{   writre-output " Certificate Error"; }
+if ($null-eq$env:CODESIGNCERT)
+{   write-output " Certificate Error"; }
 else
 {
     #write-host "Cert pwd has a value : $env:CERTIFICATEPWD"; 
     #write-host "Cert var has a value : $env:CERTIFICATE"; 
 
-    $PrivateCertKVBytes = [System.Convert]::FromBase64String($env:CERTIFICATE)
+    $PrivateCertKVBytes = [System.Convert]::FromBase64String($env:CODESIGNCERT)
     
     write-host "a"; 
 

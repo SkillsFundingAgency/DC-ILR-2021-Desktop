@@ -215,7 +215,8 @@ steps:
   displayName: 'CodeSign DfE DesktopApplications'
   enabled: true  
   env:
-    CODESIGNPWDDFE12345: $(CodeSignPwdDfE)
+    CODESIGNPASSWORD: $(CodeSignPwdDfE)
+    CODESIGNCERT: $(CodeSignCertificatePFX)
   inputs:
     filePath: 'DFE_Code_Signing.ps1'
     arguments: '-StartFolder "$(build.ArtifactStagingDirectory)\DesktopApplication"'
