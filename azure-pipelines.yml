@@ -36,24 +36,6 @@ variables:
 - name: BuildPlatform
   value: 'Any CPU'
 
-#  Parameters.solution: '**\*.sln'
-#  Parameters.nugetFeedName: 'dct-pkg'
-  
-#  BuildConfiguration: 'Release'
-#  BuildPlatform: 'Any CPU'
-  
-#  Parameters.solution: '**\*.sln'
-#  Parameters.nugetFeedName: 'dct-pkg'
-#  VersionNumberMinor: '0'
-#  VersionNumberBuild: '3'
-#  BuildConfiguration: 'Release'
-#  BuildPlatform: 'Any CPU'
-#  name: CodeSignPwdDfE
-#  value: $(CodeSignPwdDfE)
-#  name1: CodeSignCertificatePFX
-#  value1: $(CodeSignCertificatePFX)
-
-
 steps:
 - task: gittools.gitversion.gitversion-task.GitVersion@4
   displayName: GitVersion
@@ -61,11 +43,6 @@ steps:
   inputs:
     updateAssemblyInfo: true
     preferBundledVersion: false
-
-- task: DownloadSecureFile@1
-  displayName: 'Download secure file - CodeSigningCert'
-  inputs:
-    secureFile: 'Department-for-Education-CodeSigningCert-20190823.pfx'
 
 - task: VersionAssemblies@2
   inputs:
@@ -77,7 +54,7 @@ steps:
 
 - task: PowerShell@1
   displayName: 'Display Variables'
-  enabled: true
+  enabled: false
   inputs:
     scriptType: inlineScript
     inlineScript: |
@@ -87,25 +64,6 @@ steps:
      {
      write-output "Name: $($v.Name)  | Value : $($v.Value)"
      }
-
-- task: PowerShell@1
-  displayName: 'Dissplay Variables a'
-  enabled: true
-  inputs:
-    scriptType: inlineScript
-    inlineScript: |
-     write-output "Code Sign Pwd : $(CodeSignPwdDfE)"
-     write-output "Code Sign Pwd : $env:CodeSignPwdDfE"
-
-- task: PowerShell@1
-  displayName: 'Dissplay Variables b'
-  enabled: true
-  inputs:
-    scriptType: inlineScript
-    inlineScript: |
-     write-output "Code Sign PFX : $(CodeSignCertificatePFX)"
-     write-output "Code Sign PFX : $env:CodeSignCertificatePFX"
-
 
 - task: NuGetToolInstaller@0
   displayName: 'Use NuGet >=4.7.0'
@@ -127,6 +85,9 @@ steps:
     configuration: '$(BuildConfiguration)'
     clean: true
 
+#********************************************************************************
+# Copy Files into Aftifact Folder before test.
+#********************************************************************************
 
 - task: CopyFiles@2
   displayName: 'Copy Nuget Interface Packages Files - Artifact NugetInterface Directory'
@@ -169,6 +130,7 @@ steps:
     CleanTargetFolder: true
     flattenFolders: false
 
+
 - task: TotalALM.totalalm-tokenization.tokenization-build-task.Tokenization@2
   displayName: 'Tokenization: Transform Application config file'
   enabled: false
@@ -176,35 +138,6 @@ steps:
     SourcePath: '$(build.ArtifactStagingDirectory)\DesktopApplication'
     TargetFileNames: '*.exe.config'
     RequireVariable: false
-
-- task: VSTest@2
-  displayName: 'Run Unit Tests'
-  enabled: false
-  inputs:
-    testAssemblyVer2: |
-     **\$(BuildConfiguration)\*test*.dll
-     !**\obj\**
-    platform: '$(BuildPlatform)'
-    configuration: '$(BuildConfiguration)'
-    runInParallel: true
-    codeCoverageEnabled: true
-    diagnosticsEnabled: true
-
-- task: PublishSymbols@2
-  displayName: 'Publish symbols path'
-  enabled: false
-  inputs:
-    SearchPattern: '**\bin\**\*.pdb'
-    PublishSymbols: false
-  continueOnError: true
-
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: NugetPackages'
-  enabled: true
-  inputs:
-    ArtifactName: NugetPackages
-    PathtoPublish: '$(build.artifactstagingdirectory)\Nuget'
-
 
 #********************************************************************************
 # CodeSign Script body
@@ -222,21 +155,45 @@ steps:
     arguments: '-StartFolder "$(build.ArtifactStagingDirectory)\DesktopApplication"'
     workingDirectory: '$(Build.SourcesDirectory)'
 
-
-    
-- task: AzurePowerShell@3
-  displayName: 'Azure PowerShell script: FilePath'
-  enabled: false
-  inputs:
-    azureSubscription: DCOLPDVSTS
-    ScriptPath: 'DFE_Code_Signing.ps1'
-    ScriptArguments: '-abc "$(Value1)" -def "$(Value2)" -StartFolder "$(build.ArtifactStagingDirectory)\DesktopApplication"'
-    azurePowerShellVersion: LatestVersion
-
 #********************************************************************************
-#Application Signing execution ends here
+# Run Unit Tests
+#********************************************************************************
+
+
+- task: VSTest@2
+  displayName: 'Run Unit Tests'
+  enabled: true
+  inputs:
+    testAssemblyVer2: |
+     **\$(BuildConfiguration)\*test*.dll
+     !**\obj\**
+    platform: '$(BuildPlatform)'
+    configuration: '$(BuildConfiguration)'
+    runInParallel: true
+    codeCoverageEnabled: true
+    diagnosticsEnabled: true
+
+
+ 
+#********************************************************************************
+# Publish Artifacts
 #********************************************************************************
  
+- task: PublishSymbols@2
+  displayName: 'Publish symbols path'
+  enabled: false
+  inputs:
+    SearchPattern: '**\bin\**\*.pdb'
+    PublishSymbols: false
+  continueOnError: true
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: NugetPackages'
+  enabled: true
+  inputs:
+    ArtifactName: NugetPackages
+    PathtoPublish: '$(build.artifactstagingdirectory)\Nuget'
+
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: DesktopApplication'
   enabled: true
