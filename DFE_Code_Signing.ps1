@@ -28,10 +28,7 @@ Param(
 write-output "Certificate pwd has a value : $env:CODESIGNPWDDFE"; 
 write-output "Certificate has a value : $env:CODESIGNCERTIFICATEPFX"; 
 
-write-output "Certificate var1 has a value : $(CODESIGNCERTIFICATEPFX)"; 
-
-
-write-output "Certificate pwd has a value : $env:CODESIGNPWDDFE12345"; 
+write-output "Certificate pwdEnv has a value : $env:CODESIGNPWDDFE12345"; 
 
 if ($null-eq$env:CERTIFICATE)
 {   writre-output " Certificate Error"; }
