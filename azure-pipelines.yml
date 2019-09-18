@@ -14,14 +14,27 @@ pool:
   - visualstudio
   - vstest
 
+#variables:
+#- group: my-variable-group
+#- name: my-bare-variable
+#  value: 'value of my-bare-variable'
+
 variables:
-  VersionNumberMajor: '1'
-  VersionNumberMinor: '0'
-  VersionNumberBuild: '3'
-  BuildConfiguration: 'Release'
-  BuildPlatform: 'Any CPU'
-  Parameters.solution: '**\*.sln'
-  Parameters.nugetFeedName: 'dct-pkg'
+- group: 'CodeSign KV'
+- name: VersionNumberMajor 
+  value: '1'
+- name: VersionNumberMinor 
+  value: '0'
+- name: VersionNumberBuild 
+  value: '3'
+- name: Parameters.solution 
+  value: '**\*.sln'
+- name: Parameters.nugetFeedName 
+  value: 'dct-pkg'
+- name: BuildConfiguration
+  value: 'Release'
+- name: BuildPlatform
+  value: 'Any CPU'
 
 steps:
 - task: gittools.gitversion.gitversion-task.GitVersion@4
@@ -38,9 +51,10 @@ steps:
     InjectVersion: False
     FilenamePattern: 'AssemblyInfo.*'
     OutputVersion: 'OutputedVersion'
+
 - task: PowerShell@1
-  displayName: 'Dissplay Variables'
-  enabled: true
+  displayName: 'Display Variables'
+  enabled: false
   inputs:
     scriptType: inlineScript
     inlineScript: |
@@ -50,7 +64,6 @@ steps:
      {
      write-output "Name: $($v.Name)  | Value : $($v.Value)"
      }
-
 
 - task: NuGetToolInstaller@0
   displayName: 'Use NuGet >=4.7.0'
@@ -72,6 +85,9 @@ steps:
     configuration: '$(BuildConfiguration)'
     clean: true
 
+#********************************************************************************
+# Copy Files into Aftifact Folder before test.
+#********************************************************************************
 
 - task: CopyFiles@2
   displayName: 'Copy Nuget Interface Packages Files - Artifact NugetInterface Directory'
@@ -104,26 +120,38 @@ steps:
     Contents: '**\!(*.pdb)'
     TargetFolder: '$(build.ArtifactStagingDirectory)\DesktopApplication'
 
-- task: CopyFiles@2
-  displayName: 'Copy Published Storage Account Files - Artifact StorageAccount Directory'
-  inputs:
-    SourceFolder: '$(build.sourcesdirectory)\StorageAccount'
-    Contents: |
-      **\*
-    TargetFolder: '$(build.artifactstagingdirectory)\StorageAccount'
-    CleanTargetFolder: true
-    flattenFolders: false
-
 - task: TotalALM.totalalm-tokenization.tokenization-build-task.Tokenization@2
   displayName: 'Tokenization: Transform Application config file'
-  enabled: false
+  enabled: true
   inputs:
     SourcePath: '$(build.ArtifactStagingDirectory)\DesktopApplication'
     TargetFileNames: '*.exe.config'
     RequireVariable: false
 
+#********************************************************************************
+# CodeSign Script body
+# Application Signing execution begins here
+#********************************************************************************
+
+- task: PowerShell@2
+  displayName: 'CodeSign DfE DesktopApplications'
+  enabled: true  
+  env:
+    CODESIGNPASSWORD: $(CodeSignPwdDfE)
+    CODESIGNCERT: $(CodeSignCertificatePFX)
+  inputs:
+    filePath: 'DFE_Code_Signing.ps1'
+    arguments: '-StartFolder "$(build.ArtifactStagingDirectory)\DesktopApplication"'
+    workingDirectory: '$(Build.SourcesDirectory)'
+
+#********************************************************************************
+# Run Unit Tests
+#********************************************************************************
+
+
 - task: VSTest@2
   displayName: 'Run Unit Tests'
+  enabled: true
   inputs:
     testAssemblyVer2: |
      **\$(BuildConfiguration)\*test*.dll
@@ -134,6 +162,12 @@ steps:
     codeCoverageEnabled: true
     diagnosticsEnabled: true
 
+
+ 
+#********************************************************************************
+# Publish Artifacts
+#********************************************************************************
+ 
 - task: PublishSymbols@2
   displayName: 'Publish symbols path'
   enabled: false
@@ -155,12 +189,4 @@ steps:
   inputs:
     ArtifactName: DesktopApplication
     PathtoPublish: '$(build.artifactstagingdirectory)\DesktopApplication'
-
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: StoraegAccount Display Files'
-  enabled: true
-  inputs:
-    ArtifactName: StorageAccount
-    PathtoPublish: '$(build.artifactstagingdirectory)\StorageAccount'
-
 
