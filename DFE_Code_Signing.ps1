@@ -25,16 +25,20 @@ Param(
 
 #$AzureKeyVaultSecret=Get-AzureKeyVaultSecret -VaultName $KeyValutName.tolower().Replace(".vault.azure.net","") -Name $CertificateName -ErrorAction SilentlyContinue
 
-write-host "Cert pwd has a value : $env:CodeSignPwdDfE"; 
-write-host "Cert var has a value : $env:CodeSignCertificatePFX"; 
+write-output "Certificate pwd has a value : $env:CODESIGNPWDDFE"; 
+write-output "Certificate has a value : $env:CODESIGNCERTIFICATEPFX"; 
 
+write-output "Certificate var1 has a value : $(CODESIGNCERTIFICATEPFX)"; 
+
+
+write-output "Certificate pwd has a value : $env:CODESIGNPWDDFE12345"; 
 
 if ($null-eq$env:CERTIFICATE)
-{   writre-host " Certificate Error"; }
+{   writre-output " Certificate Error"; }
 else
 {
-    write-host "Cert pwd has a value : $env:CERTIFICATEPWD"; 
-    write-host "Cert var has a value : $env:CERTIFICATE"; 
+    #write-host "Cert pwd has a value : $env:CERTIFICATEPWD"; 
+    #write-host "Cert var has a value : $env:CERTIFICATE"; 
 
     $PrivateCertKVBytes = [System.Convert]::FromBase64String($env:CERTIFICATE)
     

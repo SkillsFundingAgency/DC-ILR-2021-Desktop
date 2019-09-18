@@ -211,24 +211,11 @@ steps:
 # Application Signing execution begins here
 #********************************************************************************
 
-
-- powershell: |
-    # Using an input-macro:
-    Write-Host "This works: $(CodeSignPwdDfE)"
-
-    # Using the env var directly:
-    Write-Host "This does not work: $env:CodeSignPwdDfE"
-
-    # Using the mapped env var:
-    Write-Host "This works: $env:MY_MAPPED_ENV_VAR"    # Recommended
-  env:
-    MY_MAPPED_ENV_VAR: $(CODESIGNPWDDFE)
-
-
 - task: PowerShell@2
   displayName: 'CodeSign DfE DesktopApplications'
   enabled: true  
-
+  env:
+    CODESIGNPWDDFE12345: $(CodeSignPwdDfE)
   inputs:
     filePath: 'DFE_Code_Signing.ps1'
     arguments: '-StartFolder "$(build.ArtifactStagingDirectory)\DesktopApplication"'
