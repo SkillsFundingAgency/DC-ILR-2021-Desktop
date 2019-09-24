@@ -18,6 +18,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
             containerBuilder.RegisterType<WindowsProcessService>().As<IWindowsProcessService>();
             containerBuilder.RegisterType<ReleaseVersionInformationService>().As<IReleaseVersionInformationService>();
             containerBuilder.RegisterType<ReferenceDataVersionInformationService>().As<IReferenceDataVersionInformationService>();
+            containerBuilder.RegisterType<ReportFilterService>().As<IReportFilterService>().SingleInstance();
 
             containerBuilder.RegisterType<DesktopContextFactory>().As<IDesktopContextFactory>();
 

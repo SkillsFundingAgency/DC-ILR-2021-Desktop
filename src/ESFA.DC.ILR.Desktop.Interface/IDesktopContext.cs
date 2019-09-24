@@ -11,6 +11,6 @@ namespace ESFA.DC.ILR.Desktop.Interface
 
         IDictionary<string, object> KeyValuePairs { get; }
 
-        IEnumerable<IReportFilterQuery> ReportFilterQuery { get; }
+        IEnumerable<IReportFilterQuery> ReportFilterQueries { get; }
     }
 }

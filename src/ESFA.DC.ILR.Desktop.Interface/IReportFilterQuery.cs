@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace ESFA.DC.ILR.Desktop.Interface
 {
@@ -8,6 +6,6 @@ namespace ESFA.DC.ILR.Desktop.Interface
     {
         string ReportName { get; }
 
-        IDictionary<string, object> FilterProperties { get; }
+        IEnumerable<IReportFilterQueryProperty> FilterProperties { get; }
     }
 }

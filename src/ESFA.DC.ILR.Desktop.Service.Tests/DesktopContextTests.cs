@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.Desktop.Service.Context;
 using FluentAssertions;
 using Xunit;
@@ -185,19 +187,29 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
             NewContext().KeyValuePairs.Should().HaveCount(27);
         }
 
+        [Fact]
+        public void ReportFilterQueries()
+        {
+            var reportFilterQueries = new List<IReportFilterQuery>();
+
+            NewContext(reportFilterQueries: reportFilterQueries).Should().BeSameAs(reportFilterQueries);
+        }
+
         private DesktopContext NewContext(
             DateTime? dateTime = null,
             string outputDirectory = null,
             string filePath = null,
             string referenceDataFilePath = null,
-            string connectionString = null)
+            string connectionString = null,
+            IEnumerable<IReportFilterQuery> reportFilterQueries = null)
         {
             return new DesktopContext(
                 dateTime.HasValue ? dateTime.Value : new DateTime(2018, 1, 1),
                 outputDirectory,
                 filePath,
                 referenceDataFilePath,
-                connectionString);
+                connectionString,
+                reportFilterQueries);
         }
     }
 }

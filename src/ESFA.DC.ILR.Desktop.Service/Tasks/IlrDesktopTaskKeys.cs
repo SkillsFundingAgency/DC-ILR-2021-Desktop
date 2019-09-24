@@ -1,5 +1,4 @@
-﻿using ESFA.DC.ILR.Desktop.Service.Interface;
-using ESFA.DC.ILR.Desktop.Service.Tasks.Attributes;
+﻿using ESFA.DC.ILR.Desktop.Service.Tasks.Attributes;
 
 namespace ESFA.DC.ILR.Desktop.Service.Tasks
 {

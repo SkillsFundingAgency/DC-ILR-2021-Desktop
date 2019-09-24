@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ESFA.DC.ILR.Desktop.Service.Stub
+﻿namespace ESFA.DC.ILR.Desktop.Service.Stub
 {
     public interface IReportFilterPropertyDefinition
     {

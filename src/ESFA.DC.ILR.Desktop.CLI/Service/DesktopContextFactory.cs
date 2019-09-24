@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using ESFA.DC.DateTimeProvider.Interface;
 using ESFA.DC.ILR.Desktop.CLI.Interface;
 using ESFA.DC.ILR.Desktop.Interface;
@@ -26,7 +27,8 @@ namespace ESFA.DC.ILR.Desktop.CLI.Service
                 OverrideConfig(commandLineArguments.OutputDirectory, _desktopServiceSettings.OutputDirectory),
                 commandLineArguments.FilePath,
                 ReferenceDataConstants.FilePath,
-                OverrideConfig(commandLineArguments.ConnectionString, _desktopServiceSettings.IlrDatabaseConnectionString));
+                OverrideConfig(commandLineArguments.ConnectionString, _desktopServiceSettings.IlrDatabaseConnectionString),
+                Enumerable.Empty<IReportFilterQuery>());
         }
 
         public string OverrideConfig(string commandLine, string config)

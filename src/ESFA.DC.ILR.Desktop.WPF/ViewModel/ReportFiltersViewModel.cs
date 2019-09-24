@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using ESFA.DC.ILR.Desktop.Interface;
+using ESFA.DC.ILR.Desktop.Service.Context;
+using ESFA.DC.ILR.Desktop.Service.Interface;
+using ESFA.DC.ILR.Desktop.Service.Stub;
 using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
 using ESFA.DC.ILR.Desktop.WPF.ViewModel.ReportFilters;
 using GalaSoft.MvvmLight;
@@ -10,57 +15,14 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 {
     public class ReportFiltersViewModel : ViewModelBase
     {
+        private readonly IReportFilterService _reportFilterService;
         private ReportFiltersDefinitionViewModel _selectedReport;
-        
-        public ReportFiltersViewModel()
+
+        public ReportFiltersViewModel(IReportFilterService reportFilterService)
         {
-            Reports = new ObservableCollection<ReportFiltersDefinitionViewModel>()
-            {
-                new ReportFiltersDefinitionViewModel()
-                {
-                    ReportName = "Report One",
-                    Properties = new ObservableCollection<ReportFiltersPropertyDefinitionViewModel>()
-                    {
-                        new ReportFiltersPropertyDefinitionViewModel()
-                        {
-                            Name = "Property One",
-                            Type = typeof(string).FullName,
-                        },
-                        new ReportFiltersPropertyDefinitionViewModel()
-                        {
-                            Name = "Property Two",
-                            Type = typeof(DateTime?).FullName,
-                        },
-                    },
-                },
-                new ReportFiltersDefinitionViewModel()
-                {
-                    ReportName = "Report Two",
-                    Properties = new ObservableCollection<ReportFiltersPropertyDefinitionViewModel>()
-                    {
-                        new ReportFiltersPropertyDefinitionViewModel()
-                        {
-                            Name = "Property One",
-                            Type = typeof(DateTime?).FullName,
-                        },
-                        new ReportFiltersPropertyDefinitionViewModel()
-                        {
-                            Name = "Property Two",
-                            Type = typeof(string).FullName,
-                        },
-                        new ReportFiltersPropertyDefinitionViewModel()
-                        {
-                            Name = "Property Three",
-                            Type = typeof(string).FullName,
-                        },
-                        new ReportFiltersPropertyDefinitionViewModel()
-                        {
-                            Name = "Property Four",
-                            Type = typeof(DateTime?).FullName,
-                        },
-                    },
-                },
-            };
+            _reportFilterService = reportFilterService;
+
+            Reports = BuildReportFilterDefinitions(_reportFilterService.GetReportFilterDefinitions());
 
             SelectedReport = Reports.FirstOrDefault();
 
@@ -83,14 +45,45 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         public RelayCommand<ICloseable> CancelCommand { get; set; }
 
+        public ObservableCollection<ReportFiltersDefinitionViewModel> BuildReportFilterDefinitions(IEnumerable<IReportFilterDefinition> reportFilterDefinitions)
+        {
+            var definitions = reportFilterDefinitions?.Select(d => new ReportFiltersDefinitionViewModel()
+            {
+                ReportName = d.ReportName,
+                Properties = new ObservableCollection<ReportFiltersPropertyDefinitionViewModel>(d.Properties.Select(
+                    pd => new ReportFiltersPropertyDefinitionViewModel()
+                    {
+                        Name = pd.Name,
+                        Type = pd.Type,
+                    })),
+            }) ?? Enumerable.Empty<ReportFiltersDefinitionViewModel>();
+
+            return new ObservableCollection<ReportFiltersDefinitionViewModel>(definitions);
+        }
+
         private void SaveFilters(ICloseable window)
         {
+            _reportFilterService.SaveReportFilterQueries(BuildQueries());
+
             window?.Close();
         }
 
         private void CancelFilters(ICloseable window)
         {
             window?.Close();
+        }
+
+        private IEnumerable<IReportFilterQuery> BuildQueries()
+        {
+            return Reports.Select(r => new ReportFilterQuery()
+            {
+                ReportName = r.ReportName,
+                FilterProperties = r.Properties.Select(p => new ReportFilterQueryProperty()
+                {
+                    Name = p.Name,
+                    Value = p.Value,
+                }),
+            });
         }
     }
 }
