@@ -84,6 +84,7 @@ steps:
     platform: '$(BuildPlatform)'
     configuration: '$(BuildConfiguration)'
     clean: true
+    maximumCpuCount: true
 
 #********************************************************************************
 # Copy Files into Aftifact Folder before test.
@@ -100,25 +101,24 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy Nuget Interface Packages Files - Artifact NugetInterface Directory'
   inputs:
-    SourceFolder: '$(build.sourcesdirectory)\src'
+    SourceFolder: '$(build.sourcesdirectory)/src'
     Contents: |
-     **\*$(BuildConfiguration)*\*Interface.nupkg
-     !**\packages\**
-     !**\bin\x64\**
-    TargetFolder: '$(build.artifactstagingdirectory)\Nuget\Interface'
-    CleanTargetFolder: true
+     **/*$(BuildConfiguration)*/*Interface.nupkg
+     !**/packages/**
+     !**/bin/x64/**
+    TargetFolder: '$(build.artifactstagingdirectory)/Nuget/Interface'
     flattenFolders: true
 
 - task: CopyFiles@2
   displayName: 'Copy NugetPackages Files - Artifact NugetPackages Directory'
   inputs:
-    SourceFolder: '$(build.sourcesdirectory)\src'
+    SourceFolder: '$(build.sourcesdirectory)/src'
     Contents: |
-     **\*$(BuildConfiguration)*\*.nupkg
-     !**\*Interface.nupkg
-     !**\packages\**
-     !**\bin\x64\**
-    TargetFolder: '$(build.artifactstagingdirectory)\Nuget\Packages'
+     **/*$(BuildConfiguration)*/*.nupkg
+     !**/*Interface*
+     !**/packages/**
+     !**/bin/x64/**
+    TargetFolder: '$(build.artifactstagingdirectory)/Nuget/Packages'
     flattenFolders: true
 
 - task: CopyFiles@2
