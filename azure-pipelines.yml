@@ -90,6 +90,15 @@ steps:
 #********************************************************************************
 
 - task: CopyFiles@2
+  displayName: 'Copy Scripts File to Scripts Folder'
+  inputs:
+    SourceFolder: 'src'  
+    Contents: '**\GenerateZipFilename.ps1'
+    TargetFolder: '$(build.ArtifactStagingDirectory)\Scripts'
+    flattenFolders: true
+    CleanTargetFolder: true
+
+- task: CopyFiles@2
   displayName: 'Copy Nuget Interface Packages Files - Artifact NugetInterface Directory'
   inputs:
     SourceFolder: '$(build.sourcesdirectory)\src'
@@ -175,6 +184,13 @@ steps:
     SearchPattern: '**\bin\**\*.pdb'
     PublishSymbols: false
   continueOnError: true
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: Scripts'
+  enabled: true
+  inputs:
+    ArtifactName: Scripts
+    PathtoPublish: '$(build.artifactstagingdirectory)\Scripts'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: NugetPackages'
