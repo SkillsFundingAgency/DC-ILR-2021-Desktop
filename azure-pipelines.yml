@@ -92,8 +92,7 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy Scripts File to Scripts Folder'
   inputs:
-    SourceFolder: 'src'  
-    Contents: '**\GenerateZipFilename.ps1'
+    Contents: 'GenerateZipFilename.ps1'
     TargetFolder: '$(build.ArtifactStagingDirectory)\Scripts'
     flattenFolders: true
     CleanTargetFolder: true
