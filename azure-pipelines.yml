@@ -115,7 +115,7 @@ steps:
     SourceFolder: '$(build.sourcesdirectory)\src'
     Contents: |
      **\*$(BuildConfiguration)*\*.nupkg
-     !**\*$(BuildConfiguration)*\*Interface.nupkg
+     !**\*Interface.nupkg
      !**\packages\**
      !**\bin\x64\**
     TargetFolder: '$(build.artifactstagingdirectory)\Nuget\Packages'
