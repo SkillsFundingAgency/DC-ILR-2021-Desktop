@@ -73,6 +73,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             ProcessFileCommand = new AsyncCommand(ProcessFile, () => CanSubmit);
             SettingsNavigationCommand = new RelayCommand(SettingsNavigate);
             AboutNavigationCommand = new RelayCommand(AboutNavigate);
+            ReportFiltersNavigationCommand = new RelayCommand(ReportFiltersNavigate);
             ReportsFolderCommand = new RelayCommand(() => ProcessStart(_reportsLocation));
             CancelAndReImportCommand = new RelayCommand(CancelAndReImport, () => !_cancellationTokenSource?.IsCancellationRequested ?? false);
         }
@@ -158,6 +159,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         public RelayCommand AboutNavigationCommand { get; set; }
 
+        public RelayCommand ReportFiltersNavigationCommand { get; set; }
+
         public RelayCommand ReportsFolderCommand { get; set; }
 
         public RelayCommand CancelAndReImportCommand { get; set; }
@@ -235,19 +238,12 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             }
         }
 
-        private void ProcessStart(string url)
-        {
-            _windowsProcessService.ProcessStart(url);
-        }
+        private void ProcessStart(string url) => _windowsProcessService.ProcessStart(url);
 
-        private void SettingsNavigate()
-        {
-            _windowService.ShowSettingsWindow();
-        }
+        private void SettingsNavigate() => _windowService.ShowSettingsWindow();
 
-        private void AboutNavigate()
-        {
-            _windowService.ShowAboutWindow();
-        }
+        private void AboutNavigate() => _windowService.ShowAboutWindow();
+
+        private void ReportFiltersNavigate() => _windowService.ShowReportFiltersWindow();
     }
 }

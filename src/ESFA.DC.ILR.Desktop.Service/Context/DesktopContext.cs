@@ -30,7 +30,8 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
             string outputDirectory,
             string filePath,
             string referenceDataFile,
-            string connectionString)
+            string connectionString,
+            IEnumerable<IDesktopContextReportFilterQuery> reportFilterQueries)
         {
             DateTimeUtc = dateTime;
             OutputDirectory = outputDirectory;
@@ -66,6 +67,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
                 [ILRContextKeys.FundingFm70Output] = "FundingFm70Output.json",
                 [ILRContextKeys.FundingFm81Output] = "FundingFm81Output.json",
             };
+            ReportFilterQueries = reportFilterQueries;
         }
 
         public DateTime DateTimeUtc { get; set; }
@@ -73,5 +75,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
         public string OutputDirectory { get; set; }
 
         public IDictionary<string, object> KeyValuePairs { get; set; }
+
+        public IEnumerable<IDesktopContextReportFilterQuery> ReportFilterQueries { get; set; }
     }
 }

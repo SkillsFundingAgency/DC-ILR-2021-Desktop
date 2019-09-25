@@ -26,5 +26,15 @@ namespace ESFA.DC.ILR.Desktop.WPF.Service
 
             aboutWindow.ShowDialog();
         }
+
+        public void ShowReportFiltersWindow()
+        {
+            var reportFiltersWindow = new ReportFiltersWindow()
+            {
+                Owner = Application.Current.MainWindow,
+            };
+
+            reportFiltersWindow.ShowDialog();
+        }
     }
 }

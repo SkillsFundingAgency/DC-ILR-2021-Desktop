@@ -82,15 +82,23 @@
     <Compile Include="Service\Interface\IDialogInteractionService.cs" />
     <Compile Include="Service\Interface\IReferenceDataVersionInformationService.cs" />
     <Compile Include="Service\Interface\IReleaseVersionInformationService.cs" />
+    <Compile Include="Service\Interface\IReportFilterService.cs" />
     <Compile Include="Service\Interface\IVersionInformationService.cs" />
     <Compile Include="Service\Interface\IWindowService.cs" />
     <Compile Include="Service\Interface\IWindowsProcessService.cs" />
     <Compile Include="Service\MessengerService.cs" />
     <Compile Include="Service\ReferenceDataVersionInformationService.cs" />
     <Compile Include="Service\ReleaseVersionInformationService.cs" />
+    <Compile Include="Service\ReportFilterService.cs" />
     <Compile Include="Service\WindowService.cs" />
     <Compile Include="Service\WindowsProcessService.cs" />
     <Compile Include="ViewModel\AboutViewModel.cs" />
+    <Compile Include="ViewModel\ReportFiltersViewModel.cs" />
+    <Compile Include="ViewModel\ReportFilters\ReportFiltersDefinitionViewModel.cs" />
+    <Compile Include="ViewModel\ReportFilters\ReportFiltersPropertyDefinitionViewModel.cs" />
+    <Compile Include="Views\ReportFiltersWindow.xaml.cs">
+      <DependentUpon>ReportFiltersWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
@@ -112,6 +120,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\ReportFiltersWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -211,7 +223,7 @@
       <Version>0.1.7-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.1920.ReportService.Desktop">
-      <Version>0.0.602</Version>
+      <Version>0.0.627</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.1920.ValidationService.Desktop">
       <Version>0.0.977</Version>

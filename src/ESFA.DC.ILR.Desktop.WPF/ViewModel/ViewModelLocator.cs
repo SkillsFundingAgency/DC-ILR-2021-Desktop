@@ -28,6 +28,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         public SettingsViewModel Settings => ServiceLocator.Current.GetInstance<SettingsViewModel>();
 
+        public ReportFiltersViewModel ReportFilters => ServiceLocator.Current.GetInstance<ReportFiltersViewModel>();
+
         public static void Cleanup()
         {
         }

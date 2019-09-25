@@ -16,6 +16,7 @@
         </Grid.RowDefinitions>
 
         <Menu HorizontalAlignment="Stretch">
+            <MenuItem Header="Report Filters" Command="{Binding ReportFiltersNavigationCommand}" Visibility="Collapsed"/>
             <MenuItem Header="Settings" Command="{Binding SettingsNavigationCommand}"/>
             <MenuItem Header="About" Command="{Binding AboutNavigationCommand}"/>
         </Menu>
