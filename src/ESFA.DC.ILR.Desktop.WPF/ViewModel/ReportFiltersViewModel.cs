@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.Desktop.Service.Context;
-using ESFA.DC.ILR.Desktop.Service.Interface;
-using ESFA.DC.ILR.Desktop.Service.Stub;
 using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
 using ESFA.DC.ILR.Desktop.WPF.ViewModel.ReportFilters;
+using ESFA.DC.ILR.ReportService.Service.Interface;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using IDesktopContextReportFilterQuery = ESFA.DC.ILR.Desktop.Interface.IDesktopContextReportFilterQuery;
 
 namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 {
@@ -73,12 +72,12 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             window?.Close();
         }
 
-        private IEnumerable<IReportFilterQuery> BuildQueries()
+        private IEnumerable<IDesktopContextReportFilterQuery> BuildQueries()
         {
-            return Reports.Select(r => new ReportFilterQuery()
+            return Reports.Select(r => new DesktopContextReportFilterQuery()
             {
                 ReportName = r.ReportName,
-                FilterProperties = r.Properties.Select(p => new ReportFilterQueryProperty()
+                FilterProperties = r.Properties.Select(p => new DesktopContextReportFilterQueryProperty()
                 {
                     Name = p.Name,
                     Value = p.Value,

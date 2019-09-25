@@ -1,100 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Autofac;
 using ESFA.DC.ILR.Desktop.Interface;
-using ESFA.DC.ILR.Desktop.Service.Interface;
-using ESFA.DC.ILR.Desktop.Service.Stub;
+using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
+using ESFA.DC.ILR.ReportService.Service.Interface;
 
 namespace ESFA.DC.ILR.Desktop.WPF.Service
 {
     public class ReportFilterService : IReportFilterService
     {
-        private IEnumerable<IReportFilterQuery> _reportFilterQueries = new List<IReportFilterQuery>();
+        private readonly ILifetimeScope _lifetimeScope;
+
+        private IEnumerable<IDesktopContextReportFilterQuery> _reportFilterQueries = new List<IDesktopContextReportFilterQuery>();
+
+        public ReportFilterService(ILifetimeScope lifetimeScope)
+        {
+            _lifetimeScope = lifetimeScope;
+        }
 
         public IEnumerable<IReportFilterDefinition> GetReportFilterDefinitions()
         {
-            return new List<IReportFilterDefinition>()
+            using (var childLifetimeScope = _lifetimeScope.BeginLifetimeScope())
             {
-                new ReportFilterDefinition()
-                {
-                    ReportName = "Report One",
-                    Properties = new List<IReportFilterPropertyDefinition>()
-                    {
-                        new ReportFilterPropertyDefinition()
-                        {
-                            Name = "Property One",
-                            Type = typeof(DateTime?).FullName,
-                        },
-                        new ReportFilterPropertyDefinition()
-                        {
-                            Name = "Property Two",
-                            Type = typeof(string).FullName,
-                        },
-                    },
-                },
-                new ReportFilterDefinition()
-                {
-                    ReportName = "Report Two",
-                    Properties = new List<IReportFilterPropertyDefinition>()
-                    {
-                        new ReportFilterPropertyDefinition()
-                        {
-                            Name = "Property One",
-                            Type = typeof(DateTime?).FullName,
-                        },
-                        new ReportFilterPropertyDefinition()
-                        {
-                            Name = "Property Two",
-                            Type = typeof(string).FullName,
-                        },
-                        new ReportFilterPropertyDefinition()
-                        {
-                            Name = "Property Three",
-                            Type = typeof(string).FullName,
-                        },
-                        new ReportFilterPropertyDefinition()
-                        {
-                            Name = "Property Four",
-                            Type = typeof(string).FullName,
-                        },
-                    },
-                },
-                new ReportFilterDefinition()
-                {
-                    ReportName = "Report Three",
-                    Properties = new List<IReportFilterPropertyDefinition>()
-                    {
-                        new ReportFilterPropertyDefinition()
-                        {
-                            Name = "Property One",
-                            Type = typeof(DateTime?).FullName,
-                        },
-                        new ReportFilterPropertyDefinition()
-                        {
-                            Name = "Property Two",
-                            Type = typeof(string).FullName,
-                        },
-                        new ReportFilterPropertyDefinition()
-                        {
-                            Name = "Property Three",
-                            Type = typeof(DateTime?).FullName,
-                        },
-                        new ReportFilterPropertyDefinition()
-                        {
-                            Name = "Property Four",
-                            Type = typeof(DateTime?).FullName,
-                        },
-                        new ReportFilterPropertyDefinition()
-                        {
-                            Name = "Property Five",
-                            Type = typeof(string).FullName,
-                        },
-                    },
-                },
-            };
+                var filteredReports = childLifetimeScope.Resolve<IEnumerable<IFilteredReport>>();
+
+                return filteredReports?.Select(r => r.Filter) ?? Enumerable.Empty<IReportFilterDefinition>();
+            }
         }
 
-        public void SaveReportFilterQueries(IEnumerable<IReportFilterQuery> reportFilterQueries) => _reportFilterQueries = reportFilterQueries;
+        public void SaveReportFilterQueries(IEnumerable<IDesktopContextReportFilterQuery> reportFilterQueries) => _reportFilterQueries = reportFilterQueries;
 
-        public IEnumerable<IReportFilterQuery> GetReportFilterQueries() => _reportFilterQueries;
+        public IEnumerable<IDesktopContextReportFilterQuery> GetReportFilterQueries() => _reportFilterQueries;
     }
 }

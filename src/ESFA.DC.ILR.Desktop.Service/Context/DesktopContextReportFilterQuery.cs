@@ -3,10 +3,10 @@ using ESFA.DC.ILR.Desktop.Interface;
 
 namespace ESFA.DC.ILR.Desktop.Service.Context
 {
-    public class ReportFilterQuery : IReportFilterQuery
+    public class DesktopContextReportFilterQuery : IDesktopContextReportFilterQuery
     {
         public string ReportName { get; set; }
 
-        public IEnumerable<IReportFilterQueryProperty> FilterProperties { get; set; }
+        public IEnumerable<IDesktopContextReportFilterPropertyQuery> FilterProperties { get; set; }
     }
 }

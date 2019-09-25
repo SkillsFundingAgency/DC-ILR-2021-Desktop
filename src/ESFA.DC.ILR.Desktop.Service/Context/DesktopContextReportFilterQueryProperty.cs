@@ -2,7 +2,7 @@
 
 namespace ESFA.DC.ILR.Desktop.Service.Context
 {
-    public class ReportFilterQueryProperty : IReportFilterQueryProperty
+    public class DesktopContextReportFilterQueryProperty : IDesktopContextReportFilterPropertyQuery
     {
         public string Name { get; set; }
 

@@ -28,7 +28,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
             string filePath,
             string referenceDataFile,
             string connectionString,
-            IEnumerable<IReportFilterQuery> reportFilterQueries)
+            IEnumerable<IDesktopContextReportFilterQuery> reportFilterQueries)
         {
             DateTimeUtc = dateTime;
             OutputDirectory = outputDirectory;
@@ -73,6 +73,6 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
 
         public IDictionary<string, object> KeyValuePairs { get; set; }
 
-        public IEnumerable<IReportFilterQuery> ReportFilterQueries { get; set; }
+        public IEnumerable<IDesktopContextReportFilterQuery> ReportFilterQueries { get; set; }
     }
 }

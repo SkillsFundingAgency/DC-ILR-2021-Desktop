@@ -190,7 +190,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         [Fact]
         public void ReportFilterQueries()
         {
-            var reportFilterQueries = new List<IReportFilterQuery>();
+            var reportFilterQueries = new List<IDesktopContextReportFilterQuery>();
 
             NewContext(reportFilterQueries: reportFilterQueries).Should().BeSameAs(reportFilterQueries);
         }
@@ -201,7 +201,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
             string filePath = null,
             string referenceDataFilePath = null,
             string connectionString = null,
-            IEnumerable<IReportFilterQuery> reportFilterQueries = null)
+            IEnumerable<IDesktopContextReportFilterQuery> reportFilterQueries = null)
         {
             return new DesktopContext(
                 dateTime.HasValue ? dateTime.Value : new DateTime(2018, 1, 1),

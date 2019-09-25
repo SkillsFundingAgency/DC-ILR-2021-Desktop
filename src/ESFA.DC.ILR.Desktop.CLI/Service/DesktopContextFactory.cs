@@ -28,7 +28,7 @@ namespace ESFA.DC.ILR.Desktop.CLI.Service
                 commandLineArguments.FilePath,
                 ReferenceDataConstants.FilePath,
                 OverrideConfig(commandLineArguments.ConnectionString, _desktopServiceSettings.IlrDatabaseConnectionString),
-                Enumerable.Empty<IReportFilterQuery>());
+                Enumerable.Empty<IDesktopContextReportFilterQuery>());
         }
 
         public string OverrideConfig(string commandLine, string config)

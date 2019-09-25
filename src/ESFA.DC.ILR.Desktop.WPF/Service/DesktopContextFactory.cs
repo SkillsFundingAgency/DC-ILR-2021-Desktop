@@ -3,6 +3,7 @@ using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.Desktop.Service.Context;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Service.ReferenceData;
+using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
 using IDesktopContextFactory = ESFA.DC.ILR.Desktop.WPF.Service.Interface.IDesktopContextFactory;
 
 namespace ESFA.DC.ILR.Desktop.WPF.Service
