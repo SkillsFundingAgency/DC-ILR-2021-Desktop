@@ -103,7 +103,7 @@ steps:
   inputs:
     SourceFolder: '$(build.sourcesdirectory)/src'
     Contents: |
-     **/*$(BuildConfiguration)*/*Interface.nupkg
+     **/*$(BuildConfiguration)*/*Interface*.nupkg
      !**/packages/**
      !**/bin/x64/**
     TargetFolder: '$(build.artifactstagingdirectory)/Nuget/Interface'
