@@ -192,7 +192,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         {
             var reportFilterQueries = new List<IDesktopContextReportFilterQuery>();
 
-            NewContext(reportFilterQueries: reportFilterQueries).Should().BeSameAs(reportFilterQueries);
+            NewContext(reportFilterQueries: reportFilterQueries).ReportFilterQueries.Should().BeSameAs(reportFilterQueries);
         }
 
         private DesktopContext NewContext(
