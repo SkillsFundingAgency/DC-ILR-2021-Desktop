@@ -38,6 +38,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private readonly IWindowsProcessService _windowsProcessService;
         private readonly IReleaseVersionInformationService _versionInformationService;
         private readonly ILogger _logger;
+        private readonly IFeatureSwitchService _featureSwitchService;
 
         private CancellationTokenSource _cancellationTokenSource;
         private string _fileName = _filenamePlaceholder;
@@ -56,7 +57,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             IDialogInteractionService dialogInteractionService,
             IWindowsProcessService windowsProcessService,
             IReleaseVersionInformationService versionInformationService,
-            ILogger logger)
+            ILogger logger,
+            IFeatureSwitchService featureSwitchService)
         {
             _ilrDesktopService = ilrDesktopService;
             _desktopContextFactory = desktopContextFactory;
@@ -66,6 +68,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             _windowsProcessService = windowsProcessService;
             _versionInformationService = versionInformationService;
             _logger = logger;
+            _featureSwitchService = featureSwitchService;
 
             _messengerService.Register<TaskProgressMessage>(this, HandleTaskProgressMessage);
 
@@ -150,6 +153,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         public string ReleaseVersionNumber => _versionInformationService.VersionNumber;
 
         public string ReleaseDate => _versionInformationService.Date;
+
+        public bool ReportFiltersFeatureSwitch => _featureSwitchService.ReportFilters;
 
         public RelayCommand ChooseFileCommand { get; set; }
 
