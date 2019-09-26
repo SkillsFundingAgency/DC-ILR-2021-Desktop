@@ -31,7 +31,6 @@
                 <Label FontSize="14" Content="{Binding ReleaseVersionNumber}" ContentStringFormat="Version:  {0}" />
                 <Label FontSize="14" Content="{Binding ReleaseDate}"          ContentStringFormat="Released: {0}"/>
             </StackPanel>
-
         </Grid>
 
         <Grid Margin="15" Grid.Row="2">
