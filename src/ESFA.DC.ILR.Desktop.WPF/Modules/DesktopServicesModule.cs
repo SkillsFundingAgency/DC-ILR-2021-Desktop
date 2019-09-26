@@ -28,6 +28,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
                 settings.LoadAsync(CancellationToken.None).Wait();
                 return settings;
             }).As<IDesktopServiceSettings>().SingleInstance();
+
+            containerBuilder.RegisterType<FeatureSwitchService>().As<IFeatureSwitchService>();
         }
     }
 }
