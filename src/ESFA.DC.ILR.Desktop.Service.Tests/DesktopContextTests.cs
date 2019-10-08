@@ -204,7 +204,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
             DateTime? dateTime = null,
             string outputDirectory = null,
             string filePath = null,
-            string referenceDataFileName = null,
+            string referenceDataFileName = "ReferenceData",
             string connectionString = null,
             IEnumerable<IDesktopContextReportFilterQuery> reportFilterQueries = null)
         {
