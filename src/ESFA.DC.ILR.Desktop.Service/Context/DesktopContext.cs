@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using ESFA.DC.ILR.Constants;
 using ESFA.DC.ILR.Desktop.Interface;
 
@@ -53,7 +55,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
                 [ILRContextKeys.ReportOutputFileNames] = string.Empty,
                 [ILRContextKeys.ReportTasks] = Reports,
 
-                [ILRContextKeys.ReferenceDataFilename] = referenceDataFile,
+                [ILRContextKeys.ReferenceDataFilename] = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), referenceDataFile),
 
                 [ILRContextKeys.FundingTaskALB] = "ALB",
                 [ILRContextKeys.FundingTaskFM25] = "FM25",
