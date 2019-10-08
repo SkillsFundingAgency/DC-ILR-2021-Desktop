@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.Desktop.Service.Context;
 using FluentAssertions;
@@ -178,7 +180,10 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         [Fact]
         public void ReferenceDataFilename()
         {
-            NewContext().KeyValuePairs["ReferenceDataFilename"].Should().Be(null);
+            var referenceDataFileName = "FISReferenceData.zip";
+            var referenceDataFilePath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\{referenceDataFileName}";
+
+            NewContext(referenceDataFileName: referenceDataFileName).KeyValuePairs["ReferenceDataFilename"].Should().Be(referenceDataFilePath);
         }
 
         [Fact]
@@ -199,7 +204,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
             DateTime? dateTime = null,
             string outputDirectory = null,
             string filePath = null,
-            string referenceDataFilePath = null,
+            string referenceDataFileName = null,
             string connectionString = null,
             IEnumerable<IDesktopContextReportFilterQuery> reportFilterQueries = null)
         {
@@ -207,7 +212,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
                 dateTime.HasValue ? dateTime.Value : new DateTime(2018, 1, 1),
                 outputDirectory,
                 filePath,
-                referenceDataFilePath,
+                referenceDataFileName,
                 connectionString,
                 reportFilterQueries);
         }
