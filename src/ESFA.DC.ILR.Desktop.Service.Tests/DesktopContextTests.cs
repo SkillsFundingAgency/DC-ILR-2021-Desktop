@@ -181,7 +181,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         public void ReferenceDataFilename()
         {
             var referenceDataFileName = "FISReferenceData.zip";
-            var referenceDataFilePath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\{referenceDataFileName}";
+            var referenceDataFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), referenceDataFileName);
 
             NewContext(referenceDataFileName: referenceDataFileName).KeyValuePairs["ReferenceDataFilename"].Should().Be(referenceDataFilePath);
         }

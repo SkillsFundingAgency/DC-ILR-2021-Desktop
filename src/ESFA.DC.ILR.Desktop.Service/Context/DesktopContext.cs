@@ -55,7 +55,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
                 [ILRContextKeys.ReportOutputFileNames] = string.Empty,
                 [ILRContextKeys.ReportTasks] = Reports,
 
-                [ILRContextKeys.ReferenceDataFilename] = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\\{referenceDataFile}",
+                [ILRContextKeys.ReferenceDataFilename] = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), referenceDataFile),
 
                 [ILRContextKeys.FundingTaskALB] = "ALB",
                 [ILRContextKeys.FundingTaskFM25] = "FM25",
