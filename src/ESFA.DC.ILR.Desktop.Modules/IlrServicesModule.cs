@@ -57,8 +57,6 @@ namespace ESFA.DC.ILR.Desktop.Modules
 
             containerBuilder.RegisterType<ContextMutatorExecutor>().As<IContextMutatorExecutor>();
             containerBuilder.RegisterType<SchemaErrorContextMutator>().Keyed<IContextMutator>(ContextMutatorKeys.SchemaError);
-
-            containerBuilder.RegisterType<AssemblyService>().As<IAssemblyService>();
         }
     }
 }
