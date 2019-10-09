@@ -4,6 +4,7 @@ using ESFA.DC.ILR.DataStore.Desktop;
 using ESFA.DC.ILR.DataStore.Desktop.Modules;
 using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.Desktop.Service;
+using ESFA.DC.ILR.Desktop.Service.Helpers;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Service.Mutator;
 using ESFA.DC.ILR.Desktop.Service.Tasks;
@@ -56,6 +57,8 @@ namespace ESFA.DC.ILR.Desktop.Modules
 
             containerBuilder.RegisterType<ContextMutatorExecutor>().As<IContextMutatorExecutor>();
             containerBuilder.RegisterType<SchemaErrorContextMutator>().Keyed<IContextMutator>(ContextMutatorKeys.SchemaError);
+
+            containerBuilder.RegisterType<AssemblyService>().As<IAssemblyService>();
         }
     }
 }
