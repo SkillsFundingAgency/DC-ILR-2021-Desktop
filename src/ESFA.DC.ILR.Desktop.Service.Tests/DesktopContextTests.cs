@@ -181,9 +181,10 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         public void ReferenceDataFilename()
         {
             var referenceDataFileName = "FISReferenceData.zip";
-            var referenceDataFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), referenceDataFileName);
+            var executingAssemblyPath = "ExecutingAssemblyPath";
+            var referenceDataFilePath = Path.Combine(executingAssemblyPath, referenceDataFileName);
 
-            NewContext(referenceDataFileName: referenceDataFileName).KeyValuePairs["ReferenceDataFilename"].Should().Be(referenceDataFilePath);
+            NewContext(executingAssemblyPath: executingAssemblyPath, referenceDataFileName: referenceDataFileName).KeyValuePairs["ReferenceDataFilename"].Should().Be(referenceDataFilePath);
         }
 
         [Fact]
@@ -204,6 +205,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
             DateTime? dateTime = null,
             string outputDirectory = null,
             string filePath = null,
+            string executingAssemblyPath = "ExecutingAssemblyPath",
             string referenceDataFileName = "ReferenceData",
             string connectionString = null,
             IEnumerable<IDesktopContextReportFilterQuery> reportFilterQueries = null)
@@ -212,6 +214,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
                 dateTime.HasValue ? dateTime.Value : new DateTime(2018, 1, 1),
                 outputDirectory,
                 filePath,
+                executingAssemblyPath,
                 referenceDataFileName,
                 connectionString,
                 reportFilterQueries);

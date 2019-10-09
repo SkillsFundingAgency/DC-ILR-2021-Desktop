@@ -32,6 +32,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
             DateTime dateTime,
             string outputDirectory,
             string filePath,
+            string executingAssemblyPath,
             string referenceDataFile,
             string connectionString,
             IEnumerable<IDesktopContextReportFilterQuery> reportFilterQueries)
@@ -55,7 +56,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
                 [ILRContextKeys.ReportOutputFileNames] = string.Empty,
                 [ILRContextKeys.ReportTasks] = Reports,
 
-                [ILRContextKeys.ReferenceDataFilename] = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), referenceDataFile),
+                [ILRContextKeys.ReferenceDataFilename] = Path.Combine(executingAssemblyPath, referenceDataFile),
 
                 [ILRContextKeys.FundingTaskALB] = "ALB",
                 [ILRContextKeys.FundingTaskFM25] = "FM25",

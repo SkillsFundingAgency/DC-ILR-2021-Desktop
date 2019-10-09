@@ -25,9 +25,9 @@ namespace ESFA.DC.ILR.Desktop.CLI.Tests
             NewFactory().OverrideConfig(commandLine, "Settings").Should().Be(commandLine);
         }
 
-        private DesktopContextFactory NewFactory(IDesktopServiceSettings desktopServiceSettings = null, IDateTimeProvider dateTimeProvider = null)
+        private DesktopContextFactory NewFactory(IDesktopServiceSettings desktopServiceSettings = null, IDateTimeProvider dateTimeProvider = null, IAssemblyService assemblyService = null)
         {
-            return new DesktopContextFactory(desktopServiceSettings, dateTimeProvider);
+            return new DesktopContextFactory(desktopServiceSettings, dateTimeProvider, assemblyService);
         }
     }
 }

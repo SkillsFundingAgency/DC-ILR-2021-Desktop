@@ -13,12 +13,14 @@ namespace ESFA.DC.ILR.Desktop.WPF.Service
         private readonly IDateTimeProvider _dateTimeProvider;
         private readonly IDesktopServiceSettings _desktopServiceSettings;
         private readonly IReportFilterService _reportFilterService;
+        private readonly IAssemblyService _assemblyService;
 
-        public DesktopContextFactory(IDateTimeProvider dateTimeProvider, IDesktopServiceSettings desktopServiceSettings, IReportFilterService reportFilterService)
+        public DesktopContextFactory(IDateTimeProvider dateTimeProvider, IDesktopServiceSettings desktopServiceSettings, IReportFilterService reportFilterService, IAssemblyService assemblyService)
         {
             _dateTimeProvider = dateTimeProvider;
             _desktopServiceSettings = desktopServiceSettings;
             _reportFilterService = reportFilterService;
+            _assemblyService = assemblyService;
         }
 
         public IDesktopContext Build(string filePath)
@@ -27,6 +29,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.Service
                 _dateTimeProvider.GetNowUtc(),
                 _desktopServiceSettings.OutputDirectory,
                 filePath,
+                _assemblyService.GetExecutingAssemblyPath(),
                 ReferenceDataConstants.FilePath,
                 _desktopServiceSettings.IlrDatabaseConnectionString,
                 _reportFilterService.GetReportFilterQueries());
