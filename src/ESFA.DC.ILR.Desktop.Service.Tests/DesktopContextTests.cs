@@ -201,6 +201,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
             string filePath = null,
             string referenceDataFilePath = null,
             string connectionString = null,
+            string releaseVersionInformationString = null,
             IEnumerable<IDesktopContextReportFilterQuery> reportFilterQueries = null)
         {
             return new DesktopContext(
@@ -209,6 +210,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
                 filePath,
                 referenceDataFilePath,
                 connectionString,
+                releaseVersionInformationString,
                 reportFilterQueries);
         }
     }

@@ -13,11 +13,13 @@ namespace ESFA.DC.ILR.Desktop.CLI.Service
     {
         private readonly IDesktopServiceSettings _desktopServiceSettings;
         private readonly IDateTimeProvider _dateTimeProvider;
+        private readonly IReleaseVersionInformationService _releaseVersionInformationService;
 
-        public DesktopContextFactory(IDesktopServiceSettings desktopServiceSettings, IDateTimeProvider dateTimeProvider)
+        public DesktopContextFactory(IDesktopServiceSettings desktopServiceSettings, IDateTimeProvider dateTimeProvider, IReleaseVersionInformationService releaseVersionInformationService)
         {
             _desktopServiceSettings = desktopServiceSettings;
             _dateTimeProvider = dateTimeProvider;
+            _releaseVersionInformationService = releaseVersionInformationService;
         }
 
         public IDesktopContext Build(ICommandLineArguments commandLineArguments)
@@ -28,6 +30,7 @@ namespace ESFA.DC.ILR.Desktop.CLI.Service
                 commandLineArguments.FilePath,
                 ReferenceDataConstants.FilePath,
                 OverrideConfig(commandLineArguments.ConnectionString, _desktopServiceSettings.IlrDatabaseConnectionString),
+                _releaseVersionInformationService.VersionNumber,
                 Enumerable.Empty<IDesktopContextReportFilterQuery>());
         }
 
