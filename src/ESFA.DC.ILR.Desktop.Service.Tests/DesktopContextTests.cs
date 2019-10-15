@@ -184,7 +184,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         [Fact]
         public void KeyValuePairsCount()
         {
-            NewContext().KeyValuePairs.Should().HaveCount(27);
+            NewContext().KeyValuePairs.Should().HaveCount(28);
         }
 
         [Fact]
