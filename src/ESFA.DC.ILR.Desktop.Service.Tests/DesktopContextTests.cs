@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.Desktop.Service.Context;
 using FluentAssertions;
@@ -178,13 +180,17 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         [Fact]
         public void ReferenceDataFilename()
         {
-            NewContext().KeyValuePairs["ReferenceDataFilename"].Should().Be(null);
+            var referenceDataFileName = "FISReferenceData.zip";
+            var executingAssemblyPath = "ExecutingAssemblyPath";
+            var referenceDataFilePath = Path.Combine(executingAssemblyPath, referenceDataFileName);
+
+            NewContext(executingAssemblyPath: executingAssemblyPath, referenceDataFileName: referenceDataFileName).KeyValuePairs["ReferenceDataFilename"].Should().Be(referenceDataFilePath);
         }
 
         [Fact]
         public void KeyValuePairsCount()
         {
-            NewContext().KeyValuePairs.Should().HaveCount(27);
+            NewContext().KeyValuePairs.Should().HaveCount(28);
         }
 
         [Fact]
@@ -199,16 +205,20 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
             DateTime? dateTime = null,
             string outputDirectory = null,
             string filePath = null,
-            string referenceDataFilePath = null,
+            string executingAssemblyPath = "ExecutingAssemblyPath",
+            string referenceDataFileName = "ReferenceData",
             string connectionString = null,
+            string releaseVersionInformationString = null,
             IEnumerable<IDesktopContextReportFilterQuery> reportFilterQueries = null)
         {
             return new DesktopContext(
                 dateTime.HasValue ? dateTime.Value : new DateTime(2018, 1, 1),
                 outputDirectory,
                 filePath,
-                referenceDataFilePath,
+                executingAssemblyPath,
+                referenceDataFileName,
                 connectionString,
+                releaseVersionInformationString,
                 reportFilterQueries);
         }
     }
