@@ -4,7 +4,6 @@ using ESFA.DC.ILR.DataStore.Desktop;
 using ESFA.DC.ILR.DataStore.Desktop.Modules;
 using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.Desktop.Service;
-using ESFA.DC.ILR.Desktop.Service.Helpers;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Service.Mutator;
 using ESFA.DC.ILR.Desktop.Service.Tasks;

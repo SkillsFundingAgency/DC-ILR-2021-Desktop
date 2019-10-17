@@ -2,7 +2,7 @@
 using System.Reflection;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 
-namespace ESFA.DC.ILR.Desktop.Service.Helpers
+namespace ESFA.DC.ILR.Desktop.Service
 {
     public class AssemblyService : IAssemblyService
     {

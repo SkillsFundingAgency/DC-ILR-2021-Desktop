@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using ESFA.DC.FileService;
 using ESFA.DC.FileService.Interface;
-using ESFA.DC.ILR.Desktop.Service.Helpers;
+using ESFA.DC.ILR.Desktop.Service;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.WPF.Config;
 using ESFA.DC.IO.FileSystem;
