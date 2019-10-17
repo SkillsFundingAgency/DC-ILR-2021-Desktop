@@ -14,11 +14,13 @@ namespace ESFA.DC.ILR.Desktop.CLI.Service
         private readonly IDesktopServiceSettings _desktopServiceSettings;
         private readonly IDateTimeProvider _dateTimeProvider;
         private readonly IReleaseVersionInformationService _releaseVersionInformationService;
+        private readonly IAssemblyService _assemblyService;
 
-        public DesktopContextFactory(IDesktopServiceSettings desktopServiceSettings, IDateTimeProvider dateTimeProvider, IReleaseVersionInformationService releaseVersionInformationService)
+        public DesktopContextFactory(IDesktopServiceSettings desktopServiceSettings, IDateTimeProvider dateTimeProvider, IReleaseVersionInformationService releaseVersionInformationService, IAssemblyService assemblyService)
         {
             _desktopServiceSettings = desktopServiceSettings;
             _dateTimeProvider = dateTimeProvider;
+            _assemblyService = assemblyService;
             _releaseVersionInformationService = releaseVersionInformationService;
         }
 
@@ -28,6 +30,7 @@ namespace ESFA.DC.ILR.Desktop.CLI.Service
                 _dateTimeProvider.GetNowUtc(),
                 OverrideConfig(commandLineArguments.OutputDirectory, _desktopServiceSettings.OutputDirectory),
                 commandLineArguments.FilePath,
+                _assemblyService.GetExecutingAssemblyPath(),
                 ReferenceDataConstants.FilePath,
                 OverrideConfig(commandLineArguments.ConnectionString, _desktopServiceSettings.IlrDatabaseConnectionString),
                 _releaseVersionInformationService.VersionNumber,
