@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;

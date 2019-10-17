@@ -1,4 +1,5 @@
 ﻿using ESFA.DC.ILR.Desktop.CLI.Service;
+using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.DateTimeProvider.Interface;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using FluentAssertions;
@@ -25,9 +26,9 @@ namespace ESFA.DC.ILR.Desktop.CLI.Tests
             NewFactory().OverrideConfig(commandLine, "Settings").Should().Be(commandLine);
         }
 
-        private DesktopContextFactory NewFactory(IDesktopServiceSettings desktopServiceSettings = null, IDateTimeProvider dateTimeProvider = null)
+        private DesktopContextFactory NewFactory(IDesktopServiceSettings desktopServiceSettings = null, IDateTimeProvider dateTimeProvider = null, IReleaseVersionInformationService releaseVersionInformation = null)
         {
-            return new DesktopContextFactory(desktopServiceSettings, dateTimeProvider);
+            return new DesktopContextFactory(desktopServiceSettings, dateTimeProvider, releaseVersionInformation);
         }
     }
 }

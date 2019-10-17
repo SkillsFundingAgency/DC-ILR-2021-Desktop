@@ -13,12 +13,14 @@ namespace ESFA.DC.ILR.Desktop.WPF.Service
         private readonly IDateTimeProvider _dateTimeProvider;
         private readonly IDesktopServiceSettings _desktopServiceSettings;
         private readonly IReportFilterService _reportFilterService;
+        private readonly IReleaseVersionInformationService _releaseVersionInformationService;
 
-        public DesktopContextFactory(IDateTimeProvider dateTimeProvider, IDesktopServiceSettings desktopServiceSettings, IReportFilterService reportFilterService)
+        public DesktopContextFactory(IDateTimeProvider dateTimeProvider, IDesktopServiceSettings desktopServiceSettings, IReportFilterService reportFilterService, IReleaseVersionInformationService releaseVersionInformationService)
         {
             _dateTimeProvider = dateTimeProvider;
             _desktopServiceSettings = desktopServiceSettings;
             _reportFilterService = reportFilterService;
+            _releaseVersionInformationService = releaseVersionInformationService;
         }
 
         public IDesktopContext Build(string filePath)
@@ -29,6 +31,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.Service
                 filePath,
                 ReferenceDataConstants.FilePath,
                 _desktopServiceSettings.IlrDatabaseConnectionString,
+                _releaseVersionInformationService.VersionNumber,
                 _reportFilterService.GetReportFilterQueries());
         }
     }

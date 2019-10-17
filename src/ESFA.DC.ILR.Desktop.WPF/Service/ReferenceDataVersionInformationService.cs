@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.Desktop.WPF.Config;
-using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
 
 namespace ESFA.DC.ILR.Desktop.WPF.Service
 {

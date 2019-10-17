@@ -1,4 +1,4 @@
-﻿namespace ESFA.DC.ILR.Desktop.WPF.Service.Interface
+﻿namespace ESFA.DC.ILR.Desktop.Interface
 {
     public interface IVersionInformationService
     {
