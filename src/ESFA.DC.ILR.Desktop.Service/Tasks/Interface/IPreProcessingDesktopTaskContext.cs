@@ -11,5 +11,7 @@
         int Ukprn { set; }
 
         long FileSizeInBytes { set; }
+
+        string ReferenceDataFileName { get; set; }
     }
 }
