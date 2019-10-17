@@ -35,6 +35,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
             string executingAssemblyPath,
             string referenceDataFile,
             string connectionString,
+            string releaseVersion,
             IEnumerable<IDesktopContextReportFilterQuery> reportFilterQueries)
         {
             DateTimeUtc = dateTime;
@@ -70,6 +71,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
                 [ILRContextKeys.FundingFm36Output] = "FundingFm36Output.json",
                 [ILRContextKeys.FundingFm70Output] = "FundingFm70Output.json",
                 [ILRContextKeys.FundingFm81Output] = "FundingFm81Output.json",
+                [ILRContextKeys.ServiceReleaseVersion] = releaseVersion,
             };
             ReportFilterQueries = reportFilterQueries;
         }

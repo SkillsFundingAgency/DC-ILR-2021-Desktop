@@ -190,7 +190,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         [Fact]
         public void KeyValuePairsCount()
         {
-            NewContext().KeyValuePairs.Should().HaveCount(27);
+            NewContext().KeyValuePairs.Should().HaveCount(28);
         }
 
         [Fact]
@@ -208,6 +208,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
             string executingAssemblyPath = "ExecutingAssemblyPath",
             string referenceDataFileName = "ReferenceData",
             string connectionString = null,
+            string releaseVersionInformationString = null,
             IEnumerable<IDesktopContextReportFilterQuery> reportFilterQueries = null)
         {
             return new DesktopContext(
@@ -217,6 +218,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
                 executingAssemblyPath,
                 referenceDataFileName,
                 connectionString,
+                releaseVersionInformationString,
                 reportFilterQueries);
         }
     }
