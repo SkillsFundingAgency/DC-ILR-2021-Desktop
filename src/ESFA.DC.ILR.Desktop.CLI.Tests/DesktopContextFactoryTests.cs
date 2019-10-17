@@ -28,7 +28,7 @@ namespace ESFA.DC.ILR.Desktop.CLI.Tests
 
         private DesktopContextFactory NewFactory(IDesktopServiceSettings desktopServiceSettings = null, IDateTimeProvider dateTimeProvider = null, IAssemblyService assemblyService = null, IReleaseVersionInformationService releaseVersionInformation = null)
         {
-            return new DesktopContextFactory(desktopServiceSettings, dateTimeProvider, assemblyService, releaseVersionInformation);
+            return new DesktopContextFactory(desktopServiceSettings, dateTimeProvider, releaseVersionInformation, assemblyService);
         }
     }
 }
