@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using ESFA.DC.FileService;
 using ESFA.DC.FileService.Interface;
+using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.Desktop.Service;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.WPF.Config;
@@ -29,6 +30,7 @@ namespace ESFA.DC.ILR.Desktop.Modules
             containerBuilder.RegisterInstance(fileSystemKeyValuePersistenceServiceConfiguration).As<IFileSystemKeyValuePersistenceServiceConfig>();
 
             containerBuilder.RegisterType<AssemblyService>().As<IAssemblyService>();
+            containerBuilder.RegisterType<ReleaseVersionInformationService>().As<IReleaseVersionInformationService>();
         }
     }
 }

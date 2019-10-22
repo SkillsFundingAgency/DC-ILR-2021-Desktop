@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ESFA.DC.ILR.Desktop.Interface;
-using ESFA.DC.ILR.Desktop.WPF.Config;
+﻿using ESFA.DC.ILR.Desktop.Interface;
 
 namespace ESFA.DC.ILR.Desktop.WPF.Service
 {
     public class ReferenceDataVersionInformationService : IReferenceDataVersionInformationService
     {
-        public string Date => DesktopServiceConfiguration.Configuration.ReferenceDataDate;
+        private readonly IServiceConfiguration _serviceConfiguration;
+
+        public ReferenceDataVersionInformationService(IServiceConfiguration serviceConfiguration)
+        {
+            _serviceConfiguration = serviceConfiguration;
+        }
+
+        public string Date => _serviceConfiguration.Configuration.ReferenceDataDate;
 
         public string VersionNumber => "123.123.123";
     }
