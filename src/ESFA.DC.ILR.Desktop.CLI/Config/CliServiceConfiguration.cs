@@ -2,14 +2,14 @@
 using System.Configuration;
 using ESFA.DC.ILR.Desktop.Interface;
 
-namespace ESFA.DC.ILR.Desktop.WPF.Config
+namespace ESFA.DC.ILR.Desktop.CLI.Config
 {
-    public class DesktopServiceConfiguration : ConfigurationSection, IServiceConfiguration
+    public class CliServiceConfiguration : ConfigurationSection, IServiceConfiguration
     {
         private const string ReleaseDateKey = "ReleaseDate";
         private const string ReferenceDataDatekey = "ReferenceDataDate";
 
-        public IServiceConfiguration Configuration => ConfigurationManager.GetSection("DesktopServiceConfiguration") as IServiceConfiguration;
+        public IServiceConfiguration Configuration => ConfigurationManager.GetSection("CliServiceConfiguration") as IServiceConfiguration;
 
         [ConfigurationProperty(ReleaseDateKey, IsRequired = true)]
         public string ReleaseDate => FormattedDate(ReleaseDateKey);
