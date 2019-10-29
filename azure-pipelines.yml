@@ -26,7 +26,7 @@ variables:
 - name: VersionNumberMinor 
   value: '0'
 - name: VersionNumberBuild 
-  value: '6'
+  value: '7'
 - name: Parameters.solution 
   value: '**\*.sln'
 - name: Parameters.nugetFeedName 
