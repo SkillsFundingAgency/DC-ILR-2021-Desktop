@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Configuration;
+using ESFA.DC.ILR.Desktop.Interface;
 
 namespace ESFA.DC.ILR.Desktop.WPF.Config
 {
-    public class DesktopServiceConfiguration : ConfigurationSection
+    public class DesktopServiceConfiguration : ConfigurationSection, IServiceConfiguration
     {
         private const string ReleaseDateKey = "ReleaseDate";
         private const string ReferenceDataDatekey = "ReferenceDataDate";
 
-        public static DesktopServiceConfiguration Configuration => ConfigurationManager.GetSection("DesktopServiceConfiguration") as DesktopServiceConfiguration;
+        public IServiceConfiguration Configuration => ConfigurationManager.GetSection("DesktopServiceConfiguration") as IServiceConfiguration;
 
         [ConfigurationProperty(ReleaseDateKey, IsRequired = true)]
         public string ReleaseDate => FormattedDate(ReleaseDateKey);

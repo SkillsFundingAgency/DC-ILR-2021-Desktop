@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandLineArguments.cs" />
+    <Compile Include="Config\CliServiceConfiguration.cs" />
     <Compile Include="Service\DesktopServiceSettings.cs" />
     <Compile Include="Interface\ICliEntryPoint.cs" />
     <Compile Include="Interface\ICommandLineArguments.cs" />
@@ -56,7 +57,9 @@
     <Compile Include="Service\DesktopContextFactory.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Autofac">

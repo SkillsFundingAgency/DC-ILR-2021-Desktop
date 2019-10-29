@@ -1,8 +1,8 @@
 ﻿using System.Threading;
 using Autofac;
 using ESFA.DC.ILR.Desktop.Interface;
-using ESFA.DC.ILR.Desktop.Service;
 using ESFA.DC.ILR.Desktop.Service.Interface;
+using ESFA.DC.ILR.Desktop.WPF.Config;
 using ESFA.DC.ILR.Desktop.WPF.Service;
 using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
 using IDesktopContextFactory = ESFA.DC.ILR.Desktop.WPF.Service.Interface.IDesktopContextFactory;
@@ -17,9 +17,9 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
             containerBuilder.RegisterType<WindowService>().As<IWindowService>();
             containerBuilder.RegisterType<DialogInteractionService>().As<IDialogInteractionService>();
             containerBuilder.RegisterType<WindowsProcessService>().As<IWindowsProcessService>();
-            containerBuilder.RegisterType<ReleaseVersionInformationService>().As<IReleaseVersionInformationService>();
             containerBuilder.RegisterType<ReferenceDataVersionInformationService>().As<IReferenceDataVersionInformationService>();
             containerBuilder.RegisterType<ReportFilterService>().As<IReportFilterService>().SingleInstance();
+            containerBuilder.RegisterType<DesktopServiceConfiguration>().As<IServiceConfiguration>();
 
             containerBuilder.RegisterType<DesktopContextFactory>().As<IDesktopContextFactory>();
 
