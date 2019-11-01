@@ -15,6 +15,10 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private readonly IDesktopServiceSettings _desktopServiceSettings;
         private readonly IDialogInteractionService _dialogInteractionService;
 
+        private string _ilrDatabaseConnectionString;
+        private string _outputDirectory;
+        private bool _exportToSql;
+
         public SettingsViewModel(IDesktopServiceSettings desktopServiceSettings, IDialogInteractionService dialogInteractionService)
         {
             _dialogInteractionService = dialogInteractionService;
@@ -23,6 +27,10 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             ChooseOutputDirectoryCommand = new RelayCommand(ChooseOutputDirectory);
             SaveSettingsCommand = new AsyncCommand<ICloseable>(SaveSettings, CanSave);
             CloseWindowCommand = new RelayCommand<ICloseable>(CloseWindow);
+
+            _ilrDatabaseConnectionString = _desktopServiceSettings.IlrDatabaseConnectionString;
+            _outputDirectory = _desktopServiceSettings.OutputDirectory;
+            _exportToSql = _desktopServiceSettings.ExportToSql;
         }
 
         public RelayCommand ChooseOutputDirectoryCommand { get; set; }
@@ -33,33 +41,30 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         public string IlrDatabaseConnectionString
         {
-            get => _desktopServiceSettings.IlrDatabaseConnectionString;
+            get => _ilrDatabaseConnectionString;
             set
             {
-                _desktopServiceSettings.IlrDatabaseConnectionString = value;
-                RaisePropertyChanged();
+                Set(ref _ilrDatabaseConnectionString, value);
                 SaveSettingsCommand.RaiseCanExecuteChanged();
             }
         }
 
         public string OutputDirectory
         {
-            get => _desktopServiceSettings.OutputDirectory;
+            get => _outputDirectory;
             set
             {
-                _desktopServiceSettings.OutputDirectory = value;
-                RaisePropertyChanged();
+                Set(ref _outputDirectory, value);
                 SaveSettingsCommand.RaiseCanExecuteChanged();
             }
         }
 
         public bool ExportToSql
         {
-            get => _desktopServiceSettings.ExportToSql;
+            get => _exportToSql;
             set
             {
-                _desktopServiceSettings.ExportToSql = value;
-                RaisePropertyChanged();
+                Set(ref _exportToSql, value);
                 SaveSettingsCommand.RaiseCanExecuteChanged();
             }
         }
@@ -76,16 +81,20 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         private void ChooseOutputDirectory()
         {
-            var directory = _dialogInteractionService.GetFolderNameFromFolderBrowserDialog(_desktopServiceSettings.OutputDirectory, OutputDirectoryDescription);
+            var newDirectory = _dialogInteractionService.GetFolderNameFromFolderBrowserDialog(OutputDirectory, OutputDirectoryDescription);
 
-            if (!string.IsNullOrWhiteSpace(directory))
+            if (!string.IsNullOrWhiteSpace(newDirectory))
             {
-                OutputDirectory = directory;
+                OutputDirectory = newDirectory;
             }
         }
 
         private async Task SaveSettings(ICloseable window)
         {
+            _desktopServiceSettings.IlrDatabaseConnectionString = IlrDatabaseConnectionString;
+            _desktopServiceSettings.OutputDirectory = OutputDirectory;
+            _desktopServiceSettings.ExportToSql = ExportToSql;
+
             await _desktopServiceSettings.SaveAsync(CancellationToken.None);
 
             window?.Close();
@@ -93,6 +102,10 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         private void CloseWindow(ICloseable window)
         {
+            IlrDatabaseConnectionString = _desktopServiceSettings.IlrDatabaseConnectionString;
+            OutputDirectory = _desktopServiceSettings.OutputDirectory;
+            ExportToSql = _desktopServiceSettings.ExportToSql;
+
             window?.Close();
         }
     }

@@ -20,9 +20,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
 
             var desktopServiceSettingsMock = new Mock<IDesktopServiceSettings>();
             desktopServiceSettingsMock
-                .SetupSequence(s => s.OutputDirectory)
-                .Returns(currentDirectoryName)
-                .Returns(folderName);
+                .Setup(s => s.OutputDirectory)
+                .Returns(currentDirectoryName);
 
             var dialogInteractionServiceMock = new Mock<IDialogInteractionService>();
             dialogInteractionServiceMock.Setup(x => x.GetFolderNameFromFolderBrowserDialog(currentDirectoryName, outputDirectoryDescription)).Returns(folderName);
@@ -41,13 +40,17 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             var desktopServiceSettingsMock = new Mock<IDesktopServiceSettings>();
             var closeableMock = new Mock<ICloseable>();
 
-            desktopServiceSettingsMock.SetupGet(x => x.ExportToSql).Returns(true);
-            desktopServiceSettingsMock.SetupGet(s => s.IlrDatabaseConnectionString).Returns("not empty");
-            desktopServiceSettingsMock.SetupGet(s => s.OutputDirectory).Returns("not empty either");
-
             var vm = NewViewModel(desktopServiceSettingsMock.Object);
 
+            vm.OutputDirectory = "Expected";
+            vm.IlrDatabaseConnectionString = "DataBase Connection";
+            vm.ExportToSql = true;
+
             await vm.SaveSettingsCommand.ExecuteAsync(closeableMock.Object);
+
+            desktopServiceSettingsMock.VerifySet(s => s.OutputDirectory = "Expected");
+            desktopServiceSettingsMock.VerifySet(s => s.ExportToSql = true);
+            desktopServiceSettingsMock.VerifySet(s => s.IlrDatabaseConnectionString = "DataBase Connection");
 
             desktopServiceSettingsMock.Verify(ds => ds.SaveAsync(It.IsAny<CancellationToken>()));
             closeableMock.Verify(c => c.Close());
@@ -106,41 +109,33 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
         }
 
         [Fact]
-        public void CloseWindowCommandExecute()
+        public async Task CloseWindowCommandExecute()
         {
-            var windowCloseable = new Mock<ICloseable>();
+            var ilrDatabaseConnection = "ILRDatabaseConnection";
+            var exportToSql = true;
+            var outputDirectory = "OutputDirectory";
 
-            NewViewModel().CloseWindowCommand.Execute(windowCloseable.Object);
-
-            windowCloseable.Verify(c => c.Close(), Times.Once);
-        }
-
-        [Fact]
-        public void OutputDirectorySet()
-        {
-            var outputDirectory = "Output Directory";
+            var closeableMock = new Mock<ICloseable>();
 
             var desktopServiceSettings = new Mock<IDesktopServiceSettings>();
 
-            var viewModel = NewViewModel(desktopServiceSettings.Object);
+            desktopServiceSettings.SetupGet(s => s.IlrDatabaseConnectionString).Returns(ilrDatabaseConnection);
+            desktopServiceSettings.SetupGet(s => s.ExportToSql).Returns(exportToSql);
+            desktopServiceSettings.SetupGet(s => s.OutputDirectory).Returns(outputDirectory);
 
-            viewModel.OutputDirectory = outputDirectory;
+            var viewmodel = NewViewModel(desktopServiceSettings.Object);
 
-            desktopServiceSettings.VerifySet(s => s.OutputDirectory = outputDirectory);
-        }
+            viewmodel.ExportToSql = false;
+            viewmodel.IlrDatabaseConnectionString = "Junk";
+            viewmodel.OutputDirectory = "Junk";
 
-        [Fact]
-        public void IlrConnectionStringSet()
-        {
-            var ilrConnectionString = "Connection String";
+            viewmodel.CloseWindowCommand.Execute(closeableMock.Object);
 
-            var desktopServiceSettings = new Mock<IDesktopServiceSettings>();
+            closeableMock.Verify(c => c.Close());
 
-            var viewModel = NewViewModel(desktopServiceSettings.Object);
-
-            viewModel.IlrDatabaseConnectionString = ilrConnectionString;
-
-            desktopServiceSettings.VerifySet(s => s.IlrDatabaseConnectionString = ilrConnectionString);
+            viewmodel.OutputDirectory.Should().Be(outputDirectory);
+            viewmodel.ExportToSql.Should().Be(exportToSql);
+            viewmodel.IlrDatabaseConnectionString.Should().Be(ilrDatabaseConnection);
         }
 
         private SettingsViewModel NewViewModel(IDesktopServiceSettings desktopServiceSettings = null, IDialogInteractionService dialogInteractionService = null)
