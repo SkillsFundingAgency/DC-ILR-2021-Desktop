@@ -45,7 +45,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Button Width="100" Margin="2" Content="OK" Command="{Binding SaveSettingsCommand}" CommandParameter="{Binding ElementName=settingsWindow}" />
-            <Button Grid.Column="1" Margin="2" Width="100" Content="Cancel" Command="{Binding CloseWindowCommand, Mode=OneWay}" CommandParameter="{Binding ElementName=settingsWindow}"/>
+            <Button Grid.Column="1" Margin="2" Width="100" Content="Cancel" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=settingsWindow}"/>
         </Grid>
     </Grid>
 </Window>
