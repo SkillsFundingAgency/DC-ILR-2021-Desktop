@@ -12,6 +12,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tasks
 {
     public class PreProcessingDesktopTask : IDesktopTask
     {
+        private const string ExportPath = "Export";
         private readonly ILogger _logger;
         private readonly RetryPolicy _fileSystemRetryPolicy;
 
@@ -106,6 +107,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tasks
                 {
                     _logger.LogInfo($"Creating and Populating Sandbox Directory : {preProcessingDesktopTaskContext.Container}, {preProcessingDesktopTaskContext.FileName}, {preProcessingDesktopTaskContext.ReferenceDataFileName}");
                     Directory.CreateDirectory(preProcessingDesktopTaskContext.Container);
+                    Directory.CreateDirectory(Path.Combine(preProcessingDesktopTaskContext.Container, ExportPath));
 
                     // let the file system catch up, if this isn't long enough fall back to retry policy
                     Thread.Sleep(50);

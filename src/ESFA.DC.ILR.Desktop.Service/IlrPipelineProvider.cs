@@ -13,11 +13,13 @@ namespace ESFA.DC.ILR.Desktop.Service
         {
             new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.PreExecution),
             new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.DatabaseCreate),
+            new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.MdbCreate),
             new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.FileValidationService, IlrDesktopTaskKeys.ReportService, ContextMutatorKeys.SchemaError),
             new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ReferenceDataService),
             new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ValidationService),
             new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.FundingService),
             new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.DataStore),
+            new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.MdbExport),
             new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ReportService),
             new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.PostExecution),
         };
@@ -25,10 +27,12 @@ namespace ESFA.DC.ILR.Desktop.Service
         private readonly List<IIlrDesktopTaskDefinition> _noSqlPipeline = new List<IIlrDesktopTaskDefinition>()
         {
             new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.PreExecution),
+            new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.MdbCreate),
             new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.FileValidationService, IlrDesktopTaskKeys.ReportService, ContextMutatorKeys.SchemaError),
             new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ReferenceDataService),
             new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ValidationService),
             new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.FundingService),
+            new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.MdbExport),
             new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ReportService),
             new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.PostExecution),
         };

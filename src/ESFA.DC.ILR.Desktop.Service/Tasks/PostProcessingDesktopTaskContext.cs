@@ -24,5 +24,9 @@ namespace ESFA.DC.ILR.Desktop.Service.Tasks
         public string OutputDirectory => _desktopContext.OutputDirectory;
 
         public string OriginalFilename => _desktopContext.KeyValuePairs[ILRContextKeys.OriginalFilename].ToString();
+
+        public string ExportFolder => "Export";
+
+        public string MdbFileName => "ESFA.DC.ILR.DataStore.Database.mdb";
     }
 }

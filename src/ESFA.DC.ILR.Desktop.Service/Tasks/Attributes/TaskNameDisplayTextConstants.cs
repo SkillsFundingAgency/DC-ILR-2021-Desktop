@@ -11,5 +11,7 @@
         public const string ReportGeneration = "Report Generation";
         public const string StoreData = "Store Data";
         public const string PostExecution = "Post Processing";
+        public const string MdbCreate = "Create Mdb";
+        public const string MdbExport = "Export to Mdb";
     }
 }
