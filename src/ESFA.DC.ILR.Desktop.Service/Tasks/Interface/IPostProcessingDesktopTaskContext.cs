@@ -11,5 +11,9 @@ namespace ESFA.DC.ILR.Desktop.Service.Tasks.Interface
         string OriginalFilename { get; }
 
         IReadOnlyCollection<string> ReportFileNames { get; }
+
+        string ExportFolder { get; }
+
+        string MdbFileName { get; }
     }
 }
