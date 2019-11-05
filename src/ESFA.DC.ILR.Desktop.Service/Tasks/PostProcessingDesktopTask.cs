@@ -37,6 +37,8 @@ namespace ESFA.DC.ILR.Desktop.Service.Tasks
                 }
             }
 
+            File.Copy(Path.Combine(postProcessingDesktopTaskContext.Container, postProcessingDesktopTaskContext.ExportFolder, postProcessingDesktopTaskContext.MdbFileName), Path.Combine(outputDirectory, postProcessingDesktopTaskContext.MdbFileName), true);
+
             return desktopContext;
         }
     }

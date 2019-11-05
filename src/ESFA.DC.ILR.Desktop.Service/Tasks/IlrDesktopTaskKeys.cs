@@ -10,6 +10,9 @@ namespace ESFA.DC.ILR.Desktop.Service.Tasks
         [DisplayText(TaskNameDisplayTextConstants.BuildDatabase)]
         DatabaseCreate,
 
+        [DisplayText(TaskNameDisplayTextConstants.MdbCreate)]
+        MdbCreate,
+
         [DisplayText(TaskNameDisplayTextConstants.FileValidation)]
         FileValidationService,
 
@@ -24,6 +27,9 @@ namespace ESFA.DC.ILR.Desktop.Service.Tasks
 
         [DisplayText(TaskNameDisplayTextConstants.StoreData)]
         DataStore,
+
+        [DisplayText(TaskNameDisplayTextConstants.MdbExport)]
+        MdbExport,
 
         [DisplayText(TaskNameDisplayTextConstants.ReportGeneration)]
         ReportService,
