@@ -60,6 +60,8 @@ namespace ESFA.DC.ILR.Desktop.Modules
             containerBuilder.RegisterType<MdbDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.MdbExport);
             containerBuilder.RegisterModule<MdbModule>();
 
+            containerBuilder.RegisterType<PublishMdbDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.MdbPublish);
+
             containerBuilder.RegisterType<ContextMutatorExecutor>().As<IContextMutatorExecutor>();
             containerBuilder.RegisterType<SchemaErrorContextMutator>().Keyed<IContextMutator>(ContextMutatorKeys.SchemaError);
         }

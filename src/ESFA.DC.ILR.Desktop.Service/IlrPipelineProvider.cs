@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Service.Mutator;
 using ESFA.DC.ILR.Desktop.Service.Tasks;
@@ -9,34 +10,6 @@ namespace ESFA.DC.ILR.Desktop.Service
     {
         private readonly IDesktopServiceSettings _desktopServiceSettings;
 
-        private readonly List<IIlrDesktopTaskDefinition> _pipeline = new List<IIlrDesktopTaskDefinition>()
-        {
-            new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.PreExecution),
-            new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.DatabaseCreate),
-            new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.MdbCreate),
-            new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.FileValidationService, IlrDesktopTaskKeys.ReportService, ContextMutatorKeys.SchemaError),
-            new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ReferenceDataService),
-            new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ValidationService),
-            new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.FundingService),
-            new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.DataStore),
-            new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.MdbExport),
-            new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ReportService),
-            new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.PostExecution),
-        };
-
-        private readonly List<IIlrDesktopTaskDefinition> _noSqlPipeline = new List<IIlrDesktopTaskDefinition>()
-        {
-            new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.PreExecution),
-            new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.MdbCreate),
-            new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.FileValidationService, IlrDesktopTaskKeys.ReportService, ContextMutatorKeys.SchemaError),
-            new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ReferenceDataService),
-            new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ValidationService),
-            new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.FundingService),
-            new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.MdbExport),
-            new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ReportService),
-            new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.PostExecution),
-        };
-
         public IlrPipelineProvider(IDesktopServiceSettings desktopServiceSettings)
         {
             _desktopServiceSettings = desktopServiceSettings;
@@ -44,9 +17,47 @@ namespace ESFA.DC.ILR.Desktop.Service
 
         public IReadOnlyList<IIlrDesktopTaskDefinition> Provide()
         {
-            return _desktopServiceSettings.ExportToSql ? _pipeline : _noSqlPipeline;
+            return BuildTaskDefinitionCollectionForSettings(_desktopServiceSettings.ExportToSql, _desktopServiceSettings.ExportToAccessAndCsv);
         }
 
-        public int IndexFor(IlrDesktopTaskKeys ilrDesktopTaskKey) => _pipeline.FindIndex(i => i.Key == ilrDesktopTaskKey);
+        public int IndexFor(IlrDesktopTaskKeys ilrDesktopTaskKey, IReadOnlyList<IIlrDesktopTaskDefinition> pipeline) => pipeline.ToList().FindIndex(i => i.Key == ilrDesktopTaskKey);
+
+        private IReadOnlyList<IIlrDesktopTaskDefinition> BuildTaskDefinitionCollectionForSettings(bool exportToSql, bool exportToAccessAndCsv)
+        {
+            var taskList = new List<IIlrDesktopTaskDefinition>();
+
+            taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.PreExecution));
+
+            if (exportToSql)
+            {
+                taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.DatabaseCreate));
+            }
+
+            if (exportToAccessAndCsv)
+            {
+                taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.MdbCreate));
+            }
+
+            taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.FileValidationService, IlrDesktopTaskKeys.ReportService, ContextMutatorKeys.SchemaError));
+            taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ReferenceDataService));
+            taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ValidationService));
+            taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.FundingService));
+
+            if (exportToSql)
+            {
+                taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.DataStore));
+            }
+
+            if (exportToAccessAndCsv)
+            {
+                taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.MdbExport));
+                taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.MdbPublish));
+            }
+
+            taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ReportService));
+            taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.PostExecution));
+
+            return taskList;
+        }
     }
 }

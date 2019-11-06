@@ -7,6 +7,6 @@ namespace ESFA.DC.ILR.Desktop.Service.Interface
     {
         IReadOnlyList<IIlrDesktopTaskDefinition> Provide();
 
-        int IndexFor(IlrDesktopTaskKeys ilrDesktopTaskKey);
+        int IndexFor(IlrDesktopTaskKeys ilrDesktopTaskKey, IReadOnlyList<IIlrDesktopTaskDefinition> pipeline);
     }
 }

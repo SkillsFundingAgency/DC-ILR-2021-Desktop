@@ -34,6 +34,9 @@ namespace ESFA.DC.ILR.Desktop.Service.Tasks
         [DisplayText(TaskNameDisplayTextConstants.ReportGeneration)]
         ReportService,
 
+        [DisplayText(TaskNameDisplayTextConstants.MdbPublish)]
+        MdbPublish,
+
         [DisplayText(TaskNameDisplayTextConstants.PostExecution)]
         PostExecution,
     }

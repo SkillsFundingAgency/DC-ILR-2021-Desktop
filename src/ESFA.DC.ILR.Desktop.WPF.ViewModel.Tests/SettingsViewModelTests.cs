@@ -45,12 +45,14 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             vm.OutputDirectory = "Expected";
             vm.IlrDatabaseConnectionString = "DataBase Connection";
             vm.ExportToSql = true;
+            vm.ExportToAccessAndCsv = true;
 
             await vm.SaveSettingsCommand.ExecuteAsync(closeableMock.Object);
 
             desktopServiceSettingsMock.VerifySet(s => s.OutputDirectory = "Expected");
             desktopServiceSettingsMock.VerifySet(s => s.ExportToSql = true);
             desktopServiceSettingsMock.VerifySet(s => s.IlrDatabaseConnectionString = "DataBase Connection");
+            desktopServiceSettingsMock.VerifySet(s => s.ExportToAccessAndCsv = true);
 
             desktopServiceSettingsMock.Verify(ds => ds.SaveAsync(It.IsAny<CancellationToken>()));
             closeableMock.Verify(c => c.Close());
@@ -114,6 +116,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             var ilrDatabaseConnection = "ILRDatabaseConnection";
             var exportToSql = true;
             var outputDirectory = "OutputDirectory";
+            var exportToAccessAndCsv = true;
 
             var closeableMock = new Mock<ICloseable>();
 
@@ -122,12 +125,14 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             desktopServiceSettings.SetupGet(s => s.IlrDatabaseConnectionString).Returns(ilrDatabaseConnection);
             desktopServiceSettings.SetupGet(s => s.ExportToSql).Returns(exportToSql);
             desktopServiceSettings.SetupGet(s => s.OutputDirectory).Returns(outputDirectory);
+            desktopServiceSettings.SetupGet(s => s.ExportToAccessAndCsv).Returns(exportToAccessAndCsv);
 
             var viewmodel = NewViewModel(desktopServiceSettings.Object);
 
             viewmodel.ExportToSql = false;
             viewmodel.IlrDatabaseConnectionString = "Junk";
             viewmodel.OutputDirectory = "Junk";
+            viewmodel.ExportToAccessAndCsv = false;
 
             viewmodel.CloseWindowCommand.Execute(closeableMock.Object);
 
@@ -136,6 +141,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             viewmodel.OutputDirectory.Should().Be(outputDirectory);
             viewmodel.ExportToSql.Should().Be(exportToSql);
             viewmodel.IlrDatabaseConnectionString.Should().Be(ilrDatabaseConnection);
+            viewmodel.ExportToAccessAndCsv.Should().Be(exportToAccessAndCsv);
         }
 
         private SettingsViewModel NewViewModel(IDesktopServiceSettings desktopServiceSettings = null, IDialogInteractionService dialogInteractionService = null)

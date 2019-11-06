@@ -68,7 +68,7 @@ namespace ESFA.DC.ILR.Desktop.Service
                             desktopContext = _contextMutatorExecutor.Execute(desktopTaskDefinition.FailureContextMutatorKey.Value, desktopContext);
                         }
 
-                        step = _ilrPipelineProvider.IndexFor(desktopTaskDefinition.FailureKey.Value);
+                        step = _ilrPipelineProvider.IndexFor(desktopTaskDefinition.FailureKey.Value, stepsList);
 
                         completionContext.ProcessingCompletionState = ProcessingCompletionStates.HandledFail;
 
