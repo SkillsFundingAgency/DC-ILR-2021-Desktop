@@ -20,7 +20,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
 
             var pipeline = NewProvider(desktopServiceSettingsMock.Object).Provide().ToList();
 
-            pipeline.Should().HaveCount(11);
+            pipeline.Should().HaveCount(12);
 
             pipeline[0].Key.Should().Be(IlrDesktopTaskKeys.PreExecution);
             pipeline[0].FailureKey.Should().BeNull();
@@ -49,11 +49,14 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
             pipeline[8].Key.Should().Be(IlrDesktopTaskKeys.MdbExport);
             pipeline[8].FailureKey.Should().BeNull();
 
-            pipeline[9].Key.Should().Be(IlrDesktopTaskKeys.ReportService);
+            pipeline[9].Key.Should().Be(IlrDesktopTaskKeys.MdbPublish);
             pipeline[9].FailureKey.Should().BeNull();
 
-            pipeline[10].Key.Should().Be(IlrDesktopTaskKeys.PostExecution);
+            pipeline[10].Key.Should().Be(IlrDesktopTaskKeys.ReportService);
             pipeline[10].FailureKey.Should().BeNull();
+
+            pipeline[11].Key.Should().Be(IlrDesktopTaskKeys.PostExecution);
+            pipeline[11].FailureKey.Should().BeNull();
         }
 
         [Fact]
