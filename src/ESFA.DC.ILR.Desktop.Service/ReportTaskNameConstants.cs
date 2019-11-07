@@ -19,5 +19,7 @@
         public const string FundingClaim1619Report = "TaskGenerateFundingClaim1619Report";
         public const string SummaryOfFm35FundingReport = "TaskGenerateSummaryOfFm35FundingReport";
         public const string AdultFundingClaimReport = "TaskGenerateAdultFundingClaimReport";
+        public const string RuleViolationSummaryReport = "TaskGenerateRuleViolationSummaryReport";
+        public const string CommunityLearningReport = "TaskGenerateCommunityLearningReport";
     }
 }

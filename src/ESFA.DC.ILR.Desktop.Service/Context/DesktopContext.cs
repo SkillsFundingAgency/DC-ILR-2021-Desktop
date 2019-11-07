@@ -26,7 +26,9 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
             ReportTaskNameConstants.HNSSummaryReport,
             ReportTaskNameConstants.FundingClaim1619Report,
             ReportTaskNameConstants.SummaryOfFm35FundingReport,
-            ReportTaskNameConstants.AdultFundingClaimReport);
+            ReportTaskNameConstants.AdultFundingClaimReport,
+            ReportTaskNameConstants.CommunityLearningReport,
+            ReportTaskNameConstants.RuleViolationSummaryReport);
 
         public DesktopContext(
             DateTime dateTime,
