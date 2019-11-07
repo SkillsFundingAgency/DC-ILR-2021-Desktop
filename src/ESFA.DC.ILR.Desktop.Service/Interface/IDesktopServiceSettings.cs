@@ -11,6 +11,8 @@ namespace ESFA.DC.ILR.Desktop.Service.Interface
 
         bool ExportToSql { get; set; }
 
+        bool ExportToAccessAndCsv { get; set; }
+
         Task SaveAsync(CancellationToken cancellationToken);
     }
 }

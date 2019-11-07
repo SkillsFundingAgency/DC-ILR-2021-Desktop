@@ -18,6 +18,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private string _ilrDatabaseConnectionString;
         private string _outputDirectory;
         private bool _exportToSql;
+        private bool _exportToAccessAndCsv;
 
         public SettingsViewModel(IDesktopServiceSettings desktopServiceSettings, IDialogInteractionService dialogInteractionService)
         {
@@ -31,6 +32,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             _ilrDatabaseConnectionString = _desktopServiceSettings.IlrDatabaseConnectionString;
             _outputDirectory = _desktopServiceSettings.OutputDirectory;
             _exportToSql = _desktopServiceSettings.ExportToSql;
+            _exportToAccessAndCsv = _desktopServiceSettings.ExportToAccessAndCsv;
         }
 
         public RelayCommand ChooseOutputDirectoryCommand { get; set; }
@@ -69,6 +71,16 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             }
         }
 
+        public bool ExportToAccessAndCsv
+        {
+            get => _exportToAccessAndCsv;
+            set
+            {
+                Set(ref _exportToAccessAndCsv, value);
+                SaveSettingsCommand.RaiseCanExecuteChanged();
+            }
+        }
+
         public bool CanSave()
         {
             if (ExportToSql)
@@ -94,6 +106,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             _desktopServiceSettings.IlrDatabaseConnectionString = IlrDatabaseConnectionString;
             _desktopServiceSettings.OutputDirectory = OutputDirectory;
             _desktopServiceSettings.ExportToSql = ExportToSql;
+            _desktopServiceSettings.ExportToAccessAndCsv = ExportToAccessAndCsv;
 
             await _desktopServiceSettings.SaveAsync(CancellationToken.None);
 
@@ -105,6 +118,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             IlrDatabaseConnectionString = _desktopServiceSettings.IlrDatabaseConnectionString;
             OutputDirectory = _desktopServiceSettings.OutputDirectory;
             ExportToSql = _desktopServiceSettings.ExportToSql;
+            ExportToAccessAndCsv = _desktopServiceSettings.ExportToAccessAndCsv;
 
             window?.Close();
         }
