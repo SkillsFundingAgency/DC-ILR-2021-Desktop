@@ -51,11 +51,15 @@ namespace ESFA.DC.ILR.Desktop.Service
             if (exportToAccessAndCsv)
             {
                 taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.MdbExport));
-                taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.MdbPublish));
             }
 
             taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ReportService));
             taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.PostExecution));
+
+            if (exportToAccessAndCsv)
+            {
+                taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.MdbPublish));
+            }
 
             return taskList;
         }
