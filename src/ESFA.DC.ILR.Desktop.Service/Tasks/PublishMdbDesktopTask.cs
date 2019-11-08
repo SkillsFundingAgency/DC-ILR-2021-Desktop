@@ -30,7 +30,15 @@ namespace ESFA.DC.ILR.Desktop.Service.Tasks
 
             _logger.LogInfo($"Copying Access : {sourceMdb} to {destinationMdb}");
 
-            File.Copy(sourceMdb, destinationMdb, true);
+            if (File.Exists(sourceMdb))
+            {
+                _logger.LogInfo($"Copying Access : {sourceMdb} to {destinationMdb}");
+                File.Copy(sourceMdb, destinationMdb, true);
+            }
+            else
+            {
+                _logger.LogInfo($"No File Found : {sourceMdb}");
+            }
 
             return Task.FromResult(desktopContext);
         }
