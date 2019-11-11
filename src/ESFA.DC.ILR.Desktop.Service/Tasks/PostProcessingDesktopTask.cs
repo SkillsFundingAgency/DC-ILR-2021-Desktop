@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Interface;
+using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.Logging.Interfaces;
 
 namespace ESFA.DC.ILR.Desktop.Service.Tasks
@@ -36,8 +37,6 @@ namespace ESFA.DC.ILR.Desktop.Service.Tasks
                     _logger.LogInfo($"Copying {source} to {destination}");
                 }
             }
-
-            File.Copy(Path.Combine(postProcessingDesktopTaskContext.Container, postProcessingDesktopTaskContext.ExportFolder, postProcessingDesktopTaskContext.MdbFileName), Path.Combine(outputDirectory, postProcessingDesktopTaskContext.MdbFileName), true);
 
             return desktopContext;
         }
