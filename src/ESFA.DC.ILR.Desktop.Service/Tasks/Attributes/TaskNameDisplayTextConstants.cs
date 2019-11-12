@@ -12,7 +12,7 @@
         public const string StoreData = "Store Data";
         public const string PostExecution = "Post Processing";
         public const string MdbCreate = "Build Mdb";
-        public const string MdbExport = "Export Data to Mdb";
+        public const string MdbExport = "Export Data to Mdb and CSV";
         public const string MdbPublish = "Publish Mdb";
     }
 }

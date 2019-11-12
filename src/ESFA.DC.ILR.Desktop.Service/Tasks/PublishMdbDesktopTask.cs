@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -40,7 +41,40 @@ namespace ESFA.DC.ILR.Desktop.Service.Tasks
                 _logger.LogInfo($"No File Found : {sourceMdb}");
             }
 
+            // CSV Exports
+            var exportDirectory = Path.Combine(context.Container, context.ExportDirectory);
+
+            var csvFileNames = Directory.GetFiles(exportDirectory, "*.csv");
+
+            var sourceArchive = Path.Combine(exportDirectory, "FISExportCSV.zip");
+
+            ArchiveFiles(csvFileNames, sourceArchive);
+
+            var destinationArchive = Path.Combine(outputDirectory, $"FIS-CSV {context.DateTime:yyyyMMdd-HHmmss}.zip");
+
+            if (File.Exists(sourceArchive))
+            {
+                _logger.LogInfo($"Copying Exports : {sourceArchive} to {destinationArchive}");
+
+                File.Copy(sourceArchive, destinationArchive, true);
+            }
+            else
+            {
+                _logger.LogInfo($"No File Found : {sourceArchive}");
+            }
+
             return Task.FromResult(desktopContext);
+        }
+
+        public void ArchiveFiles(IEnumerable<string> fileNames, string archiveName)
+        {
+            using (ZipArchive archive = ZipFile.Open(archiveName, ZipArchiveMode.Create))
+            {
+                foreach (var filePath in fileNames)
+                {
+                    archive.CreateEntryFromFile(filePath, Path.GetFileName(filePath));
+                }
+            }
         }
     }
 }

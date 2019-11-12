@@ -23,7 +23,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="3*" />
                 <ColumnDefinition Width="7*" />
                 <ColumnDefinition Width="40"/>
             </Grid.ColumnDefinitions>
@@ -39,7 +39,7 @@
             <Label Grid.Row="2" Content="Connection String:" VerticalAlignment="Center" Visibility="{Binding ExportToSql, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding IlrDatabaseConnectionString}" Margin="2" Visibility="{Binding ExportToSql, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
-            <Label Grid.Row="3" Content="Export to Access:" VerticalAlignment="Center"/>
+            <Label Grid.Row="3" Content="Export to Access and CSV:" VerticalAlignment="Center"/>
             <CheckBox Grid.Row="3" Grid.Column="1" Content="(Optional)" Margin="2" VerticalAlignment="Center" IsChecked="{Binding ExportToAccessAndCsv}"/>
 
         </Grid>
