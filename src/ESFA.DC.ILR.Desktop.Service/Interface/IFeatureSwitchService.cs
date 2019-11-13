@@ -3,5 +3,7 @@
     public interface IFeatureSwitchService
     {
         bool ReportFilters { get; }
+
+        bool VersionUpdate { get; }
     }
 }

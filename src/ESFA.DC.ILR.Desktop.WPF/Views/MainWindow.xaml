@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ESFA.DC.ILR.Desktop.WPF"
         mc:Ignorable="d"
         Title="Funding Information System (FIS) Funding Year 2019-2020" Height="450" Width="800" WindowStartupLocation="CenterScreen"
         DataContext="{Binding Main, Source={StaticResource Locator}}" ResizeMode="CanMinimize" Icon="../Resources/Images/DSAppIcon.ico">
@@ -19,6 +18,7 @@
             <MenuItem Header="Report Filters" Command="{Binding ReportFiltersNavigationCommand}" Visibility="{Binding ReportFiltersFeatureSwitch, Converter={StaticResource BooleanToVisibilityConverter}}" />
             <MenuItem Header="Settings" Command="{Binding SettingsNavigationCommand}"/>
             <MenuItem Header="About" Command="{Binding AboutNavigationCommand}"/>
+            <MenuItem Header="Check for update" Command="{Binding VersionNavigationCommand}"  Visibility="{Binding VersionUpdateFeatureSwitch, Converter={StaticResource BooleanToVisibilityConverter}}"/>
         </Menu>
 
         <Grid Row ="1">

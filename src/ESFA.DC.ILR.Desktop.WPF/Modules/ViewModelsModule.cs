@@ -11,6 +11,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
             containerBuilder.RegisterType<SettingsViewModel>().SingleInstance();
             containerBuilder.RegisterType<AboutViewModel>().SingleInstance();
             containerBuilder.RegisterType<ReportFiltersViewModel>().SingleInstance();
+            containerBuilder.RegisterType<VersionUpdateViewModel>().SingleInstance();
         }
     }
 }

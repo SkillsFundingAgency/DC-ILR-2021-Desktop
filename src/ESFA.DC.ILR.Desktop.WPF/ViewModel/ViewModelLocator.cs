@@ -30,6 +30,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         public ReportFiltersViewModel ReportFilters => ServiceLocator.Current.GetInstance<ReportFiltersViewModel>();
 
+        public VersionUpdateViewModel Update => ServiceLocator.Current.GetInstance<VersionUpdateViewModel>();
+
         public static void Cleanup()
         {
         }
