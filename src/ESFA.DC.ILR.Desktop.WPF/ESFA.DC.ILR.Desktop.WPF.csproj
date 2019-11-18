@@ -70,6 +70,7 @@
     <Compile Include="Command\Interface\IAsyncCommand.cs" />
     <Compile Include="Command\Interface\IErrorHandler.cs" />
     <Compile Include="Command\Extensions\TaskExtensions.cs" />
+    <Compile Include="Config\APIConfiguration.cs" />
     <Compile Include="Config\FeatureSwitchConfiguration.cs" />
     <Compile Include="Config\DesktopServiceConfiguration.cs" />
     <Compile Include="Config\FileSystemKeyValuePersistenceServiceConfig.cs" />
@@ -178,6 +179,10 @@
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Interface\ESFA.DC.ILR.Desktop.Interface.csproj">
       <Project>{2D75F514-A091-41BA-A8B0-87BB97BC0337}</Project>
       <Name>ESFA.DC.ILR.Desktop.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Models\ESFA.DC.ILR.Desktop.Models.csproj">
+      <Project>{cfef3244-c37e-4e36-8e59-71e2c155ebe7}</Project>
+      <Name>ESFA.DC.ILR.Desktop.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Modules\ESFA.DC.ILR.Desktop.Modules.csproj">
       <Project>{9759a0da-c73c-467f-b6bd-de220e3b8d97}</Project>

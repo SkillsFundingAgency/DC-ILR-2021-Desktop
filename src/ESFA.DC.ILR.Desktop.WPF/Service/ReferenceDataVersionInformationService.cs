@@ -1,4 +1,5 @@
 ﻿using ESFA.DC.ILR.Desktop.Interface;
+using ESFA.DC.ILR.Desktop.Interface.Configuration;
 
 namespace ESFA.DC.ILR.Desktop.WPF.Service
 {

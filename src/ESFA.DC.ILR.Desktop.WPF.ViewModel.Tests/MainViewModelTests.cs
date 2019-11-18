@@ -127,7 +127,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
         {
             var fileName = "FileName";
             var outputDirectory = "Output Directory";
-            var cancellationToken = CancellationToken.None;
 
             var ilrDesktopServiceMock = new Mock<IIlrDesktopService>();
 
