@@ -53,11 +53,21 @@ namespace ESFA.DC.ILR.Desktop.Service
 
                 try
                 {
-                    desktopContext = await _desktopTaskExecutionService.ExecuteAsync(desktopTaskDefinition.Key, desktopContext, cancellationToken).ConfigureAwait(false);
+                    desktopContext = await _desktopTaskExecutionService
+                        .ExecuteAsync(desktopTaskDefinition.Key, desktopContext, cancellationToken)
+                        .ConfigureAwait(false);
 
                     cancellationToken.ThrowIfCancellationRequested();
 
                     step++;
+                }
+                catch (TaskCanceledException taskCanceledException)
+                {
+                    completionContext.ProcessingCompletionState = ProcessingCompletionStates.Cancelled;
+
+                    _logger.LogError($"Task Cancelled - Step {step}", taskCanceledException);
+
+                    return completionContext;
                 }
                 catch (Exception exception)
                 {
