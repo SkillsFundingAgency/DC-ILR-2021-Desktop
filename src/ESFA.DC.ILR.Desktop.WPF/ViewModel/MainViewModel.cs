@@ -64,7 +64,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             ReportFiltersNavigationCommand = new RelayCommand(ReportFiltersNavigate);
             ReportsFolderCommand = new RelayCommand(() => ProcessStart(_reportsLocation));
             CancelAndReImportCommand = new RelayCommand(CancelAndReImport, () => !_cancellationTokenSource?.IsCancellationRequested ?? false);
-            VersionNavigationCommand = new RelayCommand(VersionNavigate);
+            VersionNavigationCommand = new RelayCommand(ShowVersionWindow);
         }
 
         public StageKeys CurrentStage
@@ -241,6 +241,9 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         private void ReportFiltersNavigate() => _windowService.ShowReportFiltersWindow();
 
-        private void VersionNavigate() => _windowService.ShowVersionWindow();
+        private void ShowVersionWindow()
+        {
+            _windowService.ShowVersionWindow();
+        }
     }
 }

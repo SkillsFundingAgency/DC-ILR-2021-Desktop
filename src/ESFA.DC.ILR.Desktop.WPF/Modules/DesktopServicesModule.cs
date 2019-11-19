@@ -10,6 +10,7 @@ using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.WPF.Config;
 using ESFA.DC.ILR.Desktop.WPF.Service;
 using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
+using ESFA.DC.ILR.Desktop.WPF.ViewModel;
 
 namespace ESFA.DC.ILR.Desktop.WPF.Modules
 {
@@ -27,14 +28,19 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
             containerBuilder.RegisterType<ApplicationVersionResultFactory>().As<IApplicationVersionResultFactory>();
             containerBuilder.RegisterType<APIClientFactory>().As<IAPIClientFactory>();
             containerBuilder.RegisterType<VersionFactory>().As<IVersionFactory>();
+            containerBuilder.RegisterType<VersionMessageFactory>().As<IVersionMessageFactory>();
 
-            containerBuilder.RegisterType<ApplicationVersionClient>().As<IApplicationVersionClient>();
+            containerBuilder.RegisterType<ApplicationVersionClientStub>().As<IApplicationVersionClient>();
+            //containerBuilder.RegisterType<ApplicationVersionClient>().As<IApplicationVersionClient>();
             containerBuilder.RegisterType<VersionService>().As<IVersionService>();
+            containerBuilder.RegisterType<VersionMediatorService>().As<IVersionMediatorService>();
 
             containerBuilder.RegisterType<DesktopServiceConfiguration>().As<IServiceConfiguration>();
             containerBuilder.RegisterType<APIConfiguration>().As<IAPIConfiguration>();
 
             containerBuilder.RegisterType<DesktopContextFactory>().As<IDesktopContextFactory>();
+
+            containerBuilder.Register(c => new ViewModelLocator()).SingleInstance();
 
             containerBuilder.Register(c =>
             {

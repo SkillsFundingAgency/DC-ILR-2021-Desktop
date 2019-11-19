@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Interface.Services;
 using ESFA.DC.ILR.Desktop.Models;
+using Version = ESFA.DC.ILR.Desktop.Models.Version;
 
 namespace ESFA.DC.ILR.Desktop.Service
 {
@@ -25,10 +26,12 @@ namespace ESFA.DC.ILR.Desktop.Service
 
             var newerVersion = GetNewerApplicationVersion(currentVersion, applicationVersions.Versions);
 
-            return _applicationVersionResultFactory.GetApplicationVersionResult(
-                newerVersion.ApplicationVersion,
-                newerVersion.ReleaseDateTime,
-                applicationVersions.Url);
+            return newerVersion == null
+                ? null
+                : _applicationVersionResultFactory.GetApplicationVersionResult(
+                    newerVersion.ApplicationVersion,
+                    newerVersion.ReleaseDateTime,
+                    applicationVersions.Url);
         }
 
         private Version GetNewerApplicationVersion(Version currentVersion, IEnumerable<Version> availableVersions)

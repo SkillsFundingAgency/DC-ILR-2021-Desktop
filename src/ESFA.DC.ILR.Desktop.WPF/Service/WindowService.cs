@@ -8,9 +8,9 @@ namespace ESFA.DC.ILR.Desktop.WPF.Service
     {
         public void ShowSettingsWindow()
         {
-            var settingsWindow = new SettingsWindow()
+            var settingsWindow = new SettingsWindow
             {
-                Owner = Application.Current.MainWindow,
+                Owner = Application.Current.MainWindow
             };
 
             settingsWindow.ShowDialog();
@@ -18,9 +18,9 @@ namespace ESFA.DC.ILR.Desktop.WPF.Service
 
         public void ShowAboutWindow()
         {
-            var aboutWindow = new AboutWindow()
+            var aboutWindow = new AboutWindow
             {
-                Owner = Application.Current.MainWindow,
+                Owner = Application.Current.MainWindow
             };
 
             aboutWindow.ShowDialog();
@@ -28,9 +28,9 @@ namespace ESFA.DC.ILR.Desktop.WPF.Service
 
         public void ShowReportFiltersWindow()
         {
-            var reportFiltersWindow = new ReportFiltersWindow()
+            var reportFiltersWindow = new ReportFiltersWindow
             {
-                Owner = Application.Current.MainWindow,
+                Owner = Application.Current.MainWindow
             };
 
             reportFiltersWindow.ShowDialog();
@@ -40,7 +40,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.Service
         {
             var versionWindow = new VersionUpdateWindow
             {
-                Owner = Application.Current.MainWindow,
+                Owner = Application.Current.MainWindow
             };
 
             versionWindow.ShowDialog();

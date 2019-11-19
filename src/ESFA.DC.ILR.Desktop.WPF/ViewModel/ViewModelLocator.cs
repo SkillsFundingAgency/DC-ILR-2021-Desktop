@@ -22,6 +22,15 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
     /// </summary>
     public class ViewModelLocator
     {
+        public ViewModelLocator()
+        {
+            var main = Main;
+            var about = About;
+            var settings = Settings;
+            var reportFilters = ReportFilters;
+            var update = Update;
+        }
+
         public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
 
         public AboutViewModel About => ServiceLocator.Current.GetInstance<AboutViewModel>();

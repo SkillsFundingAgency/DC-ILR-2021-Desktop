@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ESFA.DC.ILR.Desktop.Service.Tasks;
+﻿using ESFA.DC.ILR.Desktop.Service.Tasks;
 using ESFA.DC.Logging.Interfaces;
 using FluentAssertions;
 using Xunit;

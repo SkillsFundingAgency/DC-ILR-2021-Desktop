@@ -36,13 +36,13 @@
         </ItemsControl>
        </Grid>
         
-           <TextBlock FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center">
-               Get the latest version here: <Hyperlink Command="{Binding VersionNavigationCommand}"><TextBlock Text="{Binding ApplicationVersionResult.Url}" /></Hyperlink>
-           </TextBlock>
+       <TextBlock FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center">
+           Get the latest version here: <Hyperlink Command="{Binding VersionNavigationCommand}"><TextBlock Text="{Binding ApplicationVersionResult.Url}" /></Hyperlink>
+       </TextBlock>
 
         <Button Content="Close" HorizontalAlignment="Right" Width="100" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=aboutWindow}" />
     
-        <ProgressBar IsIndeterminate="True"></ProgressBar>
+        <ProgressBar IsIndeterminate="True" Visibility="{Binding ShowProgress}"></ProgressBar>
        </StackPanel>
     </Grid>
 </Window>

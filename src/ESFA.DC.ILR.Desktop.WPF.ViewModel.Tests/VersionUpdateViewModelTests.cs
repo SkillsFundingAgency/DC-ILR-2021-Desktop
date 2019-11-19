@@ -1,58 +1,80 @@
 ﻿using System;
-using ESFA.DC.ILR.Desktop.Interface;
-using ESFA.DC.ILR.Desktop.Interface.Services;
 using ESFA.DC.ILR.Desktop.Models;
+using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
+using FluentAssertions;
 using Moq;
 using Xunit;
-using Version = ESFA.DC.ILR.Desktop.Models.Version;
 
 namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
 {
     public class VersionUpdateViewModelTests
     {
         [Fact]
-        public void AboutWindowNavigationCommandExecute()
+        public void NavigateToVersionsUrl_Calls_WindowsProcessService_ProcessStart_With_Correct_Url()
         {
-            var url = "foo";
-            var version = "1.0.0.0";
-            var releaseDate = new DateTime(2019, 11, 1, 10, 0, 0);
+            var url = "foo.com";
 
-            var versionModel = new Version
-            {
-                ApplicationVersion = version,
-                Major = 1,
-                Minor = 0,
-                Increment = 0
-            };
+            var messengerServiceMock = new Mock<IMessengerService>();
 
-            var versionResult = new ApplicationVersionResult
+            var applicationVersionResult = new ApplicationVersionResult
             {
-                ApplicationVersion = version,
-                ReleaseDateTime = releaseDate,
                 Url = url
             };
 
             var windowServiceMock = new Mock<IWindowsProcessService>();
-
-            var versionInfoServiceMock = new Mock<IReleaseVersionInformationService>();
-            versionInfoServiceMock.Setup(m => m.VersionNumber).Returns(version);
-
-            var versionFactoryMock = new Mock<IVersionFactory>();
-            versionFactoryMock.Setup(m => m.GetVersion(version)).Returns(versionModel);
-
-            var versionServiceMock = new Mock<IVersionService>();
-            versionServiceMock.Setup(m => m.GetLatestApplicationVersion(versionModel)).ReturnsAsync(versionResult);
+            windowServiceMock.Setup(m => m.ProcessStart(url));
 
             var viewModel = NewViewModel(
-                windowServiceMock.Object,
-                versionInfoServiceMock.Object,
-                versionServiceMock.Object,
-                versionFactoryMock.Object);
+                messengerServiceMock.Object,
+                windowServiceMock.Object);
+            viewModel.ApplicationVersionResult = applicationVersionResult;
 
             viewModel.VersionNavigationCommand.Execute(null);
 
             windowServiceMock.Verify(m => m.ProcessStart(url), Times.Once);
+        }
+
+        [Fact]
+        public void Constructor_Registers_VersionMessage_Message_Handler()
+        {
+            var messengerServiceMock = new Mock<IMessengerService>();
+
+            var viewModel = NewViewModel(messengerServiceMock.Object);
+
+            messengerServiceMock.Verify(m => m.Register(viewModel, It.IsAny<Action<VersionMessage>>()));
+        }
+
+        [Fact]
+        public void Initialize_Sets_Properties_To_Passed_In_Values()
+        {
+            var applicationVersion = "1.1.1.1";
+            var url = "foo.com";
+            var releaseDate = DateTime.Now;
+
+            var message = new VersionMessage
+            {
+                ApplicationVersion = new ApplicationVersionResult
+                {
+                    ApplicationVersion = applicationVersion,
+                    Url = url,
+                    ReleaseDateTime = releaseDate
+                }
+            };
+
+            var viewModelStub = new VersionUpdateViewModelTestSpecificTestClass(
+                Mock.Of<IMessengerService>(),
+                Mock.Of<IWindowsProcessService>());
+
+            viewModelStub.Initialize(message);
+
+            viewModelStub.ShowProgress.Should().BeFalse();
+            viewModelStub.ApplicationVersionResult.Url.Should().Be(url);
+            viewModelStub.ApplicationVersionResult.ApplicationVersion.Should().Be(applicationVersion);
+            viewModelStub.ApplicationVersionResult.ReleaseDateTime.Should().Be(releaseDate);
+
+            viewModelStub.VersionItems.Should().HaveCount(2);
+            viewModelStub.VersionItems[1].Value.Should().Be(releaseDate.ToString());
         }
 
         [Fact]
@@ -68,16 +90,27 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
         }
 
         private VersionUpdateViewModel NewViewModel(
-            IWindowsProcessService windowsProcessService = null,
-            IReleaseVersionInformationService releaseVersionInformationService = null,
-            IVersionService versionService = null,
-            IVersionFactory versionFactory = null)
+            IMessengerService messengerService = null,
+            IWindowsProcessService windowsProcessService = null)
         {
             return new VersionUpdateViewModel(
-                windowsProcessService ?? Mock.Of<IWindowsProcessService>(),
-                releaseVersionInformationService ?? Mock.Of<IReleaseVersionInformationService>(),
-                versionService ?? Mock.Of<IVersionService>(),
-                versionFactory ?? Mock.Of<IVersionFactory>());
+                messengerService ?? Mock.Of<IMessengerService>(),
+                windowsProcessService ?? Mock.Of<IWindowsProcessService>());
+        }
+    }
+
+    public class VersionUpdateViewModelTestSpecificTestClass : VersionUpdateViewModel
+    {
+        public VersionUpdateViewModelTestSpecificTestClass(
+            IMessengerService messengerService,
+            IWindowsProcessService windowsProcessService)
+            : base(messengerService, windowsProcessService)
+        {
+        }
+
+        public new void Initialize(VersionMessage message)
+        {
+            base.Initialize(message);
         }
     }
 }
