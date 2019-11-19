@@ -207,9 +207,9 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
                 CanSubmit = false;
                 FileName = _filenamePlaceholder;
             }
-            catch (OperationCanceledException operationCanceledException)
+            catch (TaskCanceledException taskCanceledException)
             {
-                _logger.LogError("Operation Cancelled", operationCanceledException);
+                _logger.LogError("Operation Cancelled", taskCanceledException);
 
                 CurrentStage = StageKeys.ChooseFile;
             }
@@ -239,6 +239,9 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
                     break;
                 case ProcessingCompletionStates.UnhandledFail:
                     CurrentStage = StageKeys.ProcessUnhandledFailure;
+                    break;
+                case ProcessingCompletionStates.Cancelled:
+                    CurrentStage = StageKeys.ChooseFile;
                     break;
             }
         }
