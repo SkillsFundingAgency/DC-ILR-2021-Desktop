@@ -102,6 +102,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tasks\PostProcessingDesktopTaskContextTests.cs" />
     <Compile Include="Tasks\PreProcessingDesktopTaskTests.cs" />
+    <Compile Include="TestSpecificSubClasses\VersionMediatorServiceTestClass.cs" />
     <Compile Include="VersionMediatorServiceTests.cs" />
     <Compile Include="VersionServiceTests.cs" />
   </ItemGroup>
@@ -122,6 +123,10 @@
       <Project>{2D75F514-A091-41BA-A8B0-87BB97BC0337}</Project>
       <Name>ESFA.DC.ILR.Desktop.Interface</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Internal.Interface\ESFA.DC.ILR.Desktop.Internal.Interface.csproj">
+      <Project>{1491AC45-D5B7-4240-A9E2-1267C5F59A03}</Project>
+      <Name>ESFA.DC.ILR.Desktop.Internal.Interface</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Models\ESFA.DC.ILR.Desktop.Models.csproj">
       <Project>{cfef3244-c37e-4e36-8e59-71e2c155ebe7}</Project>
       <Name>ESFA.DC.ILR.Desktop.Models</Name>
@@ -131,6 +136,7 @@
       <Name>ESFA.DC.ILR.Desktop.Service</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

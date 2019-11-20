@@ -1,8 +1,7 @@
 ﻿using System.Threading;
 using Autofac;
-using ESFA.DC.ILR.Desktop.Interface;
-using ESFA.DC.ILR.Desktop.Interface.Configuration;
-using ESFA.DC.ILR.Desktop.Interface.Services;
+using ESFA.DC.ILR.Desktop.Internal.Interface.Configuration;
+using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
 using ESFA.DC.ILR.Desktop.Service;
 using ESFA.DC.ILR.Desktop.Service.APIClient;
 using ESFA.DC.ILR.Desktop.Service.Factories;

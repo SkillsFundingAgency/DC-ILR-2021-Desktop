@@ -2,8 +2,8 @@
 using Autofac;
 using Autofac.Extras.CommonServiceLocator;
 using CommonServiceLocator;
+using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
 using ESFA.DC.ILR.Desktop.Modules;
-using ESFA.DC.ILR.Desktop.Service;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.WPF.Modules;
 using ESFA.DC.ILR.Desktop.WPF.ViewModel;

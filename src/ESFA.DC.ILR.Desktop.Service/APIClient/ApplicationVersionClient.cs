@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ESFA.DC.ILR.Desktop.Interface.Services;
+using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
 using ESFA.DC.ILR.Desktop.Models;
 using RestSharp;
 

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ESFA.DC.ILR.Desktop.Interface;
-using ESFA.DC.ILR.Desktop.Interface.Services;
+using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
 using ESFA.DC.ILR.Desktop.Models;
 using ESFA.DC.ILR.Desktop.Service.Interface;
+using ESFA.DC.ILR.Desktop.Service.Tests.TestSpecificSubClasses;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -163,24 +163,6 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
                 messengerService ?? Mock.Of<IMessengerService>(),
                 versionInformationService ?? Mock.Of<IReleaseVersionInformationService>(),
                 versionService ?? Mock.Of<IVersionService>());
-        }
-    }
-
-    public class VersionMediatorServiceTestClass : VersionMediatorService
-    {
-        public VersionMediatorServiceTestClass(
-            IVersionFactory versionFactory,
-            IVersionMessageFactory versionMessageFactory,
-            IMessengerService messengerService,
-            IReleaseVersionInformationService versionInformationService,
-            IVersionService versionService)
-        : base(versionFactory, versionMessageFactory, messengerService, versionInformationService, versionService)
-        {
-        }
-
-        public new Version GetCurrentApplicationVersion()
-        {
-            return base.GetCurrentApplicationVersion();
         }
     }
 }

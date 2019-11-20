@@ -1,5 +1,5 @@
 ﻿using System;
-using ESFA.DC.ILR.Desktop.Interface;
+using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
 using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
 using FluentAssertions;
 using Moq;

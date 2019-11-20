@@ -1,4 +1,4 @@
-﻿namespace ESFA.DC.ILR.Desktop.Interface.Configuration
+﻿namespace ESFA.DC.ILR.Desktop.Internal.Interface.Configuration
 {
     public interface IServiceConfiguration
     {

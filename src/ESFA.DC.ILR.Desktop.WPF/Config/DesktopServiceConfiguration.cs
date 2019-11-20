@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Configuration;
-using ESFA.DC.ILR.Desktop.Interface.Configuration;
+using ESFA.DC.ILR.Desktop.Internal.Interface.Configuration;
 
 namespace ESFA.DC.ILR.Desktop.WPF.Config
 {

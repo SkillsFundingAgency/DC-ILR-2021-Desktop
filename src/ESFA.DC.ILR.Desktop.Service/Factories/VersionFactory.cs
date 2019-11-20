@@ -1,5 +1,4 @@
-﻿using System;
-using ESFA.DC.ILR.Desktop.Interface.Services;
+﻿using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
 using Version = ESFA.DC.ILR.Desktop.Models.Version;
 
 namespace ESFA.DC.ILR.Desktop.Service.Factories
@@ -12,9 +11,9 @@ namespace ESFA.DC.ILR.Desktop.Service.Factories
             return new Version
             {
                 ApplicationVersion = versionNumber,
-                Major = versionParts.Length > 0 ? Convert.ToInt32(versionParts[0]) : default(int),
-                Minor = versionParts.Length > 1 ? Convert.ToInt32(versionParts[1]) : default(int),
-                Increment = versionParts.Length > 2 ? Convert.ToInt32(versionParts[2]) : default(int)
+                Major = versionParts.Length > 0 ? int.TryParse(versionParts[0], out var major) ? major : default(int) : default(int),
+                Minor = versionParts.Length > 1 ? int.TryParse(versionParts[1], out var minor) ? minor : default(int) : default(int),
+                Increment = versionParts.Length > 2 ? int.TryParse(versionParts[2], out var increment) ? increment : default(int) : default(int)
             };
         }
     }

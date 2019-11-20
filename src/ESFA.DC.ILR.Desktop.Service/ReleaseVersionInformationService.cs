@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
-using ESFA.DC.ILR.Desktop.Interface;
-using ESFA.DC.ILR.Desktop.Interface.Configuration;
+using ESFA.DC.ILR.Desktop.Internal.Interface.Configuration;
+using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
 
 namespace ESFA.DC.ILR.Desktop.Service
 {

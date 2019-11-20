@@ -1,5 +1,5 @@
-﻿using ESFA.DC.ILR.Desktop.Interface.Configuration;
-using ESFA.DC.ILR.Desktop.Interface.Services;
+﻿using ESFA.DC.ILR.Desktop.Internal.Interface.Configuration;
+using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
 using RestSharp;
 
 namespace ESFA.DC.ILR.Desktop.Service.Factories

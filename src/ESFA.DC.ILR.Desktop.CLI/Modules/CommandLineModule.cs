@@ -2,7 +2,7 @@
 using ESFA.DC.ILR.Desktop.CLI.Config;
 using ESFA.DC.ILR.Desktop.CLI.Interface;
 using ESFA.DC.ILR.Desktop.CLI.Service;
-using ESFA.DC.ILR.Desktop.Interface.Configuration;
+using ESFA.DC.ILR.Desktop.Internal.Interface.Configuration;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 
 namespace ESFA.DC.ILR.Desktop.CLI.Modules

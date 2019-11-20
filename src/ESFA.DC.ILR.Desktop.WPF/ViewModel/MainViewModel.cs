@@ -1,7 +1,6 @@
-using System;
 using System.Threading;
 using System.Threading.Tasks;
-using ESFA.DC.ILR.Desktop.Interface;
+using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Service.Journey;
 using ESFA.DC.ILR.Desktop.Service.Message;
