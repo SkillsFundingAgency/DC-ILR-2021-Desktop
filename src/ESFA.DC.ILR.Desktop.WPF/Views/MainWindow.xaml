@@ -109,7 +109,7 @@
                                 </Grid.RowDefinitions>
                                 <Label Content="Import successfully processed" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" />
                                 <TextBlock Grid.Row="1" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                     Get your reports here: <Hyperlink Command="{Binding ReportsFolderCommand}"><TextBlock Text="{Binding ReportsLocation}" /></Hyperlink>
+                                     Get your reports and exports here: <Hyperlink Command="{Binding ReportsFolderCommand}"><TextBlock Text="{Binding ReportsLocation}" /></Hyperlink>
                                 </TextBlock>
                             </Grid>
                         </Border>
