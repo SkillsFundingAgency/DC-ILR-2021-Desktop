@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.WPF.ViewModel.ReportFilters;
 using FluentAssertions;
 using Xunit;

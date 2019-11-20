@@ -99,6 +99,10 @@
       <Project>{2d75f514-a091-41ba-a8b0-87bb97bc0337}</Project>
       <Name>ESFA.DC.ILR.Desktop.Interface</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Internal.Interface\ESFA.DC.ILR.Desktop.Internal.Interface.csproj">
+      <Project>{1491AC45-D5B7-4240-A9E2-1267C5F59A03}</Project>
+      <Name>ESFA.DC.ILR.Desktop.Internal.Interface</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Service\ESFA.DC.ILR.Desktop.Service.csproj">
       <Project>{15e50fe1-098b-4dec-9346-cf4456c6d81d}</Project>
       <Name>ESFA.DC.ILR.Desktop.Service</Name>

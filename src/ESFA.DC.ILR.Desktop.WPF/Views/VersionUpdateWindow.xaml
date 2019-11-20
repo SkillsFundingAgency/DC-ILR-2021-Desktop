@@ -1,0 +1,48 @@
+﻿<Window x:Class="ESFA.DC.ILR.Desktop.WPF.Views.VersionUpdateWindow"
+        x:Name="VersionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Update" Height="200" Width="400" WindowStartupLocation="CenterOwner"
+        DataContext="{Binding Update, Source={StaticResource Locator}}" ResizeMode="NoResize"
+        Icon="../Resources/Images/DSAppIcon.ico"> 
+   <Grid Margin="10">
+       <StackPanel>
+       <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ItemsControl ItemsSource="{Binding VersionItems}" >
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="{Binding Key}" FontWeight="Bold"/>
+                        <Label Grid.Column="1" Content="{Binding Value}" />
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+       </Grid>
+        
+       <TextBlock FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center">
+           Get the latest version here: <Hyperlink Command="{Binding VersionNavigationCommand}"><TextBlock Text="{Binding ApplicationVersionResult.Url}" /></Hyperlink>
+       </TextBlock>
+
+        <Button Content="Close" HorizontalAlignment="Right" Width="100" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=aboutWindow}" />
+    
+        <ProgressBar IsIndeterminate="True" Visibility="{Binding ShowProgress}"></ProgressBar>
+       </StackPanel>
+    </Grid>
+</Window>

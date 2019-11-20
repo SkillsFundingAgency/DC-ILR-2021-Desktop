@@ -6,5 +6,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.Service
     public class FeatureSwitchService : IFeatureSwitchService
     {
         public bool ReportFilters => FeatureSwitchConfiguration.Configuration.ReportFilters;
+
+        public bool VersionUpdate => FeatureSwitchConfiguration.Configuration.VersionUpdate;
     }
 }

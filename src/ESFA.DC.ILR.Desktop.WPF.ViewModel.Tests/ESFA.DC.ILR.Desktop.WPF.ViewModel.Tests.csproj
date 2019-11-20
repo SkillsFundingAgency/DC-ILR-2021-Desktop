@@ -99,6 +99,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TestSpecificSubClasses\VersionUpdateViewModelTestSpecificTestClass.cs" />
+    <Compile Include="VersionUpdateViewModelTests.cs" />
     <Compile Include="AboutViewModelTests.cs" />
     <Compile Include="MainViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -109,6 +111,14 @@
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Interface\ESFA.DC.ILR.Desktop.Interface.csproj">
       <Project>{2D75F514-A091-41BA-A8B0-87BB97BC0337}</Project>
       <Name>ESFA.DC.ILR.Desktop.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Internal.Interface\ESFA.DC.ILR.Desktop.Internal.Interface.csproj">
+      <Project>{1491AC45-D5B7-4240-A9E2-1267C5F59A03}</Project>
+      <Name>ESFA.DC.ILR.Desktop.Internal.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Models\ESFA.DC.ILR.Desktop.Models.csproj">
+      <Project>{CFEF3244-C37E-4E36-8E59-71E2C155EBE7}</Project>
+      <Name>ESFA.DC.ILR.Desktop.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Service\ESFA.DC.ILR.Desktop.Service.csproj">
       <Project>{15E50FE1-098B-4DEC-9346-CF4456C6D81D}</Project>
@@ -131,6 +141,7 @@
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
     <Analyzer Include="..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

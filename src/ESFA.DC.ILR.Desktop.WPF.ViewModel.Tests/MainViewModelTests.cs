@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Interface;
+using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Service.Journey;
 using ESFA.DC.ILR.Desktop.Service.Message;
@@ -127,7 +128,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
         {
             var fileName = "FileName";
             var outputDirectory = "Output Directory";
-            var cancellationToken = CancellationToken.None;
 
             var ilrDesktopServiceMock = new Mock<IIlrDesktopService>();
 

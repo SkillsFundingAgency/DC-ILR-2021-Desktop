@@ -1,6 +1,6 @@
 ﻿using ESFA.DC.ILR.Desktop.CLI.Service;
-using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.DateTimeProvider.Interface;
+using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using FluentAssertions;
 using Xunit;

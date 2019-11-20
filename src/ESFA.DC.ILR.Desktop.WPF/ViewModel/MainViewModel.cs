@@ -1,7 +1,6 @@
-using System;
 using System.Threading;
 using System.Threading.Tasks;
-using ESFA.DC.ILR.Desktop.Interface;
+using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Service.Journey;
 using ESFA.DC.ILR.Desktop.Service.Message;
@@ -10,29 +9,15 @@ using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
 using ESFA.DC.Logging.Interfaces;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using IDesktopContextFactory = ESFA.DC.ILR.Desktop.WPF.Service.Interface.IDesktopContextFactory;
 
 namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 {
-    /// <summary>
-    /// This class contains properties that the main View can data bind to.
-    /// <para>
-    /// Use the <strong>mvvminpc</strong> snippet to add bindable properties to this ViewModel.
-    /// </para>
-    /// <para>
-    /// You can also use Blend to data bind with the tool's support.
-    /// </para>
-    /// <para>
-    /// See http://www.galasoft.ch/mvvm
-    /// </para>
-    /// </summary>
     public class MainViewModel : ViewModelBase
     {
-        private const string _filenamePlaceholder = "No file chosen";
+        private const string FilenamePlaceholder = "No file chosen";
 
         private readonly IIlrDesktopService _ilrDesktopService;
         private readonly IDesktopContextFactory _desktopContextFactory;
-        private readonly IMessengerService _messengerService;
         private readonly IWindowService _windowService;
         private readonly IDialogInteractionService _dialogInteractionService;
         private readonly IWindowsProcessService _windowsProcessService;
@@ -41,7 +26,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private readonly IFeatureSwitchService _featureSwitchService;
 
         private CancellationTokenSource _cancellationTokenSource;
-        private string _fileName = _filenamePlaceholder;
+        private string _fileName = FilenamePlaceholder;
         private bool _canSubmit;
         private string _taskName;
         private int _currentTask;
@@ -62,7 +47,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         {
             _ilrDesktopService = ilrDesktopService;
             _desktopContextFactory = desktopContextFactory;
-            _messengerService = messengerService;
             _windowService = windowService;
             _dialogInteractionService = dialogInteractionService;
             _windowsProcessService = windowsProcessService;
@@ -70,7 +54,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             _logger = logger;
             _featureSwitchService = featureSwitchService;
 
-            _messengerService.Register<TaskProgressMessage>(this, HandleTaskProgressMessage);
+            messengerService.Register<TaskProgressMessage>(this, HandleTaskProgressMessage);
 
             ChooseFileCommand = new RelayCommand(ShowChooseFileDialog);
             ProcessFileCommand = new AsyncCommand(ProcessFile, () => CanSubmit);
@@ -79,6 +63,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             ReportFiltersNavigationCommand = new RelayCommand(ReportFiltersNavigate);
             ReportsFolderCommand = new RelayCommand(() => ProcessStart(_reportsLocation));
             CancelAndReImportCommand = new RelayCommand(CancelAndReImport, () => !_cancellationTokenSource?.IsCancellationRequested ?? false);
+            VersionNavigationCommand = new RelayCommand(ShowVersionWindow);
         }
 
         public StageKeys CurrentStage
@@ -156,6 +141,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         public bool ReportFiltersFeatureSwitch => _featureSwitchService.ReportFilters;
 
+        public bool VersionUpdateFeatureSwitch => _featureSwitchService.VersionUpdate;
+
         public RelayCommand ChooseFileCommand { get; set; }
 
         public AsyncCommand ProcessFileCommand { get; set; }
@@ -170,6 +157,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         public RelayCommand CancelAndReImportCommand { get; set; }
 
+        public RelayCommand VersionNavigationCommand { get; set; }
+
         public void HandleTaskProgressMessage(TaskProgressMessage taskProgressMessage)
         {
             TaskName = taskProgressMessage.TaskName;
@@ -181,7 +170,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         {
             var fileName = _dialogInteractionService.GetFileNameFromOpenFileDialog();
 
-            if (!string.IsNullOrWhiteSpace(fileName) && fileName != _filenamePlaceholder)
+            if (!string.IsNullOrWhiteSpace(fileName) && fileName != FilenamePlaceholder)
             {
                 FileName = fileName;
                 CanSubmit = true;
@@ -205,7 +194,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
                 ReportsLocation = completionContext.OutputDirectory;
                 UpdateCurrentStageForCompletionState(completionContext.ProcessingCompletionState);
                 CanSubmit = false;
-                FileName = _filenamePlaceholder;
+                FileName = FilenamePlaceholder;
             }
             catch (TaskCanceledException taskCanceledException)
             {
@@ -253,5 +242,10 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private void AboutNavigate() => _windowService.ShowAboutWindow();
 
         private void ReportFiltersNavigate() => _windowService.ShowReportFiltersWindow();
+
+        private void ShowVersionWindow()
+        {
+            _windowService.ShowVersionWindow();
+        }
     }
 }
