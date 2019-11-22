@@ -302,6 +302,11 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         private async Task CheckForNewVersion()
         {
+            if (!_featureSwitchService.VersionUpdate)
+            {
+                return;
+            }
+
             ApplicationVersionResult newVersion;
             try
             {
