@@ -14,15 +14,15 @@ namespace ESFA.DC.ILR.Desktop.Service.APIClient
             var applicationVersions = new ApplicationVersion
             {
                 LastUpdated = new DateTime(2019, 11, 10),
-                Url = "foo.com",
+                Url = "https://submitlearnerdatabeta.fasst.org.uk/public-downloads/Desktop",
                 Versions = new List<Version>
                 {
                     new Version
                     {
-                        ApplicationVersion = "2.0.0.0",
+                        ApplicationVersion = "0.0.0.1",
                         Major = 2,
                         Minor = 0,
-                        Increment = 0,
+                        Increment = 1,
                         ReleaseDateTime = new DateTime(2019, 11, 10)
                     }
                 }

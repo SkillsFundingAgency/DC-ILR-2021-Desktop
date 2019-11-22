@@ -35,15 +35,5 @@ namespace ESFA.DC.ILR.Desktop.WPF.Service
 
             reportFiltersWindow.ShowDialog();
         }
-
-        public void ShowVersionWindow()
-        {
-            var versionWindow = new VersionUpdateWindow
-            {
-                Owner = Application.Current.MainWindow
-            };
-
-            versionWindow.ShowDialog();
-        }
     }
 }

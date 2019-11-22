@@ -3,12 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
-        Title="Funding Information System (FIS) Funding Year 2019-2020" Height="450" Width="800" WindowStartupLocation="CenterScreen"
-        DataContext="{Binding Main, Source={StaticResource Locator}}" ResizeMode="CanMinimize" Icon="../Resources/Images/DSAppIcon.ico">
+        Title="Funding Information System (FIS) Funding Year 2019-2020" 
+        Height="450" 
+        Width="800" 
+        WindowStartupLocation="CenterScreen"
+        DataContext="{Binding Main, Source={StaticResource Locator}}" 
+        ResizeMode="CanMinimize" 
+        Icon="../Resources/Images/DSAppIcon.ico">
     <Grid>
-
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="120"/>
             <RowDefinition Height= "*"/>
@@ -18,10 +24,52 @@
             <MenuItem Header="Report Filters" Command="{Binding ReportFiltersNavigationCommand}" Visibility="{Binding ReportFiltersFeatureSwitch, Converter={StaticResource BooleanToVisibilityConverter}}" />
             <MenuItem Header="Settings" Command="{Binding SettingsNavigationCommand}"/>
             <MenuItem Header="About" Command="{Binding AboutNavigationCommand}"/>
-            <MenuItem Header="Check for update" Command="{Binding VersionNavigationCommand}"  Visibility="{Binding VersionUpdateFeatureSwitch, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            <MenuItem Header="Check for update" Command="{Binding CheckForUpdateMenuCommand}"
+                      IsEnabled="{Binding UpdateMenuEnabled}"
+                      Visibility="{Binding VersionUpdateFeatureSwitch, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <MenuItem.Style>
+                    <Style TargetType="MenuItem">
+                        <Style.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="LightGray" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </MenuItem.Style>
+            </MenuItem>
         </Menu>
 
-        <Grid Row ="1">
+        <Grid Grid.Row ="1" Background="DarkBlue"
+              Visibility="{Binding NewVersionBannerVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"></ColumnDefinition>
+                <ColumnDefinition Width="110"></ColumnDefinition>
+                <ColumnDefinition Width="230"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="20"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Foreground="White" FontSize="14" Content="New version available" Grid.Column="0" />
+            <Label Foreground="White" FontSize="14" Content="{Binding NewVersion.ApplicationVersion}" ContentStringFormat="Version:  {0}" Grid.Column="1" />
+            <Label Foreground="White" FontSize="14" Content="{Binding NewVersion.ReleaseDateTime}" ContentStringFormat="Released: {0}" Grid.Column="2" />
+
+            <TextBlock Grid.Column="3" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White">
+                Please download from <Hyperlink Command="{Binding VersionNavigationCommand}"><TextBlock Text="here" /></Hyperlink>
+            </TextBlock>
+
+            <Button Grid.Column="4" Command="{Binding CloseNewVersionBannerCommand}">X</Button>
+        </Grid>
+
+        <Grid Background="DarkBlue" Grid.Row="1"
+              Visibility="{Binding UpToDateBannerVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="20"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Foreground="White" FontSize="14" Content="You have the latest version" Grid.Column="0" />
+            <Button Command="{Binding CloseUpToDateBannerCommand}" Grid.Column="1">X</Button>
+        </Grid>
+
+        <Grid Row ="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="5*" />
                 <ColumnDefinition Width="3*" />
@@ -33,7 +81,7 @@
             </StackPanel>
         </Grid>
 
-        <Grid Margin="15" Grid.Row="2">
+        <Grid Margin="15" Grid.Row="3">
 
             <Grid Visibility="{Binding ChooseFileVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <Grid.RowDefinitions>
@@ -192,7 +240,12 @@
                     </Grid>
                 </StackPanel>
             </Grid>
-
         </Grid>
     </Grid>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding CheckForUpdateCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 </Window>

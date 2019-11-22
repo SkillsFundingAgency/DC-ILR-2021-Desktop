@@ -1,6 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
+using ESFA.DC.ILR.Desktop.Models;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Service.Journey;
 using ESFA.DC.ILR.Desktop.Service.Message;
@@ -24,6 +25,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private readonly IReleaseVersionInformationService _versionInformationService;
         private readonly ILogger _logger;
         private readonly IFeatureSwitchService _featureSwitchService;
+        private readonly IVersionMediatorService _versionMediatorService;
 
         private CancellationTokenSource _cancellationTokenSource;
         private string _fileName = FilenamePlaceholder;
@@ -33,6 +35,11 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private int _taskCount = 1;
         private StageKeys _currentStage = StageKeys.ChooseFile;
         private string _reportsLocation;
+        private bool _canCheckForNewVersion = true;
+        private bool _newVersionBannerVisibility;
+        private bool _uptoDateBannerVisibility;
+        private bool _updateMenuEnabled = true;
+        private ApplicationVersionResult _newVersion;
 
         public MainViewModel(
             IIlrDesktopService ilrDesktopService,
@@ -43,7 +50,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             IWindowsProcessService windowsProcessService,
             IReleaseVersionInformationService versionInformationService,
             ILogger logger,
-            IFeatureSwitchService featureSwitchService)
+            IFeatureSwitchService featureSwitchService,
+            IVersionMediatorService versionMediatorService)
         {
             _ilrDesktopService = ilrDesktopService;
             _desktopContextFactory = desktopContextFactory;
@@ -53,8 +61,12 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             _versionInformationService = versionInformationService;
             _logger = logger;
             _featureSwitchService = featureSwitchService;
+            _versionMediatorService = versionMediatorService;
 
             messengerService.Register<TaskProgressMessage>(this, HandleTaskProgressMessage);
+
+            CheckForUpdateCommand = new AsyncCommand(CheckForNewVersion, CanCheckForNewVersion);
+            CheckForUpdateMenuCommand = new AsyncCommand(CheckForNewVersionFromMenu, CanCheckForNewVersion);
 
             ChooseFileCommand = new RelayCommand(ShowChooseFileDialog);
             ProcessFileCommand = new AsyncCommand(ProcessFile, () => CanSubmit);
@@ -63,7 +75,9 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             ReportFiltersNavigationCommand = new RelayCommand(ReportFiltersNavigate);
             ReportsFolderCommand = new RelayCommand(() => ProcessStart(_reportsLocation));
             CancelAndReImportCommand = new RelayCommand(CancelAndReImport, () => !_cancellationTokenSource?.IsCancellationRequested ?? false);
-            VersionNavigationCommand = new RelayCommand(ShowVersionWindow);
+            CloseNewVersionBannerCommand = new RelayCommand(CloseNewVersionBanner);
+            CloseUpToDateBannerCommand = new RelayCommand(CloseUpToDateBanner);
+            VersionNavigationCommand = new RelayCommand(NavigateToVersionsUrl);
         }
 
         public StageKeys CurrentStage
@@ -100,6 +114,24 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         public bool ProcessFailureHandledVisibility => CurrentStage == StageKeys.ProcessHandledFailure;
 
         public bool ProcessFailureUnhandledVisibility => CurrentStage == StageKeys.ProcessUnhandledFailure;
+
+        public bool NewVersionBannerVisibility
+        {
+            get => _newVersionBannerVisibility;
+            set => Set(ref _newVersionBannerVisibility, value);
+        }
+
+        public bool UpToDateBannerVisibility
+        {
+            get => _uptoDateBannerVisibility;
+            set => Set(ref _uptoDateBannerVisibility, value);
+        }
+
+        public bool UpdateMenuEnabled
+        {
+            get => _updateMenuEnabled;
+            set => Set(ref _updateMenuEnabled, value);
+        }
 
         public string FileName
         {
@@ -143,6 +175,16 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         public bool VersionUpdateFeatureSwitch => _featureSwitchService.VersionUpdate;
 
+        public ApplicationVersionResult NewVersion
+        {
+            get => _newVersion;
+            set => Set(ref _newVersion, value);
+        }
+
+        public AsyncCommand CheckForUpdateCommand { get; set; }
+
+        public AsyncCommand CheckForUpdateMenuCommand { get; set; }
+
         public RelayCommand ChooseFileCommand { get; set; }
 
         public AsyncCommand ProcessFileCommand { get; set; }
@@ -156,6 +198,10 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         public RelayCommand ReportsFolderCommand { get; set; }
 
         public RelayCommand CancelAndReImportCommand { get; set; }
+
+        public RelayCommand CloseNewVersionBannerCommand { get; set; }
+
+        public RelayCommand CloseUpToDateBannerCommand { get; set; }
 
         public RelayCommand VersionNavigationCommand { get; set; }
 
@@ -243,9 +289,61 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         private void ReportFiltersNavigate() => _windowService.ShowReportFiltersWindow();
 
-        private void ShowVersionWindow()
+        private async Task CheckForNewVersionFromMenu()
         {
-            _windowService.ShowVersionWindow();
+            UpToDateBannerVisibility = false;
+            await CheckForNewVersion();
+
+            if (NewVersion == null)
+            {
+                UpToDateBannerVisibility = true;
+            }
+        }
+
+        private async Task CheckForNewVersion()
+        {
+            ApplicationVersionResult newVersion;
+            try
+            {
+                _canCheckForNewVersion = false;
+                _updateMenuEnabled = false;
+                newVersion = await _versionMediatorService.GetNewVersion();
+            }
+            finally
+            {
+                _canCheckForNewVersion = true;
+                _updateMenuEnabled = true;
+            }
+
+            if (newVersion != null)
+            {
+                NewVersion = newVersion;
+                NewVersionBannerVisibility = true;
+            }
+            else
+            {
+                NewVersionBannerVisibility = false;
+            }
+        }
+
+        private bool CanCheckForNewVersion()
+        {
+            return _canCheckForNewVersion;
+        }
+
+        private void CloseNewVersionBanner()
+        {
+            NewVersionBannerVisibility = false;
+        }
+
+        private void CloseUpToDateBanner()
+        {
+            UpToDateBannerVisibility = false;
+        }
+
+        private void NavigateToVersionsUrl()
+        {
+            _windowsProcessService.ProcessStart(NewVersion.Url);
         }
     }
 }

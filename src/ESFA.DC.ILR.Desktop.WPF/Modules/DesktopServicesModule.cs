@@ -30,7 +30,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
             containerBuilder.RegisterType<VersionMessageFactory>().As<IVersionMessageFactory>();
 
             containerBuilder.RegisterType<ApplicationVersionClientStub>().As<IApplicationVersionClient>();
-            //containerBuilder.RegisterType<ApplicationVersionClient>().As<IApplicationVersionClient>();
             containerBuilder.RegisterType<VersionService>().As<IVersionService>();
             containerBuilder.RegisterType<VersionMediatorService>().As<IVersionMediatorService>();
 
