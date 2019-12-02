@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Configuration;
+using System.Threading;
 using Autofac;
 using ESFA.DC.ILR.Desktop.Internal.Interface.Configuration;
 using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
@@ -29,12 +30,11 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
             containerBuilder.RegisterType<VersionFactory>().As<IVersionFactory>();
             containerBuilder.RegisterType<VersionMessageFactory>().As<IVersionMessageFactory>();
 
-            containerBuilder.RegisterType<ApplicationVersionClientStub>().As<IApplicationVersionClient>();
+            containerBuilder.RegisterType<ApplicationVersionClient>().As<IApplicationVersionClient>();
             containerBuilder.RegisterType<VersionService>().As<IVersionService>();
             containerBuilder.RegisterType<VersionMediatorService>().As<IVersionMediatorService>();
 
             containerBuilder.RegisterType<DesktopServiceConfiguration>().As<IServiceConfiguration>();
-            containerBuilder.RegisterType<APIConfiguration>().As<IAPIConfiguration>();
 
             containerBuilder.RegisterType<DesktopContextFactory>().As<IDesktopContextFactory>();
 
@@ -46,6 +46,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
                 settings.LoadAsync(CancellationToken.None).Wait();
                 return settings;
             }).As<IDesktopServiceSettings>().SingleInstance();
+
+            containerBuilder.RegisterType<APIConfiguration>().As<IAPIConfiguration>();
 
             containerBuilder.RegisterType<FeatureSwitchService>().As<IFeatureSwitchService>();
         }

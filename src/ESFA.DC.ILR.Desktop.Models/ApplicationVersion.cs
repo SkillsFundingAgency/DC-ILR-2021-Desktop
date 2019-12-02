@@ -9,6 +9,6 @@ namespace ESFA.DC.ILR.Desktop.Models
 
         public DateTime LastUpdated { get; set; }
                 
-        public IReadOnlyCollection<Version> Versions { get; set; }
+        public List<Version> Versions { get; set; }
     }
 }
