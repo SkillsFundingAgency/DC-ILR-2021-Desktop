@@ -99,8 +99,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TestSpecificSubClasses\VersionUpdateViewModelTestSpecificTestClass.cs" />
-    <Compile Include="VersionUpdateViewModelTests.cs" />
     <Compile Include="AboutViewModelTests.cs" />
     <Compile Include="MainViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

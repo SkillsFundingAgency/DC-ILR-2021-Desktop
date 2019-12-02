@@ -7,7 +7,5 @@
         void ShowAboutWindow();
 
         void ShowReportFiltersWindow();
-
-        void ShowVersionWindow();
     }
 }

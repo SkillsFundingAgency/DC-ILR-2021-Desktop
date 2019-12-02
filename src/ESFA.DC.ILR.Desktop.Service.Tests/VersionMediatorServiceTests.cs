@@ -54,8 +54,6 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
                 .Setup(m => m.GetVersion(versionNumber))
                 .Returns(version);
 
-            var messageServiceMock = new Mock<IMessengerService>();
-
             var versionInformationService = new Mock<IReleaseVersionInformationService>();
             versionInformationService
                 .Setup(m => m.VersionNumber)
@@ -68,14 +66,15 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
 
             var service = GetVersionMediatorService(
                 versionFactoryMock.Object,
-                versionMessageFactoryMock.Object,
-                messageServiceMock.Object,
                 versionInformationService.Object,
                 versionService.Object);
 
-            var found = await service.CheckForUpdates();
-            found.Should().BeTrue();
-            messageServiceMock.Verify(m => m.Send(versionMessage), Times.Once);
+            var found = service.GetCurrentApplicationVersion();
+            found.ApplicationVersion.Should().Be(version.ApplicationVersion);
+            found.ReleaseDateTime.Should().Be(version.ReleaseDateTime);
+            found.Major.Should().Be(version.Major);
+            found.Minor.Should().Be(version.Minor);
+            found.Increment.Should().Be(version.Increment);
 
             var result = service.GetCurrentApplicationVersion();
 
@@ -126,8 +125,6 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
                 .Setup(m => m.GetVersion(versionNumber))
                 .Returns(version);
 
-            var messageServiceMock = new Mock<IMessengerService>();
-
             var versionInformationService = new Mock<IReleaseVersionInformationService>();
             versionInformationService
                 .Setup(m => m.VersionNumber)
@@ -140,27 +137,24 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
 
             var service = GetVersionMediatorService(
                 versionFactoryMock.Object,
-                versionMessageFactoryMock.Object,
-                messageServiceMock.Object,
                 versionInformationService.Object,
                 versionService.Object);
 
-            var found = await service.CheckForUpdates();
-            found.Should().BeFalse();
-            messageServiceMock.Verify(m => m.Send(It.IsAny<VersionMessage>()), Times.Never);
+            var found = service.GetCurrentApplicationVersion();
+            found.ApplicationVersion.Should().Be(version.ApplicationVersion);
+            found.ReleaseDateTime.Should().Be(version.ReleaseDateTime);
+            found.Major.Should().Be(version.Major);
+            found.Minor.Should().Be(version.Minor);
+            found.Increment.Should().Be(version.Increment);
         }
 
         private VersionMediatorServiceTestClass GetVersionMediatorService(
             IVersionFactory versionFactory = null,
-            IVersionMessageFactory versionMessageFactory = null,
-            IMessengerService messengerService = null,
             IReleaseVersionInformationService versionInformationService = null,
             IVersionService versionService = null)
         {
             return new VersionMediatorServiceTestClass(
                 versionFactory ?? Mock.Of<IVersionFactory>(),
-                versionMessageFactory ?? Mock.Of<IVersionMessageFactory>(),
-                messengerService ?? Mock.Of<IMessengerService>(),
                 versionInformationService ?? Mock.Of<IReleaseVersionInformationService>(),
                 versionService ?? Mock.Of<IVersionService>());
         }
