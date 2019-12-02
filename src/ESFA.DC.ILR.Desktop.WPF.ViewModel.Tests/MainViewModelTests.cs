@@ -36,7 +36,10 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
                 .Setup(m => m.GetNewVersion())
                 .ReturnsAsync(applicationVersionResult);
 
-            var viewModel = NewViewModel(versionMediatorService: versionMediatorServiceMock.Object);
+            var featureSwitchService = new Mock<IFeatureSwitchService>();
+            featureSwitchService.Setup(m => m.VersionUpdate).Returns(true);
+
+            var viewModel = NewViewModel(versionMediatorService: versionMediatorServiceMock.Object, featureSwitchService: featureSwitchService.Object);
 
             await viewModel.CheckForUpdateMenuCommand.ExecuteAsync();
 
@@ -56,7 +59,10 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
                 .Setup(m => m.GetNewVersion())
                 .ReturnsAsync((ApplicationVersionResult)null);
 
-            var viewModel = NewViewModel(versionMediatorService: versionMediatorServiceMock.Object);
+            var featureSwitchService = new Mock<IFeatureSwitchService>();
+            featureSwitchService.Setup(m => m.VersionUpdate).Returns(true);
+
+            var viewModel = NewViewModel(versionMediatorService: versionMediatorServiceMock.Object, featureSwitchService: featureSwitchService.Object);
 
             await viewModel.CheckForUpdateMenuCommand.ExecuteAsync();
 
@@ -85,7 +91,10 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
                 .Setup(m => m.GetNewVersion())
                 .ReturnsAsync(applicationVersionResult);
 
-            var viewModel = NewViewModel(versionMediatorService: versionMediatorServiceMock.Object);
+            var featureSwitchService = new Mock<IFeatureSwitchService>();
+            featureSwitchService.Setup(m => m.VersionUpdate).Returns(true);
+
+            var viewModel = NewViewModel(versionMediatorService: versionMediatorServiceMock.Object, featureSwitchService: featureSwitchService.Object);
 
             await viewModel.CheckForUpdateCommand.ExecuteAsync();
 
@@ -105,7 +114,10 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
                 .Setup(m => m.GetNewVersion())
                 .ReturnsAsync((ApplicationVersionResult)null);
 
-            var viewModel = NewViewModel(versionMediatorService: versionMediatorServiceMock.Object);
+            var featureSwitchService = new Mock<IFeatureSwitchService>();
+            featureSwitchService.Setup(m => m.VersionUpdate).Returns(true);
+
+            var viewModel = NewViewModel(versionMediatorService: versionMediatorServiceMock.Object, featureSwitchService: featureSwitchService.Object);
 
             await viewModel.CheckForUpdateCommand.ExecuteAsync();
 
