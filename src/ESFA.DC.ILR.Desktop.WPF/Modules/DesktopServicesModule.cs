@@ -10,6 +10,8 @@ using ESFA.DC.ILR.Desktop.WPF.Config;
 using ESFA.DC.ILR.Desktop.WPF.Service;
 using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
 using ESFA.DC.ILR.Desktop.WPF.ViewModel;
+using ESFA.DC.Telemetry;
+using ESFA.DC.Telemetry.Interfaces;
 
 namespace ESFA.DC.ILR.Desktop.WPF.Modules
 {
@@ -48,6 +50,10 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
             }).As<IDesktopServiceSettings>().SingleInstance();
 
             containerBuilder.RegisterType<FeatureSwitchService>().As<IFeatureSwitchService>();
+
+            containerBuilder.RegisterType<NullTelemetry>()
+                .As<ITelemetry>()
+                .InstancePerLifetimeScope();
         }
     }
 }
