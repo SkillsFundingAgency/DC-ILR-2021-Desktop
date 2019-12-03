@@ -59,6 +59,22 @@
             <Button Grid.Column="4" Command="{Binding CloseNewVersionBannerCommand}">X</Button>
         </Grid>
 
+        <Grid Grid.Row ="1" Background="Red"
+              Visibility="{Binding NewVersionBannerVisibilityError, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="400"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="20"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Foreground="White" FontSize="14" Content="Unable to check for newer versions. Please try again later." Grid.Column="0" />
+
+            <TextBlock Grid.Column="1" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White">
+                Current list of available versions can be found <Hyperlink Command="{Binding VersionNavigationCommand}"><TextBlock Text="here" /></Hyperlink>
+            </TextBlock>
+
+            <Button Grid.Column="2" Command="{Binding CloseNewVersionBannerCommand}">X</Button>
+        </Grid>
+
         <Grid Background="DarkBlue" Grid.Row="1"
               Visibility="{Binding UpToDateBannerVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Grid.ColumnDefinitions>
