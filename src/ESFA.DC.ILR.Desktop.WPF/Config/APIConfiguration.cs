@@ -10,16 +10,24 @@ namespace ESFA.DC.ILR.Desktop.WPF.Config
         private const string ApiVersionHeaderKey = "ApiVersionHeader";
         private const string ApiVersionKey = "ApiVersion";
 
+        public IAPIConfiguration Configuration => ConfigurationManager.GetSection("APIConfiguration") as APIConfiguration;
+
         [ConfigurationProperty(BaseUrlKey, IsRequired = true)]
-        public string APIBaseUrl { get; set; }
+        public string APIBaseUrl => GetFromKey(BaseUrlKey);
 
         [ConfigurationProperty(ApplicationVersionPathKey, IsRequired = true)]
-        public string ApplicationVersionPath { get; set; }
+        public string ApplicationVersionPath => GetFromKey(ApplicationVersionPathKey);
 
         [ConfigurationProperty(ApiVersionHeaderKey, IsRequired = true)]
-        public string APIVersionHeaderKey { get; set; }
+        public string APIVersionHeaderKey => GetFromKey(ApiVersionHeaderKey);
 
         [ConfigurationProperty(ApiVersionKey, IsRequired = true)]
-        public string APIVersionNumber { get; set; }
+        public string APIVersionNumber => GetFromKey(ApiVersionKey);
+
+        public string GetFromKey(string key)
+        {
+            var result = this[key];
+            return result == null ? null : string.IsNullOrWhiteSpace(result.ToString()) ? null : result.ToString();
+        }
     }
 }

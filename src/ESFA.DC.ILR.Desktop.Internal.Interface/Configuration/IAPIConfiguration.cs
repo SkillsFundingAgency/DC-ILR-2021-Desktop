@@ -2,12 +2,14 @@
 {
     public interface IAPIConfiguration
     {
-        string APIBaseUrl { get; set; }
+        string APIBaseUrl { get; }
 
-        string ApplicationVersionPath { get; set; }
+        string ApplicationVersionPath { get; }
 
-        string APIVersionHeaderKey { get; set; }
+        string APIVersionHeaderKey { get; }
 
-        string APIVersionNumber { get; set; }
+        string APIVersionNumber { get; }
+
+        IAPIConfiguration Configuration { get; }
     }
 }
