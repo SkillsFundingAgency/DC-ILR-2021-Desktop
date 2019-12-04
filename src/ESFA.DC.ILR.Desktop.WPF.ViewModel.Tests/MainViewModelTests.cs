@@ -48,6 +48,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             viewModel.NewVersion.Url.Should().Be(url);
 
             viewModel.NewVersionBannerVisibility.Should().BeTrue();
+            viewModel.NewVersionBannerVisibilityError.Should().BeFalse();
             viewModel.UpToDateBannerVisibility.Should().BeFalse();
         }
 
@@ -69,6 +70,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             viewModel.NewVersion.Should().BeNull();
 
             viewModel.NewVersionBannerVisibility.Should().BeFalse();
+            viewModel.NewVersionBannerVisibilityError.Should().BeFalse();
             viewModel.UpToDateBannerVisibility.Should().BeTrue();
         }
 
@@ -103,6 +105,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             viewModel.NewVersion.Url.Should().Be(url);
 
             viewModel.NewVersionBannerVisibility.Should().BeTrue();
+            viewModel.NewVersionBannerVisibilityError.Should().BeFalse();
             viewModel.UpToDateBannerVisibility.Should().BeFalse();
         }
 
@@ -124,6 +127,29 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             viewModel.NewVersion.Should().BeNull();
 
             viewModel.NewVersionBannerVisibility.Should().BeFalse();
+            viewModel.NewVersionBannerVisibilityError.Should().BeFalse();
+            viewModel.UpToDateBannerVisibility.Should().BeFalse();
+        }
+
+        [Fact]
+        public async Task CheckForUpdateCommand_API_Error()
+        {
+            var versionMediatorServiceMock = new Mock<IVersionMediatorService>();
+            versionMediatorServiceMock
+                .Setup(m => m.GetNewVersion())
+                .Throws(new Exception());
+
+            var featureSwitchService = new Mock<IFeatureSwitchService>();
+            featureSwitchService.Setup(m => m.VersionUpdate).Returns(true);
+
+            var viewModel = NewViewModel(versionMediatorService: versionMediatorServiceMock.Object, featureSwitchService: featureSwitchService.Object);
+
+            await viewModel.CheckForUpdateCommand.ExecuteAsync();
+
+            viewModel.NewVersion.Should().BeNull();
+
+            viewModel.NewVersionBannerVisibility.Should().BeFalse();
+            viewModel.NewVersionBannerVisibilityError.Should().BeTrue();
             viewModel.UpToDateBannerVisibility.Should().BeFalse();
         }
 

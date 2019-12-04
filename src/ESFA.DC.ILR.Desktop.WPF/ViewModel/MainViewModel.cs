@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
@@ -37,6 +38,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private string _reportsLocation;
         private bool _canCheckForNewVersion = true;
         private bool _newVersionBannerVisibility;
+        private bool _newVersionBannerVisibilityError;
         private bool _uptoDateBannerVisibility;
         private bool _updateMenuEnabled = true;
         private ApplicationVersionResult _newVersion;
@@ -119,6 +121,12 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         {
             get => _newVersionBannerVisibility;
             set => Set(ref _newVersionBannerVisibility, value);
+        }
+
+        public bool NewVersionBannerVisibilityError
+        {
+            get => _newVersionBannerVisibilityError;
+            set => Set(ref _newVersionBannerVisibilityError, value);
         }
 
         public bool UpToDateBannerVisibility
@@ -294,7 +302,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             UpToDateBannerVisibility = false;
             await CheckForNewVersion();
 
-            if (NewVersion == null)
+            if (NewVersion == null && NewVersionBannerVisibilityError == false)
             {
                 UpToDateBannerVisibility = true;
             }
@@ -307,12 +315,17 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
                 return;
             }
 
-            ApplicationVersionResult newVersion;
             try
             {
                 _canCheckForNewVersion = false;
                 _updateMenuEnabled = false;
-                newVersion = await _versionMediatorService.GetNewVersion();
+                NewVersion = await _versionMediatorService.GetNewVersion();
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError("Exception found connecting to SLD Public API", exception);
+                NewVersionBannerVisibility = false;
+                NewVersionBannerVisibilityError = true;
             }
             finally
             {
@@ -320,14 +333,10 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
                 _updateMenuEnabled = true;
             }
 
-            if (newVersion != null)
+            if (NewVersion != null)
             {
-                NewVersion = newVersion;
                 NewVersionBannerVisibility = true;
-            }
-            else
-            {
-                NewVersionBannerVisibility = false;
+                NewVersionBannerVisibilityError = false;
             }
         }
 
@@ -339,6 +348,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private void CloseNewVersionBanner()
         {
             NewVersionBannerVisibility = false;
+            NewVersionBannerVisibilityError = false;
         }
 
         private void CloseUpToDateBanner()

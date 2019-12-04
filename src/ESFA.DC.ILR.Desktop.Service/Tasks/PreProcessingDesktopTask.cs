@@ -4,9 +4,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.Desktop.Service.Tasks.Interface;
+using ESFA.DC.ILR.Desktop.Utils.Polly.Interface;
 using ESFA.DC.Logging.Interfaces;
-using Polly;
-using Polly.Retry;
 
 namespace ESFA.DC.ILR.Desktop.Service.Tasks
 {
@@ -14,24 +13,12 @@ namespace ESFA.DC.ILR.Desktop.Service.Tasks
     {
         private const string ExportPath = "Export";
         private readonly ILogger _logger;
-        private readonly RetryPolicy _fileSystemRetryPolicy;
+        private readonly IPollyPolicies _pollyPolicies;
 
-        public PreProcessingDesktopTask(ILogger logger)
+        public PreProcessingDesktopTask(ILogger logger, IPollyPolicies pollyPolicies)
         {
             _logger = logger;
-
-            _fileSystemRetryPolicy = Policy
-                .Handle<IOException>()
-                .Or<DirectoryNotFoundException>()
-                .WaitAndRetry(
-                    new TimeSpan[]
-                    {
-                        TimeSpan.FromMilliseconds(500),
-                        TimeSpan.FromSeconds(1000),
-                        TimeSpan.FromSeconds(2000),
-                    },
-                    (exception, span) =>
-                        _logger.LogError($"Exception Caught, retry in {span.Milliseconds} Milliseconds", exception));
+            _pollyPolicies = pollyPolicies;
         }
 
         public Task<IDesktopContext> ExecuteAsync(IDesktopContext desktopContext, CancellationToken cancellationToken)
@@ -87,7 +74,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tasks
 
         private void DeleteSandboxIfExists(string container)
         {
-            _fileSystemRetryPolicy.Execute(() =>
+            _pollyPolicies.FileSystemRetryPolicy.Execute(() =>
             {
                 if (Directory.Exists(container))
                 {
@@ -102,8 +89,8 @@ namespace ESFA.DC.ILR.Desktop.Service.Tasks
 
         private void CreateAndPopulateSandbox(IPreProcessingDesktopTaskContext preProcessingDesktopTaskContext, string newFilePath, string newRefDataFilePath)
         {
-            _fileSystemRetryPolicy
-                .Execute(() =>
+            _pollyPolicies.FileSystemRetryPolicy
+               .Execute(() =>
                 {
                     _logger.LogInfo($"Creating and Populating Sandbox Directory : {preProcessingDesktopTaskContext.Container}, {preProcessingDesktopTaskContext.FileName}, {preProcessingDesktopTaskContext.ReferenceDataFileName}");
                     Directory.CreateDirectory(preProcessingDesktopTaskContext.Container);
