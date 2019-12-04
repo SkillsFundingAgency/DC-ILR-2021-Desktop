@@ -10,12 +10,12 @@ namespace ESFA.DC.ILR.Desktop.Service.APIClient
     public class ApplicationVersionClient : IApplicationVersionClient
     {
         private readonly IAPIClientFactory _clientFactory;
-        private readonly IPollyPolicies _pollyPollicies;
+        private readonly IPollyPolicies _pollyPolicies;
 
-        public ApplicationVersionClient(IAPIClientFactory clientFactory, IPollyPolicies pollyPollicies)
+        public ApplicationVersionClient(IAPIClientFactory clientFactory, IPollyPolicies pollyPolicies)
         {
             _clientFactory = clientFactory;
-            _pollyPollicies = pollyPollicies;
+            _pollyPolicies = pollyPolicies;
         }
 
         public async Task<ApplicationVersion> GetApplicationVersionsAsync()
@@ -25,7 +25,7 @@ namespace ESFA.DC.ILR.Desktop.Service.APIClient
                 var client = _clientFactory.GetAPIClient();
                 var request = _clientFactory.GetApplicationVersionRequest();
 
-                return await _pollyPollicies
+                return await _pollyPolicies
                     .RequestTimeoutAsyncRetryPolicy.ExecuteAsync(() =>
                  client.GetAsync<ApplicationVersion>(request));
             }

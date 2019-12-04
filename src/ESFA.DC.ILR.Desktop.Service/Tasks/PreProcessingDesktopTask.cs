@@ -13,12 +13,12 @@ namespace ESFA.DC.ILR.Desktop.Service.Tasks
     {
         private const string ExportPath = "Export";
         private readonly ILogger _logger;
-        private readonly IPollyPolicies _pollyPollicies;
+        private readonly IPollyPolicies _pollyPolicies;
 
-        public PreProcessingDesktopTask(ILogger logger, IPollyPolicies pollyPollicies)
+        public PreProcessingDesktopTask(ILogger logger, IPollyPolicies pollyPolicies)
         {
             _logger = logger;
-            _pollyPollicies = pollyPollicies;
+            _pollyPolicies = pollyPolicies;
         }
 
         public Task<IDesktopContext> ExecuteAsync(IDesktopContext desktopContext, CancellationToken cancellationToken)
@@ -74,7 +74,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tasks
 
         private void DeleteSandboxIfExists(string container)
         {
-            _pollyPollicies.FileSystemRetryPolicy.Execute(() =>
+            _pollyPolicies.FileSystemRetryPolicy.Execute(() =>
             {
                 if (Directory.Exists(container))
                 {
@@ -89,7 +89,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tasks
 
         private void CreateAndPopulateSandbox(IPreProcessingDesktopTaskContext preProcessingDesktopTaskContext, string newFilePath, string newRefDataFilePath)
         {
-            _pollyPollicies.FileSystemRetryPolicy
+            _pollyPolicies.FileSystemRetryPolicy
                .Execute(() =>
                 {
                     _logger.LogInfo($"Creating and Populating Sandbox Directory : {preProcessingDesktopTaskContext.Container}, {preProcessingDesktopTaskContext.FileName}, {preProcessingDesktopTaskContext.ReferenceDataFileName}");
