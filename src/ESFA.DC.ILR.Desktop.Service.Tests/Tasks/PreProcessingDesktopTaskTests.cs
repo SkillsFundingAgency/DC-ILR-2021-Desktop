@@ -1,4 +1,5 @@
 ﻿using ESFA.DC.ILR.Desktop.Service.Tasks;
+using ESFA.DC.ILR.Desktop.Utils.Polly.Interface;
 using ESFA.DC.Logging.Interfaces;
 using FluentAssertions;
 using Xunit;
@@ -28,9 +29,9 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests.Tasks
             ukprn.Should().Be(12345678);
         }
 
-        private PreProcessingDesktopTask NewTask(ILogger logger = null)
+        private PreProcessingDesktopTask NewTask(ILogger logger = null, IPollyPolicies pollyPolicies = null)
         {
-            return new PreProcessingDesktopTask(logger);
+            return new PreProcessingDesktopTask(logger, pollyPolicies);
         }
     }
 }

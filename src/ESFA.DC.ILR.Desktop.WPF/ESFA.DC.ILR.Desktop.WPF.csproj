@@ -188,6 +188,10 @@
       <Project>{15e50fe1-098b-4dec-9346-cf4456c6d81d}</Project>
       <Name>ESFA.DC.ILR.Desktop.Service</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Utils\ESFA.DC.ILR.Desktop.Utils.csproj">
+      <Project>{A0E99E96-1998-4ADD-AD69-2C0C185E1ED2}</Project>
+      <Name>ESFA.DC.ILR.Desktop.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Aspose.Cells">
@@ -248,7 +252,7 @@
       <Version>0.2.25-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.Logging.Interfaces">
-      <Version>0.1.4-beta0001</Version>
+      <Version>0.1.6-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.Mapping.Interface">
       <Version>0.1.0-beta0001</Version>
