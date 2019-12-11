@@ -2,6 +2,6 @@
 {
     public enum ContextMutatorKeys
     {
-        SchemaError,
+        FileFailure,
     }
 }

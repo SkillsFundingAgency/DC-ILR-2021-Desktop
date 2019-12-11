@@ -37,7 +37,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
             pipeline[4].FailureKey.Should().BeNull();
 
             pipeline[5].Key.Should().Be(IlrDesktopTaskKeys.ValidationService);
-            pipeline[5].FailureKey.Should().BeNull();
+            pipeline[5].FailureKey.Should().Be(IlrDesktopTaskKeys.ReportService);
 
             pipeline[6].Key.Should().Be(IlrDesktopTaskKeys.FundingService);
             pipeline[6].FailureKey.Should().BeNull();
@@ -79,7 +79,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
             pipeline[2].FailureKey.Should().BeNull();
 
             pipeline[3].Key.Should().Be(IlrDesktopTaskKeys.ValidationService);
-            pipeline[3].FailureKey.Should().BeNull();
+            pipeline[3].FailureKey.Should().Be(IlrDesktopTaskKeys.ReportService);
 
             pipeline[4].Key.Should().Be(IlrDesktopTaskKeys.FundingService);
             pipeline[4].FailureKey.Should().BeNull();

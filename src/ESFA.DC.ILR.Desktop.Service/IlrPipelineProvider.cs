@@ -38,9 +38,9 @@ namespace ESFA.DC.ILR.Desktop.Service
                 taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.MdbCreate));
             }
 
-            taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.FileValidationService, IlrDesktopTaskKeys.ReportService, ContextMutatorKeys.SchemaError));
+            taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.FileValidationService, IlrDesktopTaskKeys.ReportService, ContextMutatorKeys.FileFailure));
             taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ReferenceDataService));
-            taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ValidationService));
+            taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ValidationService, IlrDesktopTaskKeys.ReportService, ContextMutatorKeys.FileFailure));
             taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.FundingService));
 
             if (exportToSql)
