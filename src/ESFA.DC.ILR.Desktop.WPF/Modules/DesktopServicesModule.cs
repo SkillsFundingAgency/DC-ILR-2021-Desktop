@@ -52,10 +52,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
             containerBuilder.RegisterType<APIConfiguration>().As<IAPIConfiguration>();
 
             containerBuilder.RegisterType<FeatureSwitchService>().As<IFeatureSwitchService>();
-
-            containerBuilder.RegisterType<NullTelemetry>()
-                .As<ITelemetry>()
-                .InstancePerLifetimeScope();
         }
     }
 }
