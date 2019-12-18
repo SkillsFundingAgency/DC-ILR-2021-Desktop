@@ -35,11 +35,8 @@ namespace ESFA.DC.ILR.Desktop.CLI
         {
             var containerBuilder = new ContainerBuilder();
 
-            containerBuilder.RegisterModule<IlrServicesModule>();
-            containerBuilder.RegisterModule<LoggingModule>();
-            containerBuilder.RegisterModule<SerializationModule>();
-            containerBuilder.RegisterModule<IOModule>();
             containerBuilder.RegisterModule<CommandLineModule>();
+            containerBuilder.RegisterModule<BaseModule>();
 
             var desktopServiceSettings = new DesktopServiceSettings();
             desktopServiceSettings.LoadAsync(CancellationToken.None).Wait();
