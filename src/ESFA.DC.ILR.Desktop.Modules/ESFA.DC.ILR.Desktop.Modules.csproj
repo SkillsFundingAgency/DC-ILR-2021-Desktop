@@ -22,6 +22,8 @@
     <PackageReference Include="ESFA.DC.Serialization.Interfaces" Version="0.1.6-beta0001" />
     <PackageReference Include="ESFA.DC.Serialization.Json" Version="0.1.6-beta0001" />
     <PackageReference Include="ESFA.DC.Serialization.Xml" Version="0.1.6-beta0001" />
+    <PackageReference Include="ESFA.DC.Telemetry" Version="0.1.6-beta0001" />
+    <PackageReference Include="ESFA.DC.Telemetry.Interfaces" Version="0.1.6-beta0001" />
     <PackageReference Include="NLog.Config" Version="4.6.7" />
   </ItemGroup>
 

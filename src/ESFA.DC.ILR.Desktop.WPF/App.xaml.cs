@@ -33,10 +33,7 @@ namespace ESFA.DC.ILR.Desktop.WPF
             containerBuilder.RegisterModule<ViewModelsModule>();
 
             // Common Service Registration
-            containerBuilder.RegisterModule<IlrServicesModule>();
-            containerBuilder.RegisterModule<LoggingModule>();
-            containerBuilder.RegisterModule<SerializationModule>();
-            containerBuilder.RegisterModule<IOModule>();
+            containerBuilder.RegisterModule<BaseModule>();
 
             return containerBuilder;
         }
