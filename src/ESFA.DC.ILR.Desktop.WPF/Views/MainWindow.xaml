@@ -42,27 +42,34 @@
         <Grid Row ="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="473*" />
-                <ColumnDefinition Width="23*"/>
-                <ColumnDefinition Width="22*" />
-                <ColumnDefinition Width="100*"/>
-                <ColumnDefinition Width="256*"/>
+                <ColumnDefinition Width="23"/>
+                <ColumnDefinition Width="22*"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
-            <Image Source="../Resources/Images/ESFA_logo.jpg" HorizontalAlignment="Left" Margin="15,5,0,5"/>
-            <StackPanel Grid.Column="2" Grid.ColumnSpan="3" Margin="0,5,9.778,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="15*"/>
+            </Grid.RowDefinitions>
+            <Image Source="../Resources/Images/ESFA_logo.jpg" HorizontalAlignment="Left" Margin="15,5,0,5" Grid.Row="0" Grid.RowSpan="4"/>
+            <StackPanel Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="3">
                 <Border BorderBrush="#1d70b8" BorderThickness="2" Padding="6" Visibility="{Binding UpToDateBannerVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
-                    <TextBlock Grid.RowSpan="3" Foreground="Black"  FontSize="12" Grid.Column="2" HorizontalAlignment="Left" Width="350" Height="90">
+                    <TextBlock Grid.ColumnSpan="3" Foreground="Black"  FontSize="12" Grid.Column="2" HorizontalAlignment="Left">
                     You are using the latest version
                     </TextBlock>
                 </Border>
-                <Border BorderBrush="#1d70b8" BorderThickness="2" Padding="6" Visibility="{Binding NewVersionBannerVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
-                    <TextBlock Grid.Column="2" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="left" Foreground="Black" Width="296" Height="90"> 
+                <Border BorderBrush="#1d70b8" BorderThickness="2" Padding="6" Grid.Row="0" Grid.RowSpan="4" Grid.Column="2" Grid.ColumnSpan="3" Visibility="{Binding NewVersionBannerVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <TextBlock Grid.Column="2" Grid.ColumnSpan="3" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="left" Foreground="Black"> 
                         <Bold>New version available</Bold>
                          <LineBreak/> <LineBreak/>
                         Download New Version: <Hyperlink Command="{Binding VersionNavigationCommand}"><TextBlock Text="{Binding NewVersion.ApplicationVersion}" /></Hyperlink>
                     </TextBlock>
                 </Border>
                 <Border BorderBrush="#1d70b8" BorderThickness="2" Padding="6" Visibility="{Binding NewVersionBannerVisibilityError, Converter={StaticResource BooleanToVisibilityConverter}}">
-                    <TextBlock Grid.Column="2" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="left" Foreground="Black" Width="296" Height="90"> 
+                    <TextBlock Grid.Column="2" Grid.ColumnSpan="3" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="left" Foreground="Black"> 
                         <Bold>There is a problem</Bold>
                          <LineBreak/> <LineBreak/>
                         We can't check if you have the latest version. Try Later. 

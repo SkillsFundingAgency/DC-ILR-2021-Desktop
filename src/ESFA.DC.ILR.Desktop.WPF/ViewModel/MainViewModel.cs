@@ -220,6 +220,12 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             TaskCount = taskProgressMessage.TaskCount;
         }
 
+        public bool ApplicationVersionUpToDate() => NewVersion != null && NewVersion.ApplicationVersion == ReleaseVersionNumber;
+
+        public bool ApplicationVersionUpdateAvailable() => NewVersion != null && NewVersion.ApplicationVersion != null && NewVersion.ApplicationVersion != ReleaseVersionNumber;
+
+        public bool ApplicationVersionUpdateError() => NewVersion == null || NewVersion.ApplicationVersion == null;
+
         private void ShowChooseFileDialog()
         {
             var fileName = _dialogInteractionService.GetFileNameFromOpenFileDialog();
@@ -297,30 +303,45 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         private void ReportFiltersNavigate() => _windowService.ShowReportFiltersWindow();
 
+        private void VersionStatusUpToDate()
+        {
+            NewVersionBannerVisibility = false;
+            NewVersionBannerVisibilityError = false;
+            UpToDateBannerVisibility = true;
+        }
+
+        private void VersionStatusUpdateAvailable()
+        {
+            NewVersionBannerVisibility = true;
+            NewVersionBannerVisibilityError = false;
+            UpToDateBannerVisibility = false;
+        }
+
+        private void VersionStatusUpdateError()
+        {
+            NewVersionBannerVisibility = false;
+            NewVersionBannerVisibilityError = true;
+            UpToDateBannerVisibility = false;
+        }
+
         private async Task CheckForNewVersionFromMenu()
         {
             UpToDateBannerVisibility = false;
             await CheckForNewVersion();
 
-            if (NewVersion != null && NewVersion.ApplicationVersion == ReleaseVersionNumber)
+            if (ApplicationVersionUpToDate())
             {
-                NewVersionBannerVisibility = false;
-                NewVersionBannerVisibilityError = false;
-                UpToDateBannerVisibility = true;
+                VersionStatusUpToDate();
             }
 
-            if (NewVersion != null && NewVersion.ApplicationVersion != null && NewVersion.ApplicationVersion != ReleaseVersionNumber)
+            if (ApplicationVersionUpdateAvailable())
             {
-                NewVersionBannerVisibility = true;
-                NewVersionBannerVisibilityError = false;
-                UpToDateBannerVisibility = false;
+                VersionStatusUpdateAvailable();
             }
 
-            if (NewVersion == null || NewVersion.ApplicationVersion == null)
+            if (ApplicationVersionUpdateError())
             {
-                NewVersionBannerVisibility = false;
-                NewVersionBannerVisibilityError = true;
-                UpToDateBannerVisibility = false;
+                VersionStatusUpdateError();
             }
         }
 
@@ -347,17 +368,14 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
                 _updateMenuEnabled = true;
             }
 
-            if (NewVersion != null && NewVersion.ApplicationVersion == ReleaseVersionNumber)
+            if (ApplicationVersionUpToDate())
             {
-                NewVersionBannerVisibility = false;
-                NewVersionBannerVisibilityError = false;
+                VersionStatusUpToDate();
             }
 
-            if (NewVersion != null && NewVersion.ApplicationVersion != ReleaseVersionNumber)
+            if (ApplicationVersionUpdateAvailable())
             {
-                NewVersionBannerVisibility = true;
-                NewVersionBannerVisibilityError = false;
-                UpToDateBannerVisibility = false;
+                VersionStatusUpdateAvailable();
             }
         }
 

@@ -16,6 +16,6 @@ namespace ESFA.DC.ILR.Desktop.Models
 
         public DateTime ReleaseDateTime { get; set; }
 
-        public ReferenceData ReferenceData { get; set; }
+        public ReferenceData ReferenceDataVersion { get; set; }
     }
 }
