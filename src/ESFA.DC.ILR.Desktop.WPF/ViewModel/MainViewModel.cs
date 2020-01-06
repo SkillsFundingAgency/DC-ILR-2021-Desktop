@@ -302,9 +302,25 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             UpToDateBannerVisibility = false;
             await CheckForNewVersion();
 
-            if (NewVersion == null && NewVersionBannerVisibilityError == false)
+            if (NewVersion != null && NewVersion.ApplicationVersion == ReleaseVersionNumber)
             {
+                NewVersionBannerVisibility = false;
+                NewVersionBannerVisibilityError = false;
                 UpToDateBannerVisibility = true;
+            }
+
+            if (NewVersion != null && NewVersion.ApplicationVersion != null && NewVersion.ApplicationVersion != ReleaseVersionNumber)
+            {
+                NewVersionBannerVisibility = true;
+                NewVersionBannerVisibilityError = false;
+                UpToDateBannerVisibility = false;
+            }
+
+            if (NewVersion == null || NewVersion.ApplicationVersion == null)
+            {
+                NewVersionBannerVisibility = false;
+                NewVersionBannerVisibilityError = true;
+                UpToDateBannerVisibility = false;
             }
         }
 
@@ -324,8 +340,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             catch (Exception exception)
             {
                 _logger.LogError("Exception found connecting to SLD Public API", exception);
-                NewVersionBannerVisibility = false;
-                NewVersionBannerVisibilityError = true;
             }
             finally
             {
@@ -333,10 +347,17 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
                 _updateMenuEnabled = true;
             }
 
-            if (NewVersion != null)
+            if (NewVersion != null && NewVersion.ApplicationVersion == ReleaseVersionNumber)
+            {
+                NewVersionBannerVisibility = false;
+                NewVersionBannerVisibilityError = false;
+            }
+
+            if (NewVersion != null && NewVersion.ApplicationVersion != ReleaseVersionNumber)
             {
                 NewVersionBannerVisibility = true;
                 NewVersionBannerVisibilityError = false;
+                UpToDateBannerVisibility = false;
             }
         }
 

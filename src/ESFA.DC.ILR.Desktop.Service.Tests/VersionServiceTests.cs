@@ -30,7 +30,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
 
             var currentVersion = new Version
             {
-                ApplicationVersion = "1.0.0.0",
+                VersionName = "1.0.0.0",
                 ReleaseDateTime = releaseDateTime,
                 Major = currentMajor,
                 Minor = currentMinor,
@@ -90,7 +90,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
 
             var currentVersion = new Version
             {
-                ApplicationVersion = "1.0.0.0",
+                VersionName = "1.0.0.0",
                 ReleaseDateTime = releaseDateTime,
                 Major = currentMajor,
                 Minor = currentMinor,
@@ -155,7 +155,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
                 {
                     new Version
                     {
-                        ApplicationVersion = version,
+                        VersionName = version,
                         ReleaseDateTime = releaseDate.Value,
                         Major = major.Value,
                         Minor = minor.Value,

@@ -29,7 +29,7 @@ namespace ESFA.DC.ILR.Desktop.Service
             return newerVersion == null
                 ? null
                 : _applicationVersionResultFactory.GetApplicationVersionResult(
-                    newerVersion.ApplicationVersion,
+                    newerVersion.VersionName,
                     newerVersion.ReleaseDateTime,
                     applicationVersions.Url);
         }
@@ -40,7 +40,7 @@ namespace ESFA.DC.ILR.Desktop.Service
                 .OrderByDescending(v => v.Major).ThenByDescending(v => v.Minor).ThenByDescending(v => v.Increment)
                 .FirstOrDefault(v => v.Major > currentVersion.Major
                                               || (v.Major == currentVersion.Major && v.Minor > currentVersion.Minor)
-                                              || (v.Major == currentVersion.Major && v.Minor == currentVersion.Minor && v.Increment > currentVersion.Increment));
+                                              || (v.Major == currentVersion.Major && v.Minor == currentVersion.Minor && v.Increment > currentVersion.Increment)) ?? currentVersion;
         }
     }
 }

@@ -26,7 +26,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
 
             var version = new Version
             {
-                ApplicationVersion = versionNumber,
+                VersionName = versionNumber,
                 Major = major,
                 Minor = minor,
                 Increment = increment
@@ -70,7 +70,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
                 versionService.Object);
 
             var found = service.GetCurrentApplicationVersion();
-            found.ApplicationVersion.Should().Be(version.ApplicationVersion);
+            found.VersionName.Should().Be(version.VersionName);
             found.ReleaseDateTime.Should().Be(version.ReleaseDateTime);
             found.Major.Should().Be(version.Major);
             found.Minor.Should().Be(version.Minor);
@@ -78,7 +78,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
 
             var result = service.GetCurrentApplicationVersion();
 
-            result.ApplicationVersion.Should().Be(versionNumber);
+            result.VersionName.Should().Be(versionNumber);
             result.Major.Should().Be(major);
             result.Minor.Should().Be(minor);
             result.Increment.Should().Be(increment);
@@ -97,7 +97,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
 
             var version = new Version
             {
-                ApplicationVersion = versionNumber,
+                VersionName = versionNumber,
                 Major = major,
                 Minor = minor,
                 Increment = increment
@@ -141,7 +141,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
                 versionService.Object);
 
             var found = service.GetCurrentApplicationVersion();
-            found.ApplicationVersion.Should().Be(version.ApplicationVersion);
+            found.VersionName.Should().Be(version.VersionName);
             found.ReleaseDateTime.Should().Be(version.ReleaseDateTime);
             found.Major.Should().Be(version.Major);
             found.Minor.Should().Be(version.Minor);

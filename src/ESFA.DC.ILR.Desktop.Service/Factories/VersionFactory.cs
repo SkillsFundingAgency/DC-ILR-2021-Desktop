@@ -10,7 +10,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Factories
             var versionParts = versionNumber.Split('.');
             return new Version
             {
-                ApplicationVersion = versionNumber,
+                VersionName = versionNumber,
                 Major = versionParts.Length > 0 ? int.TryParse(versionParts[0], out var major) ? major : default(int) : default(int),
                 Minor = versionParts.Length > 1 ? int.TryParse(versionParts[1], out var minor) ? minor : default(int) : default(int),
                 Increment = versionParts.Length > 2 ? int.TryParse(versionParts[2], out var increment) ? increment : default(int) : default(int)

@@ -44,7 +44,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
 
             var result = factory.GetVersion(versionNumber);
 
-            result.ApplicationVersion.Should().Be(versionNumber);
+            result.VersionName.Should().Be(versionNumber);
             result.Major.Should().Be(major);
             result.Minor.Should().Be(minor);
             result.Increment.Should().Be(increment);
