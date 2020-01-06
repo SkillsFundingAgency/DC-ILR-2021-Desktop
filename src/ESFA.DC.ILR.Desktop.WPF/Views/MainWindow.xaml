@@ -80,13 +80,13 @@
             </StackPanel>
         </Grid>
 
-        <Grid Grid.Row ="3" Margin="1,211.222,-0.222,-0.111">
+        <Grid Grid.Row ="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="500" />
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label FontSize="10" Grid.Column="0" HorizontalContentAlignment="Right" Content="{Binding ReleaseVersionNumber}" ContentStringFormat="Version:  {0}" Grid.ColumnSpan="2" Margin="0,31,142.889,0" />
-            <Label FontSize="10" Grid.Column="1" HorizontalContentAlignment="Right" Content="{Binding ReleaseDate}"  ContentStringFormat="Released: {0}" Margin="0.222,31,-0.111,0"/>
+            <Label FontSize="10" Grid.Column="0" VerticalAlignment="Bottom" HorizontalContentAlignment="Right" Content="{Binding ReleaseVersionNumber}" ContentStringFormat="Version:  {0}" Grid.ColumnSpan="2" Margin="0,31,142.889,0" />
+            <Label FontSize="10" Grid.Column="1" VerticalAlignment="Bottom" HorizontalContentAlignment="Right" Content="{Binding ReleaseDate}"  ContentStringFormat="Released: {0}" Margin="0.222,31,-0.111,0"/>
         </Grid>
 
         <Grid Margin="15" Grid.Row="3">
