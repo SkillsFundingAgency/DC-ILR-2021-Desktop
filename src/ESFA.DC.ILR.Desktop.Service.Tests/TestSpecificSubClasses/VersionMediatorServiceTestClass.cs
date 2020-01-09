@@ -1,5 +1,6 @@
 ﻿using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
 using ESFA.DC.ILR.Desktop.Models;
+using ESFA.DC.ILR.Desktop.Service.Interface;
 
 namespace ESFA.DC.ILR.Desktop.Service.Tests.TestSpecificSubClasses
 {
@@ -8,8 +9,9 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests.TestSpecificSubClasses
         public VersionMediatorServiceTestClass(
             IVersionFactory versionFactory,
             IReleaseVersionInformationService versionInformationService,
-            IVersionService versionService)
-            : base(versionFactory, versionInformationService, versionService)
+            IVersionService versionService,
+            IDesktopServiceSettings desktopServiceSettings)
+            : base(versionFactory, versionInformationService, versionService, desktopServiceSettings)
         {
         }
 

@@ -13,6 +13,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.Service
         private const string OutputDirectoryKey = "OutputDirectory";
         private const string ExportToSqlKey = "ExportToSQL";
         private const string ExportToAccessAndCsvKey = "ExportToAccessAndCsv";
+        private const string ReferenceDataVersionKey = "ReferenceDataVersion";
         private const string FundingInformationSystem = "Funding Information System 2019-20";
 
         public string IlrDatabaseConnectionString { get; set; }
@@ -23,12 +24,15 @@ namespace ESFA.DC.ILR.Desktop.WPF.Service
 
         public bool ExportToAccessAndCsv { get; set; }
 
+        public string ReferenceDataVersion { get; set; }
+
         public async Task LoadAsync(CancellationToken cancellationToken)
         {
             IlrDatabaseConnectionString = ConfigurationManager.AppSettings[IlrDatabaseConnectionStringKey];
             OutputDirectory = ConfigurationManager.AppSettings[OutputDirectoryKey];
             ExportToSql = Convert.ToBoolean(ConfigurationManager.AppSettings[ExportToSqlKey]);
             ExportToAccessAndCsv = Convert.ToBoolean(ConfigurationManager.AppSettings[ExportToAccessAndCsvKey]);
+            ReferenceDataVersion = ConfigurationManager.AppSettings[ReferenceDataVersionKey];
 
             if (string.IsNullOrWhiteSpace(OutputDirectory))
             {
@@ -47,6 +51,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.Service
             config.AppSettings.Settings.Add(OutputDirectoryKey, OutputDirectory);
             config.AppSettings.Settings.Add(ExportToSqlKey, ExportToSql.ToString());
             config.AppSettings.Settings.Add(ExportToAccessAndCsvKey, ExportToAccessAndCsv.ToString());
+            config.AppSettings.Settings.Add(ReferenceDataVersionKey, ReferenceDataVersion);
 
             config.Save(ConfigurationSaveMode.Modified);
 

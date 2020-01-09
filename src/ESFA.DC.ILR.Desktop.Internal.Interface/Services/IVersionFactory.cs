@@ -4,6 +4,6 @@ namespace ESFA.DC.ILR.Desktop.Internal.Interface.Services
 {
     public interface IVersionFactory
     {
-        Version GetVersion(string versionNumber);
+        Version GetVersion(string versionNumber, string referenceDataVersion);
     }
 }

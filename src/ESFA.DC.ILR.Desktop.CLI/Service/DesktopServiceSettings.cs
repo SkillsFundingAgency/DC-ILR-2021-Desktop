@@ -11,6 +11,7 @@ namespace ESFA.DC.ILR.Desktop.CLI.Service
         private const string IlrDatabaseConnectionStringKey = "IlrDatabaseConnectionString";
         private const string OutputDirectoryKey = "OutputDirectory";
         private const string ExportToSqlKey = "ExportToSQL";
+        private const string ReferenceDataVersionKey = "ReferenceDataVersion";
         private const string ExportToAccessAndCsvKey = "ExportToAccessAndCsv";
 
         public string IlrDatabaseConnectionString { get; set; }
@@ -20,6 +21,8 @@ namespace ESFA.DC.ILR.Desktop.CLI.Service
         public bool ExportToSql { get; set; }
 
         public bool ExportToAccessAndCsv { get; set; }
+
+        public string ReferenceDataVersion { get; set; }
 
         public Task SaveAsync(CancellationToken cancellationToken)
         {
@@ -32,6 +35,7 @@ namespace ESFA.DC.ILR.Desktop.CLI.Service
             OutputDirectory = ConfigurationManager.AppSettings[OutputDirectoryKey];
             ExportToSql = Convert.ToBoolean(ConfigurationManager.AppSettings[ExportToSqlKey]);
             ExportToAccessAndCsv = Convert.ToBoolean(ConfigurationManager.AppSettings[ExportToAccessAndCsvKey]);
+            ReferenceDataVersion = ConfigurationManager.AppSettings[ReferenceDataVersionKey];
         }
     }
 }

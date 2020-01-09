@@ -42,7 +42,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
 
             var factory = new VersionFactory();
 
-            var result = factory.GetVersion(versionNumber);
+            var result = factory.GetVersion(versionNumber, versionNumber);
 
             result.VersionName.Should().Be(versionNumber);
             result.Major.Should().Be(major);
@@ -59,7 +59,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
 
             var factory = new ApplicationVersionResultFactory();
 
-            var result = factory.GetApplicationVersionResult(versionNumber, date, url);
+            var result = factory.GetResult(versionNumber, date, url);
 
             result.ApplicationVersion.Should().Be(versionNumber);
             result.ReleaseDateTime.Should().Be(date);

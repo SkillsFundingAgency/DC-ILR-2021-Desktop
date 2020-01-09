@@ -9,12 +9,12 @@ namespace ESFA.DC.ILR.Desktop.Service
 {
     public class VersionService : IVersionService
     {
-        private readonly IApplicationVersionClient _versionClient;
-        private readonly IApplicationVersionResultFactory _applicationVersionResultFactory;
+        private readonly IApplicationVersionResultClient _versionClient;
+        private readonly IAPIResultFactory<ApplicationVersionResult> _applicationVersionResultFactory;
 
         public VersionService(
-            IApplicationVersionClient versionClient,
-            IApplicationVersionResultFactory applicationVersionResultFactory)
+            IApplicationVersionResultClient versionClient,
+            IAPIResultFactory<ApplicationVersionResult> applicationVersionResultFactory)
         {
             _versionClient = versionClient;
             _applicationVersionResultFactory = applicationVersionResultFactory;
@@ -22,16 +22,18 @@ namespace ESFA.DC.ILR.Desktop.Service
 
         public async Task<ApplicationVersionResult> GetLatestApplicationVersion(Version currentVersion)
         {
-            var applicationVersions = await _versionClient.GetApplicationVersionsAsync();
+            var applicationVersions = await _versionClient.GetAsync();
 
             var newerVersion = GetNewerApplicationVersion(currentVersion, applicationVersions.Versions);
 
             return newerVersion == null
                 ? null
-                : _applicationVersionResultFactory.GetApplicationVersionResult(
+                : _applicationVersionResultFactory.GetResult(
                     newerVersion.VersionName,
                     newerVersion.ReleaseDateTime,
-                    applicationVersions.Url);
+                    applicationVersions.Url,
+                    newerVersion.ReferenceDataVersion?.VersionName,
+                    newerVersion.ReferenceDataVersion?.FileName);
         }
 
         private Version GetNewerApplicationVersion(Version currentVersion, IEnumerable<Version> availableVersions)
@@ -40,7 +42,10 @@ namespace ESFA.DC.ILR.Desktop.Service
                 .OrderByDescending(v => v.Major).ThenByDescending(v => v.Minor).ThenByDescending(v => v.Increment)
                 .FirstOrDefault(v => v.Major > currentVersion.Major
                                               || (v.Major == currentVersion.Major && v.Minor > currentVersion.Minor)
-                                              || (v.Major == currentVersion.Major && v.Minor == currentVersion.Minor && v.Increment > currentVersion.Increment)) ?? currentVersion;
+                                              || (v.Major == currentVersion.Major && v.Minor == currentVersion.Minor && v.Increment > currentVersion.Increment)
+                                              || (v.ReferenceDataVersion.Major == currentVersion.ReferenceDataVersion.Major
+                                              && v.ReferenceDataVersion.Minor == currentVersion.ReferenceDataVersion.Minor
+                                              && v.ReferenceDataVersion.Increment > currentVersion.ReferenceDataVersion.Increment)) ?? currentVersion;
         }
     }
 }

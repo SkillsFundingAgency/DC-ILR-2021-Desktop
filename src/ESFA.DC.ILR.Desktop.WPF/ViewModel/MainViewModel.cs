@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
@@ -24,9 +25,11 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private readonly IDialogInteractionService _dialogInteractionService;
         private readonly IWindowsProcessService _windowsProcessService;
         private readonly IReleaseVersionInformationService _versionInformationService;
+        private readonly IReferenceDataVersionInformationService _refDataVersionInformationService;
         private readonly ILogger _logger;
         private readonly IFeatureSwitchService _featureSwitchService;
         private readonly IVersionMediatorService _versionMediatorService;
+        private readonly IDesktopReferenceDataDownloadService _desktopReferenceDataDownloadService;
 
         private CancellationTokenSource _cancellationTokenSource;
         private string _fileName = FilenamePlaceholder;
@@ -40,6 +43,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private bool _newVersionBannerVisibility;
         private bool _newVersionBannerVisibilityError;
         private bool _uptoDateBannerVisibility;
+        private bool _referenceDataBannerVisibility;
         private bool _updateMenuEnabled = true;
         private ApplicationVersionResult _newVersion;
 
@@ -51,9 +55,11 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             IDialogInteractionService dialogInteractionService,
             IWindowsProcessService windowsProcessService,
             IReleaseVersionInformationService versionInformationService,
+            IReferenceDataVersionInformationService refDataVersionInformationService,
             ILogger logger,
             IFeatureSwitchService featureSwitchService,
-            IVersionMediatorService versionMediatorService)
+            IVersionMediatorService versionMediatorService,
+            IDesktopReferenceDataDownloadService desktopReferenceDataDownloadService)
         {
             _ilrDesktopService = ilrDesktopService;
             _desktopContextFactory = desktopContextFactory;
@@ -64,6 +70,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             _logger = logger;
             _featureSwitchService = featureSwitchService;
             _versionMediatorService = versionMediatorService;
+            _refDataVersionInformationService = refDataVersionInformationService;
+            _desktopReferenceDataDownloadService = desktopReferenceDataDownloadService;
 
             messengerService.Register<TaskProgressMessage>(this, HandleTaskProgressMessage);
 
@@ -80,6 +88,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             CloseNewVersionBannerCommand = new RelayCommand(CloseNewVersionBanner);
             CloseUpToDateBannerCommand = new RelayCommand(CloseUpToDateBanner);
             VersionNavigationCommand = new RelayCommand(NavigateToVersionsUrl);
+            ReferenceDataDownloadCommand = new RelayCommand(DownloadReferenceData);
         }
 
         public StageKeys CurrentStage
@@ -135,6 +144,12 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             set => Set(ref _uptoDateBannerVisibility, value);
         }
 
+        public bool ReferenceDataBannerVisibility
+        {
+            get => _referenceDataBannerVisibility;
+            set => Set(ref _referenceDataBannerVisibility, value);
+        }
+
         public bool UpdateMenuEnabled
         {
             get => _updateMenuEnabled;
@@ -177,6 +192,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         public string ReleaseVersionNumber => _versionInformationService.VersionNumber;
 
+        public string ReferenceDataVersionNumber => _refDataVersionInformationService.VersionNumber;
+
         public string ReleaseDate => _versionInformationService.Date;
 
         public bool ReportFiltersFeatureSwitch => _featureSwitchService.ReportFilters;
@@ -213,6 +230,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         public RelayCommand VersionNavigationCommand { get; set; }
 
+        public RelayCommand ReferenceDataDownloadCommand { get; set; }
+
         public void HandleTaskProgressMessage(TaskProgressMessage taskProgressMessage)
         {
             TaskName = taskProgressMessage.TaskName;
@@ -225,6 +244,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         public bool ApplicationVersionUpdateAvailable() => NewVersion != null && NewVersion.ApplicationVersion != null && NewVersion.ApplicationVersion != ReleaseVersionNumber;
 
         public bool ApplicationVersionUpdateError() => NewVersion == null || NewVersion.ApplicationVersion == null;
+
+        public bool ReferenceDataUpdateAvailable() => NewVersion != null && NewVersion.ApplicationVersion == ReleaseVersionNumber && NewVersion.LatestReferenceDataVersion != ReferenceDataVersionNumber;
 
         private void ShowChooseFileDialog()
         {
@@ -324,12 +345,25 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             UpToDateBannerVisibility = false;
         }
 
+        private void ReferenceDataUpdate()
+        {
+            NewVersionBannerVisibility = false;
+            NewVersionBannerVisibilityError = false;
+            UpToDateBannerVisibility = false;
+            ReferenceDataBannerVisibility = true;
+        }
+
         private async Task CheckForNewVersionFromMenu()
         {
             UpToDateBannerVisibility = false;
             await CheckForNewVersion();
 
-            if (ApplicationVersionUpToDate())
+            if (ApplicationVersionUpToDate() && ReferenceDataUpdateAvailable())
+            {
+                ReferenceDataUpdate();
+            }
+
+            if (ApplicationVersionUpToDate() && !ReferenceDataUpdateAvailable())
             {
                 VersionStatusUpToDate();
             }
@@ -368,9 +402,9 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
                 _updateMenuEnabled = true;
             }
 
-            if (ApplicationVersionUpToDate())
+            if (ApplicationVersionUpToDate() && ReferenceDataUpdateAvailable())
             {
-                VersionStatusUpToDate();
+                ReferenceDataUpdate();
             }
 
             if (ApplicationVersionUpdateAvailable())
@@ -398,6 +432,11 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private void NavigateToVersionsUrl()
         {
             _windowsProcessService.ProcessStart(NewVersion.Url);
+        }
+
+        private void DownloadReferenceData()
+        {
+            _desktopReferenceDataDownloadService.GetReferenceData(NewVersion.LatestReferenceDataFileName, NewVersion.LatestReferenceDataVersion);
         }
     }
 }

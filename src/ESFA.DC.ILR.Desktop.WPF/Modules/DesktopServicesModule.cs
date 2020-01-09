@@ -1,8 +1,10 @@
 ﻿using System.Configuration;
+using System.IO;
 using System.Threading;
 using Autofac;
 using ESFA.DC.ILR.Desktop.Internal.Interface.Configuration;
 using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
+using ESFA.DC.ILR.Desktop.Models;
 using ESFA.DC.ILR.Desktop.Service;
 using ESFA.DC.ILR.Desktop.Service.APIClient;
 using ESFA.DC.ILR.Desktop.Service.Factories;
@@ -26,13 +28,17 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
             containerBuilder.RegisterType<WindowsProcessService>().As<IWindowsProcessService>();
             containerBuilder.RegisterType<ReferenceDataVersionInformationService>().As<IReferenceDataVersionInformationService>();
             containerBuilder.RegisterType<ReportFilterService>().As<IReportFilterService>().SingleInstance();
+            containerBuilder.RegisterType<DesktopReferenceDataDownloadService>().As<IDesktopReferenceDataDownloadService>().SingleInstance();
 
-            containerBuilder.RegisterType<ApplicationVersionResultFactory>().As<IApplicationVersionResultFactory>();
-            containerBuilder.RegisterType<APIClientFactory>().As<IAPIClientFactory>();
+            containerBuilder.RegisterType<ApplicationVersionResultFactory>().As<IAPIResultFactory<ApplicationVersionResult>>();
+            containerBuilder.RegisterType<ApplicationVersionClientFactory>().As<IAPIClientFactory<ApplicationVersion>>();
             containerBuilder.RegisterType<VersionFactory>().As<IVersionFactory>();
             containerBuilder.RegisterType<VersionMessageFactory>().As<IVersionMessageFactory>();
 
-            containerBuilder.RegisterType<ApplicationVersionClient>().As<IApplicationVersionClient>();
+            containerBuilder.RegisterType<ApplicationVersionClient>().As<IApplicationVersionResultClient>();
+            containerBuilder.RegisterType<ReferenceDataClient>().As<IReferenceDataResultClient>();
+            containerBuilder.RegisterType<ReferenceDataClientFactory>().As<IAPIClientFactory<byte[]>>();
+
             containerBuilder.RegisterType<VersionService>().As<IVersionService>();
             containerBuilder.RegisterType<VersionMediatorService>().As<IVersionMediatorService>();
 

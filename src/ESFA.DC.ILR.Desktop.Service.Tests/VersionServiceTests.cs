@@ -27,6 +27,8 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
             var major = 1;
             var minor = 1;
             var increment = 1;
+            var refDataVersionNumber = "1.1.1.1";
+            var refDataFileName = "FISReferenceData.1.1.1.1";
 
             var currentVersion = new Version
             {
@@ -34,7 +36,15 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
                 ReleaseDateTime = releaseDateTime,
                 Major = currentMajor,
                 Minor = currentMinor,
-                Increment = currentIncrement
+                Increment = currentIncrement,
+                ReferenceDataVersion = new Models.ReferenceData
+                {
+                    FileName = "FISReferenceData.1.1.1.1",
+                    Major = currentMajor,
+                    Minor = currentMinor,
+                    Increment = currentIncrement,
+                    VersionName = refDataVersionNumber
+                }
             };
 
             var applicationVersion = GetApplicationVersion(
@@ -44,23 +54,26 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
                 releaseDateTime,
                 major,
                 minor,
-                increment);
+                increment,
+                refDataVersionNumber);
 
             var applicationVersionResult = new ApplicationVersionResult
             {
                 ApplicationVersion = versionNumber,
                 Url = url,
-                ReleaseDateTime = releaseDateTime
+                ReleaseDateTime = releaseDateTime,
+                LatestReferenceDataVersion = refDataVersionNumber,
+                LatestReferenceDataFileName = refDataFileName
             };
 
-            var versionClientMock = new Mock<IApplicationVersionClient>();
+            var versionClientMock = new Mock<IApplicationVersionResultClient>();
             versionClientMock
-                .Setup(m => m.GetApplicationVersionsAsync())
+                .Setup(m => m.GetAsync())
                 .ReturnsAsync(applicationVersion);
 
-            var versionResultFactory = new Mock<IApplicationVersionResultFactory>();
+            var versionResultFactory = new Mock<IAPIResultFactory<ApplicationVersionResult>>();
             versionResultFactory
-                .Setup(m => m.GetApplicationVersionResult(versionNumber, releaseDateTime, url))
+                .Setup(m => m.GetResult(versionNumber, releaseDateTime, url, refDataVersionNumber, refDataFileName))
                 .Returns(applicationVersionResult);
 
             var service = NewService(versionClientMock.Object, versionResultFactory.Object);
@@ -87,6 +100,8 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
             var major = 1;
             var minor = 1;
             var increment = 1;
+            var refDataVersionNumber = "1.1.1.1";
+            var refDataFileName = "FISReferenceData.1.1.1.1";
 
             var currentVersion = new Version
             {
@@ -94,7 +109,15 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
                 ReleaseDateTime = releaseDateTime,
                 Major = currentMajor,
                 Minor = currentMinor,
-                Increment = currentIncrement
+                Increment = currentIncrement,
+                ReferenceDataVersion = new Models.ReferenceData
+                {
+                    FileName = "FISReferenceData.1.1.1.1",
+                    Major = currentMajor,
+                    Minor = currentMinor,
+                    Increment = currentIncrement,
+                    VersionName = refDataVersionNumber
+                }
             };
 
             var applicationVersion = GetApplicationVersion(
@@ -104,23 +127,26 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
                 releaseDateTime,
                 major,
                 minor,
-                increment);
+                increment,
+                refDataVersionNumber);
 
             var applicationVersionResult = new ApplicationVersionResult
             {
                 ApplicationVersion = versionNumber,
                 Url = url,
-                ReleaseDateTime = releaseDateTime
+                ReleaseDateTime = releaseDateTime,
+                LatestReferenceDataVersion = refDataVersionNumber,
+                LatestReferenceDataFileName = refDataFileName
             };
 
-            var versionClientMock = new Mock<IApplicationVersionClient>();
+            var versionClientMock = new Mock<IApplicationVersionResultClient>();
             versionClientMock
-                .Setup(m => m.GetApplicationVersionsAsync())
+                .Setup(m => m.GetAsync())
                 .ReturnsAsync(applicationVersion);
 
-            var versionResultFactory = new Mock<IApplicationVersionResultFactory>();
+            var versionResultFactory = new Mock<IAPIResultFactory<ApplicationVersionResult>>();
             versionResultFactory
-                .Setup(m => m.GetApplicationVersionResult(versionNumber, releaseDateTime, url))
+                .Setup(m => m.GetResult(versionNumber, releaseDateTime, url, refDataVersionNumber, refDataFileName))
                 .Returns(applicationVersionResult);
 
             var service = NewService(versionClientMock.Object, versionResultFactory.Object);
@@ -130,6 +156,72 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
             result.Should().BeNull();
         }
 
+        [Fact]
+        public async Task GetLatestApplicationVersion_Correctly_Returns_NewVersion_RefData()
+        {
+            var versionNumber = "1.1.1.1";
+            var releaseDateTime = new DateTime(2019, 11, 19, 8, 0, 0);
+            var url = "foo.com";
+            var major = 1;
+            var minor = 1;
+            var increment = 1;
+            var refDataVersionNumber = "1.1.2";
+            var refDataFileName = "FISReferenceData.1.1.2";
+
+            var currentVersion = new Version
+            {
+                VersionName = versionNumber,
+                ReleaseDateTime = releaseDateTime,
+                Major = major,
+                Minor = minor,
+                Increment = increment,
+                ReferenceDataVersion = new Models.ReferenceData
+                {
+                    FileName = refDataFileName,
+                    Major = major,
+                    Minor = minor,
+                    Increment = 2,
+                    VersionName = refDataVersionNumber
+                }
+            };
+
+            var applicationVersion = GetApplicationVersion(
+                versionNumber,
+                url,
+                releaseDateTime,
+                releaseDateTime,
+                major,
+                minor,
+                increment,
+                refDataVersionNumber);
+
+            var applicationVersionResult = new ApplicationVersionResult
+            {
+                ApplicationVersion = versionNumber,
+                Url = url,
+                ReleaseDateTime = releaseDateTime,
+                LatestReferenceDataVersion = refDataVersionNumber,
+                LatestReferenceDataFileName = refDataFileName
+            };
+
+            var versionClientMock = new Mock<IApplicationVersionResultClient>();
+            versionClientMock
+                .Setup(m => m.GetAsync())
+                .ReturnsAsync(applicationVersion);
+
+            var versionResultFactory = new Mock<IAPIResultFactory<ApplicationVersionResult>>();
+            versionResultFactory
+                .Setup(m => m.GetResult(versionNumber, releaseDateTime, url, refDataVersionNumber, refDataFileName))
+                .Returns(applicationVersionResult);
+
+            var service = NewService(versionClientMock.Object, versionResultFactory.Object);
+
+            var result = await service.GetLatestApplicationVersion(currentVersion);
+
+            result.ApplicationVersion.Should().Be(versionNumber);
+            result.LatestReferenceDataVersion.Should().Be(refDataVersionNumber);
+        }
+
         private ApplicationVersion GetApplicationVersion(
             string version = null,
             string url = null,
@@ -137,7 +229,8 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
             DateTime? releaseDate = null,
             int? major = null,
             int? minor = null,
-            int? increment = null)
+            int? increment = null,
+            string refDataVersionNumber = null)
         {
             version = version ?? "1.1.1.1";
             url = url ?? "foo.com";
@@ -146,6 +239,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
             major = major ?? 1;
             minor = minor ?? 0;
             increment = increment ?? 0;
+            refDataVersionNumber = refDataVersionNumber ?? "1.1.1.1";
 
             var applicationVersion = new ApplicationVersion
             {
@@ -159,7 +253,15 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
                         ReleaseDateTime = releaseDate.Value,
                         Major = major.Value,
                         Minor = minor.Value,
-                        Increment = increment.Value
+                        Increment = increment.Value,
+                        ReferenceDataVersion = new Models.ReferenceData
+                        {
+                            FileName = "FISReferenceData.1.1.1.1",
+                            Major = major.Value,
+                            Minor = minor.Value,
+                            Increment = increment.Value,
+                            VersionName = refDataVersionNumber
+                        }
                     }
                 }
             };
@@ -168,12 +270,12 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         }
 
         private VersionService NewService(
-            IApplicationVersionClient versionClient = null,
-            IApplicationVersionResultFactory applicationVersionResultFactory = null)
+            IApplicationVersionResultClient versionClient = null,
+            IAPIResultFactory<ApplicationVersionResult> applicationVersionResultFactory = null)
         {
             return new VersionService(
-                versionClient ?? Mock.Of<IApplicationVersionClient>(),
-                applicationVersionResultFactory ?? Mock.Of<IApplicationVersionResultFactory>());
+                versionClient ?? Mock.Of<IApplicationVersionResultClient>(),
+                applicationVersionResultFactory ?? Mock.Of<IAPIResultFactory<ApplicationVersionResult>>());
         }
     }
 }

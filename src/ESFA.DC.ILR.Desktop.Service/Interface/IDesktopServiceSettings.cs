@@ -13,6 +13,8 @@ namespace ESFA.DC.ILR.Desktop.Service.Interface
 
         bool ExportToAccessAndCsv { get; set; }
 
+        string ReferenceDataVersion { get; set; }
+
         Task SaveAsync(CancellationToken cancellationToken);
     }
 }

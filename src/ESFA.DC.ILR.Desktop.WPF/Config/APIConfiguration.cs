@@ -7,6 +7,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.Config
     {
         private const string BaseUrlKey = "APIBaseUrl";
         private const string ApplicationVersionPathKey = "ApplicationVersionPath";
+        private const string ReferenceDataVersionPathKey = "ReferenceDataVersionPath";
         private const string ApiVersionHeaderKey = "ApiVersionHeader";
         private const string ApiVersionKey = "ApiVersion";
 
@@ -17,6 +18,9 @@ namespace ESFA.DC.ILR.Desktop.WPF.Config
 
         [ConfigurationProperty(ApplicationVersionPathKey, IsRequired = true)]
         public string ApplicationVersionPath => GetFromKey(ApplicationVersionPathKey);
+
+        [ConfigurationProperty(ReferenceDataVersionPathKey, IsRequired = true)]
+        public string ReferenceDataVersionPath => GetFromKey(ReferenceDataVersionPathKey);
 
         [ConfigurationProperty(ApiVersionHeaderKey, IsRequired = true)]
         public string APIVersionHeaderKey => GetFromKey(ApiVersionHeaderKey);

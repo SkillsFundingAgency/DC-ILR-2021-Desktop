@@ -51,7 +51,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
 
             var versionFactoryMock = new Mock<IVersionFactory>();
             versionFactoryMock
-                .Setup(m => m.GetVersion(versionNumber))
+                .Setup(m => m.GetVersion(versionNumber, It.IsAny<string>()))
                 .Returns(version);
 
             var versionInformationService = new Mock<IReleaseVersionInformationService>();
@@ -122,7 +122,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
 
             var versionFactoryMock = new Mock<IVersionFactory>();
             versionFactoryMock
-                .Setup(m => m.GetVersion(versionNumber))
+                .Setup(m => m.GetVersion(versionNumber, It.IsAny<string>()))
                 .Returns(version);
 
             var versionInformationService = new Mock<IReleaseVersionInformationService>();
@@ -151,12 +151,14 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         private VersionMediatorServiceTestClass GetVersionMediatorService(
             IVersionFactory versionFactory = null,
             IReleaseVersionInformationService versionInformationService = null,
-            IVersionService versionService = null)
+            IVersionService versionService = null,
+            IDesktopServiceSettings desktopServiceSettings = null)
         {
             return new VersionMediatorServiceTestClass(
                 versionFactory ?? Mock.Of<IVersionFactory>(),
                 versionInformationService ?? Mock.Of<IReleaseVersionInformationService>(),
-                versionService ?? Mock.Of<IVersionService>());
+                versionService ?? Mock.Of<IVersionService>(),
+                desktopServiceSettings ?? Mock.Of<IDesktopServiceSettings>());
         }
     }
 }
