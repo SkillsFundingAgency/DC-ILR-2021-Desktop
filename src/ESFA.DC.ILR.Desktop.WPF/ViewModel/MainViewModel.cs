@@ -85,8 +85,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             ReportFiltersNavigationCommand = new RelayCommand(ReportFiltersNavigate);
             ReportsFolderCommand = new RelayCommand(() => ProcessStart(_reportsLocation));
             CancelAndReImportCommand = new RelayCommand(CancelAndReImport, () => !_cancellationTokenSource?.IsCancellationRequested ?? false);
-            CloseNewVersionBannerCommand = new RelayCommand(CloseNewVersionBanner);
-            CloseUpToDateBannerCommand = new RelayCommand(CloseUpToDateBanner);
             VersionNavigationCommand = new RelayCommand(NavigateToVersionsUrl);
             ReferenceDataDownloadCommand = new RelayCommand(DownloadReferenceData);
         }
@@ -223,10 +221,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         public RelayCommand ReportsFolderCommand { get; set; }
 
         public RelayCommand CancelAndReImportCommand { get; set; }
-
-        public RelayCommand CloseNewVersionBannerCommand { get; set; }
-
-        public RelayCommand CloseUpToDateBannerCommand { get; set; }
 
         public RelayCommand VersionNavigationCommand { get; set; }
 
@@ -418,15 +412,10 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             return _canCheckForNewVersion;
         }
 
-        private void CloseNewVersionBanner()
+        private void RefreshReferenceDataBanner()
         {
-            NewVersionBannerVisibility = false;
-            NewVersionBannerVisibilityError = false;
-        }
-
-        private void CloseUpToDateBanner()
-        {
-            UpToDateBannerVisibility = false;
+            ReferenceDataBannerVisibility = false;
+            UpToDateBannerVisibility = true;
         }
 
         private void NavigateToVersionsUrl()
@@ -434,9 +423,11 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             _windowsProcessService.ProcessStart(NewVersion.Url);
         }
 
-        private void DownloadReferenceData()
+        private async void DownloadReferenceData()
         {
-            _desktopReferenceDataDownloadService.GetReferenceData(NewVersion.LatestReferenceDataFileName, NewVersion.LatestReferenceDataVersion);
+            await _desktopReferenceDataDownloadService.GetReferenceData(NewVersion.LatestReferenceDataFileName, NewVersion.LatestReferenceDataVersion);
+
+            RefreshReferenceDataBanner();
         }
     }
 }
