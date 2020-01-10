@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandLineArguments.cs" />
+    <Compile Include="Config\APIConfiguration.cs" />
     <Compile Include="Config\CliServiceConfiguration.cs" />
     <Compile Include="Service\DesktopServiceSettings.cs" />
     <Compile Include="Interface\ICliEntryPoint.cs" />
@@ -91,6 +92,10 @@
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Internal.Interface\ESFA.DC.ILR.Desktop.Internal.Interface.csproj">
       <Project>{1491AC45-D5B7-4240-A9E2-1267C5F59A03}</Project>
       <Name>ESFA.DC.ILR.Desktop.Internal.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Models\ESFA.DC.ILR.Desktop.Models.csproj">
+      <Project>{CFEF3244-C37E-4E36-8E59-71E2C155EBE7}</Project>
+      <Name>ESFA.DC.ILR.Desktop.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Modules\ESFA.DC.ILR.Desktop.Modules.csproj">
       <Project>{9759A0DA-C73C-467F-B6BD-DE220E3B8D97}</Project>

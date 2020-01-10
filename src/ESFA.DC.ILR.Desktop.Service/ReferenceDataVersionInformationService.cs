@@ -2,7 +2,7 @@
 using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 
-namespace ESFA.DC.ILR.Desktop.WPF.Service
+namespace ESFA.DC.ILR.Desktop.Service
 {
     public class ReferenceDataVersionInformationService : IReferenceDataVersionInformationService
     {

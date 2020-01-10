@@ -24,11 +24,6 @@ namespace ESFA.DC.ILR.Desktop.CLI.Service
 
         public string ReferenceDataVersion { get; set; }
 
-        public Task SaveAsync(CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task LoadAsync(CancellationToken cancellationToken)
         {
             IlrDatabaseConnectionString = ConfigurationManager.AppSettings[IlrDatabaseConnectionStringKey];
@@ -36,6 +31,23 @@ namespace ESFA.DC.ILR.Desktop.CLI.Service
             ExportToSql = Convert.ToBoolean(ConfigurationManager.AppSettings[ExportToSqlKey]);
             ExportToAccessAndCsv = Convert.ToBoolean(ConfigurationManager.AppSettings[ExportToAccessAndCsvKey]);
             ReferenceDataVersion = ConfigurationManager.AppSettings[ReferenceDataVersionKey];
+        }
+
+        public Task SaveAsync(CancellationToken cancellationToken)
+        {
+            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+            config.AppSettings.Settings.Clear();
+
+            config.AppSettings.Settings.Add(IlrDatabaseConnectionStringKey, IlrDatabaseConnectionString);
+            config.AppSettings.Settings.Add(OutputDirectoryKey, OutputDirectory);
+            config.AppSettings.Settings.Add(ExportToSqlKey, ExportToSql.ToString());
+            config.AppSettings.Settings.Add(ExportToAccessAndCsvKey, ExportToAccessAndCsv.ToString());
+            config.AppSettings.Settings.Add(ReferenceDataVersionKey, ReferenceDataVersion);
+
+            config.Save(ConfigurationSaveMode.Modified);
+
+            return Task.CompletedTask;
         }
     }
 }

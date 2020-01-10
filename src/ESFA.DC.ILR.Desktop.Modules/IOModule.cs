@@ -31,6 +31,7 @@ namespace ESFA.DC.ILR.Desktop.Modules
 
             containerBuilder.RegisterType<AssemblyService>().As<IAssemblyService>();
             containerBuilder.RegisterType<ReleaseVersionInformationService>().As<IReleaseVersionInformationService>();
+            containerBuilder.RegisterType<ReferenceDataVersionInformationService>().As<IReferenceDataVersionInformationService>();
         }
     }
 }

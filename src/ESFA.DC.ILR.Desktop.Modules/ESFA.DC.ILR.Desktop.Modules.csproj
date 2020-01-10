@@ -8,7 +8,8 @@
     <PackageReference Include="Aspose.Cells" Version="19.9.0" />
     <PackageReference Include="Autofac" Version="4.9.4" />
     <PackageReference Include="ESFA.DC.DateTimeProvider" Version="0.1.6-beta0001" />
-    <PackageReference Include="ESFA.DC.FileService" Version="0.1.25-beta0001" />
+    <PackageReference Include="ESFA.DC.FileService" Version="0.1.27-beta0001" />
+    <PackageReference Include="ESFA.DC.FileService.Interface" Version="0.1.27-beta0001" />
     <PackageReference Include="ESFA.DC.ILR.1920.DataStore.Desktop" Version="0.0.536" />
     <PackageReference Include="ESFA.DC.ILR.1920.FileValidationService.Desktop" Version="0.1.113" />
     <PackageReference Include="ESFA.DC.ILR.1920.FundingService.Desktop" Version="0.0.279" />
@@ -25,6 +26,7 @@
     <PackageReference Include="ESFA.DC.Telemetry" Version="0.1.6-beta0001" />
     <PackageReference Include="ESFA.DC.Telemetry.Interfaces" Version="0.1.6-beta0001" />
     <PackageReference Include="NLog.Config" Version="4.6.7" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
   </ItemGroup>
 
   <ItemGroup>

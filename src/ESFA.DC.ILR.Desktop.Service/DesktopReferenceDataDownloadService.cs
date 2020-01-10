@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.FileService.Interface;
 using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 
-namespace ESFA.DC.ILR.Desktop.WPF.Service
+namespace ESFA.DC.ILR.Desktop.Service
 {
     public class DesktopReferenceDataDownloadService : IDesktopReferenceDataDownloadService
     {

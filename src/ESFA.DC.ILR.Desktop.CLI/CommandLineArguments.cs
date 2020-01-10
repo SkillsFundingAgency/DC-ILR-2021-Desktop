@@ -13,5 +13,8 @@ namespace ESFA.DC.ILR.Desktop.CLI
 
         [Option('o', "outputdirectory", Required = false, HelpText = "Output Directory for Reports, leave blank to fall back to Config File.")]
         public string OutputDirectory { get; set; }
+
+        [Option('u', "updatereferencedata", Required = false, HelpText = "'Y' (On) or 'N' (off) to download the latest reference data, if available. Leave blank to default to 'N'.")]
+        public string CheckAndUpdateReferenceData { get; set; }
     }
 }

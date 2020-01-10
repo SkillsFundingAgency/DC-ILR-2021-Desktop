@@ -7,5 +7,7 @@
         string ConnectionString { get; }
         
         string OutputDirectory { get; }
+
+        string CheckAndUpdateReferenceData { get; }
     }
 }
