@@ -8,6 +8,7 @@ using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Service.Journey;
 using ESFA.DC.ILR.Desktop.Service.Message;
 using ESFA.DC.ILR.Desktop.WPF.Command;
+using ESFA.DC.ILR.Desktop.WPF.Command.Interface;
 using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
 using ESFA.DC.Logging.Interfaces;
 using GalaSoft.MvvmLight;
@@ -44,6 +45,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private bool _newVersionBannerVisibilityError;
         private bool _uptoDateBannerVisibility;
         private bool _referenceDataBannerVisibility;
+        private bool _referenceDataDownloadingBannerVisibility;
         private bool _updateMenuEnabled = true;
         private ApplicationVersionResult _newVersion;
 
@@ -86,7 +88,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             ReportsFolderCommand = new RelayCommand(() => ProcessStart(_reportsLocation));
             CancelAndReImportCommand = new RelayCommand(CancelAndReImport, () => !_cancellationTokenSource?.IsCancellationRequested ?? false);
             VersionNavigationCommand = new RelayCommand(NavigateToVersionsUrl);
-            ReferenceDataDownloadCommand = new RelayCommand(DownloadReferenceData);
+            ReferenceDataDownloadCommand = new AsyncCommand(DownloadReferenceData);
         }
 
         public StageKeys CurrentStage
@@ -146,6 +148,12 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         {
             get => _referenceDataBannerVisibility;
             set => Set(ref _referenceDataBannerVisibility, value);
+        }
+
+        public bool ReferenceDataDownloadingBannerVisibility
+        {
+            get => _referenceDataDownloadingBannerVisibility;
+            set => Set(ref _referenceDataDownloadingBannerVisibility, value);
         }
 
         public bool UpdateMenuEnabled
@@ -224,7 +232,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         public RelayCommand VersionNavigationCommand { get; set; }
 
-        public RelayCommand ReferenceDataDownloadCommand { get; set; }
+        public IAsyncCommand ReferenceDataDownloadCommand { get; set; }
 
         public void HandleTaskProgressMessage(TaskProgressMessage taskProgressMessage)
         {
@@ -416,6 +424,14 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         {
             ReferenceDataBannerVisibility = false;
             UpToDateBannerVisibility = true;
+            ReferenceDataDownloadingBannerVisibility = false;
+        }
+
+        private void RefDataDownloadingBanner()
+        {
+            ReferenceDataBannerVisibility = false;
+            ReferenceDataDownloadingBannerVisibility = true;
+            UpToDateBannerVisibility = false;
         }
 
         private void NavigateToVersionsUrl()
@@ -423,9 +439,11 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             _windowsProcessService.ProcessStart(NewVersion.Url);
         }
 
-        private async void DownloadReferenceData()
+        private async Task DownloadReferenceData()
         {
-            await _desktopReferenceDataDownloadService.GetReferenceData(NewVersion.LatestReferenceDataFileName, NewVersion.LatestReferenceDataVersion);
+            RefDataDownloadingBanner();
+
+            await Task.Run(() => _desktopReferenceDataDownloadService.GetReferenceData(NewVersion.LatestReferenceDataFileName, NewVersion.LatestReferenceDataVersion));
 
             RefreshReferenceDataBanner();
         }

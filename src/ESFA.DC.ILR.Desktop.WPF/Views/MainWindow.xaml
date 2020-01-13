@@ -84,6 +84,13 @@
                         Download New Version: <Hyperlink Command="{Binding ReferenceDataDownloadCommand}"><TextBlock Text="{Binding NewVersion.LatestReferenceDataVersion}" /></Hyperlink>
                     </TextBlock>
                 </Border>
+                <Border BorderBrush="#1d70b8" BorderThickness="2" Padding="6" Grid.Row="0" Grid.RowSpan="4" Grid.Column="2" Grid.ColumnSpan="3" Visibility="{Binding ReferenceDataDownloadingBannerVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <TextBlock Grid.Column="2" Grid.ColumnSpan="3" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="left" Foreground="Black"> 
+                        <Bold>New Reference Data available</Bold>
+                         <LineBreak/> <LineBreak/>
+                        <Italic>Download in progress...</Italic>
+                    </TextBlock>
+                </Border>
             </StackPanel>
         </Grid>
 
