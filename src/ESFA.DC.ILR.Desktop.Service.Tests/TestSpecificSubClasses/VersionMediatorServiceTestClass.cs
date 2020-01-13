@@ -1,6 +1,7 @@
 ﻿using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
 using ESFA.DC.ILR.Desktop.Models;
 using ESFA.DC.ILR.Desktop.Service.Interface;
+using ESFA.DC.Logging.Interfaces;
 
 namespace ESFA.DC.ILR.Desktop.Service.Tests.TestSpecificSubClasses
 {
@@ -10,8 +11,9 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests.TestSpecificSubClasses
             IVersionFactory versionFactory,
             IReleaseVersionInformationService versionInformationService,
             IVersionService versionService,
-            IDesktopServiceSettings desktopServiceSettings)
-            : base(versionFactory, versionInformationService, versionService, desktopServiceSettings)
+            IDesktopServiceSettings desktopServiceSettings,
+            ILogger logger = null)
+            : base(versionFactory, versionInformationService, versionService, desktopServiceSettings, logger)
         {
         }
 

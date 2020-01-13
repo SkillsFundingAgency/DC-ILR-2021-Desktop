@@ -129,12 +129,19 @@
                         <Italic>Checking For Updates...</Italic>
                     </TextBlock>
                 </Border>
+                <Border BorderBrush="#1d70b8" BorderThickness="2" Padding="6" Grid.Row="0" Grid.RowSpan="4" Grid.Column="2" Grid.ColumnSpan="3" Visibility="{Binding ReferenceDataBannerVisibilityError, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <TextBlock Grid.Column="2" Grid.ColumnSpan="3" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="left" Foreground="Black"> 
+                        <Bold>There is a problem</Bold>
+                         <LineBreak/> <LineBreak/>
+                        We can't check if you have the latest version of reference data.<LineBreak/>Try Later. 
+                    </TextBlock>
+                </Border>
             </StackPanel>
         </Grid>
 
         <Grid Grid.Row ="3">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="325" />
+                <ColumnDefinition Width="340" />
                 <ColumnDefinition Width="150" />
                 <ColumnDefinition Width="150" />
                 <ColumnDefinition Width="100*"/>

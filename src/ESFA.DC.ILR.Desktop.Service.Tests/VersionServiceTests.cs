@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
 using ESFA.DC.ILR.Desktop.Models;
+using ESFA.DC.Logging.Interfaces;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -271,11 +272,13 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
 
         private VersionService NewService(
             IApplicationVersionResultClient versionClient = null,
-            IAPIResultFactory<ApplicationVersionResult> applicationVersionResultFactory = null)
+            IAPIResultFactory<ApplicationVersionResult> applicationVersionResultFactory = null,
+            ILogger loggerMock = null)
         {
             return new VersionService(
                 versionClient ?? Mock.Of<IApplicationVersionResultClient>(),
-                applicationVersionResultFactory ?? Mock.Of<IAPIResultFactory<ApplicationVersionResult>>());
+                applicationVersionResultFactory ?? Mock.Of<IAPIResultFactory<ApplicationVersionResult>>(),
+                loggerMock ?? Mock.Of<ILogger>());
         }
     }
 }

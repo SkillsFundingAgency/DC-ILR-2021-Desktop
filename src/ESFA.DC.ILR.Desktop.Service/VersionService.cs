@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
 using ESFA.DC.ILR.Desktop.Models;
+using ESFA.DC.Logging.Interfaces;
 using Version = ESFA.DC.ILR.Desktop.Models.Version;
 
 namespace ESFA.DC.ILR.Desktop.Service
@@ -11,29 +13,44 @@ namespace ESFA.DC.ILR.Desktop.Service
     {
         private readonly IApplicationVersionResultClient _versionClient;
         private readonly IAPIResultFactory<ApplicationVersionResult> _applicationVersionResultFactory;
+        private readonly ILogger _logger;
 
         public VersionService(
             IApplicationVersionResultClient versionClient,
-            IAPIResultFactory<ApplicationVersionResult> applicationVersionResultFactory)
+            IAPIResultFactory<ApplicationVersionResult> applicationVersionResultFactory,
+            ILogger logger)
         {
             _versionClient = versionClient;
             _applicationVersionResultFactory = applicationVersionResultFactory;
+            _logger = logger;
         }
 
         public async Task<ApplicationVersionResult> GetLatestApplicationVersion(Version currentVersion)
         {
-            var applicationVersions = await _versionClient.GetAsync();
+            _logger.LogInfo("Retrieving Application versions from SLD API.");
 
-            var newerVersion = GetNewerApplicationVersion(currentVersion, applicationVersions.Versions);
+            var result = new ApplicationVersionResult();
+            try
+            {
+                var applicationVersions = await _versionClient.GetAsync();
+                var newerVersion = GetNewerApplicationVersion(currentVersion, applicationVersions.Versions);
 
-            return newerVersion == null
-                ? null
-                : _applicationVersionResultFactory.GetResult(
+                _logger.LogInfo("Finished retrieving Application versions from SLD API.");
+
+                result = newerVersion == null
+                ? null : _applicationVersionResultFactory.GetResult(
                     newerVersion.VersionName,
                     newerVersion.ReleaseDateTime,
                     applicationVersions.Url,
                     newerVersion.ReferenceDataVersion?.VersionName,
                     newerVersion.ReferenceDataVersion?.FileName);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error retrieving Application versions from SLD API.", e);
+            }
+
+            return result;
         }
 
         private Version GetNewerApplicationVersion(Version currentVersion, IEnumerable<Version> availableVersions)

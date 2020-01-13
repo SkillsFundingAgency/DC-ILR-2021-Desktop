@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using ESFA.DC.FileService.Interface;
 using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
 using ESFA.DC.ILR.Desktop.Service.Interface;
+using ESFA.DC.Logging.Interfaces;
 using Moq;
 using Xunit;
 
@@ -39,9 +40,10 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         private DesktopReferenceDataDownloadService NewService(
             IReferenceDataResultClient apiClient = null,
             IDesktopServiceSettings desktopServiceSettings = null,
-            IFileService fileService = null)
+            IFileService fileService = null,
+            ILogger logger = null)
         {
-            return new DesktopReferenceDataDownloadService(apiClient, desktopServiceSettings, fileService);
+            return new DesktopReferenceDataDownloadService(apiClient, desktopServiceSettings, fileService, logger ?? Mock.Of<ILogger>());
         }
     }
 }

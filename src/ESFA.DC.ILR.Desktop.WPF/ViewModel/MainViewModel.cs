@@ -45,6 +45,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private bool _newVersionBannerVisibilityError;
         private bool _uptoDateBannerVisibility;
         private bool _referenceDataBannerVisibility;
+        private bool _referenceDataBannerVisibilityError;
         private bool _checkingForUpdatesBannerVisibility;
         private bool _referenceDataDownloadingBannerVisibility;
         private bool _updateMenuEnabled = true;
@@ -155,6 +156,12 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         {
             get => _referenceDataBannerVisibility;
             set => Set(ref _referenceDataBannerVisibility, value);
+        }
+
+        public bool ReferenceDataBannerVisibilityError
+        {
+            get => _referenceDataBannerVisibilityError;
+            set => Set(ref _referenceDataBannerVisibilityError, value);
         }
 
         public bool ReferenceDataDownloadingBannerVisibility
@@ -415,6 +422,14 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             ReferenceDataDownloadingBannerVisibility = false;
         }
 
+        private void RefreshReferenceDataBannerError()
+        {
+            ReferenceDataBannerVisibility = false;
+            UpToDateBannerVisibility = false;
+            ReferenceDataDownloadingBannerVisibility = false;
+            ReferenceDataBannerVisibilityError = true;
+        }
+
         private void RefDataDownloadingBanner()
         {
             ReferenceDataBannerVisibility = false;
@@ -444,6 +459,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             NewVersionBannerVisibilityError = true;
             UpToDateBannerVisibility = false;
             CheckingForUpdatesBannerVisibility = false;
+            ReferenceDataBannerVisibility = false;
         }
 
         private void ReferenceDataUpdate()
@@ -464,9 +480,16 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         {
             RefDataDownloadingBanner();
 
-            await Task.Run(() => _desktopReferenceDataDownloadService.GetReferenceData(NewVersion.LatestReferenceDataFileName, NewVersion.LatestReferenceDataVersion));
+            try
+            {
+               await Task.Run(() => _desktopReferenceDataDownloadService.GetReferenceData(NewVersion.LatestReferenceDataFileName, NewVersion.LatestReferenceDataVersion));
 
-            RefreshReferenceDataBanner();
+               RefreshReferenceDataBanner();
+            }
+            catch (Exception e)
+            {
+                RefreshReferenceDataBannerError();
+            }
         }
     }
 }
