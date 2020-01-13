@@ -16,6 +16,7 @@ namespace ESFA.DC.ILR.Desktop.CLI.Modules
             containerBuilder.RegisterType<CommandLineMessengerService>().As<IMessengerService>().SingleInstance();
             containerBuilder.RegisterType<CliServiceConfiguration>().As<IServiceConfiguration>();
             containerBuilder.RegisterType<APIConfiguration>().As<IAPIConfiguration>();
+            containerBuilder.RegisterType<FeatureSwitchConfiguration>().As<IFeatureSwitchConfiguration>();
         }
     }
 }

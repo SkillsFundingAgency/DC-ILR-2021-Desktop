@@ -45,6 +45,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private bool _newVersionBannerVisibilityError;
         private bool _uptoDateBannerVisibility;
         private bool _referenceDataBannerVisibility;
+        private bool _checkingForUpdatesBannerVisibility;
         private bool _referenceDataDownloadingBannerVisibility;
         private bool _updateMenuEnabled = true;
         private ApplicationVersionResult _newVersion;
@@ -142,6 +143,12 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         {
             get => _uptoDateBannerVisibility;
             set => Set(ref _uptoDateBannerVisibility, value);
+        }
+
+        public bool CheckingForUpdatesBannerVisibility
+        {
+            get => _checkingForUpdatesBannerVisibility;
+            set => Set(ref _checkingForUpdatesBannerVisibility, value);
         }
 
         public bool ReferenceDataBannerVisibility
@@ -326,38 +333,10 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         private void ReportFiltersNavigate() => _windowService.ShowReportFiltersWindow();
 
-        private void VersionStatusUpToDate()
-        {
-            NewVersionBannerVisibility = false;
-            NewVersionBannerVisibilityError = false;
-            UpToDateBannerVisibility = true;
-        }
-
-        private void VersionStatusUpdateAvailable()
-        {
-            NewVersionBannerVisibility = true;
-            NewVersionBannerVisibilityError = false;
-            UpToDateBannerVisibility = false;
-        }
-
-        private void VersionStatusUpdateError()
-        {
-            NewVersionBannerVisibility = false;
-            NewVersionBannerVisibilityError = true;
-            UpToDateBannerVisibility = false;
-        }
-
-        private void ReferenceDataUpdate()
-        {
-            NewVersionBannerVisibility = false;
-            NewVersionBannerVisibilityError = false;
-            UpToDateBannerVisibility = false;
-            ReferenceDataBannerVisibility = true;
-        }
-
         private async Task CheckForNewVersionFromMenu()
         {
-            UpToDateBannerVisibility = false;
+            CheckingForUpdatesBanner();
+
             await CheckForNewVersion();
 
             if (ApplicationVersionUpToDate() && ReferenceDataUpdateAvailable())
@@ -392,7 +371,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             {
                 _canCheckForNewVersion = false;
                 _updateMenuEnabled = false;
-                NewVersion = await _versionMediatorService.GetNewVersion();
+                NewVersion = await Task.Run(() => _versionMediatorService.GetNewVersion());
             }
             catch (Exception exception)
             {
@@ -420,6 +399,15 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             return _canCheckForNewVersion;
         }
 
+        private void CheckingForUpdatesBanner()
+        {
+            UpToDateBannerVisibility = false;
+            ReferenceDataBannerVisibility = false;
+            ReferenceDataDownloadingBannerVisibility = false;
+            CheckingForUpdatesBannerVisibility = true;
+            NewVersionBannerVisibilityError = false;
+        }
+
         private void RefreshReferenceDataBanner()
         {
             ReferenceDataBannerVisibility = false;
@@ -432,6 +420,39 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             ReferenceDataBannerVisibility = false;
             ReferenceDataDownloadingBannerVisibility = true;
             UpToDateBannerVisibility = false;
+        }
+
+        private void VersionStatusUpToDate()
+        {
+            NewVersionBannerVisibility = false;
+            NewVersionBannerVisibilityError = false;
+            UpToDateBannerVisibility = true;
+            CheckingForUpdatesBannerVisibility = false;
+        }
+
+        private void VersionStatusUpdateAvailable()
+        {
+            NewVersionBannerVisibility = true;
+            NewVersionBannerVisibilityError = false;
+            UpToDateBannerVisibility = false;
+            CheckingForUpdatesBannerVisibility = false;
+        }
+
+        private void VersionStatusUpdateError()
+        {
+            NewVersionBannerVisibility = false;
+            NewVersionBannerVisibilityError = true;
+            UpToDateBannerVisibility = false;
+            CheckingForUpdatesBannerVisibility = false;
+        }
+
+        private void ReferenceDataUpdate()
+        {
+            NewVersionBannerVisibility = false;
+            NewVersionBannerVisibilityError = false;
+            UpToDateBannerVisibility = false;
+            ReferenceDataBannerVisibility = true;
+            CheckingForUpdatesBannerVisibility = false;
         }
 
         private void NavigateToVersionsUrl()

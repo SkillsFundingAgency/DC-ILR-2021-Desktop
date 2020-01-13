@@ -42,8 +42,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
             }).As<IDesktopServiceSettings>().SingleInstance();
 
             containerBuilder.RegisterType<APIConfiguration>().As<IAPIConfiguration>();
-
-            containerBuilder.RegisterType<FeatureSwitchService>().As<IFeatureSwitchService>();
+            containerBuilder.RegisterType<FeatureSwitchConfiguration>().As<IFeatureSwitchConfiguration>();
         }
     }
 }

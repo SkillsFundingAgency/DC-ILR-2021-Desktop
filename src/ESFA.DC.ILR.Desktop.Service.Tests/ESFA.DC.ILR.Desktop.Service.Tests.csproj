@@ -125,6 +125,7 @@
     <Compile Include="DesktopReferenceDataDownloadServiceTests.cs" />
     <Compile Include="FactoryTests.cs" />
     <Compile Include="ReferenceDataVersionInformationServiceTests.cs" />
+    <Compile Include="FeatureSwitchServiceTests.cs" />
     <Compile Include="ReleaseVersionInformationServiceTests.cs" />
     <Compile Include="SchemaContextMutatorTests.cs" />
     <Compile Include="IlrDesktopTaskKeysTests.cs" />

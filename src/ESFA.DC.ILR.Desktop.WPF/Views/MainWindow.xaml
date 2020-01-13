@@ -21,9 +21,39 @@
         </Grid.RowDefinitions>
 
         <Menu HorizontalAlignment="Stretch">
-            <MenuItem Header="Report Filters" Command="{Binding ReportFiltersNavigationCommand}" Visibility="{Binding ReportFiltersFeatureSwitch, Converter={StaticResource BooleanToVisibilityConverter}}" />
-            <MenuItem Header="Settings" Command="{Binding SettingsNavigationCommand}"/>
-            <MenuItem Header="About" Command="{Binding AboutNavigationCommand}"/>
+            <MenuItem Header="Report Filters" Command="{Binding ReportFiltersNavigationCommand}" Visibility="{Binding ReportFiltersFeatureSwitch, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <MenuItem.Style>
+                    <Style TargetType="MenuItem">
+                        <Style.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Foreground" Value="DarkGray" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </MenuItem.Style>
+            </MenuItem>
+            <MenuItem Header="Settings" Command="{Binding SettingsNavigationCommand}">
+                <MenuItem.Style>
+                    <Style TargetType="MenuItem">
+                        <Style.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Foreground" Value="DarkGray" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </MenuItem.Style>
+            </MenuItem>
+            <MenuItem Header="About" Command="{Binding AboutNavigationCommand}">
+                <MenuItem.Style>
+                    <Style TargetType="MenuItem">
+                        <Style.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Foreground" Value="DarkGray" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </MenuItem.Style>
+            </MenuItem>
             <MenuItem Header="Check for updates" Command="{Binding CheckForUpdateMenuCommand}"
                       IsEnabled="{Binding UpdateMenuEnabled}"
                       Visibility="{Binding VersionUpdateFeatureSwitch, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -32,6 +62,9 @@
                         <Style.Triggers>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter Property="Foreground" Value="LightGray" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Foreground" Value="DarkGray" />
                             </Trigger>
                         </Style.Triggers>
                     </Style>
@@ -91,17 +124,24 @@
                         <Italic>Download in progress...</Italic>
                     </TextBlock>
                 </Border>
+                <Border BorderBrush="#1d70b8" BorderThickness="2" Padding="6" Grid.Row="0" Grid.RowSpan="4" Grid.Column="2" Grid.ColumnSpan="3" Visibility="{Binding CheckingForUpdatesBannerVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <TextBlock Grid.Column="2" Grid.ColumnSpan="3" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="left" Foreground="Black"> 
+                        <Italic>Checking For Updates...</Italic>
+                    </TextBlock>
+                </Border>
             </StackPanel>
         </Grid>
 
         <Grid Grid.Row ="3">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="500" />
-                <ColumnDefinition Width="125" />
+                <ColumnDefinition Width="325" />
+                <ColumnDefinition Width="150" />
+                <ColumnDefinition Width="150" />
                 <ColumnDefinition Width="100*"/>
             </Grid.ColumnDefinitions>
-            <Label FontSize="10" Grid.Column="1" VerticalAlignment="Bottom" HorizontalContentAlignment="Right" Content="{Binding ReleaseVersionNumber}" ContentStringFormat="Version: {0}" />
-            <Label FontSize="10" Grid.Column="2" VerticalAlignment="Bottom" HorizontalContentAlignment="Left" Content="{Binding ReleaseDate}"  ContentStringFormat="Released: {0}" />
+            <Label FontSize="10" Grid.Column="1" VerticalAlignment="Bottom" HorizontalContentAlignment="Right" Content="{Binding ReleaseVersionNumber}" ContentStringFormat="Application Version: {0}" />
+            <Label FontSize="10" Grid.Column="2" VerticalAlignment="Bottom" HorizontalContentAlignment="Right" Content="{Binding ReferenceDataVersionNumber}" ContentStringFormat="Reference Data Version: {0}" />
+            <Label FontSize="10" Grid.Column="3" VerticalAlignment="Bottom" HorizontalContentAlignment="Right" Content="{Binding ReleaseDate}"  ContentStringFormat="Released: {0}" />
         </Grid>
 
         <Grid Margin="15" Grid.Row="3">

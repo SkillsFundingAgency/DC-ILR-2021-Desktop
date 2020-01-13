@@ -47,7 +47,8 @@ namespace ESFA.DC.ILR.Desktop.CLI.Tests
             IVersionMediatorService versionMediatorService = null,
             IDesktopReferenceDataDownloadService desktopReferenceDataDownloadService = null,
             IReferenceDataVersionInformationService referenceDataVersionInformationService = null,
-            IReleaseVersionInformationService releaseVersionInformationService = null)
+            IReleaseVersionInformationService releaseVersionInformationService = null,
+            IFeatureSwitchService featureSwitchService = null)
         {
             return new CliEntryPoint(
                 messengerService ?? Mock.Of<IMessengerService>(),
@@ -56,7 +57,8 @@ namespace ESFA.DC.ILR.Desktop.CLI.Tests
                 versionMediatorService ?? Mock.Of<IVersionMediatorService>(),
                 desktopReferenceDataDownloadService ?? Mock.Of<IDesktopReferenceDataDownloadService>(),
                 referenceDataVersionInformationService ?? Mock.Of<IReferenceDataVersionInformationService>(),
-                releaseVersionInformationService ?? Mock.Of<IReleaseVersionInformationService>());
+                releaseVersionInformationService ?? Mock.Of<IReleaseVersionInformationService>(),
+                featureSwitchService ?? Mock.Of<IFeatureSwitchService>());
         }
     }
 }

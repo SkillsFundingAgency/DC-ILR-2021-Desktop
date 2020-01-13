@@ -48,6 +48,7 @@
     <Compile Include="CommandLineArguments.cs" />
     <Compile Include="Config\APIConfiguration.cs" />
     <Compile Include="Config\CliServiceConfiguration.cs" />
+    <Compile Include="Config\FeatureSwitchConfiguration.cs" />
     <Compile Include="Service\DesktopServiceSettings.cs" />
     <Compile Include="Interface\ICliEntryPoint.cs" />
     <Compile Include="Interface\ICommandLineArguments.cs" />

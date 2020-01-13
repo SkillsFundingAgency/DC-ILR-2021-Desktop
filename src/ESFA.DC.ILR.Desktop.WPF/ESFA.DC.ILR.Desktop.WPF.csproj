@@ -93,7 +93,6 @@
     <Compile Include="Service\DesktopContextFactory.cs" />
     <Compile Include="Service\DesktopServiceSettings.cs" />
     <Compile Include="Service\DialogInteractionService.cs" />
-    <Compile Include="Service\FeatureSwitchService.cs" />
     <Compile Include="Service\Interface\ICloseable.cs" />
     <Compile Include="Service\Interface\IDesktopContextFactory.cs" />
     <Compile Include="Service\Interface\IDialogInteractionService.cs" />

@@ -17,6 +17,7 @@ namespace ESFA.DC.ILR.Desktop.CLI.Service
         private readonly IDesktopReferenceDataDownloadService _desktopReferenceDataDownloadService;
         private readonly IReferenceDataVersionInformationService _referenceDataVersionInformationService;
         private readonly IReleaseVersionInformationService _releaseVersionInformationService;
+        private readonly IFeatureSwitchService _featureSwitchService;
 
         public CliEntryPoint(
             IMessengerService messengerService, 
@@ -25,7 +26,8 @@ namespace ESFA.DC.ILR.Desktop.CLI.Service
             IVersionMediatorService versionMediatorService,
             IDesktopReferenceDataDownloadService desktopReferenceDataDownloadService,
             IReferenceDataVersionInformationService referenceDataVersionInformationService,
-            IReleaseVersionInformationService releaseVersionInformationService)
+            IReleaseVersionInformationService releaseVersionInformationService,
+            IFeatureSwitchService featureSwitchService)
         {
             _messengerService = messengerService;
             _desktopContextFactory = desktopContextFactory;
@@ -34,13 +36,14 @@ namespace ESFA.DC.ILR.Desktop.CLI.Service
             _desktopReferenceDataDownloadService = desktopReferenceDataDownloadService;
             _referenceDataVersionInformationService = referenceDataVersionInformationService;
             _releaseVersionInformationService = releaseVersionInformationService;
+            _featureSwitchService = featureSwitchService;
 
             _messengerService.Register<TaskProgressMessage>(this, HandleTaskProgressMessage);
         }
 
         public async Task ExecuteAsync(ICommandLineArguments commandLineArguments, CancellationToken cancellationToken)
         {
-            if (string.Equals(commandLineArguments.CheckAndUpdateReferenceData, "Y", StringComparison.OrdinalIgnoreCase))
+            if (_featureSwitchService.VersionUpdate)
             {
                 await CheckForReferenceDataUpdates();
             }
@@ -57,11 +60,17 @@ namespace ESFA.DC.ILR.Desktop.CLI.Service
 
         private async Task CheckForReferenceDataUpdates()
         {
-            var appVersion = await _versionMediatorService.GetNewVersion();
+            // to be follow up under a story - stubbed for now. Replace with commandLineArguments.CheckAndUpdateReferenceData at later date. 
+            var checkForRefData = "N";
 
-            if (appVersion.ApplicationVersion == _releaseVersionInformationService.VersionNumber && appVersion.LatestReferenceDataVersion != _referenceDataVersionInformationService.VersionNumber)
+            if (string.Equals(checkForRefData, "Y", StringComparison.OrdinalIgnoreCase))
             {
-                await _desktopReferenceDataDownloadService.GetReferenceData(appVersion.LatestReferenceDataFileName, appVersion.LatestReferenceDataVersion);
+                var appVersion = await _versionMediatorService.GetNewVersion();
+
+                if (appVersion.ApplicationVersion == _releaseVersionInformationService.VersionNumber && appVersion.LatestReferenceDataVersion != _referenceDataVersionInformationService.VersionNumber)
+                {
+                    await _desktopReferenceDataDownloadService.GetReferenceData(appVersion.LatestReferenceDataFileName, appVersion.LatestReferenceDataVersion);
+                }
             }
         }
     }

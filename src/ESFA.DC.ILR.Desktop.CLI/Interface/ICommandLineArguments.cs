@@ -8,6 +8,7 @@
         
         string OutputDirectory { get; }
 
-        string CheckAndUpdateReferenceData { get; }
+        // To be followed up under new story.
+        //string CheckAndUpdateReferenceData { get; }
     }
 }
