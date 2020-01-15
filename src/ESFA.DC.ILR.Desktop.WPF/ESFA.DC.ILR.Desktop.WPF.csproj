@@ -90,6 +90,7 @@
     <Compile Include="Config\FileSystemKeyValuePersistenceServiceConfig.cs" />
     <Compile Include="Modules\DesktopServicesModule.cs" />
     <Compile Include="Modules\ViewModelsModule.cs" />
+    <Compile Include="Service\ApiBannerKeys.cs" />
     <Compile Include="Service\DesktopContextFactory.cs" />
     <Compile Include="Service\DesktopServiceSettings.cs" />
     <Compile Include="Service\DialogInteractionService.cs" />

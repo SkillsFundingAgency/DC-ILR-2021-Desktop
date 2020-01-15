@@ -57,10 +57,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             viewModel.NewVersion.ReleaseDateTime.Should().Be(releaseDate);
             viewModel.NewVersion.Url.Should().Be(url);
 
-            viewModel.NewVersionBannerVisibility.Should().BeTrue();
-            viewModel.NewVersionBannerVisibilityError.Should().BeFalse();
-            viewModel.UpToDateBannerVisibility.Should().BeFalse();
-            viewModel.ReferenceDataBannerVisibility.Should().BeFalse();
+            viewModel.CurrentBannerVisibility.Should().Be(ApiBannerKeys.NewApplication);
         }
 
         [Fact]
@@ -80,9 +77,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
 
             viewModel.NewVersion.Should().BeNull();
 
-            viewModel.NewVersionBannerVisibility.Should().BeFalse();
-            viewModel.NewVersionBannerVisibilityError.Should().BeTrue();
-            viewModel.UpToDateBannerVisibility.Should().BeFalse();
+            viewModel.CurrentBannerVisibility.Should().Be(ApiBannerKeys.ErrorNewApplication);
         }
 
         [Fact]
@@ -102,9 +97,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
 
             viewModel.NewVersion.Should().NotBeNull();
 
-            viewModel.NewVersionBannerVisibility.Should().BeFalse();
-            viewModel.NewVersionBannerVisibilityError.Should().BeTrue();
-            viewModel.UpToDateBannerVisibility.Should().BeFalse();
+            viewModel.CurrentBannerVisibility.Should().Be(ApiBannerKeys.ErrorNewApplication);
         }
 
         [Fact]
@@ -138,10 +131,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
 
             viewModel.NewVersion.Should().NotBeNull();
 
-            viewModel.NewVersionBannerVisibility.Should().BeFalse();
-            viewModel.NewVersionBannerVisibilityError.Should().BeFalse();
-            viewModel.UpToDateBannerVisibility.Should().BeTrue();
-            viewModel.ReferenceDataBannerVisibility.Should().BeFalse();
+            viewModel.CurrentBannerVisibility.Should().Be(ApiBannerKeys.UpToDate);
         }
 
         [Fact]
@@ -175,10 +165,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
 
             viewModel.NewVersion.Should().NotBeNull();
 
-            viewModel.NewVersionBannerVisibility.Should().BeFalse();
-            viewModel.NewVersionBannerVisibilityError.Should().BeFalse();
-            viewModel.UpToDateBannerVisibility.Should().BeFalse();
-            viewModel.ReferenceDataBannerVisibility.Should().BeTrue();
+            viewModel.CurrentBannerVisibility.Should().Be(ApiBannerKeys.ReferenceDataUpdate);
         }
 
         [Fact]
@@ -221,10 +208,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             viewModel.NewVersion.ReleaseDateTime.Should().Be(releaseDate);
             viewModel.NewVersion.Url.Should().Be(url);
 
-            viewModel.NewVersionBannerVisibility.Should().BeTrue();
-            viewModel.NewVersionBannerVisibilityError.Should().BeFalse();
-            viewModel.UpToDateBannerVisibility.Should().BeFalse();
-            viewModel.ReferenceDataBannerVisibility.Should().BeFalse();
+            viewModel.CurrentBannerVisibility.Should().Be(ApiBannerKeys.NewApplication);
         }
 
         [Fact]
@@ -254,14 +238,11 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
                 versionInformationService: versionInformationServiceMock.Object,
                 referenceDataVersionInformationService: refDataVersionInformationServiceMock.Object);
 
-            await viewModel.CheckForUpdateMenuCommand.ExecuteAsync();
+            await viewModel.CheckForUpdateCommand.ExecuteAsync();
 
             viewModel.NewVersion.Should().NotBeNull();
 
-            viewModel.NewVersionBannerVisibility.Should().BeFalse();
-            viewModel.NewVersionBannerVisibilityError.Should().BeFalse();
-            viewModel.UpToDateBannerVisibility.Should().BeTrue();
-            viewModel.ReferenceDataBannerVisibility.Should().BeFalse();
+            viewModel.CurrentBannerVisibility.Should().Be(ApiBannerKeys.None);
         }
 
         [Fact]
@@ -295,10 +276,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
 
             viewModel.NewVersion.Should().NotBeNull();
 
-            viewModel.NewVersionBannerVisibility.Should().BeFalse();
-            viewModel.NewVersionBannerVisibilityError.Should().BeFalse();
-            viewModel.UpToDateBannerVisibility.Should().BeFalse();
-            viewModel.ReferenceDataBannerVisibility.Should().BeTrue();
+            viewModel.CurrentBannerVisibility.Should().Be(ApiBannerKeys.ReferenceDataUpdate);
         }
 
         [Fact]
@@ -318,9 +296,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
 
             viewModel.NewVersion.Should().BeNull();
 
-            viewModel.NewVersionBannerVisibility.Should().BeFalse();
-            viewModel.NewVersionBannerVisibilityError.Should().BeFalse();
-            viewModel.UpToDateBannerVisibility.Should().BeFalse();
+            viewModel.CurrentBannerVisibility.Should().Be(ApiBannerKeys.None);
         }
 
         [Fact]
@@ -463,80 +439,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             viewModel.CurrentStage.Should().Be(StageKeys.ProcessedSuccessfully);
             viewModel.CanSubmit.Should().BeFalse();
             viewModel.FileName.Should().Be("No file chosen");
-        }
-
-        [Fact]
-        public async Task ApplicationVersionUpToDate()
-        {
-            var versionMediatorServiceMock = new Mock<IVersionMediatorService>();
-            versionMediatorServiceMock
-                .Setup(m => m.GetNewVersion())
-                .ReturnsAsync(new ApplicationVersionResult()
-                {
-                    ApplicationVersion = "1.0",
-                    LatestReferenceDataVersion = "1.0.388"
-                });
-
-            var featureSwitchService = new Mock<IFeatureSwitchService>();
-            featureSwitchService.Setup(m => m.VersionUpdate).Returns(true);
-
-            var versionInformationServiceMock = new Mock<IReleaseVersionInformationService>();
-            versionInformationServiceMock.Setup(vm => vm.VersionNumber).Returns("1.0");
-
-            var viewModel = NewViewModel(versionMediatorService: versionMediatorServiceMock.Object, featureSwitchService: featureSwitchService.Object, versionInformationService: versionInformationServiceMock.Object);
-
-            await viewModel.CheckForUpdateCommand.ExecuteAsync();
-
-            viewModel.ApplicationVersionUpToDate().Should().BeTrue();
-        }
-
-        [Fact]
-        public async Task ApplicationVersionUpdateAvailable()
-        {
-            const string version = "2.0.0.0";
-            const string url = "foo";
-            var releaseDate = new DateTime(2019, 11, 10, 8, 0, 0);
-
-            var applicationVersionResult = new ApplicationVersionResult
-            {
-                ApplicationVersion = version,
-                ReleaseDateTime = releaseDate,
-                Url = url
-            };
-
-            var versionMediatorServiceMock = new Mock<IVersionMediatorService>();
-            versionMediatorServiceMock
-                .Setup(m => m.GetNewVersion())
-                .ReturnsAsync(applicationVersionResult);
-
-            var featureSwitchService = new Mock<IFeatureSwitchService>();
-            featureSwitchService.Setup(m => m.VersionUpdate).Returns(true);
-
-            var versionInformationServiceMock = new Mock<IReleaseVersionInformationService>();
-            versionInformationServiceMock.Setup(vm => vm.VersionNumber).Returns("1.0");
-
-            var viewModel = NewViewModel(versionMediatorService: versionMediatorServiceMock.Object, featureSwitchService: featureSwitchService.Object, versionInformationService: versionInformationServiceMock.Object);
-
-            await viewModel.CheckForUpdateMenuCommand.ExecuteAsync();
-
-            viewModel.ApplicationVersionUpdateAvailable().Should().BeTrue();
-        }
-
-        [Fact]
-        public async Task ApplicationVersionUpdateError()
-        {
-            var versionMediatorServiceMock = new Mock<IVersionMediatorService>();
-            versionMediatorServiceMock
-                .Setup(m => m.GetNewVersion())
-                .ReturnsAsync((ApplicationVersionResult)null);
-
-            var featureSwitchService = new Mock<IFeatureSwitchService>();
-            featureSwitchService.Setup(m => m.VersionUpdate).Returns(true);
-
-            var viewModel = NewViewModel(versionMediatorService: versionMediatorServiceMock.Object, featureSwitchService: featureSwitchService.Object);
-            await viewModel.CheckForUpdateMenuCommand.ExecuteAsync();
-
-            viewModel.ApplicationVersionUpdateError().Should().BeTrue();
         }
 
         private MainViewModel NewViewModel(
