@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
 
 namespace ESFA.DC.ILR.Desktop.Internal.Interface.Services
 {
     public interface IReferenceDataResultClient
     {
-        Task<byte[]> GetAsync(string fileName);
+        Task<Stream> GetAsync(string fileName, Stream stream);
     }
 }

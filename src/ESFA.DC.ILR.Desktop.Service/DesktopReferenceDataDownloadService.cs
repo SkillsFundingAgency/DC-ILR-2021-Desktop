@@ -37,18 +37,14 @@ namespace ESFA.DC.ILR.Desktop.Service
 
             try
             {
-                var byteArray = await _apiClient.GetAsync(fileName);
-
                 _logger.LogInfo(string.Concat("Downloading Reference Data version: ", fileName));
-                using (var fileStream = new MemoryStream(byteArray))
-                {
-                    using (var writeStream = await _fileService.OpenWriteStreamAsync(DownloadFolder + fileName, null, cancellationToken))
-                    {
-                        await fileStream.CopyToAsync(writeStream, 8096, cancellationToken);
-                    }
 
-                    await SaveReferenceDataVersionToConfig(versionNumber);
+                using (var writeStream = await _fileService.OpenWriteStreamAsync(DownloadFolder + fileName, null, cancellationToken))
+                {
+                    _apiClient.GetAsync(fileName, writeStream);
                 }
+
+                await SaveReferenceDataVersionToConfig(versionNumber);
             }
             catch (Exception e)
             {

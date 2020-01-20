@@ -5,7 +5,7 @@ using RestSharp;
 
 namespace ESFA.DC.ILR.Desktop.Service.Factories
 {
-    public class ReferenceDataClientFactory : APIClientFactory, IAPIClientFactory<byte[]>
+    public class ReferenceDataClientFactory : APIClientFactory, IAPIClientFactory<Stream>
     {
         private readonly IAPIConfiguration _configuration;
 

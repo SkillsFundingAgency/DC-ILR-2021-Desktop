@@ -18,11 +18,10 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
             var cancellationToken = CancellationToken.None;
             var fileName = "FileName.zip";
             var versionNumber = "1.0.0.0";
-            var byteArray = new byte[] { };
             Stream stream = new MemoryStream();
 
             var apiClientMock = new Mock<IReferenceDataResultClient>();
-            apiClientMock.Setup(a => a.GetAsync(fileName)).Returns(Task.FromResult(byteArray));
+            apiClientMock.Setup(a => a.GetAsync(fileName, stream)).Returns(Task.FromResult(stream));
 
             var fileServiceMock = new Mock<IFileService>();
             fileServiceMock.Setup(f => f.OpenWriteStreamAsync(It.IsAny<string>(), null, cancellationToken)).Returns(Task.FromResult(stream));
