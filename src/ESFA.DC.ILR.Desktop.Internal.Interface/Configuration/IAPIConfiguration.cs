@@ -6,6 +6,8 @@
 
         string ApplicationVersionPath { get; }
 
+        string ReferenceDataVersionPath { get; }
+
         string APIVersionHeaderKey { get; }
 
         string APIVersionNumber { get; }

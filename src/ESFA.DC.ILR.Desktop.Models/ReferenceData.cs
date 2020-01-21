@@ -2,7 +2,7 @@
 
 namespace ESFA.DC.ILR.Desktop.Models
 {
-    public class Version
+    public class ReferenceData
     {
         public string VersionName { get; set; }
 
@@ -15,7 +15,5 @@ namespace ESFA.DC.ILR.Desktop.Models
         public int Increment { get; set; }
 
         public DateTime ReleaseDateTime { get; set; }
-
-        public ReferenceData ReferenceDataVersion { get; set; }
     }
 }

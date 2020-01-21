@@ -2,6 +2,7 @@
 {
     public static class ReferenceDataConstants
     {
-        public const string FilePath = "ReferenceData\\FISReferenceData.zip";
+        public const string FilePath = "ReferenceData\\FISReferenceData.";
+        public const string FileExtension = ".zip";
     }
 }

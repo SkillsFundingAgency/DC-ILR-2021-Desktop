@@ -2,10 +2,12 @@
 
 namespace ESFA.DC.ILR.Desktop.Internal.Interface.Services
 {
-    public interface IAPIClientFactory
+    public interface IAPIClientFactory<T>
     {
-        IRestClient GetAPIClient();
+        IRestClient GetClient();
 
-        IRestRequest GetApplicationVersionRequest();
+        IRestRequest GetRequest();
+
+        IRestRequest GetRequestWithParameter(string param);
     }
 }

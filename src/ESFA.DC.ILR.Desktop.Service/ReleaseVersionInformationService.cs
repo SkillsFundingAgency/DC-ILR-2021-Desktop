@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using ESFA.DC.ILR.Desktop.Internal.Interface.Configuration;
 using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
 
@@ -15,6 +16,15 @@ namespace ESFA.DC.ILR.Desktop.Service
 
         public string Date => _serviceConfiguration.Configuration.ReleaseDate;
 
-        public string VersionNumber => Assembly.GetEntryAssembly().GetName().Version.ToString();
+        public string VersionNumber => FormatVersion();
+
+        private string FormatVersion()
+        {
+            var assemblyVersion = Assembly.GetEntryAssembly().GetName().Version.ToString();
+
+            int index = assemblyVersion.LastIndexOf(".");
+
+            return assemblyVersion.Substring(0, index);
+        }
     }
 }
