@@ -21,10 +21,40 @@
         </Grid.RowDefinitions>
 
         <Menu HorizontalAlignment="Stretch">
-            <MenuItem Header="Report Filters" Command="{Binding ReportFiltersNavigationCommand}" Visibility="{Binding ReportFiltersFeatureSwitch, Converter={StaticResource BooleanToVisibilityConverter}}" />
-            <MenuItem Header="Settings" Command="{Binding SettingsNavigationCommand}"/>
-            <MenuItem Header="About" Command="{Binding AboutNavigationCommand}"/>
-            <MenuItem Header="Check for update" Command="{Binding CheckForUpdateMenuCommand}"
+            <MenuItem Header="Report Filters" Command="{Binding ReportFiltersNavigationCommand}" Visibility="{Binding ReportFiltersFeatureSwitch, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <MenuItem.Style>
+                    <Style TargetType="MenuItem">
+                        <Style.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Foreground" Value="DarkGray" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </MenuItem.Style>
+            </MenuItem>
+            <MenuItem Header="Settings" Command="{Binding SettingsNavigationCommand}">
+                <MenuItem.Style>
+                    <Style TargetType="MenuItem">
+                        <Style.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Foreground" Value="DarkGray" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </MenuItem.Style>
+            </MenuItem>
+            <MenuItem Header="About" Command="{Binding AboutNavigationCommand}">
+                <MenuItem.Style>
+                    <Style TargetType="MenuItem">
+                        <Style.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Foreground" Value="DarkGray" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </MenuItem.Style>
+            </MenuItem>
+            <MenuItem Header="Check for updates" Command="{Binding CheckForUpdateMenuCommand}"
                       IsEnabled="{Binding UpdateMenuEnabled}"
                       Visibility="{Binding VersionUpdateFeatureSwitch, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <MenuItem.Style>
@@ -33,68 +63,92 @@
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter Property="Foreground" Value="LightGray" />
                             </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Foreground" Value="DarkGray" />
+                            </Trigger>
                         </Style.Triggers>
                     </Style>
                 </MenuItem.Style>
             </MenuItem>
         </Menu>
 
-        <Grid Grid.Row ="1" Background="DarkBlue"
-              Visibility="{Binding NewVersionBannerVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150"></ColumnDefinition>
-                <ColumnDefinition Width="110"></ColumnDefinition>
-                <ColumnDefinition Width="230"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="20"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Label Foreground="White" FontSize="14" Content="New version available" Grid.Column="0" />
-            <Label Foreground="White" FontSize="14" Content="{Binding NewVersion.ApplicationVersion}" ContentStringFormat="Version:  {0}" Grid.Column="1" />
-            <Label Foreground="White" FontSize="14" Content="{Binding NewVersion.ReleaseDateTime}" ContentStringFormat="Released: {0}" Grid.Column="2" />
-
-            <TextBlock Grid.Column="3" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White">
-                Please download from <Hyperlink Command="{Binding VersionNavigationCommand}"><TextBlock Text="here" /></Hyperlink>
-            </TextBlock>
-
-            <Button Grid.Column="4" Command="{Binding CloseNewVersionBannerCommand}">X</Button>
-        </Grid>
-
-        <Grid Grid.Row ="1" Background="Red"
-              Visibility="{Binding NewVersionBannerVisibilityError, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="400"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="20"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Label Foreground="White" FontSize="14" Content="Unable to check for newer versions. Please try again later." Grid.Column="0" />
-
-            <TextBlock Grid.Column="1" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White">
-                Current list of available versions can be found <Hyperlink Command="{Binding VersionNavigationCommand}"><TextBlock Text="here" /></Hyperlink>
-            </TextBlock>
-
-            <Button Grid.Column="2" Command="{Binding CloseNewVersionBannerCommand}">X</Button>
-        </Grid>
-
-        <Grid Background="DarkBlue" Grid.Row="1"
-              Visibility="{Binding UpToDateBannerVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="20"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Label Foreground="White" FontSize="14" Content="You have the latest version" Grid.Column="0" />
-            <Button Command="{Binding CloseUpToDateBannerCommand}" Grid.Column="1">X</Button>
-        </Grid>
-
         <Grid Row ="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="5*" />
-                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="473*" />
+                <ColumnDefinition Width="23"/>
+                <ColumnDefinition Width="22*"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
-            <Image Source="../Resources/Images/ESFA_logo.jpg" HorizontalAlignment="Left" Margin="15,5"/>
-            <StackPanel Grid.Column="1" Margin="0,26,0,0">
-                <Label FontSize="14" Content="{Binding ReleaseVersionNumber}" ContentStringFormat="Version:  {0}" />
-                <Label FontSize="14" Content="{Binding ReleaseDate}"          ContentStringFormat="Released: {0}"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="15*"/>
+            </Grid.RowDefinitions>
+            <Image Source="../Resources/Images/ESFA_logo.jpg" HorizontalAlignment="Left" Margin="15,5,0,5" Grid.Row="0" Grid.RowSpan="4"/>
+            <StackPanel Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="3">
+                <Border BorderBrush="#1d70b8" BorderThickness="2" Padding="6" Visibility="{Binding UpToDateBannerVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <TextBlock Grid.ColumnSpan="3" Foreground="Black"  FontSize="12" Grid.Column="2" HorizontalAlignment="Left">
+                    You are using the latest version
+                    </TextBlock>
+                </Border>
+                <Border BorderBrush="#1d70b8" BorderThickness="2" Padding="6" Grid.Row="0" Grid.RowSpan="4" Grid.Column="2" Grid.ColumnSpan="3" Visibility="{Binding NewVersionBannerVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <TextBlock Grid.Column="2" Grid.ColumnSpan="3" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="left" Foreground="Black"> 
+                        <Bold>New version available</Bold>
+                         <LineBreak/> <LineBreak/>
+                        Download New Version: <Hyperlink Command="{Binding VersionNavigationCommand}"><TextBlock Text="{Binding NewVersion.ApplicationVersion}" /></Hyperlink>
+                    </TextBlock>
+                </Border>
+                <Border BorderBrush="#1d70b8" BorderThickness="2" Padding="6" Visibility="{Binding NewVersionBannerVisibilityError, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <TextBlock Grid.Column="2" Grid.ColumnSpan="3" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="left" Foreground="Black"> 
+                        <Bold>There is a problem</Bold>
+                         <LineBreak/> <LineBreak/>
+                        We can't check if you have the latest version. Try Later. 
+                         <LineBreak/> <LineBreak/>
+                        <Hyperlink Command="{Binding VersionNavigationCommand}"><TextBlock Text="See FIS downloads" /></Hyperlink>
+                    </TextBlock>
+                </Border>
+                <Border BorderBrush="#1d70b8" BorderThickness="2" Padding="6" Grid.Row="0" Grid.RowSpan="4" Grid.Column="2" Grid.ColumnSpan="3" Visibility="{Binding ReferenceDataBannerVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <TextBlock Grid.Column="2" Grid.ColumnSpan="3" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="left" Foreground="Black"> 
+                        <Bold>New Reference Data available</Bold>
+                         <LineBreak/> <LineBreak/>
+                        Download New Version: <Hyperlink Command="{Binding ReferenceDataDownloadCommand}"><TextBlock Text="{Binding NewVersion.LatestReferenceDataVersion}" /></Hyperlink>
+                    </TextBlock>
+                </Border>
+                <Border BorderBrush="#1d70b8" BorderThickness="2" Padding="6" Grid.Row="0" Grid.RowSpan="4" Grid.Column="2" Grid.ColumnSpan="3" Visibility="{Binding ReferenceDataDownloadingBannerVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <TextBlock Grid.Column="2" Grid.ColumnSpan="3" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="left" Foreground="Black"> 
+                        <Bold>New Reference Data available</Bold>
+                         <LineBreak/> <LineBreak/>
+                        <Italic>Download in progress...</Italic>
+                    </TextBlock>
+                </Border>
+                <Border BorderBrush="#1d70b8" BorderThickness="2" Padding="6" Grid.Row="0" Grid.RowSpan="4" Grid.Column="2" Grid.ColumnSpan="3" Visibility="{Binding CheckingForUpdatesBannerVisibility, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <TextBlock Grid.Column="2" Grid.ColumnSpan="3" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="left" Foreground="Black"> 
+                        <Italic>Checking For Updates...</Italic>
+                    </TextBlock>
+                </Border>
+                <Border BorderBrush="#1d70b8" BorderThickness="2" Padding="6" Grid.Row="0" Grid.RowSpan="4" Grid.Column="2" Grid.ColumnSpan="3" Visibility="{Binding ReferenceDataBannerVisibilityError, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <TextBlock Grid.Column="2" Grid.ColumnSpan="3" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="left" Foreground="Black"> 
+                        <Bold>There is a problem</Bold>
+                         <LineBreak/> <LineBreak/>
+                        We can't check if you have the latest version of reference data.<LineBreak/>Try Later. 
+                    </TextBlock>
+                </Border>
             </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row ="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="340" />
+                <ColumnDefinition Width="150" />
+                <ColumnDefinition Width="150" />
+                <ColumnDefinition Width="100*"/>
+            </Grid.ColumnDefinitions>
+            <Label FontSize="10" Grid.Column="1" VerticalAlignment="Bottom" HorizontalContentAlignment="Right" Content="{Binding ReleaseVersionNumber}" ContentStringFormat="Application Version: {0}" />
+            <Label FontSize="10" Grid.Column="2" VerticalAlignment="Bottom" HorizontalContentAlignment="Right" Content="{Binding ReferenceDataVersionNumber}" ContentStringFormat="Reference Data Version: {0}" />
+            <Label FontSize="10" Grid.Column="3" VerticalAlignment="Bottom" HorizontalContentAlignment="Right" Content="{Binding ReleaseDate}"  ContentStringFormat="Released: {0}" />
         </Grid>
 
         <Grid Margin="15" Grid.Row="3">

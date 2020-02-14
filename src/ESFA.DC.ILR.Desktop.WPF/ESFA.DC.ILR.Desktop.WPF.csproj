@@ -14,6 +14,21 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -23,7 +38,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>3</WarningLevel>
     <CodeAnalysisRuleSet>ESFA.DC.ILR.Desktop.WPF.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -41,12 +56,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -76,10 +90,10 @@
     <Compile Include="Config\FileSystemKeyValuePersistenceServiceConfig.cs" />
     <Compile Include="Modules\DesktopServicesModule.cs" />
     <Compile Include="Modules\ViewModelsModule.cs" />
+    <Compile Include="Service\ApiBannerKeys.cs" />
     <Compile Include="Service\DesktopContextFactory.cs" />
     <Compile Include="Service\DesktopServiceSettings.cs" />
     <Compile Include="Service\DialogInteractionService.cs" />
-    <Compile Include="Service\FeatureSwitchService.cs" />
     <Compile Include="Service\Interface\ICloseable.cs" />
     <Compile Include="Service\Interface\IDesktopContextFactory.cs" />
     <Compile Include="Service\Interface\IDialogInteractionService.cs" />
@@ -87,7 +101,6 @@
     <Compile Include="Service\Interface\IWindowService.cs" />
     <Compile Include="Service\Interface\IWindowsProcessService.cs" />
     <Compile Include="Service\MessengerService.cs" />
-    <Compile Include="Service\ReferenceDataVersionInformationService.cs" />
     <Compile Include="Service\ReportFilterService.cs" />
     <Compile Include="Service\WindowService.cs" />
     <Compile Include="Service\WindowsProcessService.cs" />
@@ -210,7 +223,10 @@
       <Version>0.1.6-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.FileService">
-      <Version>0.1.25-beta0001</Version>
+      <Version>0.1.27-beta0001</Version>
+    </PackageReference>
+    <PackageReference Include="ESFA.DC.FileService.Interface">
+      <Version>0.1.27-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.1920.DataStore.Desktop">
       <Version>0.0.551</Version>
@@ -292,6 +308,9 @@
     <PackageReference Include="System.Data.SqlClient">
       <Version>4.6.1</Version>
     </PackageReference>
+    <PackageReference Include="System.Windows.Interactivity.WPF">
+      <Version>2.0.20525</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\DSAppIcon.ico" />
@@ -299,6 +318,17 @@
   <ItemGroup>
     <Resource Include="Resources\Images\ESFA_logo.jpg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
