@@ -44,6 +44,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private string _reportsLocation;
         private bool _canCheckForNewVersion = true;
         private bool _updateMenuEnabled = true;
+        private string _referenceDataVersionNumber;
         private ApplicationVersionResult _newVersion;
 
         public MainViewModel(
@@ -71,6 +72,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             _versionMediatorService = versionMediatorService;
             _refDataVersionInformationService = refDataVersionInformationService;
             _desktopReferenceDataDownloadService = desktopReferenceDataDownloadService;
+            _referenceDataVersionNumber = _refDataVersionInformationService.VersionNumber;
 
             messengerService.Register<TaskProgressMessage>(this, HandleTaskProgressMessage);
 
@@ -199,7 +201,13 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
         public string ReleaseVersionNumber => _versionInformationService.VersionNumber;
 
-        public string ReferenceDataVersionNumber => _refDataVersionInformationService.VersionNumber;
+        //public string ReferenceDataVersionNumber => _refDataVersionInformationService.VersionNumber;
+
+        public string ReferenceDataVersionNumber
+        {
+            get => _referenceDataVersionNumber;
+            set => Set(ref _referenceDataVersionNumber, value);
+        }
 
         public string ReleaseDate => _versionInformationService.Date;
 
@@ -408,6 +416,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             {
                 await Task.Run(() => _desktopReferenceDataDownloadService.GetReferenceData(NewVersion.LatestReferenceDataFileName, NewVersion.LatestReferenceDataVersion));
 
+                ReferenceDataVersionNumber = _refDataVersionInformationService.VersionNumber;
                 UpdateCurrentBannerVisibility(ApiBannerKeys.UpToDate);
             }
             catch (Exception e)

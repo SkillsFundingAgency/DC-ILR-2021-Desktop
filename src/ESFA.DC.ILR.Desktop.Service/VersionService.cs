@@ -55,14 +55,21 @@ namespace ESFA.DC.ILR.Desktop.Service
 
         private Version GetNewerApplicationVersion(Version currentVersion, IEnumerable<Version> availableVersions)
         {
-            return availableVersions
+            var newVersion = availableVersions
                 .OrderByDescending(v => v.Major).ThenByDescending(v => v.Minor).ThenByDescending(v => v.Increment)
-                .FirstOrDefault(v => v.Major > currentVersion.Major
-                                              || (v.Major == currentVersion.Major && v.Minor > currentVersion.Minor)
-                                              || (v.Major == currentVersion.Major && v.Minor == currentVersion.Minor && v.Increment > currentVersion.Increment)
-                                              || (v.ReferenceDataVersion.Major == currentVersion.ReferenceDataVersion.Major
-                                              && v.ReferenceDataVersion.Minor == currentVersion.ReferenceDataVersion.Minor
-                                              && v.ReferenceDataVersion.Increment > currentVersion.ReferenceDataVersion.Increment)) ?? currentVersion;
+                .FirstOrDefault(v => IsNewVersion(v, currentVersion));
+
+            return newVersion ?? currentVersion;
+        }
+
+        private bool IsNewVersion(Version version, Version currentVersion)
+        {
+            return (version.Major > currentVersion.Major)
+                || (version.Major == currentVersion.Major && version.Minor > currentVersion.Minor)
+                || (version.Major == currentVersion.Major && version.Minor == currentVersion.Minor && version.Increment > currentVersion.Increment)
+                || (version.ReferenceDataVersion?.Major == currentVersion.ReferenceDataVersion.Major
+                && version.ReferenceDataVersion?.Minor == currentVersion.ReferenceDataVersion.Minor
+                && version.ReferenceDataVersion?.Increment > currentVersion.ReferenceDataVersion.Increment);
         }
     }
 }
