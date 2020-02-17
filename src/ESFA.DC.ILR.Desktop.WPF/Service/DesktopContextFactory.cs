@@ -1,4 +1,5 @@
-﻿using ESFA.DC.DateTimeProvider.Interface;
+﻿using System.IO;
+using ESFA.DC.DateTimeProvider.Interface;
 using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
 using ESFA.DC.ILR.Desktop.Service.Context;
@@ -32,7 +33,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.Service
                 _desktopServiceSettings.OutputDirectory,
                 filePath,
                 _assemblyService.GetExecutingAssemblyPath(),
-                ReferenceDataConstants.FilePath,
+                string.Concat(ReferenceDataConstants.FilePath, _desktopServiceSettings.ReferenceDataVersion, ReferenceDataConstants.FileExtension),
                 _desktopServiceSettings.IlrDatabaseConnectionString,
                 _releaseVersionInformationService.VersionNumber,
                 _reportFilterService.GetReportFilterQueries());

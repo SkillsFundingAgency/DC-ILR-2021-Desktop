@@ -7,23 +7,23 @@ using RestSharp;
 
 namespace ESFA.DC.ILR.Desktop.Service.APIClient
 {
-    public class ApplicationVersionClient : IApplicationVersionClient
+    public class ApplicationVersionClient : IApplicationVersionResultClient
     {
-        private readonly IAPIClientFactory _clientFactory;
+        private readonly IAPIClientFactory<ApplicationVersion> _clientFactory;
         private readonly IPollyPolicies _pollyPolicies;
 
-        public ApplicationVersionClient(IAPIClientFactory clientFactory, IPollyPolicies pollyPolicies)
+        public ApplicationVersionClient(IAPIClientFactory<ApplicationVersion> clientFactory, IPollyPolicies pollyPolicies)
         {
             _clientFactory = clientFactory;
             _pollyPolicies = pollyPolicies;
         }
 
-        public async Task<ApplicationVersion> GetApplicationVersionsAsync()
+        public async Task<ApplicationVersion> GetAsync()
         {
             try
             {
-                var client = _clientFactory.GetAPIClient();
-                var request = _clientFactory.GetApplicationVersionRequest();
+                var client = _clientFactory.GetClient();
+                var request = _clientFactory.GetRequest();
 
                 return await _pollyPolicies
                     .RequestTimeoutAsyncRetryPolicy.ExecuteAsync(() =>

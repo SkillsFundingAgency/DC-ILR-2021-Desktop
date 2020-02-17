@@ -19,11 +19,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ReferenceData\FISReferenceData.zip" />
+    <None Remove="ReferenceData\FISReferenceData.1.1.0.0.zip" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="ReferenceData\FISReferenceData.zip">
+    <Content Include="ReferenceData\FISReferenceData.1.1.0.0.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -32,6 +32,8 @@
     <PackageReference Include="Autofac" Version="4.9.4" />
     <PackageReference Include="EntityFrameworkCore.Jet" Version="2.2.0" />
     <PackageReference Include="ESFA.DC.DateTimeProvider.Interface" Version="0.1.6-beta0001" />
+    <PackageReference Include="ESFA.DC.FileService" Version="0.1.29-beta0001" />
+    <PackageReference Include="ESFA.DC.FileService.Interface" Version="0.1.27-beta0001" />
     <PackageReference Include="ESFA.DC.ILR.1920.Constants" Version="0.2.0-beta0001" />
     <PackageReference Include="ESFA.DC.Logging.Interfaces" Version="0.1.6-beta0001" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
@@ -43,6 +45,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
     <PackageReference Include="System.Data.OleDb" Version="4.6.0" />
   </ItemGroup>
 

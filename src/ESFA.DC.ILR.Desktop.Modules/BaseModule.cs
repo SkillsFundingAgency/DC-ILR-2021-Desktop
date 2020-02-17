@@ -11,6 +11,7 @@ namespace ESFA.DC.ILR.Desktop.Modules
         {
             containerBuilder.RegisterModule<IlrServicesModule>();
             containerBuilder.RegisterModule<IOModule>();
+            containerBuilder.RegisterModule<APIModule>();
             containerBuilder.RegisterModule<LoggingModule>();
             containerBuilder.RegisterModule<SerializationModule>();
             containerBuilder.RegisterModule<PollyModule>();

@@ -1,31 +1,16 @@
-﻿using ESFA.DC.ILR.Desktop.Internal.Interface.Configuration;
-using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
-using RestSharp;
+﻿using RestSharp;
 
 namespace ESFA.DC.ILR.Desktop.Service.Factories
 {
-    public class APIClientFactory : IAPIClientFactory
+    public abstract class APIClientFactory
     {
-        private readonly IAPIConfiguration _configuration;
-
-        public APIClientFactory(IAPIConfiguration configuration)
+        public IRestClient GetAPIClient(string baseUrl, string headerKey, string apiVersion)
         {
-            _configuration = configuration;
-        }
+            IRestClient client = new RestClient(baseUrl);
 
-        public IRestClient GetAPIClient()
-        {
-            IRestClient client = new RestClient(_configuration.Configuration.APIBaseUrl);
-
-            client.AddDefaultHeader(_configuration.Configuration.APIVersionHeaderKey, _configuration.Configuration.APIVersionNumber);
+            client.AddDefaultHeader(headerKey, apiVersion);
 
             return client;
-        }
-
-        public IRestRequest GetApplicationVersionRequest()
-        {
-            var request = new RestRequest(_configuration.Configuration.ApplicationVersionPath, Method.GET);
-            return request;
         }
     }
 }
