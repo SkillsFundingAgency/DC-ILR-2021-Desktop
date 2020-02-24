@@ -240,7 +240,7 @@
       <Version>0.0.1355</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR1920.ReferenceDataService.Desktop">
-      <Version>0.1.28</Version>
+      <Version>0.1.33</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR1920.ReferenceDataService.Model">
       <Version>0.1.28</Version>
