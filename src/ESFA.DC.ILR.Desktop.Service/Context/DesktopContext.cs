@@ -11,6 +11,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
         private string Reports = string.Join(
             "|",
             ReportTaskNameConstants.ValidationReport,
+            ReportTaskNameConstants.ValidationReportV2,
             ReportTaskNameConstants.FundingSummaryReport,
             ReportTaskNameConstants.MainOccupancyReport,
             ReportTaskNameConstants.AllbOccupancyReport,
