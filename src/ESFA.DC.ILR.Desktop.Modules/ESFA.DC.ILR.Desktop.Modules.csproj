@@ -12,17 +12,17 @@
     <PackageReference Include="ESFA.DC.FileService.Interface" Version="0.1.27-beta0001" />
     <PackageReference Include="ESFA.DC.ILR.1920.DataStore.Desktop" Version="0.0.551" />
     <PackageReference Include="ESFA.DC.ILR.1920.FileValidationService.Desktop" Version="0.1.124" />
-    <PackageReference Include="ESFA.DC.ILR.1920.FundingService.Desktop" Version="0.0.285" />
-    <PackageReference Include="ESFA.DC.ILR.1920.ReportService.Desktop" Version="0.0.1057" />
-    <PackageReference Include="ESFA.DC.ILR.1920.ValidationService.Desktop" Version="0.0.1342" />
-    <PackageReference Include="ESFA.DC.ILR1920.ReferenceDataService.Desktop" Version="0.1.7" />
+    <PackageReference Include="ESFA.DC.ILR.1920.FundingService.Desktop" Version="0.0.291" />
+    <PackageReference Include="ESFA.DC.ILR.1920.ReportService.Desktop" Version="0.0.1098" />
+    <PackageReference Include="ESFA.DC.ILR.1920.ValidationService.Desktop" Version="0.0.1398" />
+    <PackageReference Include="ESFA.DC.ILR1920.ReferenceDataService.Desktop" Version="0.1.35" />
     <PackageReference Include="ESFA.DC.IO.FileSystem" Version="0.1.19-beta0001" />
     <PackageReference Include="ESFA.DC.IO.Interfaces" Version="0.1.18-beta0001" />
     <PackageReference Include="ESFA.DC.Jobs.Model" Version="0.2.25-beta0001" />
     <PackageReference Include="ESFA.DC.Logging.Interfaces" Version="0.1.6-beta0001" />
-    <PackageReference Include="ESFA.DC.Serialization.Interfaces" Version="0.1.6-beta0001" />
-    <PackageReference Include="ESFA.DC.Serialization.Json" Version="0.1.6-beta0001" />
-    <PackageReference Include="ESFA.DC.Serialization.Xml" Version="0.1.6-beta0001" />
+    <PackageReference Include="ESFA.DC.Serialization.Interfaces" Version="0.1.30-beta0001" />
+    <PackageReference Include="ESFA.DC.Serialization.Json" Version="0.1.32-beta0001" />
+    <PackageReference Include="ESFA.DC.Serialization.Xml" Version="0.1.32-beta0001" />
     <PackageReference Include="ESFA.DC.Telemetry" Version="0.1.6-beta0001" />
     <PackageReference Include="ESFA.DC.Telemetry.Interfaces" Version="0.1.6-beta0001" />
     <PackageReference Include="NLog.Config" Version="4.6.7" />
