@@ -21,6 +21,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*" />
@@ -37,10 +38,13 @@
             <CheckBox Grid.Row="1" Grid.Column="1" Content="(Optional)" Margin="2" VerticalAlignment="Center" IsChecked="{Binding ExportToSql}"/>
 
             <Label Grid.Row="2" Content="Connection String:" VerticalAlignment="Center" Visibility="{Binding ExportToSql, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding IlrDatabaseConnectionString}" Margin="2" Visibility="{Binding ExportToSql, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding IlrDatabaseConnectionString}" Margin="2" Visibility="{Binding ExportToSql, Converter={StaticResource BooleanToVisibilityConverter}}" IsReadOnly="{Binding ConnectionStringTestInProgress}"/>
+            <Button Grid.Row="2" Grid.Column="2" Content="Test" VerticalAlignment="Center" Command="{Binding TestConnectionStringCommand}" Visibility="{Binding ExportToSql, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
-            <Label Grid.Row="3" Content="Export to Access and CSV:" VerticalAlignment="Center"/>
-            <CheckBox Grid.Row="3" Grid.Column="1" Content="(Optional)" Margin="2" VerticalAlignment="Center" IsChecked="{Binding ExportToAccessAndCsv}"/>
+            <TextBlock Grid.Row="3" Grid.Column="1" Visibility="{Binding ConnectionStringTested, Converter={StaticResource BooleanToVisibilityConverter}}" Text="{Binding ConnectionStringTestFeedback}" TextWrapping="Wrap"/>
+
+            <Label Grid.Row="4" Content="Export to Access and CSV:" VerticalAlignment="Center"/>
+            <CheckBox Grid.Row="4" Grid.Column="1" Content="(Optional)" Margin="2" VerticalAlignment="Center" IsChecked="{Binding ExportToAccessAndCsv}"/>
 
         </Grid>
 
