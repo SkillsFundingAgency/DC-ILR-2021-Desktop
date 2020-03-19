@@ -88,9 +88,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.CLI\ESFA.DC.ILR.Desktop.CLI.csproj">
       <Project>{5b8d9ec7-b8d5-4664-8028-1cf5bda0bc29}</Project>
       <Name>ESFA.DC.ILR.Desktop.CLI</Name>
@@ -107,6 +104,9 @@
       <Project>{15e50fe1-098b-4dec-9346-cf4456c6d81d}</Project>
       <Name>ESFA.DC.ILR.Desktop.Service</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
