@@ -12,6 +12,9 @@ namespace ESFA.DC.ILR.Desktop.Service.Connectivity
     {
         private const string SelectStatement = "SELECT 1";
 
+        private const string ConnectionStringIncorrectFormatError = "Your Connection String is not formatted correctly.";
+        private const string ConnectionFailureError = "Unable to connect to the SQL Server Instance specified, check you have the correct permissions.";
+
         public async Task<bool> SqlServerTestAsync(string connectionString, CancellationToken cancellationToken)
         {
             string masterConnectionString = null;
@@ -20,9 +23,9 @@ namespace ESFA.DC.ILR.Desktop.Service.Connectivity
             {
                 masterConnectionString = GetMasterConnectionString(connectionString);
             }
-            catch (ArgumentException exception)
+            catch (Exception exception)
             {
-                throw new ArgumentException("Your Connection String is not formatted correctly.", exception);
+                throw new FormatException(ConnectionStringIncorrectFormatError, exception);
             }
 
             try
@@ -35,9 +38,9 @@ namespace ESFA.DC.ILR.Desktop.Service.Connectivity
                     await command.ExecuteScalarAsync(cancellationToken);
                 }
             }
-            catch (SqlException exception)
+            catch (Exception exception)
             {
-                throw new InvalidOperationException("Unable to connect to the SQL Server Instance specified, check you have the correct permissions.", exception);
+                throw new InvalidOperationException(ConnectionFailureError, exception);
             }
 
             return true;

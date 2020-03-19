@@ -5,6 +5,7 @@ using ESFA.DC.ILR.Desktop.Internal.Interface.Configuration;
 using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
 using ESFA.DC.ILR.Desktop.Service;
 using ESFA.DC.ILR.Desktop.Service.APIClient;
+using ESFA.DC.ILR.Desktop.Service.Connectivity;
 using ESFA.DC.ILR.Desktop.Service.Factories;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.WPF.Config;
@@ -26,6 +27,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
             containerBuilder.RegisterType<WindowsProcessService>().As<IWindowsProcessService>();
             containerBuilder.RegisterType<ReferenceDataVersionInformationService>().As<IReferenceDataVersionInformationService>();
             containerBuilder.RegisterType<ReportFilterService>().As<IReportFilterService>().SingleInstance();
+            containerBuilder.RegisterType<ConnectivityService>().As<IConnectivityService>();
 
             containerBuilder.RegisterType<ApplicationVersionResultFactory>().As<IApplicationVersionResultFactory>();
             containerBuilder.RegisterType<APIClientFactory>().As<IAPIClientFactory>();
