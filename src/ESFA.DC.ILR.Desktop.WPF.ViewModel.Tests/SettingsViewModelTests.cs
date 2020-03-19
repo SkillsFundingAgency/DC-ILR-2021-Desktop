@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
@@ -111,6 +112,53 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
         }
 
         [Fact]
+        public async Task TestConnectionStringCommand_Success()
+        {
+            var connectionString = "ConnectionString";
+
+            var cancellationToken = CancellationToken.None;
+
+            var connectivityServiceMock = new Mock<IConnectivityService>();
+
+            connectivityServiceMock.Setup(s => s.SqlServerTestAsync(connectionString, cancellationToken)).ReturnsAsync(true);
+
+            var vm = NewViewModel(connectivityService: connectivityServiceMock.Object);
+
+            vm.IlrDatabaseConnectionString = connectionString;
+
+            await vm.TestConnectionStringCommand.ExecuteAsync();
+
+            vm.ConnectionStringTested.Should().BeTrue();
+            vm.ConnectionStringTestInProgress.Should().BeFalse();
+
+            vm.ConnectionStringTestFeedback.Should().Be("Connection String Test Successful");
+        }
+
+        [Fact]
+        public async Task TestConnectionStringCommand_Fail()
+        {
+            var connectionString = "ConnectionString";
+            var errorMessage = "Error Message";
+
+            var cancellationToken = CancellationToken.None;
+
+            var connectivityServiceMock = new Mock<IConnectivityService>();
+
+            connectivityServiceMock.Setup(s => s.SqlServerTestAsync(connectionString, cancellationToken)).ThrowsAsync(new Exception(errorMessage));
+
+            var vm = NewViewModel(connectivityService: connectivityServiceMock.Object);
+
+            vm.IlrDatabaseConnectionString = connectionString;
+
+            await vm.TestConnectionStringCommand.ExecuteAsync();
+
+            vm.ConnectionStringTested.Should().BeTrue();
+            vm.ConnectionStringTestInProgress.Should().BeFalse();
+
+            vm.ConnectionStringTestFeedback.Should().Be(errorMessage);
+        }
+
+        [Fact]
         public async Task CloseWindowCommandExecute()
         {
             var ilrDatabaseConnection = "ILRDatabaseConnection";
@@ -144,9 +192,12 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             viewmodel.ExportToAccessAndCsv.Should().Be(exportToAccessAndCsv);
         }
 
-        private SettingsViewModel NewViewModel(IDesktopServiceSettings desktopServiceSettings = null, IDialogInteractionService dialogInteractionService = null)
+        private SettingsViewModel NewViewModel(IDesktopServiceSettings desktopServiceSettings = null, IDialogInteractionService dialogInteractionService = null, IConnectivityService connectivityService = null)
         {
-            return new SettingsViewModel(desktopServiceSettings ?? Mock.Of<IDesktopServiceSettings>(), dialogInteractionService ?? Mock.Of<IDialogInteractionService>());
+            return new SettingsViewModel(
+                desktopServiceSettings ?? Mock.Of<IDesktopServiceSettings>(),
+                dialogInteractionService ?? Mock.Of<IDialogInteractionService>(),
+                connectivityService ?? Mock.Of<IConnectivityService>());
         }
     }
 }

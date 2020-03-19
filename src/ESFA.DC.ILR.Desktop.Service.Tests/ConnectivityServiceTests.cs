@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Service.Connectivity;
 using FluentAssertions;
+using Microsoft.SqlServer.Server;
 using Xunit;
 
 namespace ESFA.DC.ILR.Desktop.Service.Tests
@@ -26,7 +27,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         {
             Func<Task> action = async () => await NewService().SqlServerTestAsync("Not A Connection String", CancellationToken.None);
 
-            action.Should().Throw<ArgumentException>()
+            action.Should().Throw<FormatException>()
                 .WithMessage("Your Connection String is not formatted correctly.")
                 .WithInnerException<ArgumentException>();
         }

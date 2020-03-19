@@ -7,6 +7,7 @@ using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
 using ESFA.DC.ILR.Desktop.Models;
 using ESFA.DC.ILR.Desktop.Service;
 using ESFA.DC.ILR.Desktop.Service.APIClient;
+using ESFA.DC.ILR.Desktop.Service.Connectivity;
 using ESFA.DC.ILR.Desktop.Service.Factories;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.WPF.Config;
@@ -27,6 +28,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
             containerBuilder.RegisterType<DialogInteractionService>().As<IDialogInteractionService>();
             containerBuilder.RegisterType<WindowsProcessService>().As<IWindowsProcessService>();
             containerBuilder.RegisterType<ReportFilterService>().As<IReportFilterService>().SingleInstance();
+            containerBuilder.RegisterType<ConnectivityService>().As<IConnectivityService>();
 
             containerBuilder.RegisterType<DesktopServiceConfiguration>().As<IServiceConfiguration>();
 
