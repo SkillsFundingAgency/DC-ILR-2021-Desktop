@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 
 namespace ESFA.DC.ILR.Desktop.Service.Connectivity
@@ -10,7 +12,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Connectivity
     {
         private const string SelectStatement = "SELECT 1";
 
-        public bool SQLServerTest(string connectionString)
+        public async Task<bool> SqlServerTestAsync(string connectionString, CancellationToken cancellationToken)
         {
             string masterConnectionString = null;
 
@@ -29,8 +31,8 @@ namespace ESFA.DC.ILR.Desktop.Service.Connectivity
                 {
                     var command = new SqlCommand(SelectStatement, connection);
 
-                    connection.Open();
-                    command.ExecuteScalar();
+                    await connection.OpenAsync(cancellationToken);
+                    await command.ExecuteScalarAsync(cancellationToken);
                 }
             }
             catch (SqlException exception)
