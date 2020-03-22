@@ -41,11 +41,11 @@
     <Reference Include="ESFA.DC.DateTimeProvider.Interface, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.DateTimeProvider.Interface.0.1.6-beta0001\lib\netstandard2.0\ESFA.DC.DateTimeProvider.Interface.dll</HintPath>
     </Reference>
-    <Reference Include="FluentAssertions, Version=5.9.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentAssertions.5.9.0\lib\net45\FluentAssertions.dll</HintPath>
+    <Reference Include="FluentAssertions, Version=5.10.3.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentAssertions.5.10.3\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
     <Reference Include="Moq, Version=4.13.0.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <HintPath>..\packages\Moq.4.13.0\lib\net45\Moq.dll</HintPath>
+      <HintPath>..\packages\Moq.4.13.1\lib\net45\Moq.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />

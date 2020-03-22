@@ -31,15 +31,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
             containerBuilder.RegisterType<ReportFilterService>().As<IReportFilterService>().SingleInstance();
             containerBuilder.RegisterType<ConnectivityService>().As<IConnectivityService>();
 
-            containerBuilder.RegisterType<ApplicationVersionResultFactory>().As<IApplicationVersionResultFactory>();
-            containerBuilder.RegisterType<APIClientFactory>().As<IAPIClientFactory>();
-            containerBuilder.RegisterType<VersionFactory>().As<IVersionFactory>();
-            containerBuilder.RegisterType<VersionMessageFactory>().As<IVersionMessageFactory>();
-
-            containerBuilder.RegisterType<ApplicationVersionClient>().As<IApplicationVersionClient>();
-            containerBuilder.RegisterType<VersionService>().As<IVersionService>();
-            containerBuilder.RegisterType<VersionMediatorService>().As<IVersionMediatorService>();
-
             containerBuilder.RegisterType<DesktopServiceConfiguration>().As<IServiceConfiguration>();
 
             containerBuilder.RegisterType<DesktopContextFactory>().As<IDesktopContextFactory>();
