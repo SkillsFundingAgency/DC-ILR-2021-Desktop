@@ -141,9 +141,9 @@
 
         <Grid Grid.Row ="3">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="340" />
+                <ColumnDefinition Width="280" />
                 <ColumnDefinition Width="150" />
-                <ColumnDefinition Width="150" />
+                <ColumnDefinition Width="210" />
                 <ColumnDefinition Width="100*"/>
             </Grid.ColumnDefinitions>
             <Label FontSize="10" Grid.Column="1" VerticalAlignment="Bottom" HorizontalContentAlignment="Right" Content="{Binding ReleaseVersionNumber}" ContentStringFormat="Application Version: {0}" />

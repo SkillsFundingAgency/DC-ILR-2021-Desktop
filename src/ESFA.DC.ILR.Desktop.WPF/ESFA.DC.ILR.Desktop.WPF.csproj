@@ -232,7 +232,7 @@
       <Version>0.0.561</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.1920.FileValidationService.Desktop">
-      <Version>0.1.124</Version>
+      <Version>0.1.129</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.1920.FundingService.Desktop">
       <Version>0.0.292</Version>

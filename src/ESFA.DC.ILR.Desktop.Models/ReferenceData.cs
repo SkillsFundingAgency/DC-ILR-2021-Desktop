@@ -14,6 +14,6 @@ namespace ESFA.DC.ILR.Desktop.Models
 
         public int Increment { get; set; }
 
-        public DateTime ReleaseDateTime { get; set; }
+        public DateTime? ReleaseDateTime { get; set; }
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
 using ESFA.DC.ILR.Desktop.Models;
 using ESFA.DC.Logging.Interfaces;
+using RefDataVersion = ESFA.DC.ILR.Desktop.Models.ReferenceData;
 using Version = ESFA.DC.ILR.Desktop.Models.Version;
 
 namespace ESFA.DC.ILR.Desktop.Service
@@ -64,12 +65,18 @@ namespace ESFA.DC.ILR.Desktop.Service
 
         private bool IsNewVersion(Version version, Version currentVersion)
         {
-            return (version.Major > currentVersion.Major)
-                || (version.Major == currentVersion.Major && version.Minor > currentVersion.Minor)
-                || (version.Major == currentVersion.Major && version.Minor == currentVersion.Minor && version.Increment > currentVersion.Increment)
-                || (version.ReferenceDataVersion?.Major == currentVersion.ReferenceDataVersion.Major
-                && version.ReferenceDataVersion?.Minor == currentVersion.ReferenceDataVersion.Minor
-                && version.ReferenceDataVersion?.Increment > currentVersion.ReferenceDataVersion.Increment);
+            return (version?.Major > currentVersion?.Major)
+                || (version?.Major == currentVersion?.Major && version?.Minor > currentVersion?.Minor)
+                || (version?.Major == currentVersion?.Major && version?.Minor == currentVersion?.Minor && version?.Increment > currentVersion?.Increment)
+                || IsNewRefDataVersion(version?.ReferenceDataVersion, currentVersion?.ReferenceDataVersion);
+        }
+
+        private bool IsNewRefDataVersion(RefDataVersion version, RefDataVersion currentVersion)
+        {
+            return (version?.Major > currentVersion?.Major)
+                || (version?.Major == currentVersion?.Major && version?.Minor > currentVersion?.Minor)
+                || (version?.Major == currentVersion?.Major && version?.Minor == currentVersion?.Minor && version?.Increment > currentVersion?.Increment)
+                || (version?.Major == currentVersion?.Major && version?.Minor == currentVersion?.Minor && version?.Increment == currentVersion?.Increment && version.ReleaseDateTime > currentVersion.ReleaseDateTime);
         }
     }
 }
