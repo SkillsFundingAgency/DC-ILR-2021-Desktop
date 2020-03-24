@@ -31,7 +31,7 @@ namespace ESFA.DC.ILR.Desktop.CLI.Service
                 OverrideConfig(commandLineArguments.OutputDirectory, _desktopServiceSettings.OutputDirectory),
                 commandLineArguments.FilePath,
                 _assemblyService.GetExecutingAssemblyPath(),
-                ReferenceDataConstants.FilePath,
+                string.Concat(ReferenceDataConstants.FilePath, _desktopServiceSettings.ReferenceDataVersion, ReferenceDataConstants.FileExtension),
                 OverrideConfig(commandLineArguments.ConnectionString, _desktopServiceSettings.IlrDatabaseConnectionString),
                 _releaseVersionInformationService.VersionNumber,
                 Enumerable.Empty<IDesktopContextReportFilterQuery>());

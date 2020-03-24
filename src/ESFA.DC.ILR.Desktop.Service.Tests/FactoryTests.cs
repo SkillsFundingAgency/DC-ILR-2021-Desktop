@@ -40,14 +40,27 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
             var minor = Convert.ToInt32(versionSplit[1]);
             var increment = Convert.ToInt32(versionSplit[2]);
 
+            var refDataVersion = "1.1.8.202003231000";
+            var refDataVersionSplit = refDataVersion.Split('.');
+            var refDataMajor = Convert.ToInt32(refDataVersionSplit[0]);
+            var refDataMinor = Convert.ToInt32(refDataVersionSplit[1]);
+            var refDataIncrement = Convert.ToInt32(refDataVersionSplit[2]);
+            var refDataDate = new DateTime(2020, 03, 23, 10, 0, 0);
+
             var factory = new VersionFactory();
 
-            var result = factory.GetVersion(versionNumber);
+            var result = factory.GetVersion(versionNumber, refDataVersion);
 
-            result.ApplicationVersion.Should().Be(versionNumber);
+            result.VersionName.Should().Be(versionNumber);
             result.Major.Should().Be(major);
             result.Minor.Should().Be(minor);
             result.Increment.Should().Be(increment);
+
+            result.ReferenceDataVersion.VersionName.Should().Be(refDataVersion);
+            result.ReferenceDataVersion.Major.Should().Be(refDataMajor);
+            result.ReferenceDataVersion.Minor.Should().Be(refDataMinor);
+            result.ReferenceDataVersion.Increment.Should().Be(refDataIncrement);
+            result.ReferenceDataVersion.ReleaseDateTime.Should().Be(refDataDate);
         }
 
         [Fact]
@@ -59,7 +72,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
 
             var factory = new ApplicationVersionResultFactory();
 
-            var result = factory.GetApplicationVersionResult(versionNumber, date, url);
+            var result = factory.GetResult(versionNumber, date, url);
 
             result.ApplicationVersion.Should().Be(versionNumber);
             result.ReleaseDateTime.Should().Be(date);

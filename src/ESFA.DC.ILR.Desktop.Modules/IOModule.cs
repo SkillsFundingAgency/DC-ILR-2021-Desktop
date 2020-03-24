@@ -20,7 +20,7 @@ namespace ESFA.DC.ILR.Desktop.Modules
                 .As<IKeyValuePersistenceService>()
                 .As<IStreamableKeyValuePersistenceService>();
 
-            containerBuilder.RegisterType<DecompressionService>().As<IDecompressionService>();
+            containerBuilder.RegisterType<ZipArchiveService>().As<IZipArchiveService>();
 
             var fileSystemKeyValuePersistenceServiceConfiguration = new FileSystemKeyValuePersistenceServiceConfig()
             {
@@ -31,6 +31,8 @@ namespace ESFA.DC.ILR.Desktop.Modules
 
             containerBuilder.RegisterType<AssemblyService>().As<IAssemblyService>();
             containerBuilder.RegisterType<ReleaseVersionInformationService>().As<IReleaseVersionInformationService>();
+            containerBuilder.RegisterType<ReferenceDataVersionInformationService>().As<IReferenceDataVersionInformationService>();
+            containerBuilder.RegisterType<FeatureSwitchService>().As<IFeatureSwitchService>();
         }
     }
 }
