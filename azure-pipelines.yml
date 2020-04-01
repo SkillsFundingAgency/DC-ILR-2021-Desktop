@@ -229,7 +229,7 @@ stages:
 #********************************************************************************
     - task: DotNetCoreCLI@2
       displayName: 'Run xUnit Test - Core Framework'
-      enabled: true
+      enabled: false
       inputs:
         command: test
         projects: 'src/*Tests/*.csproj'
@@ -237,7 +237,7 @@ stages:
         
     - task: VSTest@2
       displayName: 'Run Unit Tests'
-      enabled: false
+      enabled: true
       inputs:
         testAssemblyVer2: |
          **\$(Build.Configuration)\*test*.dll
