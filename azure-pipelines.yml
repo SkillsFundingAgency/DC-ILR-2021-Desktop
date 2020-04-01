@@ -108,6 +108,7 @@ stages:
         noCache: true
 
     - task: MSBuild@1
+      enabled: false
       displayName: 'Build solution'
       inputs:
         msbuildVersion: 16.0
@@ -120,10 +121,8 @@ stages:
         logProjectEvents: true
         createLogFile: true	
         #clean: true
-        
     
     - task: VSBuild@1
-      enabled: false
       displayName: 'Build solution **\*.sln'
       inputs:
         solution: '$(Solution)'
