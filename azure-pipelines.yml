@@ -68,13 +68,13 @@ stages:
         versionSpec: '> $(Nuget.Version)'
         checkLatest: true	
 
-	# Generate the report using ReportGenerator (https://github.com/danielpalme/ReportGenerator)
-	- script: |
-			dotnet tool install -g dotnet-reportgenerator-globaltool --version 4.3.6
-	  displayName: Install dotnet-reportgenerator-globaltool
-	  continueOnError: true  
-	  enabled: true
-	   
+    # Generate the report using ReportGenerator (https://github.com/danielpalme/ReportGenerator)
+    - script: |
+            dotnet tool install -g dotnet-reportgenerator-globaltool --version 4.3.6
+      displayName: Install dotnet-reportgenerator-globaltool
+      continueOnError: true  
+      enabled: true
+       
 #********************************************************************************
 # Update relevent files with build number
 #********************************************************************************   		
@@ -93,7 +93,7 @@ stages:
         FilenamePattern: 'AssemblyInfo.*'
         OutputVersion: 'OutputedVersion'
     
-	   
+       
 #********************************************************************************
 # Display all current varaiables
 #********************************************************************************   		
@@ -236,7 +236,7 @@ stages:
         command: test
         projects: 'src/*Tests/*.csproj'
         arguments: '--configuration $(Build.Configuration) --collect "Code coverage"'
-		
+        
     - task: VSTest@2
       displayName: 'Run Unit Tests'
       enabled: true
@@ -269,7 +269,7 @@ stages:
     codeCoverageTool: Cobertura
     summaryFileLocation: '$(Build.SourcesDirectory)/CodeCoverage/Cobertura.xml'
     reportDirectory: '$(Build.SourcesDirectory)/CodeCoverage'
-	
+    
 #********************************************************************************
 # Publish Artifacts
 #********************************************************************************    
