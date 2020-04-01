@@ -32,7 +32,7 @@ stages:
     pool:
       name: DCT
       demands:
-      - IsBuildServer
+      - BuildServer
       #- BuildServer
       #- msbuild
       #- visualstudio
@@ -66,13 +66,6 @@ stages:
         versionSpec: '> $(Nuget.Version)'
         checkLatest: true	
 
-    # Generate the report using ReportGenerator (https://github.com/danielpalme/ReportGenerator)
-    - script: |
-            dotnet tool install -g dotnet-reportgenerator-globaltool --version 4.3.6
-      displayName: Install dotnet-reportgenerator-globaltool
-      continueOnError: true  
-      enabled: true
-       
 #********************************************************************************
 # Update relevent files with build number
 #********************************************************************************   		
@@ -255,7 +248,8 @@ stages:
     ## Generate the report using ReportGenerator (https://github.com/danielpalme/ReportGenerator)
     # First install the tool on the machine, then run it
     - script: |
-          reportgenerator -reports:$(Build.SourcesDirectory)/**/*Tests/**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/CodeCoverage -reporttypes:Cobertura
+              dotnet tool install -g dotnet-reportgenerator-globaltool --version 4.3.6
+              reportgenerator -reports:$(Build.SourcesDirectory)/**/*Tests/**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/CodeCoverage -reporttypes:Cobertura
 
       displayName: Create Code coverage report
       enabled: false
