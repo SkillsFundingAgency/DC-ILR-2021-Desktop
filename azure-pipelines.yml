@@ -6,202 +6,295 @@ resources:
 - repo: self
   fetchDepth: 30
 
-pool:
-  name: DCT
-  demands:
-  - IsBuildServer
-  - msbuild
-  - visualstudio
-  - vstest
-
-#variables:
-#- group: my-variable-group
-#- name: my-bare-variable
-#  value: 'value of my-bare-variable'
-
 variables:
 - group: 'CodeSign KV'
 - name: VersionNumberMajor 
-  value: '1'
+  value: '0'
 - name: VersionNumberMinor 
-  value: '1'
+  value: '0'
 - name: VersionNumberBuild 
-  value: '16'
-- name: Parameters.solution 
-  value: '**\*.sln'
-- name: Parameters.nugetFeedName 
-  value: 'dct-pkg'
-- name: BuildConfiguration
-  value: 'Release'
-- name: BuildPlatform
-  value: 'Any CPU'
+  value: '0'
 
-steps:
-- task: gittools.gitversion.gitversion-task.GitVersion@4
-  displayName: GitVersion
-  enabled: false
-  inputs:
-    updateAssemblyInfo: true
-    preferBundledVersion: false
+stages:
+- stage: Build
+  displayName: Build stage
+  jobs:  
+  - job: Build
+    displayName: Build    
+    variables:
+      "Build.Configuration": 'Release'
+      "Build.Platform": 'Any CPU'
+      "Nuget.Feed": 'dct-pkg'  
+      "Nuget.Version": '5.3.0'
+      "DotnetCore.Version": '3.1.x'
+      "Solution": 'src\**\*.sln'
 
-- task: VersionAssemblies@2
-  inputs:
-    Path: '$(Build.SourcesDirectory)'
-    VersionNumber: '$(Build.BuildNumber)'
-    InjectVersion: False
-    FilenamePattern: 'AssemblyInfo.*'
-    OutputVersion: 'OutputedVersion'
+    pool:
+      name: DCT
+      demands:
+      - IsBuildServer
+      #- BuildServer
+      
+    steps:
+#********************************************************************************
+# Install and setup tools needed
+#********************************************************************************   
 
-- task: PowerShell@1
-  displayName: 'Display Variables'
-  enabled: false
-  inputs:
-    scriptType: inlineScript
-    inlineScript: |
-     $var = (gci env:*).GetEnumerator() | Sort-Object Name
-     $out = ""
-     Foreach ($v in $var) 
-     {
-     write-output "Name: $($v.Name)  | Value : $($v.Value)"
-     }
+    - task: DotNetCoreInstaller@0
+      enabled: false
+      displayName: 'Use .NET Core sdk $(DotnetCore.Version) - (x=latest)'
+      inputs:
+        version: $(DotnetCore.Version)
 
-- task: NuGetToolInstaller@0
-  displayName: 'Use NuGet >=4.7.0'
-  inputs:
-    versionSpec: '>=4.7.0'
+    - task: UseDotNet@2
+      displayName: 'Use .NET Core sdk : $(DotnetCore.Version)'
+      inputs:
+        packageType: sdk
+        version: $(DotnetCore.Version)
+    
+    - task: VisualStudioTestPlatformInstaller@1
+      displayName: 'Visual Studio Test Platform Installer'
+      inputs:
+        versionSelector: latestStable
+    
+    - task: NuGetToolInstaller@0
+      displayName: 'Use NuGet : $(Nuget.Version)'
+      inputs:
+        versionSpec: '> $(Nuget.Version)'
+        checkLatest: true	
 
-- task: NuGetCommand@2
-  displayName: 'NuGet restore'
-  inputs:
-    restoreSolution: '$(Parameters.solution)'
-    vstsFeed: '$(Parameters.nugetFeedName)'
+#********************************************************************************
+# Update relevent files with build number
+#********************************************************************************   		
+    - task: gittools.gitversion.gitversion-task.GitVersion@4
+      displayName: GitVersion
+      enabled: false
+      inputs:
+        updateAssemblyInfo: true
+        preferBundledVersion: false
+    
+    - task: VersionAssemblies@2
+      inputs:
+        Path: '$(Build.SourcesDirectory)'
+        VersionNumber: '$(Build.BuildNumber)'
+        InjectVersion: False
+        FilenamePattern: 'AssemblyInfo.*'
+        OutputVersion: 'OutputedVersion'
+    
+       
+#********************************************************************************
+# Display all current varaiables
+#********************************************************************************   		
+    - task: PowerShell@1
+      displayName: 'Display Variables'
+      enabled: false
+      inputs:
+        scriptType: inlineScript
+        inlineScript: |
+         $var = (gci env:*).GetEnumerator() | Sort-Object Name
+         Foreach ($v in $var) 
+         {
+           write-output "Name: $($v.Name)  | Value : $($v.Value)"
+         }
+    
+#********************************************************************************
+# Restore & Build Projects/Solutiosn
+#********************************************************************************   	
+    - task: NuGetCommand@2
+      displayName: 'NuGet restore'
+      inputs:
+        restoreSolution: '**/*.sln'
+        vstsFeed: '$(Nuget.Feed)'
+        noCache: true
 
-- task: VSBuild@1
-  displayName: 'Build solution **\*.sln'
-  inputs:
-    solution: '$(Parameters.solution)'
-    msbuildArgs: '/p:version=$(Build.BuildNumber) /p:FileVersion=$(Build.BuildNumber)'
-    platform: '$(BuildPlatform)'
-    configuration: '$(BuildConfiguration)'
-    clean: true
-    maximumCpuCount: true
-
+    - task: MSBuild@1
+      enabled: false
+      displayName: 'Build solution'
+      inputs:
+        msbuildVersion: 16.0
+        msbuildArchitecture: x64
+        solution: '$(Solution)'
+        platform: '$(Build.Platform)'
+        configuration: '$(Build.Configuration)'
+        msbuildArguments: '-p:version=$(Build.BuildNumber) -p:FileVersion=$(Build.BuildNumber) -p:SkipInvalidConfigurations=true'
+        maximumCpuCount: true
+        logProjectEvents: true
+        createLogFile: true	
+        #clean: true
+    
+    - task: VSBuild@1
+      displayName: 'Build solution **\*.sln'
+      inputs:
+        solution: '$(Solution)'
+        msbuildArgs: '/p:version=$(Build.BuildNumber) /p:FileVersion=$(Build.BuildNumber)'
+        platform: '$(Build.Platform)'
+        configuration: '$(Build.Configuration)'
+        clean: true
+        maximumCpuCount: true
+    
 #********************************************************************************
 # Copy Files into Aftifact Folder before test.
+#********************************************************************************   
+    - task: CopyFiles@2
+      displayName: 'Copy Scripts File to Scripts Folder'
+      inputs:
+        Contents: 'GenerateZipFilename.ps1'
+        TargetFolder: '$(build.ArtifactStagingDirectory)\Scripts'
+        flattenFolders: true
+        CleanTargetFolder: true
+    
+    - task: CopyFiles@2
+      displayName: 'Copy Nuget Interface Packages Files - Artifact NugetInterface Directory'
+      inputs:
+        SourceFolder: '$(build.sourcesdirectory)/src'
+        Contents: |
+         **/*$(Build.Configuration)*/*Interface*.nupkg
+         !**/packages/**
+         !**/bin/x64/**
+        TargetFolder: '$(build.artifactstagingdirectory)/Nuget/Interface'
+        flattenFolders: true
+    
+    - task: CopyFiles@2
+      displayName: 'Copy NugetPackages Files - Artifact NugetPackages Directory'
+      inputs:
+        SourceFolder: '$(build.sourcesdirectory)/src'
+        Contents: |
+         **/*$(Build.Configuration)*/*.nupkg
+         !**/*Interface*
+         !**/packages/**
+         !**/bin/x64/**
+        TargetFolder: '$(build.artifactstagingdirectory)/Nuget/Packages'
+        flattenFolders: true
+    
+    - task: CopyFiles@2
+      displayName: 'Copy Application File to Artifact Folder'
+      inputs:
+        SourceFolder: 'src/ESFA.DC.ILR.Desktop.WPF\bin\$(Build.Configuration)'  
+        Contents: '**\!(*.pdb)'
+        TargetFolder: '$(build.ArtifactStagingDirectory)\DesktopApplication'
+    
+    - task: TotalALM.totalalm-tokenization.tokenization-build-task.Tokenization@2
+      displayName: 'Tokenization: Transform Application config file'
+      enabled: true
+      inputs:
+        SourcePath: '$(build.ArtifactStagingDirectory)\DesktopApplication'
+        TargetFileNames: '*.exe.config'
+        RequireVariable: false
+
+
 #********************************************************************************
+# Count Artifact Files to decide what to Publish
+#********************************************************************************    
+    - task: PowerShell@2
+      displayName: 'Check What to Publish'
+      continueOnError: true  
+      inputs:
+        targetType: 'inline'
+        script: |
+                  Write-Host "##vso[task.setvariable variable=PublishArtifact_ServiceFabric]$(Test-Path '$(build.artifactstagingdirectory)\ServiceFabric' -PathType Any)";
+                  Write-Host "##vso[task.setvariable variable=PublishArtifact_NugetPackages]$(Test-Path '$(build.artifactstagingdirectory)\Nuget' -PathType Any)";
+                  Write-Host "##vso[task.setvariable variable=PublishArtifact_Databases]$(Test-Path '$(build.artifactstagingdirectory)\Databases' -PathType Any)";
+                  Write-Host "##vso[task.setvariable variable=PublishArtifact_DesktopApplication]$(Test-Path '$(build.artifactstagingdirectory)\DesktopApplication' -PathType Any)";
+      enabled: true
 
-- task: CopyFiles@2
-  displayName: 'Copy Scripts File to Scripts Folder'
-  inputs:
-    Contents: 'GenerateZipFilename.ps1'
-    TargetFolder: '$(build.ArtifactStagingDirectory)\Scripts'
-    flattenFolders: true
-    CleanTargetFolder: true
-
-- task: CopyFiles@2
-  displayName: 'Copy Nuget Interface Packages Files - Artifact NugetInterface Directory'
-  inputs:
-    SourceFolder: '$(build.sourcesdirectory)/src'
-    Contents: |
-     **/*$(BuildConfiguration)*/*Interface*.nupkg
-     !**/packages/**
-     !**/bin/x64/**
-    TargetFolder: '$(build.artifactstagingdirectory)/Nuget/Interface'
-    flattenFolders: true
-
-- task: CopyFiles@2
-  displayName: 'Copy NugetPackages Files - Artifact NugetPackages Directory'
-  inputs:
-    SourceFolder: '$(build.sourcesdirectory)/src'
-    Contents: |
-     **/*$(BuildConfiguration)*/*.nupkg
-     !**/*Interface*
-     !**/packages/**
-     !**/bin/x64/**
-    TargetFolder: '$(build.artifactstagingdirectory)/Nuget/Packages'
-    flattenFolders: true
-
-- task: CopyFiles@2
-  displayName: 'Copy Application File to Artifact Folder'
-  inputs:
-    SourceFolder: 'src/ESFA.DC.ILR.Desktop.WPF\bin\$(BuildConfiguration)'  
-    Contents: '**\!(*.pdb)'
-    TargetFolder: '$(build.ArtifactStagingDirectory)\DesktopApplication'
-
-- task: TotalALM.totalalm-tokenization.tokenization-build-task.Tokenization@2
-  displayName: 'Tokenization: Transform Application config file'
-  enabled: true
-  inputs:
-    SourcePath: '$(build.ArtifactStagingDirectory)\DesktopApplication'
-    TargetFileNames: '*.exe.config'
-    RequireVariable: false
-
+    
 #********************************************************************************
 # CodeSign Script body
 # Application Signing execution begins here
-#********************************************************************************
-
-- task: PowerShell@2
-  displayName: 'CodeSign DfE DesktopApplications'
-  enabled: true  
-  env:
-    CODESIGNPASSWORD: $(CodeSignPwdDfE)
-    CODESIGNCERT: $(CodeSignCertificatePFX)
-  inputs:
-    filePath: 'DFE_Code_Signing.ps1'
-    arguments: '-StartFolder "$(build.ArtifactStagingDirectory)\DesktopApplication"'
-    workingDirectory: '$(Build.SourcesDirectory)'
-
+#********************************************************************************    
+    - task: PowerShell@2
+      displayName: 'CodeSign DfE DesktopApplications'
+      condition: and(succeeded(), eq(variables['PublishArtifact_DesktopApplication'], 'True'))
+      enabled: true  
+      env:
+        CODESIGNPASSWORD: $(CodeSignPwdDfE)
+        CODESIGNCERT: $(CodeSignCertificatePFX)
+      inputs:
+        filePath: 'DFE_Code_Signing.ps1'
+        arguments: '-StartFolder "$(build.ArtifactStagingDirectory)\DesktopApplication"'
+        workingDirectory: '$(Build.SourcesDirectory)'
+    
 #********************************************************************************
 # Run Unit Tests
 #********************************************************************************
+    - task: DotNetCoreCLI@2
+      displayName: 'Run xUnit Test - Core Framework'
+      enabled: false
+      inputs:
+        command: test
+        projects: 'src/*Tests/*.csproj'
+        arguments: '--no-restore --no-build --configuration $(Build.Configuration) --collect "Code coverage" --framework net461'
+        
+    - task: VSTest@2
+      displayName: 'Run Unit Tests'
+      enabled: true
+      inputs:
+        testAssemblyVer2: |
+         **\$(Build.Configuration)\*test*.dll
+         !**\obj\**
+        platform: '$(Build.Platform)'
+        configuration: '$(Build.Configuration)'
+        runInParallel: true
+        codeCoverageEnabled: true
+        diagnosticsEnabled: true
 
-
-- task: VSTest@2
-  displayName: 'Run Unit Tests'
-  enabled: true
-  inputs:
-    testAssemblyVer2: |
-     **\$(BuildConfiguration)\*test*.dll
-     !**\obj\**
-    platform: '$(BuildPlatform)'
-    configuration: '$(BuildConfiguration)'
-    runInParallel: true
-    codeCoverageEnabled: true
-    diagnosticsEnabled: true
-
-
+#********************************************************************************
+# Generate Code Coverage Report and Publish
+#********************************************************************************
  
+    ## Generate the report using ReportGenerator (https://github.com/danielpalme/ReportGenerator)
+    # First install the tool on the machine, then run it
+    - script: |
+              dotnet tool install -g dotnet-reportgenerator-globaltool --version 4.3.6
+              reportgenerator -reports:$(Build.SourcesDirectory)/**/*Tests/**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/CodeCoverage -reporttypes:Cobertura
+
+      displayName: Create Code coverage report
+      enabled: false
+  
+    # Publish the code coverage result (summary and web site)
+    # The summary allows to view the coverage percentage in the summary tab
+    # The web site allows to view which lines are covered directly in Azure Pipeline
+    - task: PublishCodeCoverageResults@1
+      displayName: 'Publish code coverage'
+      enabled: false
+      inputs:
+        codeCoverageTool: Cobertura
+        summaryFileLocation: '$(Build.SourcesDirectory)/CodeCoverage/Cobertura.xml'
+        reportDirectory: '$(Build.SourcesDirectory)/CodeCoverage'
+    
 #********************************************************************************
 # Publish Artifacts
-#********************************************************************************
- 
-- task: PublishSymbols@2
-  displayName: 'Publish symbols path'
-  enabled: false
-  inputs:
-    SearchPattern: '**\bin\**\*.pdb'
-    PublishSymbols: false
-  continueOnError: true
+#********************************************************************************    
+    - task: PublishSymbols@2
+      displayName: 'Publish symbols path'
+      enabled: false
+      inputs:
+        SearchPattern: '**\bin\**\*.pdb'
+        PublishSymbols: false
+      continueOnError: true
+        
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: NugetPackages'
+      enabled: true
+      condition: and(succeeded(), eq(variables['PublishArtifact_NugetPackages'], 'True'))
+      inputs:
+        ArtifactName: NugetPackages
+        PathtoPublish: '$(build.artifactstagingdirectory)\Nuget'
+    
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: Databases'
+      enabled: true
+      condition: and(succeeded(), eq(variables['PublishArtifact_Databases'], 'True'))
+      inputs:
+        ArtifactName: Databases
+        PathtoPublish: '$(build.artifactstagingdirectory)\Databases'
 
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: Scripts'
-  enabled: true
-  inputs:
-    ArtifactName: Scripts
-    PathtoPublish: '$(build.artifactstagingdirectory)\Scripts'
-
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: NugetPackages'
-  enabled: true
-  inputs:
-    ArtifactName: NugetPackages
-    PathtoPublish: '$(build.artifactstagingdirectory)\Nuget'
-
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: DesktopApplication'
-  enabled: true
-  inputs:
-    ArtifactName: DesktopApplication
-    PathtoPublish: '$(build.artifactstagingdirectory)\DesktopApplication'
-
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: DesktopApplication'
+      enabled: true
+      condition: and(succeeded(), eq(variables['PublishArtifact_DesktopApplication'], 'True'))
+      inputs:
+        ArtifactName: DesktopApplication
+        PathtoPublish: '$(build.artifactstagingdirectory)\DesktopApplication'
+    
+    
