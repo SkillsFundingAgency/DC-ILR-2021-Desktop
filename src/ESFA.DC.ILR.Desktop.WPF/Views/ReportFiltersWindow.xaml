@@ -1,0 +1,59 @@
+﻿<Window x:Class="ESFA.DC.ILR.Desktop.WPF.Views.ReportFiltersWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ESFA.DC.ILR.Desktop.WPF.Views"
+        mc:Ignorable="d"
+        DataContext="{Binding ReportFilters, Source={StaticResource Locator}}"
+        Title="Report Filters" Height="450" Width="800" Icon="/ESFA.DC.ILR.Desktop.WPF;component/Resources/Images/DSAppIcon.ico"
+        Name="reportFiltersWindow">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="180"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Content="Report:"/>
+        <ComboBox Grid.Column="1" ItemsSource="{Binding Reports}" DisplayMemberPath="ReportName" SelectedItem="{Binding SelectedReport}" />
+
+        <Label Grid.Row="2" Content="Filters:"/>
+
+        <ItemsControl  Grid.Row="2" Grid.Column="1"  ItemsSource="{Binding SelectedReport.Properties}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="0,0,0,5" Height="25">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="{Binding Name}" />
+                        <DatePicker Grid.Column="1" SelectedDate="{Binding DateTimeValue}" Visibility="{Binding IsDateTime, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        <TextBox Grid.Column="1" Text="{Binding StringValue}" Visibility="{Binding IsString, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <Grid Grid.Row="3" Grid.Column="1" Width="Auto" HorizontalAlignment="Right">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Width="100" Margin="2" Content="OK" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=reportFiltersWindow}" />
+            <Button Grid.Column="1" Margin="2" Width="100" Content="Cancel" Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=reportFiltersWindow}"/>
+        </Grid>
+
+    </Grid>
+</Window>

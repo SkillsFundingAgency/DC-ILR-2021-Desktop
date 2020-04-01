@@ -14,7 +14,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         [Fact]
         public void Mutate_UpdateReportTasks()
         {
-            IDesktopContext context = new DesktopContext(new DateTime(2018, 1, 1), null, null, null)
+            IDesktopContext context = new DesktopContext(new DateTime(2018, 1, 1), null, null, "executingAssemblyPath", "ReferenceData", null, null, null)
             {
                 KeyValuePairs = new Dictionary<string, object>
                 {

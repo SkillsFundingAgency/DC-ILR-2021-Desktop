@@ -1,31 +1,43 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Interface;
+using ESFA.DC.ILR.Desktop.Service.Tasks.Interface;
+using ESFA.DC.ILR.Desktop.Utils.Polly.Interface;
+using ESFA.DC.Logging.Interfaces;
 
 namespace ESFA.DC.ILR.Desktop.Service.Tasks
 {
     public class PreProcessingDesktopTask : IDesktopTask
     {
+        private const string ExportPath = "Export";
+        private readonly ILogger _logger;
+        private readonly IPollyPolicies _pollyPolicies;
+
+        public PreProcessingDesktopTask(ILogger logger, IPollyPolicies pollyPolicies)
+        {
+            _logger = logger;
+            _pollyPolicies = pollyPolicies;
+        }
+
         public Task<IDesktopContext> ExecuteAsync(IDesktopContext desktopContext, CancellationToken cancellationToken)
         {
             var preProcessingDesktopTaskContext = new PreProcessingDesktopTaskContext(desktopContext);
 
-            if (Directory.Exists(preProcessingDesktopTaskContext.Container))
-            {
-                Directory.Delete(preProcessingDesktopTaskContext.Container, true);
-            }
-
-            Directory.CreateDirectory(preProcessingDesktopTaskContext.Container);
+            DeleteSandboxIfExists(preProcessingDesktopTaskContext.Container);
 
             var fileName = Path.GetFileName(preProcessingDesktopTaskContext.FileName);
+            var refDataFileName = Path.GetFileName(preProcessingDesktopTaskContext.ReferenceDataFileName);
 
             var newFilePath = Path.Combine(preProcessingDesktopTaskContext.Container, fileName);
+            var newRefDataFilePath = Path.Combine(preProcessingDesktopTaskContext.Container, refDataFileName);
 
-            File.Copy(preProcessingDesktopTaskContext.FileName, newFilePath);
+            CreateAndPopulateSandbox(preProcessingDesktopTaskContext, newFilePath, newRefDataFilePath);
 
             preProcessingDesktopTaskContext.FileName = fileName;
             preProcessingDesktopTaskContext.OriginalFileName = fileName;
+            preProcessingDesktopTaskContext.ReferenceDataFileName = refDataFileName;
 
             if (TryGetUkprnFromFileName(fileName, out var ukprn))
             {
@@ -58,6 +70,37 @@ namespace ESFA.DC.ILR.Desktop.Service.Tasks
             ukprn = 0;
 
             return false;
+        }
+
+        private void DeleteSandboxIfExists(string container)
+        {
+            _pollyPolicies.FileSystemRetryPolicy.Execute(() =>
+            {
+                if (Directory.Exists(container))
+                {
+                    _logger.LogInfo($"Deleting Sandbox Directory : {container}");
+                    Directory.Delete(container, true);
+
+                    // next step is to create directory, file system operations are asynchronous so allow 50ms to catch up.
+                    Thread.Sleep(50);
+                }
+            });
+        }
+
+        private void CreateAndPopulateSandbox(IPreProcessingDesktopTaskContext preProcessingDesktopTaskContext, string newFilePath, string newRefDataFilePath)
+        {
+            _pollyPolicies.FileSystemRetryPolicy
+               .Execute(() =>
+                {
+                    _logger.LogInfo($"Creating and Populating Sandbox Directory : {preProcessingDesktopTaskContext.Container}, {preProcessingDesktopTaskContext.FileName}, {preProcessingDesktopTaskContext.ReferenceDataFileName}");
+                    Directory.CreateDirectory(preProcessingDesktopTaskContext.Container);
+                    Directory.CreateDirectory(Path.Combine(preProcessingDesktopTaskContext.Container, ExportPath));
+
+                    // let the file system catch up, if this isn't long enough fall back to retry policy
+                    Thread.Sleep(50);
+                    File.Copy(preProcessingDesktopTaskContext.FileName, newFilePath, true);
+                    File.Copy(preProcessingDesktopTaskContext.ReferenceDataFileName, newRefDataFilePath, true);
+                });
         }
     }
 }

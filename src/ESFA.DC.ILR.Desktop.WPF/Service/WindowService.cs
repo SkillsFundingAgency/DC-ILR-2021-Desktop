@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
 using ESFA.DC.ILR.Desktop.WPF.Views;
 
@@ -9,9 +8,9 @@ namespace ESFA.DC.ILR.Desktop.WPF.Service
     {
         public void ShowSettingsWindow()
         {
-            var settingsWindow = new SettingsWindow()
+            var settingsWindow = new SettingsWindow
             {
-                Owner = Application.Current.MainWindow,
+                Owner = Application.Current.MainWindow
             };
 
             settingsWindow.ShowDialog();
@@ -19,12 +18,22 @@ namespace ESFA.DC.ILR.Desktop.WPF.Service
 
         public void ShowAboutWindow()
         {
-            var aboutWindow = new AboutWindow()
+            var aboutWindow = new AboutWindow
             {
-                Owner = Application.Current.MainWindow,
+                Owner = Application.Current.MainWindow
             };
 
             aboutWindow.ShowDialog();
+        }
+
+        public void ShowReportFiltersWindow()
+        {
+            var reportFiltersWindow = new ReportFiltersWindow
+            {
+                Owner = Application.Current.MainWindow
+            };
+
+            reportFiltersWindow.ShowDialog();
         }
     }
 }

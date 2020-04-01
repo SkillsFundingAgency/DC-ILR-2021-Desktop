@@ -1,13 +1,11 @@
-﻿using System.Linq;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autofac.Features.Indexed;
 using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Service.Journey;
 using ESFA.DC.ILR.Desktop.Service.Message;
 using ESFA.DC.ILR.Desktop.Service.Model;
-using ESFA.DC.ILR.Desktop.Service.Tasks;
 using ESFA.DC.ILR.Desktop.Service.Tasks.Extensions;
 using ESFA.DC.Logging.Interfaces;
 
@@ -53,15 +51,25 @@ namespace ESFA.DC.ILR.Desktop.Service
 
                 _messengerService.Send(new TaskProgressMessage(desktopTaskDefinition.Key.GetDisplayText(), step, stepsList.Count));
 
-                var result = await _desktopTaskExecutionService.ExecuteAsync(desktopTaskDefinition.Key, desktopContext, cancellationToken);
-
-                cancellationToken.ThrowIfCancellationRequested();
-
-                if (!result.IsFaulted)
+                try
                 {
+                    desktopContext = await _desktopTaskExecutionService
+                        .ExecuteAsync(desktopTaskDefinition.Key, desktopContext, cancellationToken)
+                        .ConfigureAwait(false);
+
+                    cancellationToken.ThrowIfCancellationRequested();
+
                     step++;
                 }
-                else
+                catch (TaskCanceledException taskCanceledException)
+                {
+                    completionContext.ProcessingCompletionState = ProcessingCompletionStates.Cancelled;
+
+                    _logger.LogError($"Task Cancelled - Step {step}", taskCanceledException);
+
+                    return completionContext;
+                }
+                catch (Exception exception)
                 {
                     if (desktopTaskDefinition.FailureKey != null)
                     {
@@ -70,17 +78,17 @@ namespace ESFA.DC.ILR.Desktop.Service
                             desktopContext = _contextMutatorExecutor.Execute(desktopTaskDefinition.FailureContextMutatorKey.Value, desktopContext);
                         }
 
-                        step = _ilrPipelineProvider.IndexFor(desktopTaskDefinition.FailureKey.Value);
+                        step = _ilrPipelineProvider.IndexFor(desktopTaskDefinition.FailureKey.Value, stepsList);
 
                         completionContext.ProcessingCompletionState = ProcessingCompletionStates.HandledFail;
 
-                        _logger.LogError($"Task Execution Handled Failure - Step {step}", result.Exception);
+                        _logger.LogError($"Task Execution Handled Failure - Step {step}", exception);
                     }
                     else
                     {
                         completionContext.ProcessingCompletionState = ProcessingCompletionStates.UnhandledFail;
 
-                        _logger.LogError($"Task Execution Unhandled Failure - Step {step}", result.Exception);
+                        _logger.LogError($"Task Execution Unhandled Failure - Step {step}", exception);
 
                         return completionContext;
                     }

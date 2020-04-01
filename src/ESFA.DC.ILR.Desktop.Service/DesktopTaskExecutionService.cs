@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using ESFA.DC.ILR.Desktop.Interface;
@@ -19,20 +16,21 @@ namespace ESFA.DC.ILR.Desktop.Service
             _lifetimeScope = lifetimeScope;
         }
 
-        public async Task<Task<IDesktopContext>> ExecuteAsync(IlrDesktopTaskKeys ilrDesktopTaskKey, IDesktopContext desktopContext, CancellationToken cancellationToken)
+        public async Task<IDesktopContext> ExecuteAsync(IlrDesktopTaskKeys ilrDesktopTaskKey, IDesktopContext desktopContext, CancellationToken cancellationToken)
         {
-            return await Task.Factory.StartNew(
-                () => ExecuteAsyncAction(ilrDesktopTaskKey, desktopContext, cancellationToken),
-                cancellationToken,
-                TaskCreationOptions.LongRunning,
-                TaskScheduler.Default);
+            Task<IDesktopContext> task = ExecuteAsyncAction(ilrDesktopTaskKey, desktopContext, cancellationToken);
+
+            return await Task.Run(() => task, cancellationToken).ConfigureAwait(false);
         }
 
         private async Task<IDesktopContext> ExecuteAsyncAction(IlrDesktopTaskKeys ilrDesktopTaskKey, IDesktopContext desktopContext, CancellationToken cancellationToken)
         {
             using (var executionLifetimeScope = _lifetimeScope.BeginLifetimeScope())
             {
-                return await executionLifetimeScope.ResolveKeyed<IDesktopTask>(ilrDesktopTaskKey).ExecuteAsync(desktopContext, cancellationToken);
+                return await executionLifetimeScope
+                    .ResolveKeyed<IDesktopTask>(ilrDesktopTaskKey)
+                    .ExecuteAsync(desktopContext, cancellationToken)
+                    .ConfigureAwait(false);
             }
         }
     }

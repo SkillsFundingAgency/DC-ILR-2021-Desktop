@@ -1,5 +1,4 @@
-﻿using ESFA.DC.ILR.Desktop.Service.Interface;
-using ESFA.DC.ILR.Desktop.Service.Tasks.Attributes;
+﻿using ESFA.DC.ILR.Desktop.Service.Tasks.Attributes;
 
 namespace ESFA.DC.ILR.Desktop.Service.Tasks
 {
@@ -10,6 +9,9 @@ namespace ESFA.DC.ILR.Desktop.Service.Tasks
 
         [DisplayText(TaskNameDisplayTextConstants.BuildDatabase)]
         DatabaseCreate,
+
+        [DisplayText(TaskNameDisplayTextConstants.MdbCreate)]
+        MdbCreate,
 
         [DisplayText(TaskNameDisplayTextConstants.FileValidation)]
         FileValidationService,
@@ -26,8 +28,14 @@ namespace ESFA.DC.ILR.Desktop.Service.Tasks
         [DisplayText(TaskNameDisplayTextConstants.StoreData)]
         DataStore,
 
+        [DisplayText(TaskNameDisplayTextConstants.MdbExport)]
+        MdbExport,
+
         [DisplayText(TaskNameDisplayTextConstants.ReportGeneration)]
         ReportService,
+
+        [DisplayText(TaskNameDisplayTextConstants.MdbPublish)]
+        MdbPublish,
 
         [DisplayText(TaskNameDisplayTextConstants.PostExecution)]
         PostExecution,

@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Windows;
+﻿using System.Windows;
 using Autofac;
 using Autofac.Extras.CommonServiceLocator;
 using CommonServiceLocator;
@@ -10,9 +8,6 @@ using ESFA.DC.Logging.Interfaces;
 
 namespace ESFA.DC.ILR.Desktop.WPF
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
         protected override void OnStartup(StartupEventArgs e)
@@ -38,10 +33,7 @@ namespace ESFA.DC.ILR.Desktop.WPF
             containerBuilder.RegisterModule<ViewModelsModule>();
 
             // Common Service Registration
-            containerBuilder.RegisterModule<IlrServicesModule>();
-            containerBuilder.RegisterModule<LoggingModule>();
-            containerBuilder.RegisterModule<SerializationModule>();
-            containerBuilder.RegisterModule<IOModule>();
+            containerBuilder.RegisterModule<BaseModule>();
 
             return containerBuilder;
         }

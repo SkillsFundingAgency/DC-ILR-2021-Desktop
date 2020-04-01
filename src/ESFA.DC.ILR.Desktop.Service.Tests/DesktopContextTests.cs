@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.Desktop.Service.Context;
 using FluentAssertions;
 using Xunit;
@@ -27,6 +30,18 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         public void Container()
         {
             NewContext().KeyValuePairs["Container"].Should().Be("Sandbox");
+        }
+
+        [Fact]
+        public void CollectionYear()
+        {
+            NewContext().KeyValuePairs["CollectionYear"].Should().Be("1920");
+        }
+
+        [Fact]
+        public void ReturnPeriod()
+        {
+            NewContext().KeyValuePairs["ReturnPeriod"].Should().Be(12);
         }
 
         [Fact]
@@ -90,18 +105,120 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         }
 
         [Fact]
-        public void KeyValuePairsCount()
+        public void FundingTaskALB()
         {
-            NewContext().KeyValuePairs.Should().HaveCount(12);
+            NewContext().KeyValuePairs["ALB"].Should().Be("ALB");
         }
 
-        private DesktopContext NewContext(DateTime? dateTime = null, string outputDirectory = null, string filePath = null, string connectionString = null)
+        [Fact]
+        public void FundingTaskFM25()
+        {
+            NewContext().KeyValuePairs["FM25"].Should().Be("FM25");
+        }
+
+        [Fact]
+        public void FundingTaskFM35()
+        {
+            NewContext().KeyValuePairs["FM35"].Should().Be("FM35");
+        }
+
+        [Fact]
+        public void FundingTaskFM36()
+        {
+            NewContext().KeyValuePairs["FM36"].Should().Be("FM36");
+        }
+
+        [Fact]
+        public void FundingTaskFM70()
+        {
+            NewContext().KeyValuePairs["FM70"].Should().Be("FM70");
+        }
+
+        [Fact]
+        public void FundingTaskFM81()
+        {
+            NewContext().KeyValuePairs["FM81"].Should().Be("FM81");
+        }
+
+        [Fact]
+        public void FundingAlbOutput()
+        {
+            NewContext().KeyValuePairs["FundingAlbOutput"].Should().Be("FundingAlbOutput.json");
+        }
+
+        [Fact]
+        public void FundingFM25Output()
+        {
+            NewContext().KeyValuePairs["FundingFm25Output"].Should().Be("FundingFm25Output.json");
+        }
+
+        [Fact]
+        public void FundingFM35Output()
+        {
+            NewContext().KeyValuePairs["FundingFm35Output"].Should().Be("FundingFm35Output.json");
+        }
+
+        [Fact]
+        public void FundingFM36Output()
+        {
+            NewContext().KeyValuePairs["FundingFm36Output"].Should().Be("FundingFm36Output.json");
+        }
+
+        [Fact]
+        public void FundingFM70Output()
+        {
+            NewContext().KeyValuePairs["FundingFm70Output"].Should().Be("FundingFm70Output.json");
+        }
+
+        [Fact]
+        public void FundingFM81Output()
+        {
+            NewContext().KeyValuePairs["FundingFm81Output"].Should().Be("FundingFm81Output.json");
+        }
+
+        [Fact]
+        public void ReferenceDataFilename()
+        {
+            var referenceDataFileName = "FISReferenceData.zip";
+            var executingAssemblyPath = "ExecutingAssemblyPath";
+            var referenceDataFilePath = Path.Combine(executingAssemblyPath, referenceDataFileName);
+
+            NewContext(executingAssemblyPath: executingAssemblyPath, referenceDataFileName: referenceDataFileName).KeyValuePairs["ReferenceDataFilename"].Should().Be(referenceDataFilePath);
+        }
+
+        [Fact]
+        public void KeyValuePairsCount()
+        {
+            NewContext().KeyValuePairs.Should().HaveCount(28);
+        }
+
+        [Fact]
+        public void ReportFilterQueries()
+        {
+            var reportFilterQueries = new List<IDesktopContextReportFilterQuery>();
+
+            NewContext(reportFilterQueries: reportFilterQueries).ReportFilterQueries.Should().BeSameAs(reportFilterQueries);
+        }
+
+        private DesktopContext NewContext(
+            DateTime? dateTime = null,
+            string outputDirectory = null,
+            string filePath = null,
+            string executingAssemblyPath = "ExecutingAssemblyPath",
+            string referenceDataFileName = "ReferenceData",
+            string connectionString = null,
+            string releaseVersionInformationString = null,
+            IEnumerable<IDesktopContextReportFilterQuery> reportFilterQueries = null)
         {
             return new DesktopContext(
                 dateTime.HasValue ? dateTime.Value : new DateTime(2018, 1, 1),
                 outputDirectory,
                 filePath,
-                connectionString);
+                executingAssemblyPath,
+                referenceDataFileName,
+                connectionString,
+                releaseVersionInformationString,
+                reportFilterQueries);
         }
     }
 }

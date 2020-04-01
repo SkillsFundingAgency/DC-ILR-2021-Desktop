@@ -1,27 +1,32 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspose.Cells" Version="19.2.0" />
-    <PackageReference Include="Autofac" Version="4.9.2" />
+    <PackageReference Include="Aspose.Cells" Version="19.9.0" />
+    <PackageReference Include="Autofac" Version="5.1.2" />
     <PackageReference Include="ESFA.DC.DateTimeProvider" Version="0.1.6-beta0001" />
-    <PackageReference Include="ESFA.DC.FileService" Version="0.1.19-beta0001" />
-    <PackageReference Include="ESFA.DC.ILR.1920.DataStore.Desktop" Version="0.0.209" />
-    <PackageReference Include="ESFA.DC.ILR.1920.FileValidationService.Desktop" Version="0.1.72" />
-    <PackageReference Include="ESFA.DC.ILR.1920.ReportService.Desktop" Version="0.0.111" />
-    <PackageReference Include="ESFA.DC.ILR.1920.ValidationService.Desktop" Version="0.0.201" />
-    <PackageReference Include="ESFA.DC.ILR1920.ReferenceDataService.Desktop" Version="0.0.87" />
-    <PackageReference Include="ESFA.DC.IO.FileSystem" Version="0.1.19-beta0001" />
-    <PackageReference Include="ESFA.DC.IO.Interfaces" Version="0.1.18-beta0001" />
-    <PackageReference Include="ESFA.DC.Jobs.Model" Version="0.2.8-beta0001" />
-    <PackageReference Include="ESFA.DC.Logging.Interfaces" Version="0.1.4-beta0001" />
-    <PackageReference Include="ESFA.DC.Serialization.Interfaces" Version="0.1.6-beta0001" />
-    <PackageReference Include="ESFA.DC.Serialization.Json" Version="0.1.6-beta0001" />
-    <PackageReference Include="ESFA.DC.Serialization.Xml" Version="0.1.6-beta0001" />
-    <PackageReference Include="NLog.Config" Version="4.6.5" />
+    <PackageReference Include="ESFA.DC.FileService" Version="0.1.34-beta0001" />
+    <PackageReference Include="ESFA.DC.FileService.Interface" Version="0.1.34-beta0001" />
+    <PackageReference Include="ESFA.DC.ILR.1920.DataStore.Desktop" Version="0.0.561" />
+    <PackageReference Include="ESFA.DC.ILR.1920.FileValidationService.Desktop" Version="0.1.129" />
+    <PackageReference Include="ESFA.DC.ILR.1920.FundingService.Desktop" Version="0.0.292" />
+    <PackageReference Include="ESFA.DC.ILR.1920.ReportService.Desktop" Version="0.0.1133" />
+    <PackageReference Include="ESFA.DC.ILR.1920.ValidationService.Desktop" Version="0.0.1405" />
+    <PackageReference Include="ESFA.DC.ILR1920.ReferenceDataService.Desktop" Version="0.1.35" />
+    <PackageReference Include="ESFA.DC.IO.FileSystem" Version="0.1.34-beta0001" />
+    <PackageReference Include="ESFA.DC.IO.Interfaces" Version="0.1.34-beta0001" />
+    <PackageReference Include="ESFA.DC.Jobs.Model" Version="0.2.63-beta0001" />
+    <PackageReference Include="ESFA.DC.Logging.Interfaces" Version="0.1.10-beta0001" />
+    <PackageReference Include="ESFA.DC.Serialization.Interfaces" Version="0.1.34-beta0001" />
+    <PackageReference Include="ESFA.DC.Serialization.Json" Version="0.1.34-beta0001" />
+    <PackageReference Include="ESFA.DC.Serialization.Xml" Version="0.1.34-beta0001" />
+    <PackageReference Include="ESFA.DC.Telemetry" Version="0.1.10-beta0001" />
+    <PackageReference Include="ESFA.DC.Telemetry.Interfaces" Version="0.1.10-beta0001" />
+    <PackageReference Include="NLog.Config" Version="4.6.7" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
   </ItemGroup>
 
   <ItemGroup>

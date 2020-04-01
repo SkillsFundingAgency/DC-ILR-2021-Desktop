@@ -7,6 +7,6 @@ namespace ESFA.DC.ILR.Desktop.Service.Interface
 {
     public interface IDesktopTaskExecutionService
     {
-        Task<Task<IDesktopContext>> ExecuteAsync(IlrDesktopTaskKeys ilrDesktopTaskKey, IDesktopContext desktopContext, CancellationToken cancellationToken);
+        Task<IDesktopContext> ExecuteAsync(IlrDesktopTaskKeys ilrDesktopTaskKey, IDesktopContext desktopContext, CancellationToken cancellationToken);
     }
 }

@@ -1,6 +1,9 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.Interface;
+using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
+using ESFA.DC.ILR.Desktop.Models;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Service.Journey;
 using ESFA.DC.ILR.Desktop.Service.Message;
@@ -14,6 +17,288 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
 {
     public class MainViewModelTests
     {
+        [Fact]
+        public async Task CheckForUpdateMenuCommand_New_Version_Available()
+        {
+            const string version = "2.0.0.0";
+            const string url = "foo";
+            var releaseDate = new DateTime(2019, 11, 10, 8, 0, 0);
+
+            var applicationVersionResult = new ApplicationVersionResult
+            {
+                ApplicationVersion = version,
+                ReleaseDateTime = releaseDate,
+                Url = url
+            };
+
+            var versionMediatorServiceMock = new Mock<IVersionMediatorService>();
+            versionMediatorServiceMock
+                .Setup(m => m.GetNewVersion())
+                .ReturnsAsync(applicationVersionResult);
+
+            var featureSwitchService = new Mock<IFeatureSwitchService>();
+            featureSwitchService.Setup(m => m.VersionUpdate).Returns(true);
+
+            var versionInformationServiceMock = new Mock<IReleaseVersionInformationService>();
+            versionInformationServiceMock.Setup(vm => vm.VersionNumber).Returns("3.0");
+
+            var refDataVersionInformationServiceMock = new Mock<IReferenceDataVersionInformationService>();
+            refDataVersionInformationServiceMock.Setup(vm => vm.VersionNumber).Returns("1.0");
+
+            var viewModel = NewViewModel(
+                versionMediatorService: versionMediatorServiceMock.Object,
+                featureSwitchService: featureSwitchService.Object,
+                versionInformationService: versionInformationServiceMock.Object,
+                referenceDataVersionInformationService: refDataVersionInformationServiceMock.Object);
+
+            await viewModel.CheckForUpdateMenuCommand.ExecuteAsync();
+
+            viewModel.NewVersion.ApplicationVersion.Should().Be(version);
+            viewModel.NewVersion.ReleaseDateTime.Should().Be(releaseDate);
+            viewModel.NewVersion.Url.Should().Be(url);
+
+            viewModel.CurrentBannerVisibility.Should().Be(ApiBannerKeys.NewApplication);
+        }
+
+        [Fact]
+        public async Task CheckForUpdateMenuCommand_No_New_Version_Available_Error_NullObject()
+        {
+            var versionMediatorServiceMock = new Mock<IVersionMediatorService>();
+            versionMediatorServiceMock
+                .Setup(m => m.GetNewVersion())
+                .ReturnsAsync((ApplicationVersionResult)null);
+
+            var featureSwitchService = new Mock<IFeatureSwitchService>();
+            featureSwitchService.Setup(m => m.VersionUpdate).Returns(true);
+
+            var viewModel = NewViewModel(versionMediatorService: versionMediatorServiceMock.Object, featureSwitchService: featureSwitchService.Object);
+
+            await viewModel.CheckForUpdateMenuCommand.ExecuteAsync();
+
+            viewModel.NewVersion.Should().BeNull();
+
+            viewModel.CurrentBannerVisibility.Should().Be(ApiBannerKeys.ErrorNewApplication);
+        }
+
+        [Fact]
+        public async Task CheckForUpdateMenuCommand_No_New_Version_Available_Error_NullAppVersion()
+        {
+            var versionMediatorServiceMock = new Mock<IVersionMediatorService>();
+            versionMediatorServiceMock
+                .Setup(m => m.GetNewVersion())
+                .ReturnsAsync(new ApplicationVersionResult());
+
+            var featureSwitchService = new Mock<IFeatureSwitchService>();
+            featureSwitchService.Setup(m => m.VersionUpdate).Returns(true);
+
+            var viewModel = NewViewModel(versionMediatorService: versionMediatorServiceMock.Object, featureSwitchService: featureSwitchService.Object);
+
+            await viewModel.CheckForUpdateMenuCommand.ExecuteAsync();
+
+            viewModel.NewVersion.Should().NotBeNull();
+
+            viewModel.CurrentBannerVisibility.Should().Be(ApiBannerKeys.ErrorNewApplication);
+        }
+
+        [Fact]
+        public async Task CheckForUpdateMenuCommand_No_New_Version_Available()
+        {
+            var versionMediatorServiceMock = new Mock<IVersionMediatorService>();
+            versionMediatorServiceMock
+                .Setup(m => m.GetNewVersion())
+                .ReturnsAsync(new ApplicationVersionResult()
+                {
+                    ApplicationVersion = "1.0",
+                    LatestReferenceDataVersion = "1.0.1"
+                });
+
+            var featureSwitchService = new Mock<IFeatureSwitchService>();
+            featureSwitchService.Setup(m => m.VersionUpdate).Returns(true);
+
+            var versionInformationServiceMock = new Mock<IReleaseVersionInformationService>();
+            versionInformationServiceMock.Setup(vm => vm.VersionNumber).Returns("1.0");
+
+            var refDataVersionInformationServiceMock = new Mock<IReferenceDataVersionInformationService>();
+            refDataVersionInformationServiceMock.Setup(vm => vm.VersionNumber).Returns("1.0.1");
+
+            var viewModel = NewViewModel(
+                versionMediatorService: versionMediatorServiceMock.Object,
+                featureSwitchService: featureSwitchService.Object,
+                versionInformationService: versionInformationServiceMock.Object,
+                referenceDataVersionInformationService: refDataVersionInformationServiceMock.Object);
+
+            await viewModel.CheckForUpdateMenuCommand.ExecuteAsync();
+
+            viewModel.NewVersion.Should().NotBeNull();
+
+            viewModel.CurrentBannerVisibility.Should().Be(ApiBannerKeys.UpToDate);
+        }
+
+        [Fact]
+        public async Task CheckForUpdateMenuCommand_New_RefData_Available()
+        {
+            var versionMediatorServiceMock = new Mock<IVersionMediatorService>();
+            versionMediatorServiceMock
+                .Setup(m => m.GetNewVersion())
+                .ReturnsAsync(new ApplicationVersionResult()
+                {
+                    ApplicationVersion = "1.0",
+                    LatestReferenceDataVersion = "1.0.0"
+                });
+
+            var featureSwitchService = new Mock<IFeatureSwitchService>();
+            featureSwitchService.Setup(m => m.VersionUpdate).Returns(true);
+
+            var versionInformationServiceMock = new Mock<IReleaseVersionInformationService>();
+            versionInformationServiceMock.Setup(vm => vm.VersionNumber).Returns("1.0");
+
+            var refDataVersionInformationServiceMock = new Mock<IReferenceDataVersionInformationService>();
+            refDataVersionInformationServiceMock.Setup(vm => vm.VersionNumber).Returns("1.0.1");
+
+            var viewModel = NewViewModel(
+                versionMediatorService: versionMediatorServiceMock.Object,
+                featureSwitchService: featureSwitchService.Object,
+                versionInformationService: versionInformationServiceMock.Object,
+                referenceDataVersionInformationService: refDataVersionInformationServiceMock.Object);
+
+            await viewModel.CheckForUpdateMenuCommand.ExecuteAsync();
+
+            viewModel.NewVersion.Should().NotBeNull();
+
+            viewModel.CurrentBannerVisibility.Should().Be(ApiBannerKeys.ReferenceDataUpdate);
+        }
+
+        [Fact]
+        public async Task CheckForUpdateCommand_New_Version_Available()
+        {
+            const string version = "2.0.0.0";
+            const string url = "foo";
+            var releaseDate = new DateTime(2019, 11, 10, 8, 0, 0);
+
+            var applicationVersionResult = new ApplicationVersionResult
+            {
+                ApplicationVersion = version,
+                ReleaseDateTime = releaseDate,
+                Url = url
+            };
+
+            var versionMediatorServiceMock = new Mock<IVersionMediatorService>();
+            versionMediatorServiceMock
+                .Setup(m => m.GetNewVersion())
+                .ReturnsAsync(applicationVersionResult);
+
+            var featureSwitchService = new Mock<IFeatureSwitchService>();
+            featureSwitchService.Setup(m => m.VersionUpdate).Returns(true);
+
+            var versionInformationServiceMock = new Mock<IReleaseVersionInformationService>();
+            versionInformationServiceMock.Setup(vm => vm.VersionNumber).Returns("3.0");
+
+            var refDataVersionInformationServiceMock = new Mock<IReferenceDataVersionInformationService>();
+            refDataVersionInformationServiceMock.Setup(vm => vm.VersionNumber).Returns("1.0");
+
+            var viewModel = NewViewModel(
+                versionMediatorService: versionMediatorServiceMock.Object,
+                featureSwitchService: featureSwitchService.Object,
+                versionInformationService: versionInformationServiceMock.Object,
+                referenceDataVersionInformationService: refDataVersionInformationServiceMock.Object);
+
+            await viewModel.CheckForUpdateCommand.ExecuteAsync();
+
+            viewModel.NewVersion.ApplicationVersion.Should().Be(version);
+            viewModel.NewVersion.ReleaseDateTime.Should().Be(releaseDate);
+            viewModel.NewVersion.Url.Should().Be(url);
+
+            viewModel.CurrentBannerVisibility.Should().Be(ApiBannerKeys.NewApplication);
+        }
+
+        [Fact]
+        public async Task CheckForUpdateCommand_No_New_Version_Available()
+        {
+            var versionMediatorServiceMock = new Mock<IVersionMediatorService>();
+            versionMediatorServiceMock
+                .Setup(m => m.GetNewVersion())
+                .ReturnsAsync(new ApplicationVersionResult()
+                {
+                    ApplicationVersion = "1.0",
+                    LatestReferenceDataVersion = "1.0.1"
+                });
+
+            var featureSwitchService = new Mock<IFeatureSwitchService>();
+            featureSwitchService.Setup(m => m.VersionUpdate).Returns(true);
+
+            var versionInformationServiceMock = new Mock<IReleaseVersionInformationService>();
+            versionInformationServiceMock.Setup(vm => vm.VersionNumber).Returns("1.0");
+
+            var refDataVersionInformationServiceMock = new Mock<IReferenceDataVersionInformationService>();
+            refDataVersionInformationServiceMock.Setup(vm => vm.VersionNumber).Returns("1.0.1");
+
+            var viewModel = NewViewModel(
+                versionMediatorService: versionMediatorServiceMock.Object,
+                featureSwitchService: featureSwitchService.Object,
+                versionInformationService: versionInformationServiceMock.Object,
+                referenceDataVersionInformationService: refDataVersionInformationServiceMock.Object);
+
+            await viewModel.CheckForUpdateCommand.ExecuteAsync();
+
+            viewModel.NewVersion.Should().NotBeNull();
+
+            viewModel.CurrentBannerVisibility.Should().Be(ApiBannerKeys.None);
+        }
+
+        [Fact]
+        public async Task CheckForUpdateCommand_New_RefData_Available()
+        {
+            var versionMediatorServiceMock = new Mock<IVersionMediatorService>();
+            versionMediatorServiceMock
+                .Setup(m => m.GetNewVersion())
+                .ReturnsAsync(new ApplicationVersionResult()
+                {
+                    ApplicationVersion = "1.0",
+                    LatestReferenceDataVersion = "1.0.0"
+                });
+
+            var featureSwitchService = new Mock<IFeatureSwitchService>();
+            featureSwitchService.Setup(m => m.VersionUpdate).Returns(true);
+
+            var versionInformationServiceMock = new Mock<IReleaseVersionInformationService>();
+            versionInformationServiceMock.Setup(vm => vm.VersionNumber).Returns("1.0");
+
+            var refDataVersionInformationServiceMock = new Mock<IReferenceDataVersionInformationService>();
+            refDataVersionInformationServiceMock.Setup(vm => vm.VersionNumber).Returns("1.0.1");
+
+            var viewModel = NewViewModel(
+                versionMediatorService: versionMediatorServiceMock.Object,
+                featureSwitchService: featureSwitchService.Object,
+                versionInformationService: versionInformationServiceMock.Object,
+                referenceDataVersionInformationService: refDataVersionInformationServiceMock.Object);
+
+            await viewModel.CheckForUpdateCommand.ExecuteAsync();
+
+            viewModel.NewVersion.Should().NotBeNull();
+
+            viewModel.CurrentBannerVisibility.Should().Be(ApiBannerKeys.ReferenceDataUpdate);
+        }
+
+        [Fact]
+        public async Task CheckForUpdateCommand_API_Error()
+        {
+            var versionMediatorServiceMock = new Mock<IVersionMediatorService>();
+            versionMediatorServiceMock
+                .Setup(m => m.GetNewVersion())
+                .Throws(new Exception());
+
+            var featureSwitchService = new Mock<IFeatureSwitchService>();
+            featureSwitchService.Setup(m => m.VersionUpdate).Returns(true);
+
+            var viewModel = NewViewModel(versionMediatorService: versionMediatorServiceMock.Object, featureSwitchService: featureSwitchService.Object);
+
+            await viewModel.CheckForUpdateCommand.ExecuteAsync();
+
+            viewModel.NewVersion.Should().BeNull();
+
+            viewModel.CurrentBannerVisibility.Should().Be(ApiBannerKeys.None);
+        }
+
         [Fact]
         public void ChooseFileCommandExecute()
         {
@@ -127,7 +412,6 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
         {
             var fileName = "FileName";
             var outputDirectory = "Output Directory";
-            var cancellationToken = CancellationToken.None;
 
             var ilrDesktopServiceMock = new Mock<IIlrDesktopService>();
 
@@ -165,7 +449,11 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             IDialogInteractionService dialogInteractionService = null,
             IWindowsProcessService windowsProcessService = null,
             IReleaseVersionInformationService versionInformationService = null,
-            ILogger logger = null)
+            IReferenceDataVersionInformationService referenceDataVersionInformationService = null,
+            ILogger logger = null,
+            IFeatureSwitchService featureSwitchService = null,
+            IVersionMediatorService versionMediatorService = null,
+            IDesktopReferenceDataDownloadService desktopReferenceDataDownloadService = null)
         {
             return new MainViewModel(
                 ilrDesktopService ?? Mock.Of<IIlrDesktopService>(),
@@ -175,7 +463,11 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
                 dialogInteractionService ?? Mock.Of<IDialogInteractionService>(),
                 windowsProcessService ?? Mock.Of<IWindowsProcessService>(),
                 versionInformationService ?? Mock.Of<IReleaseVersionInformationService>(),
-                logger ?? Mock.Of<ILogger>());
+                referenceDataVersionInformationService ?? Mock.Of<IReferenceDataVersionInformationService>(),
+                logger ?? Mock.Of<ILogger>(),
+                featureSwitchService ?? Mock.Of<IFeatureSwitchService>(),
+                versionMediatorService ?? Mock.Of<IVersionMediatorService>(),
+                desktopReferenceDataDownloadService ?? Mock.Of<IDesktopReferenceDataDownloadService>());
         }
     }
 }

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading;
 using ESFA.DC.ILR.Desktop.CLI.Interface;
 using ESFA.DC.ILR.Desktop.CLI.Service;
 using ESFA.DC.ILR.Desktop.Interface;
+using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Service.Message;
 using Moq;
@@ -44,12 +40,25 @@ namespace ESFA.DC.ILR.Desktop.CLI.Tests
             messengerService.Verify(m => m.Register<TaskProgressMessage>(entryPoint, entryPoint.HandleTaskProgressMessage));
         }
 
-        private CliEntryPoint NewEntryPoint(IMessengerService messengerService = null, IDesktopContextFactory desktopContextFactory = null, IIlrDesktopService ilrDesktopService = null)
+        private CliEntryPoint NewEntryPoint(
+            IMessengerService messengerService = null,
+            IDesktopContextFactory desktopContextFactory = null,
+            IIlrDesktopService ilrDesktopService = null,
+            IVersionMediatorService versionMediatorService = null,
+            IDesktopReferenceDataDownloadService desktopReferenceDataDownloadService = null,
+            IReferenceDataVersionInformationService referenceDataVersionInformationService = null,
+            IReleaseVersionInformationService releaseVersionInformationService = null,
+            IFeatureSwitchService featureSwitchService = null)
         {
             return new CliEntryPoint(
                 messengerService ?? Mock.Of<IMessengerService>(),
                 desktopContextFactory ?? Mock.Of<IDesktopContextFactory>(),
-                ilrDesktopService ?? Mock.Of<IIlrDesktopService>());
+                ilrDesktopService ?? Mock.Of<IIlrDesktopService>(),
+                versionMediatorService ?? Mock.Of<IVersionMediatorService>(),
+                desktopReferenceDataDownloadService ?? Mock.Of<IDesktopReferenceDataDownloadService>(),
+                referenceDataVersionInformationService ?? Mock.Of<IReferenceDataVersionInformationService>(),
+                releaseVersionInformationService ?? Mock.Of<IReleaseVersionInformationService>(),
+                featureSwitchService ?? Mock.Of<IFeatureSwitchService>());
         }
     }
 }

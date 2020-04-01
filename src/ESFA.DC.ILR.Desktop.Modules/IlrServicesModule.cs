@@ -9,6 +9,8 @@ using ESFA.DC.ILR.Desktop.Service.Mutator;
 using ESFA.DC.ILR.Desktop.Service.Tasks;
 using ESFA.DC.ILR.FileValidationService.Desktop;
 using ESFA.DC.ILR.FileValidationService.Desktop.Modules;
+using ESFA.DC.ILR.FundingService.Desktop;
+using ESFA.DC.ILR.FundingService.Desktop.Modules;
 using ESFA.DC.ILR.ReferenceDataService.Desktop;
 using ESFA.DC.ILR.ReferenceDataService.Desktop.Modules;
 using ESFA.DC.ILR.ReportService.Desktop;
@@ -41,6 +43,9 @@ namespace ESFA.DC.ILR.Desktop.Modules
             containerBuilder.RegisterType<ValidationServiceDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.ValidationService);
             containerBuilder.RegisterModule<ValidationServiceDesktopModule>();
 
+            containerBuilder.RegisterType<FundingServiceDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.FundingService);
+            containerBuilder.RegisterModule<FundingServiceDesktopModule>();
+
             containerBuilder.RegisterType<DataStoreDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.DataStore);
             containerBuilder.RegisterModule<DataStoreModule>();
 
@@ -49,8 +54,16 @@ namespace ESFA.DC.ILR.Desktop.Modules
 
             containerBuilder.RegisterType<PostProcessingDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.PostExecution);
 
+            containerBuilder.RegisterType<BuildMdbDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.MdbCreate);
+            containerBuilder.RegisterModule<BuildMdbModule>();
+
+            containerBuilder.RegisterType<MdbDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.MdbExport);
+            containerBuilder.RegisterModule<MdbModule>();
+
+            containerBuilder.RegisterType<PublishMdbDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.MdbPublish);
+
             containerBuilder.RegisterType<ContextMutatorExecutor>().As<IContextMutatorExecutor>();
-            containerBuilder.RegisterType<SchemaErrorContextMutator>().Keyed<IContextMutator>(ContextMutatorKeys.SchemaError);
+            containerBuilder.RegisterType<SchemaErrorContextMutator>().Keyed<IContextMutator>(ContextMutatorKeys.FileFailure);
         }
     }
 }

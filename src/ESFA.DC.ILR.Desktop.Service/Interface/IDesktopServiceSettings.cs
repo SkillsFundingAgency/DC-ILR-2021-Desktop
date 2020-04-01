@@ -9,6 +9,12 @@ namespace ESFA.DC.ILR.Desktop.Service.Interface
 
         string OutputDirectory { get; set; }
 
+        bool ExportToSql { get; set; }
+
+        bool ExportToAccessAndCsv { get; set; }
+
+        string ReferenceDataVersion { get; set; }
+
         Task SaveAsync(CancellationToken cancellationToken);
     }
 }
