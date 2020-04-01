@@ -26,7 +26,7 @@ stages:
       "Build.Platform": 'Any CPU'
       "Nuget.Feed": 'dct-pkg'  
       "Nuget.Version": '5.3.0'
-      "DotnetCore.Version": '2.2.x'
+      "DotnetCore.Version": '3.1.x'
       "Solution": 'src\**\*.sln'
 
     pool:
@@ -34,9 +34,6 @@ stages:
       demands:
       - BuildServer
       #- BuildServer
-      #- msbuild
-      #- visualstudio
-      #- vstest	  
       
     steps:
 #********************************************************************************
@@ -111,8 +108,9 @@ stages:
         noCache: true
 
     - task: MSBuild@1
-      displayName: 'Build solution **/*.sln'
+      displayName: 'Build solution'
       inputs:
+        msbuildVersion: 16.0
         msbuildArchitecture: x64
         solution: '$(Solution)'
         platform: '$(Build.Platform)'
