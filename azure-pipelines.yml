@@ -116,11 +116,11 @@ stages:
         platform: '$(Build.Platform)'
         configuration: '$(Build.Configuration)'
         msbuildArguments: '-p:version=$(Build.BuildNumber) -p:FileVersion=$(Build.BuildNumber) -p:SkipInvalidConfigurations=true'
-        clean: true
         maximumCpuCount: true
-        restoreNugetPackages: false
         logProjectEvents: true
         createLogFile: true	
+        #clean: true
+        
     
     - task: VSBuild@1
       enabled: false
