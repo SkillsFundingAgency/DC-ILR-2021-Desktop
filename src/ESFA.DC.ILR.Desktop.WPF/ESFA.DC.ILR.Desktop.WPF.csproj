@@ -181,10 +181,6 @@
       <Project>{5b8d9ec7-b8d5-4664-8028-1cf5bda0bc29}</Project>
       <Name>ESFA.DC.ILR.Desktop.CLI</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Interface\ESFA.DC.ILR.Desktop.Interface.csproj">
-      <Project>{2D75F514-A091-41BA-A8B0-87BB97BC0337}</Project>
-      <Name>ESFA.DC.ILR.Desktop.Interface</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Internal.Interface\ESFA.DC.ILR.Desktop.Internal.Interface.csproj">
       <Project>{1491AC45-D5B7-4240-A9E2-1267C5F59A03}</Project>
       <Name>ESFA.DC.ILR.Desktop.Internal.Interface</Name>
@@ -230,6 +226,9 @@
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.1920.DataStore.Desktop">
       <Version>0.0.561</Version>
+    </PackageReference>
+    <PackageReference Include="ESFA.DC.ILR.1920.Desktop.Interface">
+      <Version>1.0.4.8</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.1920.FileValidationService.Desktop">
       <Version>0.1.129</Version>
