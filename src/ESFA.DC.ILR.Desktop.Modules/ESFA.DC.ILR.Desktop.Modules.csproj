@@ -30,7 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Interface\ESFA.DC.ILR.Desktop.Interface.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Service\ESFA.DC.ILR.Desktop.Service.csproj" />
   </ItemGroup>
 
