@@ -35,7 +35,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         [Fact]
         public void CollectionYear()
         {
-            NewContext().KeyValuePairs["CollectionYear"].Should().Be("1920");
+            NewContext().KeyValuePairs["CollectionYear"].Should().Be("2021");
         }
 
         [Fact]
