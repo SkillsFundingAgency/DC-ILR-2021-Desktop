@@ -18,7 +18,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         {
             var url = "test";
             var versionNumber = "1.0.0.0";
-            var releaseDate = new DateTime(2019, 11, 10, 8, 0, 0);
+            var releaseDate = new DateTime(2020, 11, 10, 8, 0, 0);
             var versionSplit = versionNumber.Split('.');
             var major = Convert.ToInt32(versionSplit[0]);
             var minor = Convert.ToInt32(versionSplit[0]);
@@ -89,7 +89,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         {
             var url = "test";
             var versionNumber = "1.0.0.0";
-            var releaseDate = new DateTime(2019, 11, 10, 8, 0, 0);
+            var releaseDate = new DateTime(2020, 11, 10, 8, 0, 0);
             var versionSplit = versionNumber.Split('.');
             var major = Convert.ToInt32(versionSplit[0]);
             var minor = Convert.ToInt32(versionSplit[1]);

@@ -13,7 +13,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         {
             var url = "test";
             var versionNumber = "1.0.0.0";
-            var date = new DateTime(2019, 11, 10, 8, 0, 0);
+            var date = new DateTime(2020, 11, 10, 8, 0, 0);
 
             var applicationVersionResult = new ApplicationVersionResult
             {
@@ -68,7 +68,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         {
             var url = "test";
             var versionNumber = "1.0.0.0";
-            var date = new DateTime(2019, 11, 10, 8, 0, 0);
+            var date = new DateTime(2020, 11, 10, 8, 0, 0);
 
             var factory = new ApplicationVersionResultFactory();
 

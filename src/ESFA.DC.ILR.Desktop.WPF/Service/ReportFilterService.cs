@@ -11,7 +11,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.Service
     {
         private readonly ILifetimeScope _lifetimeScope;
 
-        private IEnumerable<IDesktopContextReportFilterQuery> _reportFilterQueries = new List<IDesktopContextReportFilterQuery>();
+        private IEnumerable<ESFA.DC.ILR.Desktop.Interface.IDesktopContextReportFilterQuery> _reportFilterQueries = new List<IDesktopContextReportFilterQuery>();
 
         public ReportFilterService(ILifetimeScope lifetimeScope)
         {
