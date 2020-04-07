@@ -8,10 +8,10 @@
     <PackageReference Include="Aspose.Cells" Version="19.9.0" />
     <PackageReference Include="Autofac" Version="5.1.2" />
     <PackageReference Include="ESFA.DC.DateTimeProvider" Version="0.1.6-beta0001" />
-    <PackageReference Include="ESFA.DC.FileService" Version="0.1.34-beta0001" />
-    <PackageReference Include="ESFA.DC.FileService.Interface" Version="0.1.34-beta0001" />
+    <PackageReference Include="ESFA.DC.FileService" Version="0.1.36-beta0001" />
+    <PackageReference Include="ESFA.DC.FileService.Interface" Version="0.1.35-beta0001" />
     <PackageReference Include="ESFA.DC.ILR.2021.DataStore.Desktop" Version="0.1.16" />
-    <PackageReference Include="ESFA.DC.ILR.2021.FileValidationService.Desktop" Version="0.1.24" />
+    <PackageReference Include="ESFA.DC.ILR.2021.FileValidationService.Desktop" Version="0.1.29" />
     <PackageReference Include="ESFA.DC.ILR.2021.FundingService.Desktop" Version="0.1.18" />
     <PackageReference Include="ESFA.DC.ILR.2021.ReferenceDataService.Desktop" Version="0.1.160" />
     <PackageReference Include="ESFA.DC.ILR.2021.ReportService.Desktop" Version="0.1.19" />

@@ -219,31 +219,31 @@
       <Version>0.1.6-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.FileService">
-      <Version>0.1.34-beta0001</Version>
+      <Version>0.1.36-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.FileService.Interface">
-      <Version>0.1.34-beta0001</Version>
+      <Version>0.1.35-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.DataStore.Desktop">
       <Version>0.1.16</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.FileValidationService.Desktop">
-      <Version>0.1.24</Version>
+      <Version>0.1.29</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.FundingService.Desktop">
       <Version>0.1.18</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.IO.Model.Validation">
-      <Version>0.1.0-beta0001</Version>
+      <Version>0.1.1-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.Model">
-      <Version>0.1.0-beta0001</Version>
+      <Version>0.1.1-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.Model.Interface">
       <Version>0.1.0-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.Model.Loose">
-      <Version>0.1.0-beta0001</Version>
+      <Version>0.1.1-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.ReferenceDataService.Desktop">
       <Version>0.1.160</Version>

@@ -14,7 +14,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.Service
         private const string ExportToSqlKey = "ExportToSQL";
         private const string ExportToAccessAndCsvKey = "ExportToAccessAndCsv";
         private const string ReferenceDataVersionKey = "ReferenceDataVersion";
-        private const string FundingInformationSystem = "Funding Information System 2019-20";
+        private const string FundingInformationSystem = "Funding Information System 2020-21";
 
         public string IlrDatabaseConnectionString { get; set; }
 
