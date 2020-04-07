@@ -11,7 +11,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         [Fact]
         public void Date()
         {
-            var date = "01/08/2019";
+            var date = "01/08/2020";
 
             var serviceConfigurationMock = new Mock<IServiceConfiguration>();
             serviceConfigurationMock.Setup(sc => sc.Configuration.ReferenceDataDate).Returns(date);

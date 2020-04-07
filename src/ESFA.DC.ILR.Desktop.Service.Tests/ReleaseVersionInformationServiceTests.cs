@@ -10,14 +10,14 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         [Fact]
         public void Date()
         {
-            NewService().Date.Should().BeEquivalentTo("01/08/2019");
+            NewService().Date.Should().BeEquivalentTo("01/08/2020");
         }
 
         private ReleaseVersionInformationService NewService()
         {
             var serviceConfigurationMock = new Mock<IServiceConfiguration>();
 
-            serviceConfigurationMock.Setup(sc => sc.Configuration.ReleaseDate).Returns("01/08/2019");
+            serviceConfigurationMock.Setup(sc => sc.Configuration.ReleaseDate).Returns("01/08/2020");
 
             return new ReleaseVersionInformationService(serviceConfigurationMock.Object);
         }

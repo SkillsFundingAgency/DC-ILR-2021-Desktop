@@ -23,7 +23,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
             int currentIncrement)
         {
             var versionNumber = "1.1.1.1";
-            var releaseDateTime = new DateTime(2019, 11, 19, 8, 0, 0);
+            var releaseDateTime = new DateTime(2020, 11, 19, 8, 0, 0);
             var url = "foo.com";
             var major = 1;
             var minor = 1;
@@ -96,7 +96,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
             int currentIncrement)
         {
             var versionNumber = "1.1.1.1";
-            var releaseDateTime = new DateTime(2019, 11, 19, 8, 0, 0);
+            var releaseDateTime = new DateTime(2020, 11, 19, 8, 0, 0);
             var url = "foo.com";
             var major = 1;
             var minor = 1;
@@ -161,7 +161,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         public async Task GetLatestApplicationVersion_Correctly_Returns_NewVersion_RefData()
         {
             var versionNumber = "1.1.1.1";
-            var releaseDateTime = new DateTime(2019, 11, 19, 8, 0, 0);
+            var releaseDateTime = new DateTime(2020, 11, 19, 8, 0, 0);
             var url = "foo.com";
             var major = 1;
             var minor = 1;

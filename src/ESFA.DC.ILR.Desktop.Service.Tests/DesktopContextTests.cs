@@ -13,7 +13,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         [Fact]
         public void DateTimeUtc()
         {
-            var dateTime = new DateTime(2019, 6, 1);
+            var dateTime = new DateTime(2020, 6, 1);
 
             NewContext(dateTime).DateTimeUtc.Should().Be(dateTime);
         }

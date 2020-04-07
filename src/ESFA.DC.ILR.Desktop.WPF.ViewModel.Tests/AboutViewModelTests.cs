@@ -25,7 +25,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
         public void AboutItems()
         {
             var referenceDataVersionInformationServiceMock = new Mock<IReferenceDataVersionInformationService>();
-            referenceDataVersionInformationServiceMock.SetupGet(x => x.Date).Returns(new DateTime(2019, 12, 25, 1, 2, 3).ToString());
+            referenceDataVersionInformationServiceMock.SetupGet(x => x.Date).Returns(new DateTime(2020, 12, 25, 1, 2, 3).ToString());
             referenceDataVersionInformationServiceMock.SetupGet(x => x.VersionNumber).Returns("123.123.123");
 
             var releaseVersionInformationServiceMock = new Mock<IReleaseVersionInformationService>();
@@ -39,7 +39,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
             viewModel.AboutItems[0].Value.Should().Be("123.123.123");
 
             viewModel.AboutItems[1].Key.Should().Be("Reference Data Date:");
-            viewModel.AboutItems[1].Value.Should().Be(new DateTime(2019, 12, 25, 1, 2, 3).ToString());
+            viewModel.AboutItems[1].Value.Should().Be(new DateTime(2020, 12, 25, 1, 2, 3).ToString());
         }
 
         private AboutViewModel NewViewModel(IReferenceDataVersionInformationService referenceDataVersionInformationService = null, IReleaseVersionInformationService releaseVersionInformationService = null)
