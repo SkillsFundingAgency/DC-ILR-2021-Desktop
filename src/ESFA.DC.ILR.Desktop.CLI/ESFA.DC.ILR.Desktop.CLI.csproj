@@ -72,9 +72,6 @@
     <PackageReference Include="commandlineparser">
       <Version>2.6.0</Version>
     </PackageReference>
-    <PackageReference Include="ESFA.DC.ILR.2021.Desktop.Interface">
-      <Version>0.1.0.1</Version>
-    </PackageReference>
     <PackageReference Include="ESFA.DC.Telemetry">
       <Version>0.1.10-beta0001</Version>
     </PackageReference>
@@ -89,6 +86,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Interface\ESFA.DC.ILR.Desktop.Interface.csproj">
+      <Project>{2d75f514-a091-41ba-a8b0-87bb97bc0337}</Project>
+      <Name>ESFA.DC.ILR.Desktop.Interface</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Internal.Interface\ESFA.DC.ILR.Desktop.Internal.Interface.csproj">
       <Project>{1491AC45-D5B7-4240-A9E2-1267C5F59A03}</Project>
       <Name>ESFA.DC.ILR.Desktop.Internal.Interface</Name>
