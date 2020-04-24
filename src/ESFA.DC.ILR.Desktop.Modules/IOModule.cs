@@ -1,4 +1,8 @@
 ﻿using Autofac;
+using ESFA.DC.CsvService;
+using ESFA.DC.CsvService.Interface;
+using ESFA.DC.ExcelService;
+using ESFA.DC.ExcelService.Interface;
 using ESFA.DC.FileService;
 using ESFA.DC.FileService.Interface;
 using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
@@ -20,6 +24,8 @@ namespace ESFA.DC.ILR.Desktop.Modules
                 .As<IKeyValuePersistenceService>()
                 .As<IStreamableKeyValuePersistenceService>();
 
+            containerBuilder.RegisterType<CsvFileService>().As<ICsvFileService>();
+            containerBuilder.RegisterType<ExcelFileService>().As<IExcelFileService>();
             containerBuilder.RegisterType<ZipArchiveService>().As<IZipArchiveService>();
 
             var fileSystemKeyValuePersistenceServiceConfiguration = new FileSystemKeyValuePersistenceServiceConfig()
