@@ -11,6 +11,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
         private string Reports = string.Join(
             "|",
             ReportTaskNameConstants.ValidationReport,
+            ReportTaskNameConstants.RuleViolationSummaryReport,
             //ReportTaskNameConstants.FundingSummaryReport,
             //ReportTaskNameConstants.MainOccupancyReport,
             //ReportTaskNameConstants.AllbOccupancyReport,
@@ -27,7 +28,6 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
             //ReportTaskNameConstants.SummaryOfFm35FundingReport,
             //ReportTaskNameConstants.AdultFundingClaimReport,
             //ReportTaskNameConstants.CommunityLearningReport,
-            //ReportTaskNameConstants.RuleViolationSummaryReport
 
         public DesktopContext(
             DateTime dateTime,
