@@ -13,7 +13,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
             ReportTaskNameConstants.ValidationReport,
             ReportTaskNameConstants.RuleViolationSummaryReport,
             //ReportTaskNameConstants.FundingSummaryReport,
-            //ReportTaskNameConstants.MainOccupancyReport,
+            ReportTaskNameConstants.MainOccupancyReport,
             //ReportTaskNameConstants.AllbOccupancyReport,
             //ReportTaskNameConstants.DevolvedAdultEducationFundingSummaryReport,
             //ReportTaskNameConstants.DevolvedAdultEducationOccupancyReport,
