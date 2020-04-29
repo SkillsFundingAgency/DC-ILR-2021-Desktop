@@ -14,20 +14,20 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
             ReportTaskNameConstants.RuleViolationSummaryReport,
             //ReportTaskNameConstants.FundingSummaryReport,
             ReportTaskNameConstants.MainOccupancyReport,
-            //ReportTaskNameConstants.AllbOccupancyReport,
-            //ReportTaskNameConstants.DevolvedAdultEducationFundingSummaryReport,
-            //ReportTaskNameConstants.DevolvedAdultEducationOccupancyReport,
+            ReportTaskNameConstants.AllbOccupancyReport,
+            ReportTaskNameConstants.DevolvedAdultEducationFundingSummaryReport,
+            ReportTaskNameConstants.DevolvedAdultEducationOccupancyReport,
             ReportTaskNameConstants.TrailblazerAppsOccupancyReport,
             ReportTaskNameConstants.TrailblazerEmployerIncentivesReport,
             //ReportTaskNameConstants.AppsIndicativeEarningsReport,
             ReportTaskNameConstants.SummaryOfFundingByStudentReport,
             ReportTaskNameConstants.MathsAndEnglishReport,
-            ReportTaskNameConstants.HNSReport);
+            ReportTaskNameConstants.HNSReport,
+            ReportTaskNameConstants.SummaryOfFm35FundingReport,
+            ReportTaskNameConstants.CommunityLearningReport);
             //ReportTaskNameConstants.HNSSummaryReport,
             //ReportTaskNameConstants.FundingClaim1619Report,
-            //ReportTaskNameConstants.SummaryOfFm35FundingReport,
             //ReportTaskNameConstants.AdultFundingClaimReport,
-            //ReportTaskNameConstants.CommunityLearningReport,
 
         public DesktopContext(
             DateTime dateTime,
@@ -73,6 +73,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
                 [ILRContextKeys.FundingFm70Output] = "FundingFm70Output.json",
                 [ILRContextKeys.FundingFm81Output] = "FundingFm81Output.json",
                 [ILRContextKeys.ServiceReleaseVersion] = releaseVersion,
+                [ILRContextKeys.EasReportingFilename] = "N/A",
             };
             ReportFilterQueries = reportFilterQueries;
         }
