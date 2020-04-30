@@ -17,8 +17,8 @@
     <PackageReference Include="ESFA.DC.ILR.2021.FundingService.Desktop" Version="0.1.38" />
     <PackageReference Include="ESFA.DC.ILR.2021.ReferenceDataService.Desktop" Version="0.1.189" />
     <PackageReference Include="ESFA.DC.ILR.2021.ReferenceDataService.Model" Version="0.1.189" />
-    <PackageReference Include="ESFA.DC.ILR.2021.ReportService.Desktop" Version="0.1.62" />
-    <PackageReference Include="ESFA.DC.ILR.2021.ValidationService.Desktop" Version="0.1.19" />
+    <PackageReference Include="ESFA.DC.ILR.2021.ReportService.Desktop" Version="0.1.106" />
+    <PackageReference Include="ESFA.DC.ILR.2021.ValidationService.Desktop" Version="0.1.67" />
     <PackageReference Include="ESFA.DC.IO.FileSystem" Version="0.1.36-beta0001" />
     <PackageReference Include="ESFA.DC.IO.Interfaces" Version="0.1.37-beta0001" />
     <PackageReference Include="ESFA.DC.Jobs.Model" Version="0.2.67-beta0001" />
