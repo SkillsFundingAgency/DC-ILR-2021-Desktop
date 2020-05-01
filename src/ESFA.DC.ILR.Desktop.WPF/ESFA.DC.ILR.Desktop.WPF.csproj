@@ -244,16 +244,16 @@
       <Version>0.1.38</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.IO.Model.Validation">
-      <Version>0.1.1-beta0001</Version>
+      <Version>0.1.2-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.Model">
-      <Version>0.1.1-beta0001</Version>
+      <Version>0.1.2-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.Model.Interface">
-      <Version>0.1.0-beta0001</Version>
+      <Version>0.1.2-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.Model.Loose">
-      <Version>0.1.1-beta0001</Version>
+      <Version>0.1.2-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.ReferenceDataService.Desktop">
       <Version>0.1.189</Version>
@@ -262,10 +262,10 @@
       <Version>0.1.189</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.ReportService.Desktop">
-      <Version>0.1.62</Version>
+      <Version>0.1.106</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.ValidationService.Desktop">
-      <Version>0.1.19</Version>
+      <Version>0.1.67</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.IO.FileSystem">
       <Version>0.1.36-beta0001</Version>

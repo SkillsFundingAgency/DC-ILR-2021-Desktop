@@ -24,10 +24,10 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
             ReportTaskNameConstants.MathsAndEnglishReport,
             ReportTaskNameConstants.HNSReport,
             ReportTaskNameConstants.SummaryOfFm35FundingReport,
-            ReportTaskNameConstants.CommunityLearningReport);
+            ReportTaskNameConstants.CommunityLearningReport,
             //ReportTaskNameConstants.HNSSummaryReport,
             //ReportTaskNameConstants.FundingClaim1619Report,
-            //ReportTaskNameConstants.AdultFundingClaimReport,
+            ReportTaskNameConstants.AdultFundingClaimReport);
 
         public DesktopContext(
             DateTime dateTime,
