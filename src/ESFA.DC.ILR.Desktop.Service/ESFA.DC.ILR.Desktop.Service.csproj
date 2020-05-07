@@ -19,11 +19,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ReferenceData\FISReferenceData.0.1.166.202004231603.zip" />
+    <None Remove="ReferenceData\FISReferenceData.0.1.206.202005061915.zip" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="ReferenceData\FISReferenceData.0.1.166.202004231603.zip">
+    <Content Include="ReferenceData\FISReferenceData.0.1.206.202005061915.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -34,7 +34,7 @@
     <PackageReference Include="ESFA.DC.DateTimeProvider.Interface" Version="0.1.6-beta0001" />
     <PackageReference Include="ESFA.DC.FileService" Version="0.1.36-beta0001" />
     <PackageReference Include="ESFA.DC.FileService.Interface" Version="0.1.35-beta0001" />
-    <PackageReference Include="ESFA.DC.ILR.2021.Constants" Version="0.1.2-beta0001" />
+    <PackageReference Include="ESFA.DC.ILR.2021.Constants" Version="0.1.3-beta0001" />
     <PackageReference Include="ESFA.DC.Logging.Interfaces" Version="0.1.10-beta0001" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.2.6" />
