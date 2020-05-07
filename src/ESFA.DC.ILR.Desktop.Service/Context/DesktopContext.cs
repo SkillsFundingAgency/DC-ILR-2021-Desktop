@@ -12,7 +12,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
             "|",
             ReportTaskNameConstants.ValidationReport,
             ReportTaskNameConstants.RuleViolationSummaryReport,
-            //ReportTaskNameConstants.FundingSummaryReport,
+            ReportTaskNameConstants.FundingSummaryReport,
             ReportTaskNameConstants.MainOccupancyReport,
             ReportTaskNameConstants.AllbOccupancyReport,
             ReportTaskNameConstants.DevolvedAdultEducationFundingSummaryReport,
@@ -25,8 +25,8 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
             ReportTaskNameConstants.HNSReport,
             ReportTaskNameConstants.SummaryOfFm35FundingReport,
             ReportTaskNameConstants.CommunityLearningReport,
-            //ReportTaskNameConstants.HNSSummaryReport,
-            //ReportTaskNameConstants.FundingClaim1619Report,
+            ReportTaskNameConstants.HNSSummaryReport,
+            ReportTaskNameConstants.FundingClaim1619Report,
             ReportTaskNameConstants.AdultFundingClaimReport);
 
         public DesktopContext(
@@ -73,7 +73,6 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
                 [ILRContextKeys.FundingFm70Output] = "FundingFm70Output.json",
                 [ILRContextKeys.FundingFm81Output] = "FundingFm81Output.json",
                 [ILRContextKeys.ServiceReleaseVersion] = releaseVersion,
-                [ILRContextKeys.EasReportingFilename] = "N/A",
             };
             ReportFilterQueries = reportFilterQueries;
         }
