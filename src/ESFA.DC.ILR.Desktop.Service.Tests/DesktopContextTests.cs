@@ -122,7 +122,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
             NewContext().KeyValuePairs["FM35"].Should().Be("FM35");
         }
 
-        [Fact]
+        [Fact(Skip = "Temporarily Removed")]
         public void FundingTaskFM36()
         {
             NewContext().KeyValuePairs["FM36"].Should().Be("FM36");
@@ -189,7 +189,8 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         [Fact]
         public void KeyValuePairsCount()
         {
-            NewContext().KeyValuePairs.Should().HaveCount(28);
+            // FM36 calc removed
+            NewContext().KeyValuePairs.Should().HaveCount(27);
         }
 
         [Fact]
