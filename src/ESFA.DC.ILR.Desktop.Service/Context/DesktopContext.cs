@@ -63,7 +63,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
                 [ILRContextKeys.FundingTaskALB] = "ALB",
                 [ILRContextKeys.FundingTaskFM25] = "FM25",
                 [ILRContextKeys.FundingTaskFM35] = "FM35",
-                [ILRContextKeys.FundingTaskFM36] = "FM36",
+                //[ILRContextKeys.FundingTaskFM36] = "FM36",
                 [ILRContextKeys.FundingTaskFM70] = "FM70",
                 [ILRContextKeys.FundingTaskFM81] = "FM81",
                 [ILRContextKeys.FundingAlbOutput] = "FundingAlbOutput.json",
