@@ -14,7 +14,7 @@
     <PackageReference Include="ESFA.DC.FileService.Interface" Version="0.1.39-beta0001" />
     <PackageReference Include="ESFA.DC.ILR.2021.DataStore.Desktop" Version="0.1.70" />
     <PackageReference Include="ESFA.DC.ILR.2021.FileValidationService.Desktop" Version="0.1.29" />
-    <PackageReference Include="ESFA.DC.ILR.2021.FundingService.Desktop" Version="0.1.52" />
+    <PackageReference Include="ESFA.DC.ILR.2021.FundingService.Desktop" Version="0.1.60" />
     <PackageReference Include="ESFA.DC.ILR.2021.ReferenceDataService.Desktop" Version="0.1.226" />
     <PackageReference Include="ESFA.DC.ILR.2021.ReferenceDataService.Model" Version="0.1.226" />
     <PackageReference Include="ESFA.DC.ILR.2021.ReportService.Desktop" Version="0.1.154" />
