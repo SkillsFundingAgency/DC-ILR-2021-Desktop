@@ -35,7 +35,7 @@ namespace ESFA.DC.ILR.Desktop.Service
 
                     if (module != null)
                     {
-                        c.RegisterModule(module.Invoke());
+                        c.RegisterModule(module());
                     }
                 }))
             {
