@@ -29,6 +29,32 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
             ReportTaskNameConstants.FundingClaim1619Report,
             ReportTaskNameConstants.AdultFundingClaimReport);
 
+        private string DataStore = string.Join(
+            "|",
+            DataStoreTaskNameConstants.TaskStoreALBTables,
+            DataStoreTaskNameConstants.TaskStoreFM25Tables,
+            DataStoreTaskNameConstants.TaskStoreFM35Tables,
+            //DataStoreTaskNameConstants.TaskStoreFM36Tables,
+            DataStoreTaskNameConstants.TaskStoreFM70Tables,
+            DataStoreTaskNameConstants.TaskStoreFM81Tables,
+            DataStoreTaskNameConstants.TaskStoreInvalidTables,
+            DataStoreTaskNameConstants.TaskStoreValidTables,
+            DataStoreTaskNameConstants.TaskStoreValidationTables);
+
+        private string MdbExport = string.Join(
+            "|",
+            ExportTaskNameConstants.TaskExportAlbTables,
+            ExportTaskNameConstants.TaskExportDVTables,
+            ExportTaskNameConstants.TaskExportEsfTables,
+            ExportTaskNameConstants.TaskExportFM25FM35Tables,
+            ExportTaskNameConstants.TaskExportFM25Tables,
+            ExportTaskNameConstants.TaskExportFM35Tables,
+            //ExportTaskNameConstants.TaskExportFM36Tables,
+            ExportTaskNameConstants.TaskExportInvalidTables,
+            ExportTaskNameConstants.TaskExportTblTables,
+            ExportTaskNameConstants.TaskExportValidTables,
+            ExportTaskNameConstants.TaskExportValidationErrorTable);
+
         public DesktopContext(
             DateTime dateTime,
             string outputDirectory,
@@ -57,7 +83,8 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
                 [ILRContextKeys.ValidationErrorLookups] = "ValidationErrorLookups.json",
                 [ILRContextKeys.ReportOutputFileNames] = string.Empty,
                 [ILRContextKeys.ReportTasks] = Reports,
-
+                [ILRContextKeys.DataStoreTasks] = DataStore,
+                [ILRContextKeys.ExportTasks] = MdbExport,
                 [ILRContextKeys.ReferenceDataFilename] = Path.Combine(executingAssemblyPath, referenceDataFile),
 
                 [ILRContextKeys.FundingTaskALB] = "ALB",
