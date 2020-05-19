@@ -190,7 +190,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         public void KeyValuePairsCount()
         {
             // FM36 calc removed
-            NewContext().KeyValuePairs.Should().HaveCount(27);
+            NewContext().KeyValuePairs.Should().HaveCount(29);
         }
 
         [Fact]
