@@ -19,7 +19,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
             ReportTaskNameConstants.DevolvedAdultEducationOccupancyReport,
             ReportTaskNameConstants.TrailblazerAppsOccupancyReport,
             ReportTaskNameConstants.TrailblazerEmployerIncentivesReport,
-            //ReportTaskNameConstants.AppsIndicativeEarningsReport,
+            ReportTaskNameConstants.AppsIndicativeEarningsReport,
             ReportTaskNameConstants.SummaryOfFundingByStudentReport,
             ReportTaskNameConstants.MathsAndEnglishReport,
             ReportTaskNameConstants.HNSReport,
