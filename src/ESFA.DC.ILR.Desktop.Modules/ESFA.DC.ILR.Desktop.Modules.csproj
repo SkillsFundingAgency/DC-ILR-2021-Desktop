@@ -12,16 +12,16 @@
     <PackageReference Include="ESFA.DC.ExcelService" Version="0.1.39-beta0001" />
     <PackageReference Include="ESFA.DC.FileService" Version="0.1.39-beta0001" />
     <PackageReference Include="ESFA.DC.FileService.Interface" Version="0.1.39-beta0001" />
-    <PackageReference Include="ESFA.DC.ILR.2021.DataStore.Desktop" Version="0.1.117" />
+    <PackageReference Include="ESFA.DC.ILR.2021.DataStore.Desktop" Version="0.1.122" />
     <PackageReference Include="ESFA.DC.ILR.2021.FileValidationService.Desktop" Version="0.1.29" />
-    <PackageReference Include="ESFA.DC.ILR.2021.FundingService.Desktop" Version="0.1.67" />
-    <PackageReference Include="ESFA.DC.ILR.2021.ReferenceDataService.Desktop" Version="0.1.226" />
-    <PackageReference Include="ESFA.DC.ILR.2021.ReferenceDataService.Model" Version="0.1.226" />
-    <PackageReference Include="ESFA.DC.ILR.2021.ReportService.Desktop" Version="0.1.164" />
-    <PackageReference Include="ESFA.DC.ILR.2021.ValidationService.Desktop" Version="0.1.113" />
+    <PackageReference Include="ESFA.DC.ILR.2021.FundingService.Desktop" Version="0.1.73" />
+    <PackageReference Include="ESFA.DC.ILR.2021.ReferenceDataService.Desktop" Version="0.1.234" />
+    <PackageReference Include="ESFA.DC.ILR.2021.ReferenceDataService.Model" Version="0.1.234" />
+    <PackageReference Include="ESFA.DC.ILR.2021.ReportService.Desktop" Version="0.1.184" />
+    <PackageReference Include="ESFA.DC.ILR.2021.ValidationService.Desktop" Version="0.1.202" />
     <PackageReference Include="ESFA.DC.IO.FileSystem" Version="0.1.39-beta0001" />
     <PackageReference Include="ESFA.DC.IO.Interfaces" Version="0.1.39-beta0001" />
-    <PackageReference Include="ESFA.DC.Jobs.Model" Version="0.2.74-beta0001" />
+    <PackageReference Include="ESFA.DC.Jobs.Model" Version="0.2.75-beta0001" />
     <PackageReference Include="ESFA.DC.Logging.Interfaces" Version="0.1.10-beta0001" />
     <PackageReference Include="ESFA.DC.Serialization.Interfaces" Version="0.1.39-beta0001" />
     <PackageReference Include="ESFA.DC.Serialization.Json" Version="0.1.39-beta0001" />

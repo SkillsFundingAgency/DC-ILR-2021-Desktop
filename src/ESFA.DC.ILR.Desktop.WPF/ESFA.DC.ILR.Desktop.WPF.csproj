@@ -235,13 +235,13 @@
       <Version>0.1.39-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.DataStore.Desktop">
-      <Version>0.1.117</Version>
+      <Version>0.1.122</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.FileValidationService.Desktop">
       <Version>0.1.29</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.FundingService.Desktop">
-      <Version>0.1.67</Version>
+      <Version>0.1.73</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.IO.Model.Validation">
       <Version>0.1.4-beta0001</Version>
@@ -256,16 +256,16 @@
       <Version>0.1.4-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.ReferenceDataService.Desktop">
-      <Version>0.1.226</Version>
+      <Version>0.1.234</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.ReferenceDataService.Model">
-      <Version>0.1.226</Version>
+      <Version>0.1.234</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.ReportService.Desktop">
-      <Version>0.1.164</Version>
+      <Version>0.1.184</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.ValidationService.Desktop">
-      <Version>0.1.113</Version>
+      <Version>0.1.202</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.IO.FileSystem">
       <Version>0.1.39-beta0001</Version>
@@ -274,7 +274,7 @@
       <Version>0.1.39-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.Jobs.Model">
-      <Version>0.2.74-beta0001</Version>
+      <Version>0.2.75-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.Logging.Interfaces">
       <Version>0.1.10-beta0001</Version>
