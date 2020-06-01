@@ -41,7 +41,20 @@
             <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding IlrDatabaseConnectionString}" Margin="2" Visibility="{Binding ExportToSql, Converter={StaticResource BooleanToVisibilityConverter}}" IsReadOnly="{Binding ConnectionStringTestInProgress}"/>
             <Button Grid.Row="2" Grid.Column="2" Content="Test" VerticalAlignment="Center" Command="{Binding TestConnectionStringCommand}" Visibility="{Binding ExportToSql, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
-            <TextBlock Grid.Row="3" Grid.Column="1" Visibility="{Binding ConnectionStringTested, Converter={StaticResource BooleanToVisibilityConverter}}" Text="{Binding ConnectionStringTestFeedback}" TextWrapping="Wrap"/>
+            <TextBlock Grid.Row="3" Grid.Column="1" Visibility="{Binding ConnectionStringTested, Converter={StaticResource BooleanToVisibilityConverter}}" Text="{Binding ConnectionStringTestFeedback}" TextWrapping="Wrap">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ConnectionStringError}"
+                                         Value="True">
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="Foreground" Value="Red" />
+                            </DataTrigger>
+
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
 
             <Label Grid.Row="4" Content="Export to Access and CSV:" VerticalAlignment="Center"/>
             <CheckBox Grid.Row="4" Grid.Column="1" Content="(Optional)" Margin="2" VerticalAlignment="Center" IsChecked="{Binding ExportToAccessAndCsv}"/>
