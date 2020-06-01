@@ -24,6 +24,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
         private bool _exportToAccessAndCsv;
         private string _connectionStringTestFeedback;
         private bool _connectionStringTested;
+        private bool _connectionStringError;
         private bool _connectionStringTestInProgress;
 
         public SettingsViewModel(
@@ -108,6 +109,12 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             set { Set(ref _connectionStringTested, value); }
         }
 
+        public bool ConnectionStringError
+        {
+            get => _connectionStringError;
+            set { Set(ref _connectionStringError, value); }
+        }
+
         public bool ConnectionStringTestInProgress
         {
             get => _connectionStringTestInProgress;
@@ -167,11 +174,13 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
 
                 if (result)
                 {
+                    ConnectionStringError = false;
                     ConnectionStringTestFeedback = ConnectionStringTestSuccess;
                 }
             }
             catch (Exception exception)
             {
+                ConnectionStringError = true;
                 ConnectionStringTestFeedback = exception.Message;
             }
             finally
