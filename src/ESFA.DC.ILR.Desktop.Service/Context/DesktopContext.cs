@@ -27,7 +27,8 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
             ReportTaskNameConstants.CommunityLearningReport,
             ReportTaskNameConstants.HNSSummaryReport,
             ReportTaskNameConstants.FundingClaim1619Report,
-            ReportTaskNameConstants.AdultFundingClaimReport);
+            ReportTaskNameConstants.AdultFundingClaimReport,
+            ReportTaskNameConstants.AebStfiInitiativesOccupancyReport);
 
         private string DataStore = string.Join(
             "|",
