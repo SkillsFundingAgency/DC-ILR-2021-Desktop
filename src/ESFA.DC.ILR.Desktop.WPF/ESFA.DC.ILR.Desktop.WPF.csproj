@@ -241,7 +241,7 @@
       <Version>0.1.29</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.FundingService.Desktop">
-      <Version>0.1.73</Version>
+      <Version>0.1.82</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.IO.Model.Validation">
       <Version>0.1.4-beta0001</Version>
@@ -262,7 +262,7 @@
       <Version>0.1.246</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.ReportService.Desktop">
-      <Version>0.1.219</Version>
+      <Version>0.1.240</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.ValidationService.Desktop">
       <Version>0.1.291</Version>
