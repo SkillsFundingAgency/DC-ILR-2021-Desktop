@@ -32,7 +32,7 @@
     <PackageReference Include="Autofac" Version="5.1.2" />
     <PackageReference Include="EntityFrameworkCore.Jet" Version="2.2.0" />
     <PackageReference Include="ESFA.DC.DateTimeProvider.Interface" Version="0.1.6-beta0001" />
-    <PackageReference Include="ESFA.DC.FileService" Version="0.1.39-beta0001" />
+    <PackageReference Include="ESFA.DC.FileService" Version="0.1.40-beta0001" />
     <PackageReference Include="ESFA.DC.FileService.Interface" Version="0.1.39-beta0001" />
     <PackageReference Include="ESFA.DC.ILR.2021.Constants" Version="0.1.4-beta0001" />
     <PackageReference Include="ESFA.DC.Logging.Interfaces" Version="0.1.10-beta0001" />
