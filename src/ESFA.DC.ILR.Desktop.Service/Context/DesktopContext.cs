@@ -27,15 +27,15 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
             ReportTaskNameConstants.CommunityLearningReport,
             ReportTaskNameConstants.HNSSummaryReport,
             ReportTaskNameConstants.FundingClaim1619Report,
-            ReportTaskNameConstants.AdultFundingClaimReport,
-            ReportTaskNameConstants.AebStfiInitiativesOccupancyReport);
+            ReportTaskNameConstants.AdultFundingClaimReport);
+           // ReportTaskNameConstants.AebStfiInitiativesOccupancyReport);
 
         private string DataStore = string.Join(
             "|",
             DataStoreTaskNameConstants.TaskStoreALBTables,
             DataStoreTaskNameConstants.TaskStoreFM25Tables,
             DataStoreTaskNameConstants.TaskStoreFM35Tables,
-            //DataStoreTaskNameConstants.TaskStoreFM36Tables,
+            DataStoreTaskNameConstants.TaskStoreFM36Tables,
             DataStoreTaskNameConstants.TaskStoreFM70Tables,
             DataStoreTaskNameConstants.TaskStoreFM81Tables,
             DataStoreTaskNameConstants.TaskStoreInvalidTables,
@@ -50,7 +50,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
             ExportTaskNameConstants.TaskExportFM25FM35Tables,
             ExportTaskNameConstants.TaskExportFM25Tables,
             ExportTaskNameConstants.TaskExportFM35Tables,
-            //ExportTaskNameConstants.TaskExportFM36Tables,
+            ExportTaskNameConstants.TaskExportFM36Tables,
             ExportTaskNameConstants.TaskExportInvalidTables,
             ExportTaskNameConstants.TaskExportTblTables,
             ExportTaskNameConstants.TaskExportValidTables,
@@ -91,7 +91,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
                 [ILRContextKeys.FundingTaskALB] = "ALB",
                 [ILRContextKeys.FundingTaskFM25] = "FM25",
                 [ILRContextKeys.FundingTaskFM35] = "FM35",
-                //[ILRContextKeys.FundingTaskFM36] = "FM36",
+                [ILRContextKeys.FundingTaskFM36] = "FM36",
                 [ILRContextKeys.FundingTaskFM70] = "FM70",
                 [ILRContextKeys.FundingTaskFM81] = "FM81",
                 [ILRContextKeys.FundingAlbOutput] = "FundingAlbOutput.json",
