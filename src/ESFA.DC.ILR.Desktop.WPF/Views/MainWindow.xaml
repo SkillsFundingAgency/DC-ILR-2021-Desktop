@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
-        Title="Funding Information System (FIS) Funding Year 2019-2020" 
+        Title="Funding Information System (FIS) Funding Year 2020-2021" 
         Height="450" 
         Width="800" 
         WindowStartupLocation="CenterScreen"

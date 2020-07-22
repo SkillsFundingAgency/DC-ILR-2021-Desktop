@@ -22,5 +22,6 @@
         public const string AdultFundingClaimReport = "TaskGenerateAdultFundingClaimReport";
         public const string RuleViolationSummaryReport = "TaskGenerateRuleViolationSummaryReport";
         public const string CommunityLearningReport = "TaskGenerateCommunityLearningReport";
+        public const string AebStfiInitiativesOccupancyReport = "TaskGenerateAEBSTFInitiativesOccupancyReport";
     }
 }

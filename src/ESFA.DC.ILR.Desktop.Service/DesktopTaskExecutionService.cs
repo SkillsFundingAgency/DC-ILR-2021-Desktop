@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using System;
+using System.Collections.Immutable;
+using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using ESFA.DC.ILR.Desktop.Interface;
@@ -10,10 +12,12 @@ namespace ESFA.DC.ILR.Desktop.Service
     public class DesktopTaskExecutionService : IDesktopTaskExecutionService
     {
         private readonly ILifetimeScope _lifetimeScope;
+        private readonly IImmutableDictionary<IlrDesktopTaskKeys, Func<Module>> _keyedModules;
 
-        public DesktopTaskExecutionService(ILifetimeScope lifetimeScope)
+        public DesktopTaskExecutionService(ILifetimeScope lifetimeScope, IImmutableDictionary<IlrDesktopTaskKeys, Func<Module>> keyedModules)
         {
             _lifetimeScope = lifetimeScope;
+            _keyedModules = keyedModules;
         }
 
         public async Task<IDesktopContext> ExecuteAsync(IlrDesktopTaskKeys ilrDesktopTaskKey, IDesktopContext desktopContext, CancellationToken cancellationToken)
@@ -25,7 +29,15 @@ namespace ESFA.DC.ILR.Desktop.Service
 
         private async Task<IDesktopContext> ExecuteAsyncAction(IlrDesktopTaskKeys ilrDesktopTaskKey, IDesktopContext desktopContext, CancellationToken cancellationToken)
         {
-            using (var executionLifetimeScope = _lifetimeScope.BeginLifetimeScope())
+            using (var executionLifetimeScope = _lifetimeScope.BeginLifetimeScope(c =>
+                {
+                    _keyedModules.TryGetValue(ilrDesktopTaskKey, out var module);
+
+                    if (module != null)
+                    {
+                        c.RegisterModule(module());
+                    }
+                }))
             {
                 return await executionLifetimeScope
                     .ResolveKeyed<IDesktopTask>(ilrDesktopTaskKey)

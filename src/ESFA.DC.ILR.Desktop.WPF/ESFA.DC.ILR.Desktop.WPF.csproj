@@ -40,6 +40,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>3</WarningLevel>
     <CodeAnalysisRuleSet>ESFA.DC.ILR.Desktop.WPF.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -182,7 +183,7 @@
       <Name>ESFA.DC.ILR.Desktop.CLI</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Interface\ESFA.DC.ILR.Desktop.Interface.csproj">
-      <Project>{2D75F514-A091-41BA-A8B0-87BB97BC0337}</Project>
+      <Project>{2d75f514-a091-41ba-a8b0-87bb97bc0337}</Project>
       <Name>ESFA.DC.ILR.Desktop.Interface</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Internal.Interface\ESFA.DC.ILR.Desktop.Internal.Interface.csproj">
@@ -219,56 +220,62 @@
     <PackageReference Include="CommonServiceLocator">
       <Version>2.0.5</Version>
     </PackageReference>
+    <PackageReference Include="ESFA.DC.CsvService">
+      <Version>0.1.40-beta0001</Version>
+    </PackageReference>
     <PackageReference Include="ESFA.DC.DateTimeProvider">
       <Version>0.1.6-beta0001</Version>
     </PackageReference>
+    <PackageReference Include="ESFA.DC.ExcelService">
+      <Version>0.1.40-beta0001</Version>
+    </PackageReference>
     <PackageReference Include="ESFA.DC.FileService">
-      <Version>0.1.34-beta0001</Version>
+      <Version>0.1.40-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.FileService.Interface">
-      <Version>0.1.34-beta0001</Version>
+      <Version>0.1.39-beta0001</Version>
     </PackageReference>
-    <PackageReference Include="ESFA.DC.ILR.1920.DataStore.Desktop">
-      <Version>0.0.561</Version>
+    <PackageReference Include="ESFA.DC.ILR.2021.DataStore.Desktop">
+      <Version>0.1.154</Version>
     </PackageReference>
-    <PackageReference Include="ESFA.DC.ILR.1920.FileValidationService.Desktop">
-      <Version>0.1.129</Version>
+    <PackageReference Include="ESFA.DC.ILR.2021.FileValidationService.Desktop">
+      <Version>0.1.29</Version>
     </PackageReference>
-    <PackageReference Include="ESFA.DC.ILR.1920.FundingService.Desktop">
-      <Version>0.0.292</Version>
+    <PackageReference Include="ESFA.DC.ILR.2021.FundingService.Desktop">
+      <Version>0.1.119</Version>
     </PackageReference>
-    <PackageReference Include="ESFA.DC.ILR.1920.IO.Model.Validation">
-      <Version>0.2.1-beta0001</Version>
-    </PackageReference>
-    <PackageReference Include="ESFA.DC.ILR.1920.Model">
-      <Version>0.2.1-beta0001</Version>
-    </PackageReference>
-    <PackageReference Include="ESFA.DC.ILR.1920.Model.Interface">
+    <PackageReference Include="ESFA.DC.ILR.2021.IO.Model.Validation">
       <Version>0.1.4-beta0001</Version>
     </PackageReference>
-    <PackageReference Include="ESFA.DC.ILR.1920.Model.Loose">
-      <Version>0.2.1-beta0001</Version>
+    <PackageReference Include="ESFA.DC.ILR.2021.Model">
+      <Version>0.1.4-beta0001</Version>
     </PackageReference>
-    <PackageReference Include="ESFA.DC.ILR.1920.ReportService.Desktop">
-      <Version>0.0.1133</Version>
+    <PackageReference Include="ESFA.DC.ILR.2021.Model.Interface">
+      <Version>0.1.4-beta0001</Version>
     </PackageReference>
-    <PackageReference Include="ESFA.DC.ILR.1920.ValidationService.Desktop">
-      <Version>0.0.1405</Version>
+    <PackageReference Include="ESFA.DC.ILR.2021.Model.Loose">
+      <Version>0.1.4-beta0001</Version>
     </PackageReference>
-    <PackageReference Include="ESFA.DC.ILR1920.ReferenceDataService.Desktop">
-      <Version>0.1.35</Version>
+    <PackageReference Include="ESFA.DC.ILR.2021.ReferenceDataService.Desktop">
+      <Version>0.1.279</Version>
     </PackageReference>
-    <PackageReference Include="ESFA.DC.ILR1920.ReferenceDataService.Model">
-      <Version>0.1.35</Version>
+    <PackageReference Include="ESFA.DC.ILR.2021.ReferenceDataService.Model">
+      <Version>0.1.279</Version>
+    </PackageReference>
+    <PackageReference Include="ESFA.DC.ILR.2021.ReportService.Desktop">
+      <Version>0.1.327</Version>
+    </PackageReference>
+    <PackageReference Include="ESFA.DC.ILR.2021.ValidationService.Desktop">
+      <Version>0.1.436</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.IO.FileSystem">
-      <Version>0.1.34-beta0001</Version>
+      <Version>0.1.40-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.IO.Interfaces">
-      <Version>0.1.34-beta0001</Version>
+      <Version>0.1.39-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.Jobs.Model">
-      <Version>0.2.63-beta0001</Version>
+      <Version>0.2.76-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.Logging.Interfaces">
       <Version>0.1.10-beta0001</Version>
@@ -277,13 +284,13 @@
       <Version>0.1.0-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.Serialization.Interfaces">
-      <Version>0.1.34-beta0001</Version>
+      <Version>0.1.39-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.Serialization.Json">
-      <Version>0.1.34-beta0001</Version>
+      <Version>0.1.40-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.Serialization.Xml">
-      <Version>0.1.34-beta0001</Version>
+      <Version>0.1.40-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.Telemetry">
       <Version>0.1.10-beta0001</Version>

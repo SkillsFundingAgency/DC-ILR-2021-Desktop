@@ -11,7 +11,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
         private string Reports = string.Join(
             "|",
             ReportTaskNameConstants.ValidationReport,
-            ReportTaskNameConstants.ValidationReportV2,
+            ReportTaskNameConstants.RuleViolationSummaryReport,
             ReportTaskNameConstants.FundingSummaryReport,
             ReportTaskNameConstants.MainOccupancyReport,
             ReportTaskNameConstants.AllbOccupancyReport,
@@ -23,12 +23,39 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
             ReportTaskNameConstants.SummaryOfFundingByStudentReport,
             ReportTaskNameConstants.MathsAndEnglishReport,
             ReportTaskNameConstants.HNSReport,
+            ReportTaskNameConstants.SummaryOfFm35FundingReport,
+            ReportTaskNameConstants.CommunityLearningReport,
             ReportTaskNameConstants.HNSSummaryReport,
             ReportTaskNameConstants.FundingClaim1619Report,
-            ReportTaskNameConstants.SummaryOfFm35FundingReport,
-            ReportTaskNameConstants.AdultFundingClaimReport,
-            ReportTaskNameConstants.CommunityLearningReport,
-            ReportTaskNameConstants.RuleViolationSummaryReport);
+            ReportTaskNameConstants.AdultFundingClaimReport);
+            //ReportTaskNameConstants.AebStfiInitiativesOccupancyReport,
+            //ReportTaskNameConstants.AebStfiInitiativesFundingSummaryReport);
+
+        private string DataStore = string.Join(
+            "|",
+            DataStoreTaskNameConstants.TaskStoreALBTables,
+            DataStoreTaskNameConstants.TaskStoreFM25Tables,
+            DataStoreTaskNameConstants.TaskStoreFM35Tables,
+            DataStoreTaskNameConstants.TaskStoreFM36Tables,
+            DataStoreTaskNameConstants.TaskStoreFM70Tables,
+            DataStoreTaskNameConstants.TaskStoreFM81Tables,
+            DataStoreTaskNameConstants.TaskStoreInvalidTables,
+            DataStoreTaskNameConstants.TaskStoreValidTables,
+            DataStoreTaskNameConstants.TaskStoreValidationTables);
+
+        private string MdbExport = string.Join(
+            "|",
+            ExportTaskNameConstants.TaskExportAlbTables,
+            ExportTaskNameConstants.TaskExportDVTables,
+            ExportTaskNameConstants.TaskExportEsfTables,
+            ExportTaskNameConstants.TaskExportFM25FM35Tables,
+            ExportTaskNameConstants.TaskExportFM25Tables,
+            ExportTaskNameConstants.TaskExportFM35Tables,
+            ExportTaskNameConstants.TaskExportFM36Tables,
+            ExportTaskNameConstants.TaskExportInvalidTables,
+            ExportTaskNameConstants.TaskExportTblTables,
+            ExportTaskNameConstants.TaskExportValidTables,
+            ExportTaskNameConstants.TaskExportValidationErrorTable);
 
         public DesktopContext(
             DateTime dateTime,
@@ -48,7 +75,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
                 [ILRContextKeys.Filename] = filePath,
                 [ILRContextKeys.OriginalFilename] = filePath,
                 [ILRContextKeys.Ukprn] = 12345678,
-                [ILRContextKeys.CollectionYear] = "1920",
+                [ILRContextKeys.CollectionYear] = "2021",
                 [ILRContextKeys.ReturnPeriod] = 12,
                 [ILRContextKeys.ValidationErrors] = "ValidationErrors.json",
                 [ILRContextKeys.IlrDatabaseConnectionString] = connectionString,
@@ -58,7 +85,8 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
                 [ILRContextKeys.ValidationErrorLookups] = "ValidationErrorLookups.json",
                 [ILRContextKeys.ReportOutputFileNames] = string.Empty,
                 [ILRContextKeys.ReportTasks] = Reports,
-
+                [ILRContextKeys.DataStoreTasks] = DataStore,
+                [ILRContextKeys.ExportTasks] = MdbExport,
                 [ILRContextKeys.ReferenceDataFilename] = Path.Combine(executingAssemblyPath, referenceDataFile),
 
                 [ILRContextKeys.FundingTaskALB] = "ALB",

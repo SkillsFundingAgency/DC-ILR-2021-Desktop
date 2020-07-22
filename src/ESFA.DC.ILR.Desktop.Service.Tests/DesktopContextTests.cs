@@ -13,7 +13,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         [Fact]
         public void DateTimeUtc()
         {
-            var dateTime = new DateTime(2019, 6, 1);
+            var dateTime = new DateTime(2020, 6, 1);
 
             NewContext(dateTime).DateTimeUtc.Should().Be(dateTime);
         }
@@ -35,7 +35,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         [Fact]
         public void CollectionYear()
         {
-            NewContext().KeyValuePairs["CollectionYear"].Should().Be("1920");
+            NewContext().KeyValuePairs["CollectionYear"].Should().Be("2021");
         }
 
         [Fact]
@@ -122,7 +122,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
             NewContext().KeyValuePairs["FM35"].Should().Be("FM35");
         }
 
-        [Fact]
+        [Fact(Skip = "Temporarily Removed")]
         public void FundingTaskFM36()
         {
             NewContext().KeyValuePairs["FM36"].Should().Be("FM36");
@@ -189,7 +189,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         [Fact]
         public void KeyValuePairsCount()
         {
-            NewContext().KeyValuePairs.Should().HaveCount(28);
+            NewContext().KeyValuePairs.Should().HaveCount(30);
         }
 
         [Fact]

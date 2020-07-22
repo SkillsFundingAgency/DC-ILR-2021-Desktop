@@ -22,7 +22,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
         {
             const string version = "2.0.0.0";
             const string url = "foo";
-            var releaseDate = new DateTime(2019, 11, 10, 8, 0, 0);
+            var releaseDate = new DateTime(2020, 11, 10, 8, 0, 0);
 
             var applicationVersionResult = new ApplicationVersionResult
             {
@@ -173,7 +173,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel.Tests
         {
             const string version = "2.0.0.0";
             const string url = "foo";
-            var releaseDate = new DateTime(2019, 11, 10, 8, 0, 0);
+            var releaseDate = new DateTime(2020, 11, 10, 8, 0, 0);
 
             var applicationVersionResult = new ApplicationVersionResult
             {

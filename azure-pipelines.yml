@@ -9,9 +9,9 @@ resources:
 variables:
 - group: 'CodeSign KV'
 - name: VersionNumberMajor 
-  value: '0'
+  value: '1'
 - name: VersionNumberMinor 
-  value: '0'
+  value: '1'
 - name: VersionNumberBuild 
   value: '0'
 

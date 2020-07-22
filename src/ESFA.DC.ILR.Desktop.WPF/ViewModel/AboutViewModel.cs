@@ -16,6 +16,7 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
             AboutItems = new ObservableCollection<KeyValuePair<string, string>>
             {
                 new KeyValuePair<string, string>("Version Number:", releaseVersionInformationService.VersionNumber),
+                new KeyValuePair<string, string>("Release Date:", releaseVersionInformationService.Date),
                 new KeyValuePair<string, string>("Reference Data Date:", versionInformationService.Date),
             };
             CloseWindowCommand = new RelayCommand<ICloseable>(CloseWindow);
