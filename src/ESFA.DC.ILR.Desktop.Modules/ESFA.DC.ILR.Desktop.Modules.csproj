@@ -18,10 +18,10 @@
     <PackageReference Include="ESFA.DC.ILR.2021.ReferenceDataService.Desktop" Version="0.1.279" />
     <PackageReference Include="ESFA.DC.ILR.2021.ReferenceDataService.Model" Version="0.1.279" />
     <PackageReference Include="ESFA.DC.ILR.2021.ReportService.Desktop" Version="0.1.327" />
-    <PackageReference Include="ESFA.DC.ILR.2021.ValidationService.Desktop" Version="0.1.436" />
+    <PackageReference Include="ESFA.DC.ILR.2021.ValidationService.Desktop" Version="0.1.502" />
     <PackageReference Include="ESFA.DC.IO.FileSystem" Version="0.1.40-beta0001" />
     <PackageReference Include="ESFA.DC.IO.Interfaces" Version="0.1.39-beta0001" />
-    <PackageReference Include="ESFA.DC.Jobs.Model" Version="0.2.76-beta0001" />
+    <PackageReference Include="ESFA.DC.Jobs.Model" Version="0.2.88-beta0001" />
     <PackageReference Include="ESFA.DC.Logging.Interfaces" Version="0.1.10-beta0001" />
     <PackageReference Include="ESFA.DC.Serialization.Interfaces" Version="0.1.39-beta0001" />
     <PackageReference Include="ESFA.DC.Serialization.Json" Version="0.1.40-beta0001" />

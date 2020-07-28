@@ -267,7 +267,7 @@
       <Version>0.1.327</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.ValidationService.Desktop">
-      <Version>0.1.436</Version>
+      <Version>0.1.502</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.IO.FileSystem">
       <Version>0.1.40-beta0001</Version>
@@ -276,7 +276,7 @@
       <Version>0.1.39-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.Jobs.Model">
-      <Version>0.2.76-beta0001</Version>
+      <Version>0.2.88-beta0001</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.Logging.Interfaces">
       <Version>0.1.10-beta0001</Version>
