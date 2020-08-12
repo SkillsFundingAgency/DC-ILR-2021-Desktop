@@ -14,11 +14,11 @@
     <PackageReference Include="ESFA.DC.FileService.Interface" Version="0.1.39-beta0001" />
     <PackageReference Include="ESFA.DC.ILR.2021.DataStore.Desktop" Version="0.1.154" />
     <PackageReference Include="ESFA.DC.ILR.2021.FileValidationService.Desktop" Version="0.1.29" />
-    <PackageReference Include="ESFA.DC.ILR.2021.FundingService.Desktop" Version="0.1.127" />
-    <PackageReference Include="ESFA.DC.ILR.2021.ReferenceDataService.Desktop" Version="0.1.279" />
-    <PackageReference Include="ESFA.DC.ILR.2021.ReferenceDataService.Model" Version="0.1.279" />
-    <PackageReference Include="ESFA.DC.ILR.2021.ReportService.Desktop" Version="0.1.327" />
-    <PackageReference Include="ESFA.DC.ILR.2021.ValidationService.Desktop" Version="0.1.632" />
+    <PackageReference Include="ESFA.DC.ILR.2021.FundingService.Desktop" Version="0.1.133" />
+    <PackageReference Include="ESFA.DC.ILR.2021.ReferenceDataService.Desktop" Version="0.1.308" />
+    <PackageReference Include="ESFA.DC.ILR.2021.ReferenceDataService.Model" Version="0.1.308" />
+    <PackageReference Include="ESFA.DC.ILR.2021.ReportService.Desktop" Version="0.1.400" />
+    <PackageReference Include="ESFA.DC.ILR.2021.ValidationService.Desktop" Version="0.1.665" />
     <PackageReference Include="ESFA.DC.IO.FileSystem" Version="0.1.40-beta0001" />
     <PackageReference Include="ESFA.DC.IO.Interfaces" Version="0.1.39-beta0001" />
     <PackageReference Include="ESFA.DC.Jobs.Model" Version="0.2.88-beta0001" />
