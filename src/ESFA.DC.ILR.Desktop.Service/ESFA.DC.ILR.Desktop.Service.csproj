@@ -48,7 +48,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="ReferenceData\FISReferenceData.0.1.279.202008171321.zip">
+    <None Update="ReferenceData\FISReferenceData.0.1.279.202008181034.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
