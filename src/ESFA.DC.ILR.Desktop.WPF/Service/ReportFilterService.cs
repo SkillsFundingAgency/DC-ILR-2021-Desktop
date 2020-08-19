@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Autofac;
 using ESFA.DC.ILR.Desktop.Interface;
@@ -10,17 +11,22 @@ namespace ESFA.DC.ILR.Desktop.WPF.Service
     public class ReportFilterService : IReportFilterService
     {
         private readonly ILifetimeScope _lifetimeScope;
+        private readonly Func<Module> _reportModuleFunc;
 
-        private IEnumerable<ESFA.DC.ILR.Desktop.Interface.IDesktopContextReportFilterQuery> _reportFilterQueries = new List<IDesktopContextReportFilterQuery>();
+        private IEnumerable<IDesktopContextReportFilterQuery> _reportFilterQueries = new List<IDesktopContextReportFilterQuery>();
 
-        public ReportFilterService(ILifetimeScope lifetimeScope)
+        public ReportFilterService(ILifetimeScope lifetimeScope, Func<Module> reportModuleFunc)
         {
             _lifetimeScope = lifetimeScope;
+            _reportModuleFunc = reportModuleFunc;
         }
 
         public IEnumerable<IReportFilterDefinition> GetReportFilterDefinitions()
         {
-            using (var childLifetimeScope = _lifetimeScope.BeginLifetimeScope())
+            using (var childLifetimeScope = _lifetimeScope.BeginLifetimeScope(c =>
+            {
+                c.RegisterModule(_reportModuleFunc());
+            }))
             {
                 var filteredReports = childLifetimeScope.Resolve<IEnumerable<IFilteredReport>>();
 
