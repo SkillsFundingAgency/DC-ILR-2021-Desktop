@@ -19,7 +19,8 @@ namespace ESFA.DC.ILR.Desktop.Service.Factories
             return GetAPIClient(
                 _configuration.Configuration.APIBaseUrl,
                 _configuration.Configuration.APIVersionHeaderKey,
-                _configuration.Configuration.APIVersionNumber);
+                _configuration.Configuration.APIVersionNumber,
+                _configuration.Configuration.AcademicYear);
         }
 
         public IRestRequest GetRequestWithParameter(string param)
