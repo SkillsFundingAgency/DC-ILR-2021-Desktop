@@ -1,32 +1,31 @@
 ﻿using System.Configuration;
 using ESFA.DC.ILR.Desktop.Internal.Interface.Configuration;
+using ESFA.DC.ILR.Desktop.Internal.Interface.Constants;
 
 namespace ESFA.DC.ILR.Desktop.CLI.Config
 {
     public class APIConfiguration : ConfigurationSection, IAPIConfiguration
     {
-        private const string BaseUrlKey = "APIBaseUrl";
-        private const string ApplicationVersionPathKey = "ApplicationVersionPath";
-        private const string ReferenceDataVersionPathKey = "ReferenceDataVersionPath";
-        private const string ApiVersionHeaderKey = "ApiVersionHeader";
-        private const string ApiVersionKey = "ApiVersion";
+        public IAPIConfiguration Configuration => ConfigurationManager.GetSection(APIConstants.ConfigSection) as APIConfiguration;
 
-        public IAPIConfiguration Configuration => ConfigurationManager.GetSection("APIConfiguration") as APIConfiguration;
+        [ConfigurationProperty(APIConstants.BaseUrlKey, IsRequired = true)]
+        public string APIBaseUrl => GetFromKey(APIConstants.BaseUrlKey);
 
-        [ConfigurationProperty(BaseUrlKey, IsRequired = true)]
-        public string APIBaseUrl => GetFromKey(BaseUrlKey);
+        [ConfigurationProperty(APIConstants.ApplicationVersionPathKey, IsRequired = true)]
+        public string ApplicationVersionPath => GetFromKey(APIConstants.ApplicationVersionPathKey);
 
-        [ConfigurationProperty(ApplicationVersionPathKey, IsRequired = true)]
-        public string ApplicationVersionPath => GetFromKey(ApplicationVersionPathKey);
+        [ConfigurationProperty(APIConstants.ReferenceDataVersionPathKey, IsRequired = true)]
+        public string ReferenceDataVersionPath => GetFromKey(APIConstants.ReferenceDataVersionPathKey);
 
-        [ConfigurationProperty(ReferenceDataVersionPathKey, IsRequired = true)]
-        public string ReferenceDataVersionPath => GetFromKey(ReferenceDataVersionPathKey);
+        [ConfigurationProperty(APIConstants.ApiVersionHeaderKey, IsRequired = true)]
+        public string APIVersionHeaderKey => GetFromKey(APIConstants.ApiVersionHeaderKey);
 
-        [ConfigurationProperty(ApiVersionHeaderKey, IsRequired = true)]
-        public string APIVersionHeaderKey => GetFromKey(ApiVersionHeaderKey);
+        [ConfigurationProperty(APIConstants.ApiVersionKey, IsRequired = true)]
+        public string APIVersionNumber => GetFromKey(APIConstants.ApiVersionKey);
 
-        [ConfigurationProperty(ApiVersionKey, IsRequired = true)]
-        public string APIVersionNumber => GetFromKey(ApiVersionKey);
+        [ConfigurationProperty(APIConstants.AcademicYearKey, IsRequired = true)]
+        public string AcademicYear => GetFromKey(APIConstants.AcademicYearKey);
+
 
         public string GetFromKey(string key)
         {

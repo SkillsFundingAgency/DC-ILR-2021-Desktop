@@ -12,6 +12,8 @@
 
         string APIVersionNumber { get; }
 
+        string AcademicYear { get; }
+
         IAPIConfiguration Configuration { get; }
     }
 }

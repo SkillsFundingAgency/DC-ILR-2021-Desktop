@@ -5,6 +5,7 @@ using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Service.Message;
+using ESFA.DC.Logging.Interfaces;
 using Moq;
 using Xunit;
 
@@ -58,7 +59,8 @@ namespace ESFA.DC.ILR.Desktop.CLI.Tests
                 desktopReferenceDataDownloadService ?? Mock.Of<IDesktopReferenceDataDownloadService>(),
                 referenceDataVersionInformationService ?? Mock.Of<IReferenceDataVersionInformationService>(),
                 releaseVersionInformationService ?? Mock.Of<IReleaseVersionInformationService>(),
-                featureSwitchService ?? Mock.Of<IFeatureSwitchService>());
+                featureSwitchService ?? Mock.Of<IFeatureSwitchService>(),
+                Mock.Of<ILogger>());
         }
     }
 }
