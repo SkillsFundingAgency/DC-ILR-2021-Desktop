@@ -19,6 +19,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ReferenceData\FISReferenceData.0.1.320.202008271229.zip" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ReferenceData\FISReferenceData.0.1.320.202008271229.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac" Version="5.1.2" />
     <PackageReference Include="EntityFrameworkCore.Jet" Version="2.2.0" />
     <PackageReference Include="ESFA.DC.DateTimeProvider.Interface" Version="0.1.6-beta0001" />
@@ -45,12 +55,6 @@
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Internal.Interface\ESFA.DC.ILR.Desktop.Internal.Interface.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Models\ESFA.DC.ILR.Desktop.Models.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Utils\ESFA.DC.ILR.Desktop.Utils.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="ReferenceData\FISReferenceData.0.1.279.202008181034.zip">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>
