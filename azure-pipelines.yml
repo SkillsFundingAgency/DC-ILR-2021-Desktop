@@ -187,8 +187,8 @@ stages:
         SourcePath: '$(build.ArtifactStagingDirectory)\DesktopApplication'
         TargetFileNames: '*.exe.config'
         RequireVariable: true
-        TokenStart: '#@#'
-        TokenEnd: '#@#'
+        TokenStart: '###'
+        TokenEnd: '###'
 
 #********************************************************************************
 # Count Artifact Files to decide what to Publish
