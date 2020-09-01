@@ -1,17 +1,15 @@
 
-name: $(VersionNumberMajor).$(VersionNumberMinor).$(VersionNumberBuild)$(Rev:.rrrr)
+name: ${{ parameters.VersionNumberMajor) }}.${{ parameters.VersionNumberMinor }} .${{ parameters.VersionNumberBuild }}$(Rev:.rrrr)
 
 parameters:
 - name: VersionNumberMajor
   displayName: 'Version Number : Major'
   type: string
-  default: '1'
-  
+  default: '1'  
 - name: VersionNumberMinor
   displayName: 'Version Number : Minor'
   type: string
-  default: '1'
-  
+  default: '1'  
 - name: VersionNumberBuild
   displayName: 'Version Number : Build'
   type: string
