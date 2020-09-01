@@ -1,5 +1,5 @@
 
-name: ${{ parameters.VersionNumberMajor }}.${{ parameters.VersionNumberMinor }} .${{ parameters.VersionNumberBuild }}$(Rev:.rrrr)
+name: ${{ parameters.VersionNumberMajor }}.${{ parameters.VersionNumberMinor }}.${{ parameters.VersionNumberBuild }}$(Rev:.rrrr)
 
 parameters:
 - name: VersionNumberMajor
@@ -13,7 +13,7 @@ parameters:
 - name: VersionNumberBuild
   displayName: 'Version Number : Build'
   type: string
-  default: '2'
+  default: '3'
   
 resources:
 - repo: self
