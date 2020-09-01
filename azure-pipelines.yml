@@ -39,7 +39,7 @@ stages:
     pool:
       name: DCT
       demands:
-      - IsBuildServer
+      - TestBuildServer
       #- BuildServer
       
     steps:
