@@ -182,12 +182,13 @@ stages:
     
     - task: TotalALM.totalalm-tokenization.tokenization-build-task.Tokenization@2
       displayName: 'Tokenization: Transform Application config file'
-      enabled: false
+      enabled: enabled
       inputs:
         SourcePath: '$(build.ArtifactStagingDirectory)\DesktopApplication'
         TargetFileNames: '*.exe.config'
         RequireVariable: true
-
+        TokenStart: '#@#'
+        TokenEnd: '#@#'
 
 #********************************************************************************
 # Count Artifact Files to decide what to Publish
