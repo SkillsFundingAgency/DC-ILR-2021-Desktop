@@ -1,5 +1,5 @@
 
-name: ${{ parameters.VersionNumberMajor) }}.${{ parameters.VersionNumberMinor }} .${{ parameters.VersionNumberBuild }}$(Rev:.rrrr)
+name: ${{ parameters.VersionNumberMajor }}.${{ parameters.VersionNumberMinor }} .${{ parameters.VersionNumberBuild }}$(Rev:.rrrr)
 
 parameters:
 - name: VersionNumberMajor
