@@ -1,19 +1,26 @@
 
-#name: $(GitVersion_NuGetVersion)
-name: $(VersionNumberMajor).$(VersionNumberMinor).$(VersionNumberBuild)$(Rev:.rrrr)
+name: ${{ parameters.VersionNumberMajor }}.${{ parameters.VersionNumberMinor }}.${{ parameters.VersionNumberBuild }}$(Rev:.rrrr)
 
+parameters:
+- name: VersionNumberMajor
+  displayName: 'Version Number : Major'
+  type: string
+  default: '1'  
+- name: VersionNumberMinor
+  displayName: 'Version Number : Minor'
+  type: string
+  default: '1'  
+- name: VersionNumberBuild
+  displayName: 'Version Number : Build'
+  type: string
+  default: '3'
+  
 resources:
 - repo: self
   fetchDepth: 30
 
 variables:
 - group: 'CodeSign KV'
-- name: VersionNumberMajor 
-  value: '1'
-- name: VersionNumberMinor 
-  value: '1'
-- name: VersionNumberBuild 
-  value: '2'
 
 stages:
 - stage: Build
@@ -179,8 +186,9 @@ stages:
       inputs:
         SourcePath: '$(build.ArtifactStagingDirectory)\DesktopApplication'
         TargetFileNames: '*.exe.config'
-        RequireVariable: false
-
+        RequireVariable: true
+        TokenStart: '###'
+        TokenEnd: '###'
 
 #********************************************************************************
 # Count Artifact Files to decide what to Publish
