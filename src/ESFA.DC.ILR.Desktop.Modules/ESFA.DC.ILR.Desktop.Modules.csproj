@@ -36,6 +36,7 @@
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Interface\ESFA.DC.ILR.Desktop.Interface.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Internal.Interface\ESFA.DC.ILR.Desktop.Internal.Interface.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Models\ESFA.DC.ILR.Desktop.Models.csproj" />
+    <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Service.Pipeline\ESFA.DC.ILR.Desktop.Service.Pipeline.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Service\ESFA.DC.ILR.Desktop.Service.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Utils\ESFA.DC.ILR.Desktop.Utils.csproj" />
   </ItemGroup>

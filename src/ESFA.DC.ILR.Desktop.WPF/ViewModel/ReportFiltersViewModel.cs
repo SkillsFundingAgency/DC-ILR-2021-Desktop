@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using ESFA.DC.ILR.Desktop.Service.Context;
+using ESFA.DC.ILR.Desktop.Service.Pipeline.Context;
 using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
 using ESFA.DC.ILR.Desktop.WPF.ViewModel.ReportFilters;
 using ESFA.DC.ILR.ReportService.Service.Interface;

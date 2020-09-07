@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ESFA.DC.ILR.Desktop.Service.Interface
+namespace ESFA.DC.ILR.Desktop.Messaging
 {
     /// <summary>
     /// Wrapper for Mvvm Light Messenger exposing only subset, and preventing leak of Mvvm Light in to Service Layer

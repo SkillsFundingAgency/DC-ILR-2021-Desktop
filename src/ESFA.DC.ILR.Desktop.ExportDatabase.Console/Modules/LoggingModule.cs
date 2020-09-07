@@ -1,14 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Autofac;
-using ESFA.DC.ILR.Desktop.WPF.Service;
 using ESFA.DC.ILR.Desktop.WPF.Service.Pipeline;
 using NLog;
 using NLog.Config;
 using NLog.Layouts;
 using NLog.Targets;
-using ILogger = ESFA.DC.Logging.Interfaces.ILogger;
 
-namespace ESFA.DC.ILR.Desktop.Modules
+namespace ESFA.DC.ILR.Desktop.ExportDatabase.Console.Modules
 {
     public class LoggingModule : Module
     {

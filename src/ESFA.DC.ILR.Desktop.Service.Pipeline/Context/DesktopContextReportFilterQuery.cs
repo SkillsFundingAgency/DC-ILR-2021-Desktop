@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using ESFA.DC.ILR.Desktop.Interface;
 
-namespace ESFA.DC.ILR.Desktop.Service.Context
+namespace ESFA.DC.ILR.Desktop.Service.Pipeline.Context
 {
     public class DesktopContextReportFilterQuery : IDesktopContextReportFilterQuery
     {

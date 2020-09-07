@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.CLI.Interface;
 using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
+using ESFA.DC.ILR.Desktop.Messaging;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Service.Message;
 using ESFA.DC.Logging.Interfaces;

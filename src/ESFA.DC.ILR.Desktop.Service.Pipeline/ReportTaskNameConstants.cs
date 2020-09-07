@@ -1,4 +1,4 @@
-﻿namespace ESFA.DC.ILR.Desktop.Service
+﻿namespace ESFA.DC.ILR.Desktop.Pipeline
 {
     public static class ReportTaskNameConstants
     {

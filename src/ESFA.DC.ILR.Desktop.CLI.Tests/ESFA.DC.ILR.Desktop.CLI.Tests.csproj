@@ -103,6 +103,10 @@
       <Project>{1491AC45-D5B7-4240-A9E2-1267C5F59A03}</Project>
       <Name>ESFA.DC.ILR.Desktop.Internal.Interface</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Messaging\ESFA.DC.ILR.Desktop.Messaging.csproj">
+      <Project>{08dda31a-1fb9-4c1b-830f-071f79cf906d}</Project>
+      <Name>ESFA.DC.ILR.Desktop.Messaging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Service\ESFA.DC.ILR.Desktop.Service.csproj">
       <Project>{15e50fe1-098b-4dec-9346-cf4456c6d81d}</Project>
       <Name>ESFA.DC.ILR.Desktop.Service</Name>

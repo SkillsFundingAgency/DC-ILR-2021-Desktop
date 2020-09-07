@@ -1,8 +1,7 @@
-﻿using ESFA.DC.ILR.Desktop.Service.Interface;
-using System;
+﻿using System;
 using PubSub.Core;
 
-namespace ESFA.DC.ILR.Desktop.CLI.Service
+namespace ESFA.DC.ILR.Desktop.Messaging
 {
     public class CommandLineMessengerService : IMessengerService
     {

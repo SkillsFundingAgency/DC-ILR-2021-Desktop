@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using ESFA.DC.ILR.Constants;
 using ESFA.DC.ILR.Desktop.Interface;
+using ESFA.DC.ILR.Desktop.Pipeline;
 
-namespace ESFA.DC.ILR.Desktop.Service.Context
+namespace ESFA.DC.ILR.Desktop.Service.Pipeline.Context
 {
     public class DesktopContext : IDesktopContext
     {

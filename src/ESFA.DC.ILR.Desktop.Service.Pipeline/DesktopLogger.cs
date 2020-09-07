@@ -4,7 +4,7 @@ using NLog;
 using NLog.Fluent;
 using ILogger = ESFA.DC.Logging.Interfaces.ILogger;
 
-namespace ESFA.DC.ILR.Desktop.WPF.Service
+namespace ESFA.DC.ILR.Desktop.WPF.Service.Pipeline
 {
     public class DesktopLogger : Logger, ILogger
     {
