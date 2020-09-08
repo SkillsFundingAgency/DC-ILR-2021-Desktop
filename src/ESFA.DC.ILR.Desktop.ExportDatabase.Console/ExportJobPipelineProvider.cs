@@ -10,7 +10,6 @@ namespace ESFA.DC.ILR.Desktop.ExportDatabase.Console
 {
     public class ExportJobPipelineProvider : IIlrPipelineProvider
     {
-
         public IReadOnlyList<IIlrDesktopTaskDefinition> Provide()
         {
             return BuildTaskDefinitionCollectionForSettings();

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CommandLine;
+﻿using CommandLine;
 using ESFA.DC.ILR.Desktop.ExportDatabase.Console.Interfaces;
 
 namespace ESFA.DC.ILR.Desktop.ExportDatabase.Console

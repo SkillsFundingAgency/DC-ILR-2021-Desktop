@@ -39,6 +39,5 @@ namespace ESFA.DC.ILR.Desktop.ExportDatabase.Console.Services
         {
             System.Console.WriteLine($"{taskProgressMessage.CurrentTask}/{taskProgressMessage.TaskCount} - {taskProgressMessage.TaskName}");
         }
-
     }
 }
