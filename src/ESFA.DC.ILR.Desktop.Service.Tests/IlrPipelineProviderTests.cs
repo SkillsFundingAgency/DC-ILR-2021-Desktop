@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.ILR.Desktop.Service.Interface;
+using ESFA.DC.ILR.Desktop.Service.Pipeline;
+using ESFA.DC.ILR.Desktop.Service.Pipeline.Interface;
 using ESFA.DC.ILR.Desktop.Service.Tasks;
 using FluentAssertions;
 using Moq;

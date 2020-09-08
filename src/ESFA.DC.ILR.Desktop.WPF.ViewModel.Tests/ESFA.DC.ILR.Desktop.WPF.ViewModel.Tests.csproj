@@ -128,6 +128,10 @@
       <Project>{CFEF3244-C37E-4E36-8E59-71E2C155EBE7}</Project>
       <Name>ESFA.DC.ILR.Desktop.Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Service.Pipeline\ESFA.DC.ILR.Desktop.Service.Pipeline.csproj">
+      <Project>{cd36fa08-23d2-4fad-9d20-f5842c139e04}</Project>
+      <Name>ESFA.DC.ILR.Desktop.Service.Pipeline</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Service\ESFA.DC.ILR.Desktop.Service.csproj">
       <Project>{15E50FE1-098B-4DEC-9346-CF4456C6D81D}</Project>
       <Name>ESFA.DC.ILR.Desktop.Service</Name>

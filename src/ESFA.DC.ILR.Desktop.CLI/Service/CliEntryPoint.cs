@@ -5,7 +5,8 @@ using ESFA.DC.ILR.Desktop.CLI.Interface;
 using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
 using ESFA.DC.ILR.Desktop.Messaging;
 using ESFA.DC.ILR.Desktop.Service.Interface;
-using ESFA.DC.ILR.Desktop.Service.Message;
+using ESFA.DC.ILR.Desktop.Service.Pipeline.Message;
+using ESFA.DC.ILR.Desktop.Service.Pipeline.Interface;
 using ESFA.DC.Logging.Interfaces;
 
 namespace ESFA.DC.ILR.Desktop.CLI.Service

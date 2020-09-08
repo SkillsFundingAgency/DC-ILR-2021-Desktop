@@ -6,6 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.ExportDatabase.Console.Interfaces;
 using ESFA.DC.ILR.Desktop.Messaging;
+using ESFA.DC.ILR.Desktop.Service.Pipeline.Interface;
+using ESFA.DC.ILR.Desktop.Service.Pipeline.Message;
 
 namespace ESFA.DC.ILR.Desktop.ExportDatabase.Console.Services
 {

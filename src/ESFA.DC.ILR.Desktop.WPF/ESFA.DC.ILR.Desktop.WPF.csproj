@@ -183,6 +183,10 @@
       <Project>{5b8d9ec7-b8d5-4664-8028-1cf5bda0bc29}</Project>
       <Name>ESFA.DC.ILR.Desktop.CLI</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.Desktop.ExportDatabase.Console\ESFA.DC.ILR.Desktop.ExportDatabase.Console.csproj">
+      <Project>{d19a784a-f715-4110-9bfa-797551f71ff9}</Project>
+      <Name>ESFA.DC.ILR.Desktop.ExportDatabase.Console</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Interface\ESFA.DC.ILR.Desktop.Interface.csproj">
       <Project>{2d75f514-a091-41ba-a8b0-87bb97bc0337}</Project>
       <Name>ESFA.DC.ILR.Desktop.Interface</Name>

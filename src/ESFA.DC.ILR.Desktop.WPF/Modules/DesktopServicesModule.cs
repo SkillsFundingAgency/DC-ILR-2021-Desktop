@@ -7,6 +7,7 @@ using ESFA.DC.ILR.Desktop.Messaging;
 using ESFA.DC.ILR.Desktop.Service;
 using ESFA.DC.ILR.Desktop.Service.Connectivity;
 using ESFA.DC.ILR.Desktop.Service.Interface;
+using ESFA.DC.ILR.Desktop.Service.Pipeline;
 using ESFA.DC.ILR.Desktop.Service.Tasks;
 using ESFA.DC.ILR.Desktop.WPF.Config;
 using ESFA.DC.ILR.Desktop.WPF.Service;

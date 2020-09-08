@@ -10,6 +10,9 @@ using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.Desktop.Service;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Service.Mutator;
+using ESFA.DC.ILR.Desktop.Service.Pipeline;
+using ESFA.DC.ILR.Desktop.Service.Pipeline.Interface;
+using ESFA.DC.ILR.Desktop.Service.Pipeline.Mutator;
 using ESFA.DC.ILR.Desktop.Service.Tasks;
 using ESFA.DC.ILR.FileValidationService.Desktop;
 using ESFA.DC.ILR.FileValidationService.Desktop.Modules;
@@ -61,13 +64,8 @@ namespace ESFA.DC.ILR.Desktop.Modules
 
             containerBuilder.RegisterType<PostProcessingDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.PostExecution);
 
-            containerBuilder.RegisterType<BuildMdbDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.MdbCreate);
-            containerBuilder.RegisterType<BuildMdbModule>().Keyed<Module>(IlrDesktopTaskKeys.MdbCreate);
-
-            containerBuilder.RegisterType<MdbDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.MdbExport);
-            containerBuilder.RegisterType<MdbModule>().Keyed<Module>(IlrDesktopTaskKeys.MdbExport);
-
-            containerBuilder.RegisterType<PublishMdbDesktopTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.MdbPublish);
+            containerBuilder.RegisterType<StoreDesktopContextTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.StoreDesktopContext);
+            containerBuilder.RegisterType<MdbExportProcessTask>().Keyed<IDesktopTask>(IlrDesktopTaskKeys.ExportMdbProcess);
 
             containerBuilder.RegisterType<ContextMutatorExecutor>().As<IContextMutatorExecutor>();
             containerBuilder.RegisterType<SchemaErrorContextMutator>().Keyed<IContextMutator>(ContextMutatorKeys.FileFailure);

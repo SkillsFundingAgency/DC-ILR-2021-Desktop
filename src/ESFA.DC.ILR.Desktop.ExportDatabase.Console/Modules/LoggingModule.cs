@@ -9,6 +9,7 @@ using NLog;
 using NLog.Config;
 using NLog.Layouts;
 using NLog.Targets;
+using ILogger = ESFA.DC.Logging.Interfaces.ILogger;
 
 namespace ESFA.DC.ILR.Desktop.ExportDatabase.Console.Modules
 {

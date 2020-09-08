@@ -58,6 +58,10 @@ namespace ESFA.DC.ILR.Desktop.Service.Pipeline.Context
             ExportTaskNameConstants.TaskExportValidTables,
             ExportTaskNameConstants.TaskExportValidationErrorTable);
 
+        public DesktopContext()
+        {
+        }
+
         public DesktopContext(
             DateTime dateTime,
             string outputDirectory,

@@ -23,7 +23,7 @@ namespace ESFA.DC.ILR.Desktop.ExportDatabase.Console
                     {
                         try
                         {
-                            container.Resolve<IEntryPoint>().ExecuteAsync(a, CancellationToken.None).Wait();
+                           container.Resolve<IEntryPoint>().ExecuteAsync(a, CancellationToken.None).Wait();
                         }
                         catch (Exception e)
                         {
