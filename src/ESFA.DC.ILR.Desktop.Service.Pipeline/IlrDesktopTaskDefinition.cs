@@ -1,5 +1,4 @@
-﻿using ESFA.DC.ILR.Desktop.Service.Pipeline;
-using ESFA.DC.ILR.Desktop.Service.Pipeline.Interface;
+﻿using ESFA.DC.ILR.Desktop.Service.Pipeline.Interface;
 using ESFA.DC.ILR.Desktop.Service.Pipeline.Mutator;
 
 namespace ESFA.DC.ILR.Desktop.Service.Pipeline

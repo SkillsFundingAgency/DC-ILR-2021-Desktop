@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ESFA.DC.ILR.Desktop.Service.Pipeline
+﻿namespace ESFA.DC.ILR.Desktop.Service.Pipeline
 {
     public static class ExportTaskNameConstants
     {
