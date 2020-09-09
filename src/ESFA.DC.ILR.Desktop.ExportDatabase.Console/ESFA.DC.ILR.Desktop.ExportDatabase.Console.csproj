@@ -45,6 +45,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Interface\ESFA.DC.ILR.Desktop.Interface.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Messaging\ESFA.DC.ILR.Desktop.Messaging.csproj" />
+    <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Modules\ESFA.DC.ILR.Desktop.Modules.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Service.Pipeline\ESFA.DC.ILR.Desktop.Service.Pipeline.csproj" />
   </ItemGroup>
 

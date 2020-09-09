@@ -4,6 +4,7 @@ using Autofac;
 using CommandLine;
 using ESFA.DC.ILR.Desktop.ExportDatabase.Console.Interfaces;
 using ESFA.DC.ILR.Desktop.ExportDatabase.Console.Modules;
+using ESFA.DC.ILR.Desktop.Modules;
 using ESFA.DC.Logging.Interfaces;
 
 namespace ESFA.DC.ILR.Desktop.ExportDatabase.Console

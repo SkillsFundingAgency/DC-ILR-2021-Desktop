@@ -80,8 +80,8 @@ namespace ESFA.DC.ILR.Desktop.WPF.ViewModel
                 {
                     Name = p.Name,
                     Value = p.Value,
-                }),
-            });
+                }).ToList(),
+            }).ToList();
         }
     }
 }
