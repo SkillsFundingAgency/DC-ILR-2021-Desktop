@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.902
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.ILR.Desktop.Interface", "ESFA.DC.ILR.Desktop.Interface\ESFA.DC.ILR.Desktop.Interface.csproj", "{2D75F514-A091-41BA-A8B0-87BB97BC0337}"
 EndProject
@@ -30,7 +30,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.ILR.Desktop.Models"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.ILR.Desktop.Internal.Interface", "ESFA.DC.ILR.Desktop.Internal.Interface\ESFA.DC.ILR.Desktop.Internal.Interface.csproj", "{1491AC45-D5B7-4240-A9E2-1267C5F59A03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.Desktop.Utils", "ESFA.DC.ILR.Desktop.Utils\ESFA.DC.ILR.Desktop.Utils.csproj", "{A0E99E96-1998-4ADD-AD69-2C0C185E1ED2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.ILR.Desktop.Utils", "ESFA.DC.ILR.Desktop.Utils\ESFA.DC.ILR.Desktop.Utils.csproj", "{A0E99E96-1998-4ADD-AD69-2C0C185E1ED2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.Desktop.Service.Pipeline", "ESFA.DC.ILR.Desktop.Service.Pipeline\ESFA.DC.ILR.Desktop.Service.Pipeline.csproj", "{CD36FA08-23D2-4FAD-9D20-F5842C139E04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.Desktop.Messaging", "ESFA.DC.ILR.Desktop.Messaging\ESFA.DC.ILR.Desktop.Messaging.csproj", "{08DDA31A-1FB9-4C1B-830F-071F79CF906D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.Desktop.ExportDatabase.Console", "ESFA.DC.ILR.Desktop.ExportDatabase.Console\ESFA.DC.ILR.Desktop.ExportDatabase.Console.csproj", "{D19A784A-F715-4110-9BFA-797551F71FF9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -82,6 +88,18 @@ Global
 		{A0E99E96-1998-4ADD-AD69-2C0C185E1ED2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0E99E96-1998-4ADD-AD69-2C0C185E1ED2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0E99E96-1998-4ADD-AD69-2C0C185E1ED2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD36FA08-23D2-4FAD-9D20-F5842C139E04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD36FA08-23D2-4FAD-9D20-F5842C139E04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD36FA08-23D2-4FAD-9D20-F5842C139E04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD36FA08-23D2-4FAD-9D20-F5842C139E04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08DDA31A-1FB9-4C1B-830F-071F79CF906D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08DDA31A-1FB9-4C1B-830F-071F79CF906D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08DDA31A-1FB9-4C1B-830F-071F79CF906D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08DDA31A-1FB9-4C1B-830F-071F79CF906D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D19A784A-F715-4110-9BFA-797551F71FF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D19A784A-F715-4110-9BFA-797551F71FF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D19A784A-F715-4110-9BFA-797551F71FF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D19A784A-F715-4110-9BFA-797551F71FF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

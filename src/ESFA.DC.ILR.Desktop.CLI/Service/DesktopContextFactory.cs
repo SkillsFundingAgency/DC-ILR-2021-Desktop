@@ -3,8 +3,8 @@ using ESFA.DC.DateTimeProvider.Interface;
 using ESFA.DC.ILR.Desktop.CLI.Interface;
 using ESFA.DC.ILR.Desktop.Interface;
 using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
-using ESFA.DC.ILR.Desktop.Service.Context;
 using ESFA.DC.ILR.Desktop.Service.Interface;
+using ESFA.DC.ILR.Desktop.Service.Pipeline.Context;
 using ESFA.DC.ILR.Desktop.Service.ReferenceData;
 
 namespace ESFA.DC.ILR.Desktop.CLI.Service

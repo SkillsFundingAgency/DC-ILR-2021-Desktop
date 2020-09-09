@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.ILR.Desktop.Service.Interface;
+using ESFA.DC.ILR.Desktop.Service.Pipeline;
+using ESFA.DC.ILR.Desktop.Service.Pipeline.Interface;
 using ESFA.DC.ILR.Desktop.Service.Tasks;
 using FluentAssertions;
 using Moq;
@@ -19,7 +21,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
 
             var pipeline = NewProvider(desktopServiceSettingsMock.Object).Provide().ToList();
 
-            pipeline.Should().HaveCount(12);
+            pipeline.Should().HaveCount(11);
 
             pipeline[0].Key.Should().Be(IlrDesktopTaskKeys.PreExecution);
             pipeline[0].FailureKey.Should().BeNull();
@@ -27,35 +29,32 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
             pipeline[1].Key.Should().Be(IlrDesktopTaskKeys.DatabaseCreate);
             pipeline[1].FailureKey.Should().BeNull();
 
-            pipeline[2].Key.Should().Be(IlrDesktopTaskKeys.MdbCreate);
-            pipeline[2].FailureKey.Should().BeNull();
+            pipeline[2].Key.Should().Be(IlrDesktopTaskKeys.FileValidationService);
+            pipeline[2].FailureKey.Should().Be(IlrDesktopTaskKeys.ReportService);
 
-            pipeline[3].Key.Should().Be(IlrDesktopTaskKeys.FileValidationService);
-            pipeline[3].FailureKey.Should().Be(IlrDesktopTaskKeys.ReportService);
+            pipeline[3].Key.Should().Be(IlrDesktopTaskKeys.ReferenceDataService);
+            pipeline[3].FailureKey.Should().BeNull();
 
-            pipeline[4].Key.Should().Be(IlrDesktopTaskKeys.ReferenceDataService);
-            pipeline[4].FailureKey.Should().BeNull();
+            pipeline[4].Key.Should().Be(IlrDesktopTaskKeys.ValidationService);
+            pipeline[4].FailureKey.Should().Be(IlrDesktopTaskKeys.ReportService);
 
-            pipeline[5].Key.Should().Be(IlrDesktopTaskKeys.ValidationService);
-            pipeline[5].FailureKey.Should().Be(IlrDesktopTaskKeys.ReportService);
+            pipeline[5].Key.Should().Be(IlrDesktopTaskKeys.FundingService);
+            pipeline[5].FailureKey.Should().BeNull();
 
-            pipeline[6].Key.Should().Be(IlrDesktopTaskKeys.FundingService);
+            pipeline[6].Key.Should().Be(IlrDesktopTaskKeys.DataStore);
             pipeline[6].FailureKey.Should().BeNull();
 
-            pipeline[7].Key.Should().Be(IlrDesktopTaskKeys.DataStore);
+            pipeline[7].Key.Should().Be(IlrDesktopTaskKeys.StoreDesktopContext);
             pipeline[7].FailureKey.Should().BeNull();
 
-            pipeline[8].Key.Should().Be(IlrDesktopTaskKeys.MdbExport);
+            pipeline[8].Key.Should().Be(IlrDesktopTaskKeys.ReportService);
             pipeline[8].FailureKey.Should().BeNull();
 
-            pipeline[9].Key.Should().Be(IlrDesktopTaskKeys.ReportService);
+            pipeline[9].Key.Should().Be(IlrDesktopTaskKeys.PostExecution);
             pipeline[9].FailureKey.Should().BeNull();
 
-            pipeline[10].Key.Should().Be(IlrDesktopTaskKeys.PostExecution);
+            pipeline[10].Key.Should().Be(IlrDesktopTaskKeys.ExportMdbProcess);
             pipeline[10].FailureKey.Should().BeNull();
-
-            pipeline[11].Key.Should().Be(IlrDesktopTaskKeys.MdbPublish);
-            pipeline[11].FailureKey.Should().BeNull();
         }
 
         [Fact]

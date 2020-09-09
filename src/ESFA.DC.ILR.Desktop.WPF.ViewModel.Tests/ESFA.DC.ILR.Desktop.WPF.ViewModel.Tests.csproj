@@ -120,9 +120,17 @@
       <Project>{1491AC45-D5B7-4240-A9E2-1267C5F59A03}</Project>
       <Name>ESFA.DC.ILR.Desktop.Internal.Interface</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Messaging\ESFA.DC.ILR.Desktop.Messaging.csproj">
+      <Project>{08dda31a-1fb9-4c1b-830f-071f79cf906d}</Project>
+      <Name>ESFA.DC.ILR.Desktop.Messaging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Models\ESFA.DC.ILR.Desktop.Models.csproj">
       <Project>{CFEF3244-C37E-4E36-8E59-71E2C155EBE7}</Project>
       <Name>ESFA.DC.ILR.Desktop.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Service.Pipeline\ESFA.DC.ILR.Desktop.Service.Pipeline.csproj">
+      <Project>{cd36fa08-23d2-4fad-9d20-f5842c139e04}</Project>
+      <Name>ESFA.DC.ILR.Desktop.Service.Pipeline</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Service\ESFA.DC.ILR.Desktop.Service.csproj">
       <Project>{15E50FE1-098B-4DEC-9346-CF4456C6D81D}</Project>

@@ -1,5 +1,6 @@
-﻿using ESFA.DC.ILR.Desktop.Service.Tasks;
-using ESFA.DC.ILR.Desktop.Service.Tasks.Extensions;
+﻿using ESFA.DC.ILR.Desktop.Service.Pipeline;
+using ESFA.DC.ILR.Desktop.Service.Pipeline.Extensions;
+using ESFA.DC.ILR.Desktop.Service.Tasks;
 using FluentAssertions;
 using Xunit;
 
