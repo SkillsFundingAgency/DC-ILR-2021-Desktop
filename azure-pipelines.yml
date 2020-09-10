@@ -13,7 +13,7 @@ parameters:
 - name: VersionNumberBuild
   displayName: 'Version Number : Build'
   type: string
-  default: '3'
+  default: '4'
   
 resources:
 - repo: self
