@@ -80,6 +80,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Context
                 [ILRContextKeys.ValidationErrors] = "ValidationErrors.json",
                 [ILRContextKeys.IlrDatabaseConnectionString] = connectionString,
                 [ILRContextKeys.IlrReferenceData] = "IlrReferenceData.json",
+                [ILRContextKeys.LearnerReferenceData] = "LearnerReferenceData.json",
                 [ILRContextKeys.InvalidLearnRefNumbers] = "InvalidLearnRefNumbers.json",
                 [ILRContextKeys.ValidLearnRefNumbers] = "ValidLearnRefNumbers.json",
                 [ILRContextKeys.ValidationErrorLookups] = "ValidationErrorLookups.json",
