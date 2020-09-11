@@ -252,7 +252,7 @@
       <Version>0.1.160</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.FileValidationService.Desktop">
-      <Version>0.1.39</Version>
+      <Version>0.1.43</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.FundingService.Desktop">
       <Version>0.1.145</Version>
