@@ -276,7 +276,7 @@
       <Version>0.3.51</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.ReportService.Desktop">
-      <Version>0.1.563</Version>
+      <Version>0.1.568</Version>
     </PackageReference>
     <PackageReference Include="ESFA.DC.ILR.2021.ValidationService.Desktop">
       <Version>0.1.880</Version>
