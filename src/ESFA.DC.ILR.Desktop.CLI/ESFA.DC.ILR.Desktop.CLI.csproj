@@ -50,6 +50,7 @@
     <Compile Include="Config\APIConfiguration.cs" />
     <Compile Include="Config\CliServiceConfiguration.cs" />
     <Compile Include="Config\FeatureSwitchConfiguration.cs" />
+    <Compile Include="Interface\IDesktopSettingsDefaultsService.cs" />
     <Compile Include="Service\DesktopServiceSettings.cs" />
     <Compile Include="Interface\ICliEntryPoint.cs" />
     <Compile Include="Interface\ICommandLineArguments.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\CliEntryPoint.cs" />
     <Compile Include="Service\DesktopContextFactory.cs" />
+    <Compile Include="Service\DesktopSettingsDefaultsService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

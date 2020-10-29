@@ -12,13 +12,15 @@ namespace ESFA.DC.ILR.Desktop.CLI.Service
     public class DesktopContextFactory : IDesktopContextFactory
     {
         private readonly IDesktopServiceSettings _desktopServiceSettings;
+        private readonly IDesktopSettingsDefaultsService _desktopSettingsDefaultsService;
         private readonly IDateTimeProvider _dateTimeProvider;
         private readonly IReleaseVersionInformationService _releaseVersionInformationService;
         private readonly IAssemblyService _assemblyService;
 
-        public DesktopContextFactory(IDesktopServiceSettings desktopServiceSettings, IDateTimeProvider dateTimeProvider, IReleaseVersionInformationService releaseVersionInformationService, IAssemblyService assemblyService)
+        public DesktopContextFactory(IDesktopServiceSettings desktopServiceSettings, IDateTimeProvider dateTimeProvider, IDesktopSettingsDefaultsService desktopSettingsDefaultsService, IReleaseVersionInformationService releaseVersionInformationService, IAssemblyService assemblyService)
         {
             _desktopServiceSettings = desktopServiceSettings;
+            _desktopSettingsDefaultsService = desktopSettingsDefaultsService;
             _dateTimeProvider = dateTimeProvider;
             _assemblyService = assemblyService;
             _releaseVersionInformationService = releaseVersionInformationService;
@@ -26,6 +28,7 @@ namespace ESFA.DC.ILR.Desktop.CLI.Service
 
         public IDesktopContext Build(ICommandLineArguments commandLineArguments)
         {
+            _desktopSettingsDefaultsService.CheckDefaults(commandLineArguments);
             return new DesktopContext(
                 _dateTimeProvider.GetNowUtc(),
                 OverrideConfig(commandLineArguments.OutputDirectory, _desktopServiceSettings.OutputDirectory),
