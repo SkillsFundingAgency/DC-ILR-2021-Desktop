@@ -19,11 +19,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ReferenceData\FISReferenceData.0.3.21.202010131649.zip" />
+    <None Remove="ReferenceData\FISReferenceData.0.3.21.202010300918.zip" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="ReferenceData\FISReferenceData.0.3.21.202010131649.zip">
+    <Content Include="ReferenceData\FISReferenceData.0.3.21.202010300918.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
