@@ -47,13 +47,13 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
             pipeline[7].Key.Should().Be(IlrDesktopTaskKeys.StoreDesktopContext);
             pipeline[7].FailureKey.Should().BeNull();
 
-            pipeline[8].Key.Should().Be(IlrDesktopTaskKeys.ReportService);
+            pipeline[8].Key.Should().Be(IlrDesktopTaskKeys.ExportMdbProcess);
             pipeline[8].FailureKey.Should().BeNull();
 
-            pipeline[9].Key.Should().Be(IlrDesktopTaskKeys.PostExecution);
+            pipeline[9].Key.Should().Be(IlrDesktopTaskKeys.ReportService);
             pipeline[9].FailureKey.Should().BeNull();
 
-            pipeline[10].Key.Should().Be(IlrDesktopTaskKeys.ExportMdbProcess);
+            pipeline[10].Key.Should().Be(IlrDesktopTaskKeys.PostExecution);
             pipeline[10].FailureKey.Should().BeNull();
         }
 
