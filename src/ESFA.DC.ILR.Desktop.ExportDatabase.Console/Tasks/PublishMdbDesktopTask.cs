@@ -32,6 +32,8 @@ namespace ESFA.DC.ILR.Desktop.ExportDatabase.Console.Tasks
             if (File.Exists(sourceMdb))
             {
                 _logger.LogInfo($"Copying Access : {sourceMdb} to {destinationMdb}");
+
+                Directory.CreateDirectory(outputDirectory);
                 File.Copy(sourceMdb, destinationMdb, true);
             }
             else
