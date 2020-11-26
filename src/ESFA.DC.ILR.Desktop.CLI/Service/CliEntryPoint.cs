@@ -3,8 +3,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.Desktop.CLI.Interface;
 using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
+using ESFA.DC.ILR.Desktop.Messaging;
 using ESFA.DC.ILR.Desktop.Service.Interface;
-using ESFA.DC.ILR.Desktop.Service.Message;
+using ESFA.DC.ILR.Desktop.Service.Pipeline.Message;
+using ESFA.DC.ILR.Desktop.Service.Pipeline.Interface;
+using ESFA.DC.Logging.Interfaces;
 
 namespace ESFA.DC.ILR.Desktop.CLI.Service
 {
@@ -18,6 +21,7 @@ namespace ESFA.DC.ILR.Desktop.CLI.Service
         private readonly IReferenceDataVersionInformationService _referenceDataVersionInformationService;
         private readonly IReleaseVersionInformationService _releaseVersionInformationService;
         private readonly IFeatureSwitchService _featureSwitchService;
+        private readonly ILogger _logger;
 
         public CliEntryPoint(
             IMessengerService messengerService, 
@@ -27,7 +31,8 @@ namespace ESFA.DC.ILR.Desktop.CLI.Service
             IDesktopReferenceDataDownloadService desktopReferenceDataDownloadService,
             IReferenceDataVersionInformationService referenceDataVersionInformationService,
             IReleaseVersionInformationService releaseVersionInformationService,
-            IFeatureSwitchService featureSwitchService)
+            IFeatureSwitchService featureSwitchService,
+            ILogger logger)
         {
             _messengerService = messengerService;
             _desktopContextFactory = desktopContextFactory;
@@ -37,6 +42,7 @@ namespace ESFA.DC.ILR.Desktop.CLI.Service
             _referenceDataVersionInformationService = referenceDataVersionInformationService;
             _releaseVersionInformationService = releaseVersionInformationService;
             _featureSwitchService = featureSwitchService;
+            _logger = logger;
 
             _messengerService.Register<TaskProgressMessage>(this, HandleTaskProgressMessage);
         }
@@ -45,9 +51,11 @@ namespace ESFA.DC.ILR.Desktop.CLI.Service
         {
             if (_featureSwitchService.VersionUpdate)
             {
-                await CheckForReferenceDataUpdates();
+                _logger.LogInfo("Checking for Reference data updates.");
+                await CheckForReferenceDataUpdates(commandLineArguments.CheckAndUpdateReferenceData);
             }
 
+            _logger.LogInfo("Creating Context.");
             var context = _desktopContextFactory.Build(commandLineArguments);
 
             await _ilrDesktopService.ProcessAsync(context, cancellationToken);
@@ -58,18 +66,29 @@ namespace ESFA.DC.ILR.Desktop.CLI.Service
             Console.WriteLine($"{taskProgressMessage.CurrentTask}/{taskProgressMessage.TaskCount} - {taskProgressMessage.TaskName}");
         }
 
-        private async Task CheckForReferenceDataUpdates()
+        private async Task CheckForReferenceDataUpdates(string checkAndUpdateRefData)
         {
-            // to be follow up under a story - stubbed for now. Replace with commandLineArguments.CheckAndUpdateReferenceData at later date. 
-            var checkForRefData = "N";
-
-            if (string.Equals(checkForRefData, "Y", StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(checkAndUpdateRefData, "Y", StringComparison.OrdinalIgnoreCase))
             {
                 var appVersion = await _versionMediatorService.GetNewVersion();
+                var currentAppSchemaVersion = _releaseVersionInformationService.VersionNumber?.Split('.')[1];
+                var latestAppSchemaVersion = appVersion.ApplicationVersion?.Split('.')[1];
 
-                if (appVersion.ApplicationVersion == _releaseVersionInformationService.VersionNumber && appVersion.LatestReferenceDataVersion != _referenceDataVersionInformationService.VersionNumber)
+
+                if (currentAppSchemaVersion == latestAppSchemaVersion && appVersion.LatestReferenceDataVersion != _referenceDataVersionInformationService.VersionNumber)
                 {
+                    _logger.LogInfo(string.Concat(
+                        "Later version of Reference data found. Was ",
+                        _referenceDataVersionInformationService.VersionNumber,
+                        ", now ",
+                        appVersion.LatestReferenceDataVersion,
+                        "."));
+
                     await _desktopReferenceDataDownloadService.GetReferenceData(appVersion.LatestReferenceDataFileName, appVersion.LatestReferenceDataVersion);
+                }
+                else
+                {
+                    _logger.LogInfo(string.Concat("Later version of Reference data not found. Current version is ", _referenceDataVersionInformationService.VersionNumber));
                 }
             }
         }

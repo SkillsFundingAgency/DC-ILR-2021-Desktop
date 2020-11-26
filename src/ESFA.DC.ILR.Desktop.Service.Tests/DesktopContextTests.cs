@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using ESFA.DC.ILR.Desktop.Interface;
-using ESFA.DC.ILR.Desktop.Service.Context;
+using ESFA.DC.ILR.Desktop.Service.Pipeline.Context;
 using FluentAssertions;
 using Xunit;
 
@@ -189,7 +189,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Tests
         [Fact]
         public void KeyValuePairsCount()
         {
-            NewContext().KeyValuePairs.Should().HaveCount(30);
+            NewContext().KeyValuePairs.Should().HaveCount(31);
         }
 
         [Fact]

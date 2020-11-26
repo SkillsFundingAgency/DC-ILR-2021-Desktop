@@ -4,9 +4,11 @@ namespace ESFA.DC.ILR.Desktop.Service.Factories
 {
     public abstract class APIClientFactory
     {
-        public IRestClient GetAPIClient(string baseUrl, string headerKey, string apiVersion)
+        public IRestClient GetAPIClient(string baseUrl, string headerKey, string apiVersion, string academicYear)
         {
-            IRestClient client = new RestClient(baseUrl);
+            var url = string.Concat(baseUrl, "/", apiVersion, "/", academicYear);
+
+            IRestClient client = new RestClient(url);
 
             client.AddDefaultHeader(headerKey, apiVersion);
 

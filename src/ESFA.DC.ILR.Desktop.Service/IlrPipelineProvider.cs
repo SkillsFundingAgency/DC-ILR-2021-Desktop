@@ -2,6 +2,9 @@
 using System.Linq;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 using ESFA.DC.ILR.Desktop.Service.Mutator;
+using ESFA.DC.ILR.Desktop.Service.Pipeline;
+using ESFA.DC.ILR.Desktop.Service.Pipeline.Interface;
+using ESFA.DC.ILR.Desktop.Service.Pipeline.Mutator;
 using ESFA.DC.ILR.Desktop.Service.Tasks;
 
 namespace ESFA.DC.ILR.Desktop.Service
@@ -33,11 +36,6 @@ namespace ESFA.DC.ILR.Desktop.Service
                 taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.DatabaseCreate));
             }
 
-            if (exportToAccessAndCsv)
-            {
-                taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.MdbCreate));
-            }
-
             taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.FileValidationService, IlrDesktopTaskKeys.ReportService, ContextMutatorKeys.FileFailure));
             taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ReferenceDataService));
             taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ValidationService, IlrDesktopTaskKeys.ReportService, ContextMutatorKeys.FileFailure));
@@ -50,16 +48,16 @@ namespace ESFA.DC.ILR.Desktop.Service
 
             if (exportToAccessAndCsv)
             {
-                taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.MdbExport));
+                taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.StoreDesktopContext));
+            }
+
+            if (exportToAccessAndCsv)
+            {
+                taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ExportMdbProcess));
             }
 
             taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.ReportService));
             taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.PostExecution));
-
-            if (exportToAccessAndCsv)
-            {
-                taskList.Add(new IlrDesktopTaskDefinition(IlrDesktopTaskKeys.MdbPublish));
-            }
 
             return taskList;
         }

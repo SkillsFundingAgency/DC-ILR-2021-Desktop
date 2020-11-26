@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Autofac;
 using ESFA.DC.ILR.Desktop.WPF.Service;
+using ESFA.DC.ILR.Desktop.WPF.Service.Pipeline;
 using NLog;
 using NLog.Config;
 using NLog.Layouts;

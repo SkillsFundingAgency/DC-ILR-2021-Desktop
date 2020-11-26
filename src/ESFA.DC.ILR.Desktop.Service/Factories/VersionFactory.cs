@@ -7,7 +7,7 @@ namespace ESFA.DC.ILR.Desktop.Service.Factories
 {
     public class VersionFactory : IVersionFactory
     {
-        private readonly string _referenceDataDateFormat = "yyyyMMddhhmm";
+        private readonly string _referenceDataDateFormat = "yyyyMMddHHmm";
 
         public Version GetVersion(string versionNumber, string referenceDataVersion)
         {

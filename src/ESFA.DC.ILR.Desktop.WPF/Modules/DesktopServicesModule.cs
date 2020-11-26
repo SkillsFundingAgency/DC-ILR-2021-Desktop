@@ -1,21 +1,18 @@
-﻿using System.Configuration;
-using System.IO;
+﻿using System;
 using System.Threading;
 using Autofac;
 using ESFA.DC.ILR.Desktop.Internal.Interface.Configuration;
 using ESFA.DC.ILR.Desktop.Internal.Interface.Services;
-using ESFA.DC.ILR.Desktop.Models;
+using ESFA.DC.ILR.Desktop.Messaging;
 using ESFA.DC.ILR.Desktop.Service;
-using ESFA.DC.ILR.Desktop.Service.APIClient;
 using ESFA.DC.ILR.Desktop.Service.Connectivity;
-using ESFA.DC.ILR.Desktop.Service.Factories;
 using ESFA.DC.ILR.Desktop.Service.Interface;
+using ESFA.DC.ILR.Desktop.Service.Pipeline;
+using ESFA.DC.ILR.Desktop.Service.Tasks;
 using ESFA.DC.ILR.Desktop.WPF.Config;
 using ESFA.DC.ILR.Desktop.WPF.Service;
 using ESFA.DC.ILR.Desktop.WPF.Service.Interface;
 using ESFA.DC.ILR.Desktop.WPF.ViewModel;
-using ESFA.DC.Telemetry;
-using ESFA.DC.Telemetry.Interfaces;
 
 namespace ESFA.DC.ILR.Desktop.WPF.Modules
 {
@@ -28,8 +25,10 @@ namespace ESFA.DC.ILR.Desktop.WPF.Modules
             containerBuilder.RegisterType<DialogInteractionService>().As<IDialogInteractionService>();
             containerBuilder.RegisterType<WindowsProcessService>().As<IWindowsProcessService>();
             containerBuilder.RegisterType<ReferenceDataVersionInformationService>().As<IReferenceDataVersionInformationService>();
-            containerBuilder.RegisterType<ReportFilterService>().As<IReportFilterService>().SingleInstance();
             containerBuilder.RegisterType<ConnectivityService>().As<IConnectivityService>();
+
+            containerBuilder.Register(c => new ReportFilterService(c.Resolve<ILifetimeScope>(), c.ResolveKeyed<Func<Module>>(IlrDesktopTaskKeys.ReportService)))
+                .As<IReportFilterService>().SingleInstance();
 
             containerBuilder.RegisterType<DesktopServiceConfiguration>().As<IServiceConfiguration>();
 

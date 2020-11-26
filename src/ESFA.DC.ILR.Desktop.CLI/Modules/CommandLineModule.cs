@@ -3,6 +3,7 @@ using ESFA.DC.ILR.Desktop.CLI.Config;
 using ESFA.DC.ILR.Desktop.CLI.Interface;
 using ESFA.DC.ILR.Desktop.CLI.Service;
 using ESFA.DC.ILR.Desktop.Internal.Interface.Configuration;
+using ESFA.DC.ILR.Desktop.Messaging;
 using ESFA.DC.ILR.Desktop.Service.Interface;
 
 namespace ESFA.DC.ILR.Desktop.CLI.Modules
@@ -13,6 +14,7 @@ namespace ESFA.DC.ILR.Desktop.CLI.Modules
         {
             containerBuilder.RegisterType<CliEntryPoint>().As<ICliEntryPoint>();
             containerBuilder.RegisterType<DesktopContextFactory>().As<IDesktopContextFactory>();
+            containerBuilder.RegisterType<DesktopSettingsDefaultsService>().As<IDesktopSettingsDefaultsService>();
             containerBuilder.RegisterType<CommandLineMessengerService>().As<IMessengerService>().SingleInstance();
             containerBuilder.RegisterType<CliServiceConfiguration>().As<IServiceConfiguration>();
             containerBuilder.RegisterType<APIConfiguration>().As<IAPIConfiguration>();

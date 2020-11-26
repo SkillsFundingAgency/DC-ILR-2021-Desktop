@@ -19,11 +19,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ReferenceData\FISReferenceData.0.1.256.202007150855.zip" />
+    <None Remove="ReferenceData\FISReferenceData.0.3.21.202011260922.zip" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="ReferenceData\FISReferenceData.0.1.256.202007150855.zip">
+    <Content Include="ReferenceData\FISReferenceData.0.3.21.202011260922.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -32,10 +32,11 @@
     <PackageReference Include="Autofac" Version="5.1.2" />
     <PackageReference Include="EntityFrameworkCore.Jet" Version="2.2.0" />
     <PackageReference Include="ESFA.DC.DateTimeProvider.Interface" Version="0.1.6-beta0001" />
-    <PackageReference Include="ESFA.DC.FileService" Version="0.1.40-beta0001" />
+    <PackageReference Include="ESFA.DC.FileService" Version="0.1.41-beta0001" />
     <PackageReference Include="ESFA.DC.FileService.Interface" Version="0.1.39-beta0001" />
-    <PackageReference Include="ESFA.DC.ILR.2021.Constants" Version="0.1.4-beta0001" />
+    <PackageReference Include="ESFA.DC.ILR.2021.Constants" Version="0.1.6-beta0001" />
     <PackageReference Include="ESFA.DC.Logging.Interfaces" Version="0.1.10-beta0001" />
+    <PackageReference Include="ESFA.DC.Serialization.Interfaces" Version="0.1.39-beta0001" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.2.6" />
     <PackageReference Include="NLog" Version="4.6.7" />
@@ -53,7 +54,9 @@
   <ItemGroup>
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Interface\ESFA.DC.ILR.Desktop.Interface.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Internal.Interface\ESFA.DC.ILR.Desktop.Internal.Interface.csproj" />
+    <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Messaging\ESFA.DC.ILR.Desktop.Messaging.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Models\ESFA.DC.ILR.Desktop.Models.csproj" />
+    <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Service.Pipeline\ESFA.DC.ILR.Desktop.Service.Pipeline.csproj" />
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Utils\ESFA.DC.ILR.Desktop.Utils.csproj" />
   </ItemGroup>
 

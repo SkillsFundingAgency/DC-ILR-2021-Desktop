@@ -41,6 +41,9 @@
     <Reference Include="ESFA.DC.DateTimeProvider.Interface, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.DateTimeProvider.Interface.0.1.6-beta0001\lib\netstandard2.0\ESFA.DC.DateTimeProvider.Interface.dll</HintPath>
     </Reference>
+    <Reference Include="ESFA.DC.Logging.Interfaces, Version=0.1.10.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.Logging.Interfaces.0.1.10-beta0001\lib\netstandard2.0\ESFA.DC.Logging.Interfaces.dll</HintPath>
+    </Reference>
     <Reference Include="FluentAssertions, Version=5.10.3.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentAssertions.5.10.3\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
@@ -99,6 +102,14 @@
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Internal.Interface\ESFA.DC.ILR.Desktop.Internal.Interface.csproj">
       <Project>{1491AC45-D5B7-4240-A9E2-1267C5F59A03}</Project>
       <Name>ESFA.DC.ILR.Desktop.Internal.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Messaging\ESFA.DC.ILR.Desktop.Messaging.csproj">
+      <Project>{08dda31a-1fb9-4c1b-830f-071f79cf906d}</Project>
+      <Name>ESFA.DC.ILR.Desktop.Messaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Service.Pipeline\ESFA.DC.ILR.Desktop.Service.Pipeline.csproj">
+      <Project>{cd36fa08-23d2-4fad-9d20-f5842c139e04}</Project>
+      <Name>ESFA.DC.ILR.Desktop.Service.Pipeline</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Service\ESFA.DC.ILR.Desktop.Service.csproj">
       <Project>{15e50fe1-098b-4dec-9346-cf4456c6d81d}</Project>

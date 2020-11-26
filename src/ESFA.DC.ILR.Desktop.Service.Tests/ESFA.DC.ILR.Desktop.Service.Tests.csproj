@@ -46,14 +46,14 @@
     <Reference Include="ESFA.DC.DateTimeProvider.Interface, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.DateTimeProvider.Interface.0.1.6-beta0001\lib\netstandard2.0\ESFA.DC.DateTimeProvider.Interface.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.FileService, Version=0.1.40.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.FileService.0.1.40-beta0001\lib\netstandard2.0\ESFA.DC.FileService.dll</HintPath>
+    <Reference Include="ESFA.DC.FileService, Version=0.1.41.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.FileService.0.1.41-beta0001\lib\netstandard2.0\ESFA.DC.FileService.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.FileService.Interface, Version=0.1.39.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.FileService.Interface.0.1.39-beta0001\lib\netstandard2.0\ESFA.DC.FileService.Interface.dll</HintPath>
     </Reference>
-    <Reference Include="ESFA.DC.ILR.Constants, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESFA.DC.ILR.2021.Constants.0.1.4-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Constants.dll</HintPath>
+    <Reference Include="ESFA.DC.ILR.Constants, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ILR.2021.Constants.0.1.6-beta0001\lib\netstandard2.0\ESFA.DC.ILR.Constants.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.Logging.Interfaces, Version=0.1.10.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Logging.Interfaces.0.1.10-beta0001\lib\netstandard2.0\ESFA.DC.Logging.Interfaces.dll</HintPath>
@@ -172,6 +172,10 @@
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Models\ESFA.DC.ILR.Desktop.Models.csproj">
       <Project>{cfef3244-c37e-4e36-8e59-71e2c155ebe7}</Project>
       <Name>ESFA.DC.ILR.Desktop.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Service.Pipeline\ESFA.DC.ILR.Desktop.Service.Pipeline.csproj">
+      <Project>{cd36fa08-23d2-4fad-9d20-f5842c139e04}</Project>
+      <Name>ESFA.DC.ILR.Desktop.Service.Pipeline</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.ILR.Desktop.Service\ESFA.DC.ILR.Desktop.Service.csproj">
       <Project>{15E50FE1-098B-4DEC-9346-CF4456C6D81D}</Project>
